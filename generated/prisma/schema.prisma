@@ -1,0 +1,243 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Timeline represents the fictional universe timelines (Universal Century, After Colony, etc.)
+model Timeline {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String?  @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  series Series[]
+
+  @@map("timelines")
+}
+
+// Series represents anime/manga series (Mobile Suit Gundam, Zeta Gundam, etc.)
+model Series {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  slug          String?  @unique
+  description   String?
+  timelineId    String?
+  scrapedImages String[] @default([])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  timeline    Timeline?    @relation(fields: [timelineId], references: [id], onDelete: SetNull)
+  mobileSuits MobileSuit[]
+  kits        Kit[]
+
+  @@map("series")
+}
+
+// MobileSuit represents the mecha/robot designs (RX-78-2 Gundam, Zaku II, etc.)
+model MobileSuit {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  slug          String?  @unique
+  description   String?
+  seriesId      String?
+  scrapedImages String[] @default([])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  series  Series?            @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  kits    KitMobileSuit[]
+  uploads MobileSuitUpload[]
+
+  @@map("mobile_suits")
+}
+
+// Grade represents the classification system (HG, RG, MG, PG, etc.)
+model Grade {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String?  @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  productLines ProductLine[]
+  kits         Kit[]
+
+  @@map("grades")
+}
+
+// ProductLine represents specific product lines within grades (HGUC, MGEX, PG Unleashed, etc.)
+model ProductLine {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  slug         String?  @unique
+  description  String?
+  gradeId      String
+  logoId       String?
+  scrapedImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  grade Grade   @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  logo  Upload? @relation(fields: [logoId], references: [id], onDelete: SetNull)
+  kits  Kit[]
+
+  @@map("product_lines")
+}
+
+// ReleaseType represents how a kit is released (Retail, P-Bandai, Gundam Base, etc.)
+model ReleaseType {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  kits Kit[]
+
+  @@map("release_types")
+}
+
+// Kit represents the main entity - individual Gunpla kits
+model Kit {
+  id               String    @id @default(cuid())
+  name             String
+  slug             String?   @unique
+  number           String
+  variant          String?
+  releaseDate      DateTime?
+  priceYen         Int?
+  region           String?
+  boxArt           String? // Cloudinary URL
+  notes            String?
+  manualLinks      String[]  @default([])
+  scrapedImages    String[]  @default([])
+  potentialBaseKit String? // Potential base kit reference
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // Foreign keys
+  gradeId       String
+  productLineId String?
+  seriesId      String?
+  releaseTypeId String?
+  baseKitId     String?
+
+  // Relations
+  grade       Grade           @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  productLine ProductLine?    @relation(fields: [productLineId], references: [id], onDelete: SetNull)
+  series      Series?         @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  releaseType ReleaseType?    @relation(fields: [releaseTypeId], references: [id], onDelete: SetNull)
+  baseKit     Kit?            @relation("KitVariants", fields: [baseKitId], references: [id], onDelete: SetNull)
+  variants    Kit[]           @relation("KitVariants")
+  mobileSuits KitMobileSuit[]
+  uploads     KitUpload[]
+
+  @@map("kits")
+}
+
+// Junction table for many-to-many relationship between Kit and MobileSuit
+model KitMobileSuit {
+  id           String   @id @default(cuid())
+  kitId        String
+  mobileSuitId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  kit        Kit        @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  mobileSuit MobileSuit @relation(fields: [mobileSuitId], references: [id], onDelete: Cascade)
+
+  @@unique([kitId, mobileSuitId])
+  @@map("kit_mobile_suits")
+}
+
+// Upload represents files uploaded to Cloudinary
+model Upload {
+  id                String   @id @default(cuid())
+  cloudinaryAssetId String   @unique
+  publicId          String
+  url               String
+  eagerUrl          String?
+  format            String
+  resourceType      String
+  size              Int
+  pages             Int?
+  originalFilename  String
+  uploadedAt        DateTime
+  uploadedById      String // FK to User who uploaded the file
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  kitUploads        KitUpload[]
+  mobileSuitUploads MobileSuitUpload[]
+  productLineLogos  ProductLine[]
+
+  @@map("uploads")
+}
+
+// KitImageType enum for categorizing kit images
+enum KitImageType {
+  BOX_ART
+  PRODUCT_SHOTS
+  RUNNERS
+  MANUAL
+  PROTOTYPE
+}
+
+// Junction table for many-to-many relationship between Kit and Upload
+model KitUpload {
+  id        String       @id @default(cuid())
+  kitId     String
+  uploadId  String
+  caption   String?
+  order     Int?
+  type      KitImageType
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // Relations
+  kit    Kit    @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  upload Upload @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+
+  @@unique([kitId, uploadId])
+  @@map("kit_uploads")
+}
+
+// Junction table for many-to-many relationship between MobileSuit and Upload
+model MobileSuitUpload {
+  id           String   @id @default(cuid())
+  mobileSuitId String
+  uploadId     String
+  caption      String?
+  order        Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  mobileSuit MobileSuit @relation(fields: [mobileSuitId], references: [id], onDelete: Cascade)
+  upload     Upload     @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+
+  @@unique([mobileSuitId, uploadId])
+  @@map("mobile_suit_uploads")
+}

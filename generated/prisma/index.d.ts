@@ -1,0 +1,21917 @@
+
+/**
+ * Client
+**/
+
+import * as runtime from './runtime/library.js';
+import $Types = runtime.Types // general types
+import $Public = runtime.Types.Public
+import $Utils = runtime.Types.Utils
+import $Extensions = runtime.Types.Extensions
+import $Result = runtime.Types.Result
+
+export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+
+/**
+ * Model Timeline
+ * 
+ */
+export type Timeline = $Result.DefaultSelection<Prisma.$TimelinePayload>
+/**
+ * Model Series
+ * 
+ */
+export type Series = $Result.DefaultSelection<Prisma.$SeriesPayload>
+/**
+ * Model MobileSuit
+ * 
+ */
+export type MobileSuit = $Result.DefaultSelection<Prisma.$MobileSuitPayload>
+/**
+ * Model Grade
+ * 
+ */
+export type Grade = $Result.DefaultSelection<Prisma.$GradePayload>
+/**
+ * Model ProductLine
+ * 
+ */
+export type ProductLine = $Result.DefaultSelection<Prisma.$ProductLinePayload>
+/**
+ * Model ReleaseType
+ * 
+ */
+export type ReleaseType = $Result.DefaultSelection<Prisma.$ReleaseTypePayload>
+/**
+ * Model Kit
+ * 
+ */
+export type Kit = $Result.DefaultSelection<Prisma.$KitPayload>
+/**
+ * Model KitMobileSuit
+ * 
+ */
+export type KitMobileSuit = $Result.DefaultSelection<Prisma.$KitMobileSuitPayload>
+/**
+ * Model Upload
+ * 
+ */
+export type Upload = $Result.DefaultSelection<Prisma.$UploadPayload>
+/**
+ * Model KitUpload
+ * 
+ */
+export type KitUpload = $Result.DefaultSelection<Prisma.$KitUploadPayload>
+/**
+ * Model MobileSuitUpload
+ * 
+ */
+export type MobileSuitUpload = $Result.DefaultSelection<Prisma.$MobileSuitUploadPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const KitImageType: {
+  BOX_ART: 'BOX_ART',
+  PRODUCT_SHOTS: 'PRODUCT_SHOTS',
+  RUNNERS: 'RUNNERS',
+  MANUAL: 'MANUAL',
+  PROTOTYPE: 'PROTOTYPE'
+};
+
+export type KitImageType = (typeof KitImageType)[keyof typeof KitImageType]
+
+}
+
+export type KitImageType = $Enums.KitImageType
+
+export const KitImageType: typeof $Enums.KitImageType
+
+/**
+ * ##  Prisma Client ʲˢ
+ *
+ * Type-safe database client for TypeScript & Node.js
+ * @example
+ * ```
+ * const prisma = new PrismaClient()
+ * // Fetch zero or more Timelines
+ * const timelines = await prisma.timeline.findMany()
+ * ```
+ *
+ *
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ */
+export class PrismaClient<
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
+
+    /**
+   * ##  Prisma Client ʲˢ
+   *
+   * Type-safe database client for TypeScript & Node.js
+   * @example
+   * ```
+   * const prisma = new PrismaClient()
+   * // Fetch zero or more Timelines
+   * const timelines = await prisma.timeline.findMany()
+   * ```
+   *
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   */
+
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+
+  /**
+   * Connect with the database
+   */
+  $connect(): $Utils.JsPromise<void>;
+
+  /**
+   * Disconnect from the database
+   */
+  $disconnect(): $Utils.JsPromise<void>;
+
+/**
+   * Executes a prepared raw query and returns the number of affected rows.
+   * @example
+   * ```
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Executes a raw query and returns the number of affected rows.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Performs a prepared raw query and returns the `SELECT` data.
+   * @example
+   * ```
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
+   * Performs a raw query and returns the `SELECT` data.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
+
+  /**
+   * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
+   * @example
+   * ```
+   * const [george, bob, alice] = await prisma.$transaction([
+   *   prisma.user.create({ data: { name: 'George' } }),
+   *   prisma.user.create({ data: { name: 'Bob' } }),
+   *   prisma.user.create({ data: { name: 'Alice' } }),
+   * ])
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   */
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+
+  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
+
+
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
+    extArgs: ExtArgs
+  }>>
+
+      /**
+   * `prisma.timeline`: Exposes CRUD operations for the **Timeline** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Timelines
+    * const timelines = await prisma.timeline.findMany()
+    * ```
+    */
+  get timeline(): Prisma.TimelineDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.series`: Exposes CRUD operations for the **Series** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Series
+    * const series = await prisma.series.findMany()
+    * ```
+    */
+  get series(): Prisma.SeriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mobileSuit`: Exposes CRUD operations for the **MobileSuit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MobileSuits
+    * const mobileSuits = await prisma.mobileSuit.findMany()
+    * ```
+    */
+  get mobileSuit(): Prisma.MobileSuitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.grade`: Exposes CRUD operations for the **Grade** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Grades
+    * const grades = await prisma.grade.findMany()
+    * ```
+    */
+  get grade(): Prisma.GradeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.productLine`: Exposes CRUD operations for the **ProductLine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductLines
+    * const productLines = await prisma.productLine.findMany()
+    * ```
+    */
+  get productLine(): Prisma.ProductLineDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.releaseType`: Exposes CRUD operations for the **ReleaseType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReleaseTypes
+    * const releaseTypes = await prisma.releaseType.findMany()
+    * ```
+    */
+  get releaseType(): Prisma.ReleaseTypeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kit`: Exposes CRUD operations for the **Kit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kits
+    * const kits = await prisma.kit.findMany()
+    * ```
+    */
+  get kit(): Prisma.KitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kitMobileSuit`: Exposes CRUD operations for the **KitMobileSuit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KitMobileSuits
+    * const kitMobileSuits = await prisma.kitMobileSuit.findMany()
+    * ```
+    */
+  get kitMobileSuit(): Prisma.KitMobileSuitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.upload`: Exposes CRUD operations for the **Upload** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Uploads
+    * const uploads = await prisma.upload.findMany()
+    * ```
+    */
+  get upload(): Prisma.UploadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kitUpload`: Exposes CRUD operations for the **KitUpload** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KitUploads
+    * const kitUploads = await prisma.kitUpload.findMany()
+    * ```
+    */
+  get kitUpload(): Prisma.KitUploadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mobileSuitUpload`: Exposes CRUD operations for the **MobileSuitUpload** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MobileSuitUploads
+    * const mobileSuitUploads = await prisma.mobileSuitUpload.findMany()
+    * ```
+    */
+  get mobileSuitUpload(): Prisma.MobileSuitUploadDelegate<ExtArgs, ClientOptions>;
+}
+
+export namespace Prisma {
+  export import DMMF = runtime.DMMF
+
+  export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+  /**
+   * Validator
+   */
+  export import validator = runtime.Public.validator
+
+  /**
+   * Prisma Errors
+   */
+  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError
+  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError
+  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
+  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
+  export import PrismaClientValidationError = runtime.PrismaClientValidationError
+
+  /**
+   * Re-export of sql-template-tag
+   */
+  export import sql = runtime.sqltag
+  export import empty = runtime.empty
+  export import join = runtime.join
+  export import raw = runtime.raw
+  export import Sql = runtime.Sql
+
+
+
+  /**
+   * Decimal.js
+   */
+  export import Decimal = runtime.Decimal
+
+  export type DecimalJsLike = runtime.DecimalJsLike
+
+  /**
+   * Metrics
+   */
+  export type Metrics = runtime.Metrics
+  export type Metric<T> = runtime.Metric<T>
+  export type MetricHistogram = runtime.MetricHistogram
+  export type MetricHistogramBucket = runtime.MetricHistogramBucket
+
+  /**
+  * Extensions
+  */
+  export import Extension = $Extensions.UserArgs
+  export import getExtensionContext = runtime.Extensions.getExtensionContext
+  export import Args = $Public.Args
+  export import Payload = $Public.Payload
+  export import Result = $Public.Result
+  export import Exact = $Public.Exact
+
+  /**
+   * Prisma Client JS version: 6.16.0
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+   */
+  export type PrismaVersion = {
+    client: string
+  }
+
+  export const prismaVersion: PrismaVersion
+
+  /**
+   * Utility Types
+   */
+
+
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
+
+  /**
+   * Types of the values used to represent different kinds of `null` values when working with JSON fields.
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  namespace NullTypes {
+    /**
+    * Type of `Prisma.DbNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class DbNull {
+      private DbNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.JsonNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class JsonNull {
+      private JsonNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.AnyNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class AnyNull {
+      private AnyNull: never
+      private constructor()
+    }
+  }
+
+  /**
+   * Helper for filtering JSON entries that have `null` on the database (empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const DbNull: NullTypes.DbNull
+
+  /**
+   * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const JsonNull: NullTypes.JsonNull
+
+  /**
+   * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const AnyNull: NullTypes.AnyNull
+
+  type SelectAndInclude = {
+    select: any
+    include: any
+  }
+
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
+  /**
+   * Get the type of the value, that the Promise holds.
+   */
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+
+  /**
+   * Get the return type of a function which returns a Promise.
+   */
+  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<ReturnType<T>>
+
+  /**
+   * From T, pick a set of properties whose keys are in the union K
+   */
+  type Prisma__Pick<T, K extends keyof T> = {
+      [P in K]: T[P];
+  };
+
+
+  export type Enumerable<T> = T | Array<T>;
+
+  export type RequiredKeys<T> = {
+    [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
+  }[keyof T]
+
+  export type TruthyKeys<T> = keyof {
+    [K in keyof T as T[K] extends false | undefined | null ? never : K]: K
+  }
+
+  export type TrueKeys<T> = TruthyKeys<Prisma__Pick<T, RequiredKeys<T>>>
+
+  /**
+   * Subset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection
+   */
+  export type Subset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never;
+  };
+
+  /**
+   * SelectSubset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
+   * Additionally, it validates, if both select and include are present. If the case, it errors.
+   */
+  export type SelectSubset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    (T extends SelectAndInclude
+      ? 'Please either choose `select` or `include`.'
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
+
+  /**
+   * Subset + Intersection
+   * @desc From `T` pick properties that exist in `U` and intersect `K`
+   */
+  export type SubsetIntersection<T, U, K> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    K
+
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+  /**
+   * XOR is needed to have a real mutually exclusive union type
+   * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
+   */
+  type XOR<T, U> =
+    T extends object ?
+    U extends object ?
+      (Without<T, U> & U) | (Without<U, T> & T)
+    : U : T
+
+
+  /**
+   * Is T a Record?
+   */
+  type IsObject<T extends any> = T extends Array<any>
+  ? False
+  : T extends Date
+  ? False
+  : T extends Uint8Array
+  ? False
+  : T extends BigInt
+  ? False
+  : T extends object
+  ? True
+  : False
+
+
+  /**
+   * If it's T[], return T
+   */
+  export type UnEnumerate<T extends unknown> = T extends Array<infer U> ? U : T
+
+  /**
+   * From ts-toolbelt
+   */
+
+  type __Either<O extends object, K extends Key> = Omit<O, K> &
+    {
+      // Merge all but K
+      [P in K]: Prisma__Pick<O, P & keyof O> // With K possibilities
+    }[K]
+
+  type EitherStrict<O extends object, K extends Key> = Strict<__Either<O, K>>
+
+  type EitherLoose<O extends object, K extends Key> = ComputeRaw<__Either<O, K>>
+
+  type _Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean
+  > = {
+    1: EitherStrict<O, K>
+    0: EitherLoose<O, K>
+  }[strict]
+
+  type Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean = 1
+  > = O extends unknown ? _Either<O, K, strict> : never
+
+  export type Union = any
+
+  type PatchUndefined<O extends object, O1 extends object> = {
+    [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K]
+  } & {}
+
+  /** Helper Types for "Merge" **/
+  export type IntersectOf<U extends Union> = (
+    U extends unknown ? (k: U) => void : never
+  ) extends (k: infer I) => void
+    ? I
+    : never
+
+  export type Overwrite<O extends object, O1 extends object> = {
+      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
+  } & {};
+
+  type _Merge<U extends object> = IntersectOf<Overwrite<U, {
+      [K in keyof U]-?: At<U, K>;
+  }>>;
+
+  type Key = string | number | symbol;
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
+      1: AtStrict<O, K>;
+      0: AtLoose<O, K>;
+  }[strict];
+
+  export type ComputeRaw<A extends any> = A extends Function ? A : {
+    [K in keyof A]: A[K];
+  } & {};
+
+  export type OptionalFlat<O> = {
+    [K in keyof O]?: O[K];
+  } & {};
+
+  type _Record<K extends keyof any, T> = {
+    [P in K]: T;
+  };
+
+  // cause typescript not to expand types and preserve names
+  type NoExpand<T> = T extends unknown ? T : never;
+
+  // this type assumes the passed object is entirely optional
+  type AtLeast<O extends object, K extends string> = NoExpand<
+    O extends unknown
+    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
+    : never>;
+
+  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
+  /** End Helper Types for "Merge" **/
+
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+
+  /**
+  A [[Boolean]]
+  */
+  export type Boolean = True | False
+
+  // /**
+  // 1
+  // */
+  export type True = 1
+
+  /**
+  0
+  */
+  export type False = 0
+
+  export type Not<B extends Boolean> = {
+    0: 1
+    1: 0
+  }[B]
+
+  export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
+    ? 0 // anything `never` is false
+    : A1 extends A2
+    ? 1
+    : 0
+
+  export type Has<U extends Union, U1 extends Union> = Not<
+    Extends<Exclude<U1, U>, U1>
+  >
+
+  export type Or<B1 extends Boolean, B2 extends Boolean> = {
+    0: {
+      0: 0
+      1: 1
+    }
+    1: {
+      0: 1
+      1: 1
+    }
+  }[B1][B2]
+
+  export type Keys<U extends Union> = U extends unknown ? keyof U : never
+
+  type Cast<A, B> = A extends B ? A : B;
+
+  export const type: unique symbol;
+
+
+
+  /**
+   * Used by group by
+   */
+
+  export type GetScalarType<T, O> = O extends object ? {
+    [P in keyof T]: P extends keyof O
+      ? O[P]
+      : never
+  } : never
+
+  type FieldPaths<
+    T,
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
+  > = IsObject<T> extends True ? U : T
+
+  type GetHavingFields<T> = {
+    [K in keyof T]: Or<
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
+    > extends True
+      ? // infer is only needed to not hit TS limit
+        // based on the brilliant idea of Pierre-Antoine Mills
+        // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
+        T[K] extends infer TK
+        ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
+        : never
+      : {} extends FieldPaths<T[K]>
+      ? never
+      : K
+  }[keyof T]
+
+  /**
+   * Convert tuple to union
+   */
+  type _TupleToUnion<T> = T extends (infer E)[] ? E : never
+  type TupleToUnion<K extends readonly any[]> = _TupleToUnion<K>
+  type MaybeTupleToUnion<T> = T extends any[] ? TupleToUnion<T> : T
+
+  /**
+   * Like `Pick`, but additionally can also accept an array of keys
+   */
+  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>
+
+  /**
+   * Exclude all keys with underscores
+   */
+  type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
+
+
+  export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
+
+  type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
+
+
+  export const ModelName: {
+    Timeline: 'Timeline',
+    Series: 'Series',
+    MobileSuit: 'MobileSuit',
+    Grade: 'Grade',
+    ProductLine: 'ProductLine',
+    ReleaseType: 'ReleaseType',
+    Kit: 'Kit',
+    KitMobileSuit: 'KitMobileSuit',
+    Upload: 'Upload',
+    KitUpload: 'KitUpload',
+    MobileSuitUpload: 'MobileSuitUpload'
+  };
+
+  export type ModelName = (typeof ModelName)[keyof typeof ModelName]
+
+
+  export type Datasources = {
+    db?: Datasource
+  }
+
+  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+  }
+
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
+    globalOmitOptions: {
+      omit: GlobalOmitOptions
+    }
+    meta: {
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload"
+      txIsolationLevel: Prisma.TransactionIsolationLevel
+    }
+    model: {
+      Timeline: {
+        payload: Prisma.$TimelinePayload<ExtArgs>
+        fields: Prisma.TimelineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TimelineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TimelineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          findFirst: {
+            args: Prisma.TimelineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TimelineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          findMany: {
+            args: Prisma.TimelineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+          }
+          create: {
+            args: Prisma.TimelineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          createMany: {
+            args: Prisma.TimelineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TimelineCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+          }
+          delete: {
+            args: Prisma.TimelineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          update: {
+            args: Prisma.TimelineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          deleteMany: {
+            args: Prisma.TimelineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TimelineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TimelineUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+          }
+          upsert: {
+            args: Prisma.TimelineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TimelinePayload>
+          }
+          aggregate: {
+            args: Prisma.TimelineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTimeline>
+          }
+          groupBy: {
+            args: Prisma.TimelineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TimelineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TimelineCountArgs<ExtArgs>
+            result: $Utils.Optional<TimelineCountAggregateOutputType> | number
+          }
+        }
+      }
+      Series: {
+        payload: Prisma.$SeriesPayload<ExtArgs>
+        fields: Prisma.SeriesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SeriesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SeriesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          findFirst: {
+            args: Prisma.SeriesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SeriesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          findMany: {
+            args: Prisma.SeriesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+          }
+          create: {
+            args: Prisma.SeriesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          createMany: {
+            args: Prisma.SeriesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SeriesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+          }
+          delete: {
+            args: Prisma.SeriesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          update: {
+            args: Prisma.SeriesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          deleteMany: {
+            args: Prisma.SeriesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SeriesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SeriesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+          }
+          upsert: {
+            args: Prisma.SeriesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+          }
+          aggregate: {
+            args: Prisma.SeriesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSeries>
+          }
+          groupBy: {
+            args: Prisma.SeriesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SeriesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SeriesCountArgs<ExtArgs>
+            result: $Utils.Optional<SeriesCountAggregateOutputType> | number
+          }
+        }
+      }
+      MobileSuit: {
+        payload: Prisma.$MobileSuitPayload<ExtArgs>
+        fields: Prisma.MobileSuitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MobileSuitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MobileSuitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          findFirst: {
+            args: Prisma.MobileSuitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MobileSuitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          findMany: {
+            args: Prisma.MobileSuitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>[]
+          }
+          create: {
+            args: Prisma.MobileSuitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          createMany: {
+            args: Prisma.MobileSuitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MobileSuitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>[]
+          }
+          delete: {
+            args: Prisma.MobileSuitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          update: {
+            args: Prisma.MobileSuitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          deleteMany: {
+            args: Prisma.MobileSuitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MobileSuitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MobileSuitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>[]
+          }
+          upsert: {
+            args: Prisma.MobileSuitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitPayload>
+          }
+          aggregate: {
+            args: Prisma.MobileSuitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMobileSuit>
+          }
+          groupBy: {
+            args: Prisma.MobileSuitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MobileSuitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MobileSuitCountArgs<ExtArgs>
+            result: $Utils.Optional<MobileSuitCountAggregateOutputType> | number
+          }
+        }
+      }
+      Grade: {
+        payload: Prisma.$GradePayload<ExtArgs>
+        fields: Prisma.GradeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GradeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GradeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          findFirst: {
+            args: Prisma.GradeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GradeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          findMany: {
+            args: Prisma.GradeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>[]
+          }
+          create: {
+            args: Prisma.GradeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          createMany: {
+            args: Prisma.GradeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GradeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>[]
+          }
+          delete: {
+            args: Prisma.GradeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          update: {
+            args: Prisma.GradeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          deleteMany: {
+            args: Prisma.GradeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GradeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GradeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>[]
+          }
+          upsert: {
+            args: Prisma.GradeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GradePayload>
+          }
+          aggregate: {
+            args: Prisma.GradeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGrade>
+          }
+          groupBy: {
+            args: Prisma.GradeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GradeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GradeCountArgs<ExtArgs>
+            result: $Utils.Optional<GradeCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProductLine: {
+        payload: Prisma.$ProductLinePayload<ExtArgs>
+        fields: Prisma.ProductLineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProductLineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProductLineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          findFirst: {
+            args: Prisma.ProductLineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProductLineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          findMany: {
+            args: Prisma.ProductLineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>[]
+          }
+          create: {
+            args: Prisma.ProductLineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          createMany: {
+            args: Prisma.ProductLineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProductLineCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>[]
+          }
+          delete: {
+            args: Prisma.ProductLineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          update: {
+            args: Prisma.ProductLineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProductLineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProductLineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProductLineUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>[]
+          }
+          upsert: {
+            args: Prisma.ProductLineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductLinePayload>
+          }
+          aggregate: {
+            args: Prisma.ProductLineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductLine>
+          }
+          groupBy: {
+            args: Prisma.ProductLineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductLineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProductLineCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductLineCountAggregateOutputType> | number
+          }
+        }
+      }
+      ReleaseType: {
+        payload: Prisma.$ReleaseTypePayload<ExtArgs>
+        fields: Prisma.ReleaseTypeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReleaseTypeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReleaseTypeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          findFirst: {
+            args: Prisma.ReleaseTypeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReleaseTypeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          findMany: {
+            args: Prisma.ReleaseTypeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>[]
+          }
+          create: {
+            args: Prisma.ReleaseTypeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          createMany: {
+            args: Prisma.ReleaseTypeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReleaseTypeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>[]
+          }
+          delete: {
+            args: Prisma.ReleaseTypeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          update: {
+            args: Prisma.ReleaseTypeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          deleteMany: {
+            args: Prisma.ReleaseTypeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReleaseTypeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReleaseTypeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>[]
+          }
+          upsert: {
+            args: Prisma.ReleaseTypeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReleaseTypePayload>
+          }
+          aggregate: {
+            args: Prisma.ReleaseTypeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReleaseType>
+          }
+          groupBy: {
+            args: Prisma.ReleaseTypeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReleaseTypeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReleaseTypeCountArgs<ExtArgs>
+            result: $Utils.Optional<ReleaseTypeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Kit: {
+        payload: Prisma.$KitPayload<ExtArgs>
+        fields: Prisma.KitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          findFirst: {
+            args: Prisma.KitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          findMany: {
+            args: Prisma.KitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>[]
+          }
+          create: {
+            args: Prisma.KitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          createMany: {
+            args: Prisma.KitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>[]
+          }
+          delete: {
+            args: Prisma.KitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          update: {
+            args: Prisma.KitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          deleteMany: {
+            args: Prisma.KitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>[]
+          }
+          upsert: {
+            args: Prisma.KitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitPayload>
+          }
+          aggregate: {
+            args: Prisma.KitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKit>
+          }
+          groupBy: {
+            args: Prisma.KitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KitCountArgs<ExtArgs>
+            result: $Utils.Optional<KitCountAggregateOutputType> | number
+          }
+        }
+      }
+      KitMobileSuit: {
+        payload: Prisma.$KitMobileSuitPayload<ExtArgs>
+        fields: Prisma.KitMobileSuitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KitMobileSuitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KitMobileSuitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          findFirst: {
+            args: Prisma.KitMobileSuitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KitMobileSuitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          findMany: {
+            args: Prisma.KitMobileSuitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>[]
+          }
+          create: {
+            args: Prisma.KitMobileSuitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          createMany: {
+            args: Prisma.KitMobileSuitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KitMobileSuitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>[]
+          }
+          delete: {
+            args: Prisma.KitMobileSuitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          update: {
+            args: Prisma.KitMobileSuitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          deleteMany: {
+            args: Prisma.KitMobileSuitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KitMobileSuitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KitMobileSuitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>[]
+          }
+          upsert: {
+            args: Prisma.KitMobileSuitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitMobileSuitPayload>
+          }
+          aggregate: {
+            args: Prisma.KitMobileSuitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKitMobileSuit>
+          }
+          groupBy: {
+            args: Prisma.KitMobileSuitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KitMobileSuitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KitMobileSuitCountArgs<ExtArgs>
+            result: $Utils.Optional<KitMobileSuitCountAggregateOutputType> | number
+          }
+        }
+      }
+      Upload: {
+        payload: Prisma.$UploadPayload<ExtArgs>
+        fields: Prisma.UploadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UploadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UploadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          findFirst: {
+            args: Prisma.UploadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UploadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          findMany: {
+            args: Prisma.UploadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>[]
+          }
+          create: {
+            args: Prisma.UploadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          createMany: {
+            args: Prisma.UploadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UploadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>[]
+          }
+          delete: {
+            args: Prisma.UploadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          update: {
+            args: Prisma.UploadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          deleteMany: {
+            args: Prisma.UploadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UploadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UploadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>[]
+          }
+          upsert: {
+            args: Prisma.UploadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UploadPayload>
+          }
+          aggregate: {
+            args: Prisma.UploadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUpload>
+          }
+          groupBy: {
+            args: Prisma.UploadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UploadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UploadCountArgs<ExtArgs>
+            result: $Utils.Optional<UploadCountAggregateOutputType> | number
+          }
+        }
+      }
+      KitUpload: {
+        payload: Prisma.$KitUploadPayload<ExtArgs>
+        fields: Prisma.KitUploadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KitUploadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KitUploadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          findFirst: {
+            args: Prisma.KitUploadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KitUploadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          findMany: {
+            args: Prisma.KitUploadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>[]
+          }
+          create: {
+            args: Prisma.KitUploadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          createMany: {
+            args: Prisma.KitUploadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KitUploadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>[]
+          }
+          delete: {
+            args: Prisma.KitUploadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          update: {
+            args: Prisma.KitUploadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          deleteMany: {
+            args: Prisma.KitUploadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KitUploadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KitUploadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>[]
+          }
+          upsert: {
+            args: Prisma.KitUploadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitUploadPayload>
+          }
+          aggregate: {
+            args: Prisma.KitUploadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKitUpload>
+          }
+          groupBy: {
+            args: Prisma.KitUploadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KitUploadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KitUploadCountArgs<ExtArgs>
+            result: $Utils.Optional<KitUploadCountAggregateOutputType> | number
+          }
+        }
+      }
+      MobileSuitUpload: {
+        payload: Prisma.$MobileSuitUploadPayload<ExtArgs>
+        fields: Prisma.MobileSuitUploadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MobileSuitUploadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MobileSuitUploadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          findFirst: {
+            args: Prisma.MobileSuitUploadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MobileSuitUploadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          findMany: {
+            args: Prisma.MobileSuitUploadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>[]
+          }
+          create: {
+            args: Prisma.MobileSuitUploadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          createMany: {
+            args: Prisma.MobileSuitUploadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MobileSuitUploadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>[]
+          }
+          delete: {
+            args: Prisma.MobileSuitUploadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          update: {
+            args: Prisma.MobileSuitUploadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          deleteMany: {
+            args: Prisma.MobileSuitUploadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MobileSuitUploadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MobileSuitUploadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>[]
+          }
+          upsert: {
+            args: Prisma.MobileSuitUploadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileSuitUploadPayload>
+          }
+          aggregate: {
+            args: Prisma.MobileSuitUploadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMobileSuitUpload>
+          }
+          groupBy: {
+            args: Prisma.MobileSuitUploadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MobileSuitUploadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MobileSuitUploadCountArgs<ExtArgs>
+            result: $Utils.Optional<MobileSuitUploadCountAggregateOutputType> | number
+          }
+        }
+      }
+    }
+  } & {
+    other: {
+      payload: any
+      operations: {
+        $executeRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $executeRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+      }
+    }
+  }
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export type DefaultPrismaClient = PrismaClient
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
+  export interface PrismaClientOptions {
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasources?: Datasources
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasourceUrl?: string
+    /**
+     * @default "colorless"
+     */
+    errorFormat?: ErrorFormat
+    /**
+     * @example
+     * ```
+     * // Shorthand for `emit: 'stdout'`
+     * log: ['query', 'info', 'warn', 'error']
+     * 
+     * // Emit as events only
+     * log: [
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
+     * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
+     * ```
+     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     */
+    log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
+    /**
+     * Global configuration for omitting model fields by default.
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   omit: {
+     *     user: {
+     *       password: true
+     *     }
+     *   }
+     * })
+     * ```
+     */
+    omit?: Prisma.GlobalOmitConfig
+  }
+  export type GlobalOmitConfig = {
+    timeline?: TimelineOmit
+    series?: SeriesOmit
+    mobileSuit?: MobileSuitOmit
+    grade?: GradeOmit
+    productLine?: ProductLineOmit
+    releaseType?: ReleaseTypeOmit
+    kit?: KitOmit
+    kitMobileSuit?: KitMobileSuitOmit
+    upload?: UploadOmit
+    kitUpload?: KitUploadOmit
+    mobileSuitUpload?: MobileSuitUploadOmit
+  }
+
+  /* Types for Logging */
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error'
+  export type LogDefinition = {
+    level: LogLevel
+    emit: 'stdout' | 'event'
+  }
+
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
+
+  export type QueryEvent = {
+    timestamp: Date
+    query: string
+    params: string
+    duration: number
+    target: string
+  }
+
+  export type LogEvent = {
+    timestamp: Date
+    message: string
+    target: string
+  }
+  /* End Types for Logging */
+
+
+  export type PrismaAction =
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'updateManyAndReturn'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy'
+
+  // tested in getLogLevel.test.ts
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+
+  /**
+   * `PrismaClient` proxy available in interactive transactions.
+   */
+  export type TransactionClient = Omit<Prisma.DefaultPrismaClient, runtime.ITXClientDenyList>
+
+  export type Datasource = {
+    url?: string
+  }
+
+  /**
+   * Count Types
+   */
+
+
+  /**
+   * Count Type TimelineCountOutputType
+   */
+
+  export type TimelineCountOutputType = {
+    series: number
+  }
+
+  export type TimelineCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | TimelineCountOutputTypeCountSeriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TimelineCountOutputType without action
+   */
+  export type TimelineCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TimelineCountOutputType
+     */
+    select?: TimelineCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TimelineCountOutputType without action
+   */
+  export type TimelineCountOutputTypeCountSeriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SeriesWhereInput
+  }
+
+
+  /**
+   * Count Type SeriesCountOutputType
+   */
+
+  export type SeriesCountOutputType = {
+    mobileSuits: number
+    kits: number
+  }
+
+  export type SeriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mobileSuits?: boolean | SeriesCountOutputTypeCountMobileSuitsArgs
+    kits?: boolean | SeriesCountOutputTypeCountKitsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SeriesCountOutputType without action
+   */
+  export type SeriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SeriesCountOutputType
+     */
+    select?: SeriesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SeriesCountOutputType without action
+   */
+  export type SeriesCountOutputTypeCountMobileSuitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileSuitWhereInput
+  }
+
+  /**
+   * SeriesCountOutputType without action
+   */
+  export type SeriesCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+  }
+
+
+  /**
+   * Count Type MobileSuitCountOutputType
+   */
+
+  export type MobileSuitCountOutputType = {
+    kits: number
+    uploads: number
+  }
+
+  export type MobileSuitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kits?: boolean | MobileSuitCountOutputTypeCountKitsArgs
+    uploads?: boolean | MobileSuitCountOutputTypeCountUploadsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MobileSuitCountOutputType without action
+   */
+  export type MobileSuitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitCountOutputType
+     */
+    select?: MobileSuitCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MobileSuitCountOutputType without action
+   */
+  export type MobileSuitCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitMobileSuitWhereInput
+  }
+
+  /**
+   * MobileSuitCountOutputType without action
+   */
+  export type MobileSuitCountOutputTypeCountUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileSuitUploadWhereInput
+  }
+
+
+  /**
+   * Count Type GradeCountOutputType
+   */
+
+  export type GradeCountOutputType = {
+    productLines: number
+    kits: number
+  }
+
+  export type GradeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    productLines?: boolean | GradeCountOutputTypeCountProductLinesArgs
+    kits?: boolean | GradeCountOutputTypeCountKitsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GradeCountOutputType without action
+   */
+  export type GradeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GradeCountOutputType
+     */
+    select?: GradeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GradeCountOutputType without action
+   */
+  export type GradeCountOutputTypeCountProductLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductLineWhereInput
+  }
+
+  /**
+   * GradeCountOutputType without action
+   */
+  export type GradeCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+  }
+
+
+  /**
+   * Count Type ProductLineCountOutputType
+   */
+
+  export type ProductLineCountOutputType = {
+    kits: number
+  }
+
+  export type ProductLineCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kits?: boolean | ProductLineCountOutputTypeCountKitsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProductLineCountOutputType without action
+   */
+  export type ProductLineCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLineCountOutputType
+     */
+    select?: ProductLineCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProductLineCountOutputType without action
+   */
+  export type ProductLineCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+  }
+
+
+  /**
+   * Count Type ReleaseTypeCountOutputType
+   */
+
+  export type ReleaseTypeCountOutputType = {
+    kits: number
+  }
+
+  export type ReleaseTypeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kits?: boolean | ReleaseTypeCountOutputTypeCountKitsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ReleaseTypeCountOutputType without action
+   */
+  export type ReleaseTypeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseTypeCountOutputType
+     */
+    select?: ReleaseTypeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ReleaseTypeCountOutputType without action
+   */
+  export type ReleaseTypeCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+  }
+
+
+  /**
+   * Count Type KitCountOutputType
+   */
+
+  export type KitCountOutputType = {
+    variants: number
+    mobileSuits: number
+    uploads: number
+  }
+
+  export type KitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    variants?: boolean | KitCountOutputTypeCountVariantsArgs
+    mobileSuits?: boolean | KitCountOutputTypeCountMobileSuitsArgs
+    uploads?: boolean | KitCountOutputTypeCountUploadsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitCountOutputType
+     */
+    select?: KitCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountVariantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountMobileSuitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitMobileSuitWhereInput
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitUploadWhereInput
+  }
+
+
+  /**
+   * Count Type UploadCountOutputType
+   */
+
+  export type UploadCountOutputType = {
+    kitUploads: number
+    mobileSuitUploads: number
+    productLineLogos: number
+  }
+
+  export type UploadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kitUploads?: boolean | UploadCountOutputTypeCountKitUploadsArgs
+    mobileSuitUploads?: boolean | UploadCountOutputTypeCountMobileSuitUploadsArgs
+    productLineLogos?: boolean | UploadCountOutputTypeCountProductLineLogosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UploadCountOutputType
+     */
+    select?: UploadCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountKitUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitUploadWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountMobileSuitUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileSuitUploadWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountProductLineLogosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductLineWhereInput
+  }
+
+
+  /**
+   * Models
+   */
+
+  /**
+   * Model Timeline
+   */
+
+  export type AggregateTimeline = {
+    _count: TimelineCountAggregateOutputType | null
+    _min: TimelineMinAggregateOutputType | null
+    _max: TimelineMaxAggregateOutputType | null
+  }
+
+  export type TimelineMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TimelineMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TimelineCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TimelineMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TimelineMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TimelineCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TimelineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Timeline to aggregate.
+     */
+    where?: TimelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Timelines to fetch.
+     */
+    orderBy?: TimelineOrderByWithRelationInput | TimelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TimelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Timelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Timelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Timelines
+    **/
+    _count?: true | TimelineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TimelineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TimelineMaxAggregateInputType
+  }
+
+  export type GetTimelineAggregateType<T extends TimelineAggregateArgs> = {
+        [P in keyof T & keyof AggregateTimeline]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTimeline[P]>
+      : GetScalarType<T[P], AggregateTimeline[P]>
+  }
+
+
+
+
+  export type TimelineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TimelineWhereInput
+    orderBy?: TimelineOrderByWithAggregationInput | TimelineOrderByWithAggregationInput[]
+    by: TimelineScalarFieldEnum[] | TimelineScalarFieldEnum
+    having?: TimelineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TimelineCountAggregateInputType | true
+    _min?: TimelineMinAggregateInputType
+    _max?: TimelineMaxAggregateInputType
+  }
+
+  export type TimelineGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TimelineCountAggregateOutputType | null
+    _min: TimelineMinAggregateOutputType | null
+    _max: TimelineMaxAggregateOutputType | null
+  }
+
+  type GetTimelineGroupByPayload<T extends TimelineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TimelineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TimelineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TimelineGroupByOutputType[P]>
+            : GetScalarType<T[P], TimelineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TimelineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    series?: boolean | Timeline$seriesArgs<ExtArgs>
+    _count?: boolean | TimelineCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["timeline"]>
+
+  export type TimelineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["timeline"]>
+
+  export type TimelineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["timeline"]>
+
+  export type TimelineSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TimelineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["timeline"]>
+  export type TimelineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | Timeline$seriesArgs<ExtArgs>
+    _count?: boolean | TimelineCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TimelineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TimelineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TimelinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Timeline"
+    objects: {
+      series: Prisma.$SeriesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["timeline"]>
+    composites: {}
+  }
+
+  type TimelineGetPayload<S extends boolean | null | undefined | TimelineDefaultArgs> = $Result.GetResult<Prisma.$TimelinePayload, S>
+
+  type TimelineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TimelineFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TimelineCountAggregateInputType | true
+    }
+
+  export interface TimelineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Timeline'], meta: { name: 'Timeline' } }
+    /**
+     * Find zero or one Timeline that matches the filter.
+     * @param {TimelineFindUniqueArgs} args - Arguments to find a Timeline
+     * @example
+     * // Get one Timeline
+     * const timeline = await prisma.timeline.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TimelineFindUniqueArgs>(args: SelectSubset<T, TimelineFindUniqueArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Timeline that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TimelineFindUniqueOrThrowArgs} args - Arguments to find a Timeline
+     * @example
+     * // Get one Timeline
+     * const timeline = await prisma.timeline.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TimelineFindUniqueOrThrowArgs>(args: SelectSubset<T, TimelineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Timeline that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineFindFirstArgs} args - Arguments to find a Timeline
+     * @example
+     * // Get one Timeline
+     * const timeline = await prisma.timeline.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TimelineFindFirstArgs>(args?: SelectSubset<T, TimelineFindFirstArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Timeline that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineFindFirstOrThrowArgs} args - Arguments to find a Timeline
+     * @example
+     * // Get one Timeline
+     * const timeline = await prisma.timeline.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TimelineFindFirstOrThrowArgs>(args?: SelectSubset<T, TimelineFindFirstOrThrowArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Timelines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Timelines
+     * const timelines = await prisma.timeline.findMany()
+     * 
+     * // Get first 10 Timelines
+     * const timelines = await prisma.timeline.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const timelineWithIdOnly = await prisma.timeline.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TimelineFindManyArgs>(args?: SelectSubset<T, TimelineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Timeline.
+     * @param {TimelineCreateArgs} args - Arguments to create a Timeline.
+     * @example
+     * // Create one Timeline
+     * const Timeline = await prisma.timeline.create({
+     *   data: {
+     *     // ... data to create a Timeline
+     *   }
+     * })
+     * 
+     */
+    create<T extends TimelineCreateArgs>(args: SelectSubset<T, TimelineCreateArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Timelines.
+     * @param {TimelineCreateManyArgs} args - Arguments to create many Timelines.
+     * @example
+     * // Create many Timelines
+     * const timeline = await prisma.timeline.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TimelineCreateManyArgs>(args?: SelectSubset<T, TimelineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Timelines and returns the data saved in the database.
+     * @param {TimelineCreateManyAndReturnArgs} args - Arguments to create many Timelines.
+     * @example
+     * // Create many Timelines
+     * const timeline = await prisma.timeline.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Timelines and only return the `id`
+     * const timelineWithIdOnly = await prisma.timeline.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TimelineCreateManyAndReturnArgs>(args?: SelectSubset<T, TimelineCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Timeline.
+     * @param {TimelineDeleteArgs} args - Arguments to delete one Timeline.
+     * @example
+     * // Delete one Timeline
+     * const Timeline = await prisma.timeline.delete({
+     *   where: {
+     *     // ... filter to delete one Timeline
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TimelineDeleteArgs>(args: SelectSubset<T, TimelineDeleteArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Timeline.
+     * @param {TimelineUpdateArgs} args - Arguments to update one Timeline.
+     * @example
+     * // Update one Timeline
+     * const timeline = await prisma.timeline.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TimelineUpdateArgs>(args: SelectSubset<T, TimelineUpdateArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Timelines.
+     * @param {TimelineDeleteManyArgs} args - Arguments to filter Timelines to delete.
+     * @example
+     * // Delete a few Timelines
+     * const { count } = await prisma.timeline.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TimelineDeleteManyArgs>(args?: SelectSubset<T, TimelineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Timelines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Timelines
+     * const timeline = await prisma.timeline.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TimelineUpdateManyArgs>(args: SelectSubset<T, TimelineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Timelines and returns the data updated in the database.
+     * @param {TimelineUpdateManyAndReturnArgs} args - Arguments to update many Timelines.
+     * @example
+     * // Update many Timelines
+     * const timeline = await prisma.timeline.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Timelines and only return the `id`
+     * const timelineWithIdOnly = await prisma.timeline.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TimelineUpdateManyAndReturnArgs>(args: SelectSubset<T, TimelineUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Timeline.
+     * @param {TimelineUpsertArgs} args - Arguments to update or create a Timeline.
+     * @example
+     * // Update or create a Timeline
+     * const timeline = await prisma.timeline.upsert({
+     *   create: {
+     *     // ... data to create a Timeline
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Timeline we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TimelineUpsertArgs>(args: SelectSubset<T, TimelineUpsertArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Timelines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineCountArgs} args - Arguments to filter Timelines to count.
+     * @example
+     * // Count the number of Timelines
+     * const count = await prisma.timeline.count({
+     *   where: {
+     *     // ... the filter for the Timelines we want to count
+     *   }
+     * })
+    **/
+    count<T extends TimelineCountArgs>(
+      args?: Subset<T, TimelineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TimelineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Timeline.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TimelineAggregateArgs>(args: Subset<T, TimelineAggregateArgs>): Prisma.PrismaPromise<GetTimelineAggregateType<T>>
+
+    /**
+     * Group by Timeline.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TimelineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TimelineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TimelineGroupByArgs['orderBy'] }
+        : { orderBy?: TimelineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TimelineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTimelineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Timeline model
+   */
+  readonly fields: TimelineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Timeline.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TimelineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    series<T extends Timeline$seriesArgs<ExtArgs> = {}>(args?: Subset<T, Timeline$seriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Timeline model
+   */
+  interface TimelineFieldRefs {
+    readonly id: FieldRef<"Timeline", 'String'>
+    readonly name: FieldRef<"Timeline", 'String'>
+    readonly slug: FieldRef<"Timeline", 'String'>
+    readonly description: FieldRef<"Timeline", 'String'>
+    readonly createdAt: FieldRef<"Timeline", 'DateTime'>
+    readonly updatedAt: FieldRef<"Timeline", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Timeline findUnique
+   */
+  export type TimelineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter, which Timeline to fetch.
+     */
+    where: TimelineWhereUniqueInput
+  }
+
+  /**
+   * Timeline findUniqueOrThrow
+   */
+  export type TimelineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter, which Timeline to fetch.
+     */
+    where: TimelineWhereUniqueInput
+  }
+
+  /**
+   * Timeline findFirst
+   */
+  export type TimelineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter, which Timeline to fetch.
+     */
+    where?: TimelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Timelines to fetch.
+     */
+    orderBy?: TimelineOrderByWithRelationInput | TimelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Timelines.
+     */
+    cursor?: TimelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Timelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Timelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Timelines.
+     */
+    distinct?: TimelineScalarFieldEnum | TimelineScalarFieldEnum[]
+  }
+
+  /**
+   * Timeline findFirstOrThrow
+   */
+  export type TimelineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter, which Timeline to fetch.
+     */
+    where?: TimelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Timelines to fetch.
+     */
+    orderBy?: TimelineOrderByWithRelationInput | TimelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Timelines.
+     */
+    cursor?: TimelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Timelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Timelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Timelines.
+     */
+    distinct?: TimelineScalarFieldEnum | TimelineScalarFieldEnum[]
+  }
+
+  /**
+   * Timeline findMany
+   */
+  export type TimelineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter, which Timelines to fetch.
+     */
+    where?: TimelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Timelines to fetch.
+     */
+    orderBy?: TimelineOrderByWithRelationInput | TimelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Timelines.
+     */
+    cursor?: TimelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Timelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Timelines.
+     */
+    skip?: number
+    distinct?: TimelineScalarFieldEnum | TimelineScalarFieldEnum[]
+  }
+
+  /**
+   * Timeline create
+   */
+  export type TimelineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Timeline.
+     */
+    data: XOR<TimelineCreateInput, TimelineUncheckedCreateInput>
+  }
+
+  /**
+   * Timeline createMany
+   */
+  export type TimelineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Timelines.
+     */
+    data: TimelineCreateManyInput | TimelineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Timeline createManyAndReturn
+   */
+  export type TimelineCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * The data used to create many Timelines.
+     */
+    data: TimelineCreateManyInput | TimelineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Timeline update
+   */
+  export type TimelineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Timeline.
+     */
+    data: XOR<TimelineUpdateInput, TimelineUncheckedUpdateInput>
+    /**
+     * Choose, which Timeline to update.
+     */
+    where: TimelineWhereUniqueInput
+  }
+
+  /**
+   * Timeline updateMany
+   */
+  export type TimelineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Timelines.
+     */
+    data: XOR<TimelineUpdateManyMutationInput, TimelineUncheckedUpdateManyInput>
+    /**
+     * Filter which Timelines to update
+     */
+    where?: TimelineWhereInput
+    /**
+     * Limit how many Timelines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Timeline updateManyAndReturn
+   */
+  export type TimelineUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * The data used to update Timelines.
+     */
+    data: XOR<TimelineUpdateManyMutationInput, TimelineUncheckedUpdateManyInput>
+    /**
+     * Filter which Timelines to update
+     */
+    where?: TimelineWhereInput
+    /**
+     * Limit how many Timelines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Timeline upsert
+   */
+  export type TimelineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Timeline to update in case it exists.
+     */
+    where: TimelineWhereUniqueInput
+    /**
+     * In case the Timeline found by the `where` argument doesn't exist, create a new Timeline with this data.
+     */
+    create: XOR<TimelineCreateInput, TimelineUncheckedCreateInput>
+    /**
+     * In case the Timeline was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TimelineUpdateInput, TimelineUncheckedUpdateInput>
+  }
+
+  /**
+   * Timeline delete
+   */
+  export type TimelineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    /**
+     * Filter which Timeline to delete.
+     */
+    where: TimelineWhereUniqueInput
+  }
+
+  /**
+   * Timeline deleteMany
+   */
+  export type TimelineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Timelines to delete
+     */
+    where?: TimelineWhereInput
+    /**
+     * Limit how many Timelines to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Timeline.series
+   */
+  export type Timeline$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    where?: SeriesWhereInput
+    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    cursor?: SeriesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+  }
+
+  /**
+   * Timeline without action
+   */
+  export type TimelineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Series
+   */
+
+  export type AggregateSeries = {
+    _count: SeriesCountAggregateOutputType | null
+    _min: SeriesMinAggregateOutputType | null
+    _max: SeriesMaxAggregateOutputType | null
+  }
+
+  export type SeriesMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    timelineId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SeriesMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    timelineId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SeriesCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    timelineId: number
+    scrapedImages: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SeriesMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    timelineId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SeriesMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    timelineId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SeriesCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    timelineId?: true
+    scrapedImages?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SeriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Series to aggregate.
+     */
+    where?: SeriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Series to fetch.
+     */
+    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SeriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Series from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Series.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Series
+    **/
+    _count?: true | SeriesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SeriesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SeriesMaxAggregateInputType
+  }
+
+  export type GetSeriesAggregateType<T extends SeriesAggregateArgs> = {
+        [P in keyof T & keyof AggregateSeries]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSeries[P]>
+      : GetScalarType<T[P], AggregateSeries[P]>
+  }
+
+
+
+
+  export type SeriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SeriesWhereInput
+    orderBy?: SeriesOrderByWithAggregationInput | SeriesOrderByWithAggregationInput[]
+    by: SeriesScalarFieldEnum[] | SeriesScalarFieldEnum
+    having?: SeriesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SeriesCountAggregateInputType | true
+    _min?: SeriesMinAggregateInputType
+    _max?: SeriesMaxAggregateInputType
+  }
+
+  export type SeriesGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    timelineId: string | null
+    scrapedImages: string[]
+    createdAt: Date
+    updatedAt: Date
+    _count: SeriesCountAggregateOutputType | null
+    _min: SeriesMinAggregateOutputType | null
+    _max: SeriesMaxAggregateOutputType | null
+  }
+
+  type GetSeriesGroupByPayload<T extends SeriesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SeriesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SeriesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SeriesGroupByOutputType[P]>
+            : GetScalarType<T[P], SeriesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SeriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    timelineId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+    mobileSuits?: boolean | Series$mobileSuitsArgs<ExtArgs>
+    kits?: boolean | Series$kitsArgs<ExtArgs>
+    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["series"]>
+
+  export type SeriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    timelineId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+  }, ExtArgs["result"]["series"]>
+
+  export type SeriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    timelineId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+  }, ExtArgs["result"]["series"]>
+
+  export type SeriesSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    timelineId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "timelineId" | "scrapedImages" | "createdAt" | "updatedAt", ExtArgs["result"]["series"]>
+  export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+    mobileSuits?: boolean | Series$mobileSuitsArgs<ExtArgs>
+    kits?: boolean | Series$kitsArgs<ExtArgs>
+    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SeriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+  }
+  export type SeriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    timeline?: boolean | Series$timelineArgs<ExtArgs>
+  }
+
+  export type $SeriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Series"
+    objects: {
+      timeline: Prisma.$TimelinePayload<ExtArgs> | null
+      mobileSuits: Prisma.$MobileSuitPayload<ExtArgs>[]
+      kits: Prisma.$KitPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      timelineId: string | null
+      scrapedImages: string[]
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["series"]>
+    composites: {}
+  }
+
+  type SeriesGetPayload<S extends boolean | null | undefined | SeriesDefaultArgs> = $Result.GetResult<Prisma.$SeriesPayload, S>
+
+  type SeriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SeriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SeriesCountAggregateInputType | true
+    }
+
+  export interface SeriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Series'], meta: { name: 'Series' } }
+    /**
+     * Find zero or one Series that matches the filter.
+     * @param {SeriesFindUniqueArgs} args - Arguments to find a Series
+     * @example
+     * // Get one Series
+     * const series = await prisma.series.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SeriesFindUniqueArgs>(args: SelectSubset<T, SeriesFindUniqueArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Series that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SeriesFindUniqueOrThrowArgs} args - Arguments to find a Series
+     * @example
+     * // Get one Series
+     * const series = await prisma.series.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SeriesFindUniqueOrThrowArgs>(args: SelectSubset<T, SeriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Series that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesFindFirstArgs} args - Arguments to find a Series
+     * @example
+     * // Get one Series
+     * const series = await prisma.series.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SeriesFindFirstArgs>(args?: SelectSubset<T, SeriesFindFirstArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Series that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesFindFirstOrThrowArgs} args - Arguments to find a Series
+     * @example
+     * // Get one Series
+     * const series = await prisma.series.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SeriesFindFirstOrThrowArgs>(args?: SelectSubset<T, SeriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Series that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Series
+     * const series = await prisma.series.findMany()
+     * 
+     * // Get first 10 Series
+     * const series = await prisma.series.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const seriesWithIdOnly = await prisma.series.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SeriesFindManyArgs>(args?: SelectSubset<T, SeriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Series.
+     * @param {SeriesCreateArgs} args - Arguments to create a Series.
+     * @example
+     * // Create one Series
+     * const Series = await prisma.series.create({
+     *   data: {
+     *     // ... data to create a Series
+     *   }
+     * })
+     * 
+     */
+    create<T extends SeriesCreateArgs>(args: SelectSubset<T, SeriesCreateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Series.
+     * @param {SeriesCreateManyArgs} args - Arguments to create many Series.
+     * @example
+     * // Create many Series
+     * const series = await prisma.series.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SeriesCreateManyArgs>(args?: SelectSubset<T, SeriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Series and returns the data saved in the database.
+     * @param {SeriesCreateManyAndReturnArgs} args - Arguments to create many Series.
+     * @example
+     * // Create many Series
+     * const series = await prisma.series.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Series and only return the `id`
+     * const seriesWithIdOnly = await prisma.series.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SeriesCreateManyAndReturnArgs>(args?: SelectSubset<T, SeriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Series.
+     * @param {SeriesDeleteArgs} args - Arguments to delete one Series.
+     * @example
+     * // Delete one Series
+     * const Series = await prisma.series.delete({
+     *   where: {
+     *     // ... filter to delete one Series
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SeriesDeleteArgs>(args: SelectSubset<T, SeriesDeleteArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Series.
+     * @param {SeriesUpdateArgs} args - Arguments to update one Series.
+     * @example
+     * // Update one Series
+     * const series = await prisma.series.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SeriesUpdateArgs>(args: SelectSubset<T, SeriesUpdateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Series.
+     * @param {SeriesDeleteManyArgs} args - Arguments to filter Series to delete.
+     * @example
+     * // Delete a few Series
+     * const { count } = await prisma.series.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SeriesDeleteManyArgs>(args?: SelectSubset<T, SeriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Series.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Series
+     * const series = await prisma.series.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SeriesUpdateManyArgs>(args: SelectSubset<T, SeriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Series and returns the data updated in the database.
+     * @param {SeriesUpdateManyAndReturnArgs} args - Arguments to update many Series.
+     * @example
+     * // Update many Series
+     * const series = await prisma.series.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Series and only return the `id`
+     * const seriesWithIdOnly = await prisma.series.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SeriesUpdateManyAndReturnArgs>(args: SelectSubset<T, SeriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Series.
+     * @param {SeriesUpsertArgs} args - Arguments to update or create a Series.
+     * @example
+     * // Update or create a Series
+     * const series = await prisma.series.upsert({
+     *   create: {
+     *     // ... data to create a Series
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Series we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SeriesUpsertArgs>(args: SelectSubset<T, SeriesUpsertArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Series.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesCountArgs} args - Arguments to filter Series to count.
+     * @example
+     * // Count the number of Series
+     * const count = await prisma.series.count({
+     *   where: {
+     *     // ... the filter for the Series we want to count
+     *   }
+     * })
+    **/
+    count<T extends SeriesCountArgs>(
+      args?: Subset<T, SeriesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SeriesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Series.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SeriesAggregateArgs>(args: Subset<T, SeriesAggregateArgs>): Prisma.PrismaPromise<GetSeriesAggregateType<T>>
+
+    /**
+     * Group by Series.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeriesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SeriesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SeriesGroupByArgs['orderBy'] }
+        : { orderBy?: SeriesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SeriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSeriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Series model
+   */
+  readonly fields: SeriesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Series.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SeriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    timeline<T extends Series$timelineArgs<ExtArgs> = {}>(args?: Subset<T, Series$timelineArgs<ExtArgs>>): Prisma__TimelineClient<$Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    mobileSuits<T extends Series$mobileSuitsArgs<ExtArgs> = {}>(args?: Subset<T, Series$mobileSuitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kits<T extends Series$kitsArgs<ExtArgs> = {}>(args?: Subset<T, Series$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Series model
+   */
+  interface SeriesFieldRefs {
+    readonly id: FieldRef<"Series", 'String'>
+    readonly name: FieldRef<"Series", 'String'>
+    readonly slug: FieldRef<"Series", 'String'>
+    readonly description: FieldRef<"Series", 'String'>
+    readonly timelineId: FieldRef<"Series", 'String'>
+    readonly scrapedImages: FieldRef<"Series", 'String[]'>
+    readonly createdAt: FieldRef<"Series", 'DateTime'>
+    readonly updatedAt: FieldRef<"Series", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Series findUnique
+   */
+  export type SeriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Series to fetch.
+     */
+    where: SeriesWhereUniqueInput
+  }
+
+  /**
+   * Series findUniqueOrThrow
+   */
+  export type SeriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Series to fetch.
+     */
+    where: SeriesWhereUniqueInput
+  }
+
+  /**
+   * Series findFirst
+   */
+  export type SeriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Series to fetch.
+     */
+    where?: SeriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Series to fetch.
+     */
+    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Series.
+     */
+    cursor?: SeriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Series from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Series.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Series.
+     */
+    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+  }
+
+  /**
+   * Series findFirstOrThrow
+   */
+  export type SeriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Series to fetch.
+     */
+    where?: SeriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Series to fetch.
+     */
+    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Series.
+     */
+    cursor?: SeriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Series from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Series.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Series.
+     */
+    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+  }
+
+  /**
+   * Series findMany
+   */
+  export type SeriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Series to fetch.
+     */
+    where?: SeriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Series to fetch.
+     */
+    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Series.
+     */
+    cursor?: SeriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Series from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Series.
+     */
+    skip?: number
+    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+  }
+
+  /**
+   * Series create
+   */
+  export type SeriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Series.
+     */
+    data: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+  }
+
+  /**
+   * Series createMany
+   */
+  export type SeriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Series.
+     */
+    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Series createManyAndReturn
+   */
+  export type SeriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * The data used to create many Series.
+     */
+    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Series update
+   */
+  export type SeriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Series.
+     */
+    data: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+    /**
+     * Choose, which Series to update.
+     */
+    where: SeriesWhereUniqueInput
+  }
+
+  /**
+   * Series updateMany
+   */
+  export type SeriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Series.
+     */
+    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    /**
+     * Filter which Series to update
+     */
+    where?: SeriesWhereInput
+    /**
+     * Limit how many Series to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Series updateManyAndReturn
+   */
+  export type SeriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * The data used to update Series.
+     */
+    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    /**
+     * Filter which Series to update
+     */
+    where?: SeriesWhereInput
+    /**
+     * Limit how many Series to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Series upsert
+   */
+  export type SeriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Series to update in case it exists.
+     */
+    where: SeriesWhereUniqueInput
+    /**
+     * In case the Series found by the `where` argument doesn't exist, create a new Series with this data.
+     */
+    create: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+    /**
+     * In case the Series was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+  }
+
+  /**
+   * Series delete
+   */
+  export type SeriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    /**
+     * Filter which Series to delete.
+     */
+    where: SeriesWhereUniqueInput
+  }
+
+  /**
+   * Series deleteMany
+   */
+  export type SeriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Series to delete
+     */
+    where?: SeriesWhereInput
+    /**
+     * Limit how many Series to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Series.timeline
+   */
+  export type Series$timelineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Timeline
+     */
+    select?: TimelineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Timeline
+     */
+    omit?: TimelineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TimelineInclude<ExtArgs> | null
+    where?: TimelineWhereInput
+  }
+
+  /**
+   * Series.mobileSuits
+   */
+  export type Series$mobileSuitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    where?: MobileSuitWhereInput
+    orderBy?: MobileSuitOrderByWithRelationInput | MobileSuitOrderByWithRelationInput[]
+    cursor?: MobileSuitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MobileSuitScalarFieldEnum | MobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * Series.kits
+   */
+  export type Series$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    cursor?: KitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Series without action
+   */
+  export type SeriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MobileSuit
+   */
+
+  export type AggregateMobileSuit = {
+    _count: MobileSuitCountAggregateOutputType | null
+    _min: MobileSuitMinAggregateOutputType | null
+    _max: MobileSuitMaxAggregateOutputType | null
+  }
+
+  export type MobileSuitMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    seriesId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MobileSuitMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    seriesId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MobileSuitCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    seriesId: number
+    scrapedImages: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MobileSuitMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    seriesId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MobileSuitMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    seriesId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MobileSuitCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    seriesId?: true
+    scrapedImages?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MobileSuitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileSuit to aggregate.
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuits to fetch.
+     */
+    orderBy?: MobileSuitOrderByWithRelationInput | MobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MobileSuits
+    **/
+    _count?: true | MobileSuitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MobileSuitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MobileSuitMaxAggregateInputType
+  }
+
+  export type GetMobileSuitAggregateType<T extends MobileSuitAggregateArgs> = {
+        [P in keyof T & keyof AggregateMobileSuit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMobileSuit[P]>
+      : GetScalarType<T[P], AggregateMobileSuit[P]>
+  }
+
+
+
+
+  export type MobileSuitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileSuitWhereInput
+    orderBy?: MobileSuitOrderByWithAggregationInput | MobileSuitOrderByWithAggregationInput[]
+    by: MobileSuitScalarFieldEnum[] | MobileSuitScalarFieldEnum
+    having?: MobileSuitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MobileSuitCountAggregateInputType | true
+    _min?: MobileSuitMinAggregateInputType
+    _max?: MobileSuitMaxAggregateInputType
+  }
+
+  export type MobileSuitGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    seriesId: string | null
+    scrapedImages: string[]
+    createdAt: Date
+    updatedAt: Date
+    _count: MobileSuitCountAggregateOutputType | null
+    _min: MobileSuitMinAggregateOutputType | null
+    _max: MobileSuitMaxAggregateOutputType | null
+  }
+
+  type GetMobileSuitGroupByPayload<T extends MobileSuitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MobileSuitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MobileSuitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MobileSuitGroupByOutputType[P]>
+            : GetScalarType<T[P], MobileSuitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MobileSuitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    seriesId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+    kits?: boolean | MobileSuit$kitsArgs<ExtArgs>
+    uploads?: boolean | MobileSuit$uploadsArgs<ExtArgs>
+    _count?: boolean | MobileSuitCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuit"]>
+
+  export type MobileSuitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    seriesId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuit"]>
+
+  export type MobileSuitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    seriesId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuit"]>
+
+  export type MobileSuitSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    seriesId?: boolean
+    scrapedImages?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MobileSuitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "seriesId" | "scrapedImages" | "createdAt" | "updatedAt", ExtArgs["result"]["mobileSuit"]>
+  export type MobileSuitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+    kits?: boolean | MobileSuit$kitsArgs<ExtArgs>
+    uploads?: boolean | MobileSuit$uploadsArgs<ExtArgs>
+    _count?: boolean | MobileSuitCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MobileSuitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+  }
+  export type MobileSuitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | MobileSuit$seriesArgs<ExtArgs>
+  }
+
+  export type $MobileSuitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MobileSuit"
+    objects: {
+      series: Prisma.$SeriesPayload<ExtArgs> | null
+      kits: Prisma.$KitMobileSuitPayload<ExtArgs>[]
+      uploads: Prisma.$MobileSuitUploadPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      seriesId: string | null
+      scrapedImages: string[]
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["mobileSuit"]>
+    composites: {}
+  }
+
+  type MobileSuitGetPayload<S extends boolean | null | undefined | MobileSuitDefaultArgs> = $Result.GetResult<Prisma.$MobileSuitPayload, S>
+
+  type MobileSuitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MobileSuitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MobileSuitCountAggregateInputType | true
+    }
+
+  export interface MobileSuitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MobileSuit'], meta: { name: 'MobileSuit' } }
+    /**
+     * Find zero or one MobileSuit that matches the filter.
+     * @param {MobileSuitFindUniqueArgs} args - Arguments to find a MobileSuit
+     * @example
+     * // Get one MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MobileSuitFindUniqueArgs>(args: SelectSubset<T, MobileSuitFindUniqueArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MobileSuit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MobileSuitFindUniqueOrThrowArgs} args - Arguments to find a MobileSuit
+     * @example
+     * // Get one MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MobileSuitFindUniqueOrThrowArgs>(args: SelectSubset<T, MobileSuitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileSuit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitFindFirstArgs} args - Arguments to find a MobileSuit
+     * @example
+     * // Get one MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MobileSuitFindFirstArgs>(args?: SelectSubset<T, MobileSuitFindFirstArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileSuit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitFindFirstOrThrowArgs} args - Arguments to find a MobileSuit
+     * @example
+     * // Get one MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MobileSuitFindFirstOrThrowArgs>(args?: SelectSubset<T, MobileSuitFindFirstOrThrowArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MobileSuits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MobileSuits
+     * const mobileSuits = await prisma.mobileSuit.findMany()
+     * 
+     * // Get first 10 MobileSuits
+     * const mobileSuits = await prisma.mobileSuit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mobileSuitWithIdOnly = await prisma.mobileSuit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MobileSuitFindManyArgs>(args?: SelectSubset<T, MobileSuitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MobileSuit.
+     * @param {MobileSuitCreateArgs} args - Arguments to create a MobileSuit.
+     * @example
+     * // Create one MobileSuit
+     * const MobileSuit = await prisma.mobileSuit.create({
+     *   data: {
+     *     // ... data to create a MobileSuit
+     *   }
+     * })
+     * 
+     */
+    create<T extends MobileSuitCreateArgs>(args: SelectSubset<T, MobileSuitCreateArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MobileSuits.
+     * @param {MobileSuitCreateManyArgs} args - Arguments to create many MobileSuits.
+     * @example
+     * // Create many MobileSuits
+     * const mobileSuit = await prisma.mobileSuit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MobileSuitCreateManyArgs>(args?: SelectSubset<T, MobileSuitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MobileSuits and returns the data saved in the database.
+     * @param {MobileSuitCreateManyAndReturnArgs} args - Arguments to create many MobileSuits.
+     * @example
+     * // Create many MobileSuits
+     * const mobileSuit = await prisma.mobileSuit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MobileSuits and only return the `id`
+     * const mobileSuitWithIdOnly = await prisma.mobileSuit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MobileSuitCreateManyAndReturnArgs>(args?: SelectSubset<T, MobileSuitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MobileSuit.
+     * @param {MobileSuitDeleteArgs} args - Arguments to delete one MobileSuit.
+     * @example
+     * // Delete one MobileSuit
+     * const MobileSuit = await prisma.mobileSuit.delete({
+     *   where: {
+     *     // ... filter to delete one MobileSuit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MobileSuitDeleteArgs>(args: SelectSubset<T, MobileSuitDeleteArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MobileSuit.
+     * @param {MobileSuitUpdateArgs} args - Arguments to update one MobileSuit.
+     * @example
+     * // Update one MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MobileSuitUpdateArgs>(args: SelectSubset<T, MobileSuitUpdateArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MobileSuits.
+     * @param {MobileSuitDeleteManyArgs} args - Arguments to filter MobileSuits to delete.
+     * @example
+     * // Delete a few MobileSuits
+     * const { count } = await prisma.mobileSuit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MobileSuitDeleteManyArgs>(args?: SelectSubset<T, MobileSuitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileSuits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MobileSuits
+     * const mobileSuit = await prisma.mobileSuit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MobileSuitUpdateManyArgs>(args: SelectSubset<T, MobileSuitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileSuits and returns the data updated in the database.
+     * @param {MobileSuitUpdateManyAndReturnArgs} args - Arguments to update many MobileSuits.
+     * @example
+     * // Update many MobileSuits
+     * const mobileSuit = await prisma.mobileSuit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MobileSuits and only return the `id`
+     * const mobileSuitWithIdOnly = await prisma.mobileSuit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MobileSuitUpdateManyAndReturnArgs>(args: SelectSubset<T, MobileSuitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MobileSuit.
+     * @param {MobileSuitUpsertArgs} args - Arguments to update or create a MobileSuit.
+     * @example
+     * // Update or create a MobileSuit
+     * const mobileSuit = await prisma.mobileSuit.upsert({
+     *   create: {
+     *     // ... data to create a MobileSuit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MobileSuit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MobileSuitUpsertArgs>(args: SelectSubset<T, MobileSuitUpsertArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MobileSuits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitCountArgs} args - Arguments to filter MobileSuits to count.
+     * @example
+     * // Count the number of MobileSuits
+     * const count = await prisma.mobileSuit.count({
+     *   where: {
+     *     // ... the filter for the MobileSuits we want to count
+     *   }
+     * })
+    **/
+    count<T extends MobileSuitCountArgs>(
+      args?: Subset<T, MobileSuitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MobileSuitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MobileSuit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MobileSuitAggregateArgs>(args: Subset<T, MobileSuitAggregateArgs>): Prisma.PrismaPromise<GetMobileSuitAggregateType<T>>
+
+    /**
+     * Group by MobileSuit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MobileSuitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MobileSuitGroupByArgs['orderBy'] }
+        : { orderBy?: MobileSuitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MobileSuitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMobileSuitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MobileSuit model
+   */
+  readonly fields: MobileSuitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MobileSuit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MobileSuitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    series<T extends MobileSuit$seriesArgs<ExtArgs> = {}>(args?: Subset<T, MobileSuit$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kits<T extends MobileSuit$kitsArgs<ExtArgs> = {}>(args?: Subset<T, MobileSuit$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploads<T extends MobileSuit$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, MobileSuit$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MobileSuit model
+   */
+  interface MobileSuitFieldRefs {
+    readonly id: FieldRef<"MobileSuit", 'String'>
+    readonly name: FieldRef<"MobileSuit", 'String'>
+    readonly slug: FieldRef<"MobileSuit", 'String'>
+    readonly description: FieldRef<"MobileSuit", 'String'>
+    readonly seriesId: FieldRef<"MobileSuit", 'String'>
+    readonly scrapedImages: FieldRef<"MobileSuit", 'String[]'>
+    readonly createdAt: FieldRef<"MobileSuit", 'DateTime'>
+    readonly updatedAt: FieldRef<"MobileSuit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MobileSuit findUnique
+   */
+  export type MobileSuitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuit to fetch.
+     */
+    where: MobileSuitWhereUniqueInput
+  }
+
+  /**
+   * MobileSuit findUniqueOrThrow
+   */
+  export type MobileSuitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuit to fetch.
+     */
+    where: MobileSuitWhereUniqueInput
+  }
+
+  /**
+   * MobileSuit findFirst
+   */
+  export type MobileSuitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuit to fetch.
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuits to fetch.
+     */
+    orderBy?: MobileSuitOrderByWithRelationInput | MobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileSuits.
+     */
+    cursor?: MobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileSuits.
+     */
+    distinct?: MobileSuitScalarFieldEnum | MobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuit findFirstOrThrow
+   */
+  export type MobileSuitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuit to fetch.
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuits to fetch.
+     */
+    orderBy?: MobileSuitOrderByWithRelationInput | MobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileSuits.
+     */
+    cursor?: MobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileSuits.
+     */
+    distinct?: MobileSuitScalarFieldEnum | MobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuit findMany
+   */
+  export type MobileSuitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuits to fetch.
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuits to fetch.
+     */
+    orderBy?: MobileSuitOrderByWithRelationInput | MobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MobileSuits.
+     */
+    cursor?: MobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuits.
+     */
+    skip?: number
+    distinct?: MobileSuitScalarFieldEnum | MobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuit create
+   */
+  export type MobileSuitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MobileSuit.
+     */
+    data: XOR<MobileSuitCreateInput, MobileSuitUncheckedCreateInput>
+  }
+
+  /**
+   * MobileSuit createMany
+   */
+  export type MobileSuitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MobileSuits.
+     */
+    data: MobileSuitCreateManyInput | MobileSuitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MobileSuit createManyAndReturn
+   */
+  export type MobileSuitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * The data used to create many MobileSuits.
+     */
+    data: MobileSuitCreateManyInput | MobileSuitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileSuit update
+   */
+  export type MobileSuitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MobileSuit.
+     */
+    data: XOR<MobileSuitUpdateInput, MobileSuitUncheckedUpdateInput>
+    /**
+     * Choose, which MobileSuit to update.
+     */
+    where: MobileSuitWhereUniqueInput
+  }
+
+  /**
+   * MobileSuit updateMany
+   */
+  export type MobileSuitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MobileSuits.
+     */
+    data: XOR<MobileSuitUpdateManyMutationInput, MobileSuitUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileSuits to update
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * Limit how many MobileSuits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileSuit updateManyAndReturn
+   */
+  export type MobileSuitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * The data used to update MobileSuits.
+     */
+    data: XOR<MobileSuitUpdateManyMutationInput, MobileSuitUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileSuits to update
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * Limit how many MobileSuits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileSuit upsert
+   */
+  export type MobileSuitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MobileSuit to update in case it exists.
+     */
+    where: MobileSuitWhereUniqueInput
+    /**
+     * In case the MobileSuit found by the `where` argument doesn't exist, create a new MobileSuit with this data.
+     */
+    create: XOR<MobileSuitCreateInput, MobileSuitUncheckedCreateInput>
+    /**
+     * In case the MobileSuit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MobileSuitUpdateInput, MobileSuitUncheckedUpdateInput>
+  }
+
+  /**
+   * MobileSuit delete
+   */
+  export type MobileSuitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter which MobileSuit to delete.
+     */
+    where: MobileSuitWhereUniqueInput
+  }
+
+  /**
+   * MobileSuit deleteMany
+   */
+  export type MobileSuitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileSuits to delete
+     */
+    where?: MobileSuitWhereInput
+    /**
+     * Limit how many MobileSuits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileSuit.series
+   */
+  export type MobileSuit$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    where?: SeriesWhereInput
+  }
+
+  /**
+   * MobileSuit.kits
+   */
+  export type MobileSuit$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    where?: KitMobileSuitWhereInput
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    cursor?: KitMobileSuitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitMobileSuitScalarFieldEnum | KitMobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuit.uploads
+   */
+  export type MobileSuit$uploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    where?: MobileSuitUploadWhereInput
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    cursor?: MobileSuitUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MobileSuitUploadScalarFieldEnum | MobileSuitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuit without action
+   */
+  export type MobileSuitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuit
+     */
+    select?: MobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuit
+     */
+    omit?: MobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Grade
+   */
+
+  export type AggregateGrade = {
+    _count: GradeCountAggregateOutputType | null
+    _min: GradeMinAggregateOutputType | null
+    _max: GradeMaxAggregateOutputType | null
+  }
+
+  export type GradeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GradeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GradeCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GradeMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GradeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GradeCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GradeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Grade to aggregate.
+     */
+    where?: GradeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Grades to fetch.
+     */
+    orderBy?: GradeOrderByWithRelationInput | GradeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GradeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Grades
+    **/
+    _count?: true | GradeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GradeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GradeMaxAggregateInputType
+  }
+
+  export type GetGradeAggregateType<T extends GradeAggregateArgs> = {
+        [P in keyof T & keyof AggregateGrade]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGrade[P]>
+      : GetScalarType<T[P], AggregateGrade[P]>
+  }
+
+
+
+
+  export type GradeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GradeWhereInput
+    orderBy?: GradeOrderByWithAggregationInput | GradeOrderByWithAggregationInput[]
+    by: GradeScalarFieldEnum[] | GradeScalarFieldEnum
+    having?: GradeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GradeCountAggregateInputType | true
+    _min?: GradeMinAggregateInputType
+    _max?: GradeMaxAggregateInputType
+  }
+
+  export type GradeGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: GradeCountAggregateOutputType | null
+    _min: GradeMinAggregateOutputType | null
+    _max: GradeMaxAggregateOutputType | null
+  }
+
+  type GetGradeGroupByPayload<T extends GradeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GradeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GradeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GradeGroupByOutputType[P]>
+            : GetScalarType<T[P], GradeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GradeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    productLines?: boolean | Grade$productLinesArgs<ExtArgs>
+    kits?: boolean | Grade$kitsArgs<ExtArgs>
+    _count?: boolean | GradeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["grade"]>
+
+  export type GradeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["grade"]>
+
+  export type GradeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["grade"]>
+
+  export type GradeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GradeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["grade"]>
+  export type GradeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    productLines?: boolean | Grade$productLinesArgs<ExtArgs>
+    kits?: boolean | Grade$kitsArgs<ExtArgs>
+    _count?: boolean | GradeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type GradeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type GradeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $GradePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Grade"
+    objects: {
+      productLines: Prisma.$ProductLinePayload<ExtArgs>[]
+      kits: Prisma.$KitPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["grade"]>
+    composites: {}
+  }
+
+  type GradeGetPayload<S extends boolean | null | undefined | GradeDefaultArgs> = $Result.GetResult<Prisma.$GradePayload, S>
+
+  type GradeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GradeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GradeCountAggregateInputType | true
+    }
+
+  export interface GradeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Grade'], meta: { name: 'Grade' } }
+    /**
+     * Find zero or one Grade that matches the filter.
+     * @param {GradeFindUniqueArgs} args - Arguments to find a Grade
+     * @example
+     * // Get one Grade
+     * const grade = await prisma.grade.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GradeFindUniqueArgs>(args: SelectSubset<T, GradeFindUniqueArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Grade that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GradeFindUniqueOrThrowArgs} args - Arguments to find a Grade
+     * @example
+     * // Get one Grade
+     * const grade = await prisma.grade.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GradeFindUniqueOrThrowArgs>(args: SelectSubset<T, GradeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Grade that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeFindFirstArgs} args - Arguments to find a Grade
+     * @example
+     * // Get one Grade
+     * const grade = await prisma.grade.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GradeFindFirstArgs>(args?: SelectSubset<T, GradeFindFirstArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Grade that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeFindFirstOrThrowArgs} args - Arguments to find a Grade
+     * @example
+     * // Get one Grade
+     * const grade = await prisma.grade.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GradeFindFirstOrThrowArgs>(args?: SelectSubset<T, GradeFindFirstOrThrowArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Grades that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Grades
+     * const grades = await prisma.grade.findMany()
+     * 
+     * // Get first 10 Grades
+     * const grades = await prisma.grade.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gradeWithIdOnly = await prisma.grade.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GradeFindManyArgs>(args?: SelectSubset<T, GradeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Grade.
+     * @param {GradeCreateArgs} args - Arguments to create a Grade.
+     * @example
+     * // Create one Grade
+     * const Grade = await prisma.grade.create({
+     *   data: {
+     *     // ... data to create a Grade
+     *   }
+     * })
+     * 
+     */
+    create<T extends GradeCreateArgs>(args: SelectSubset<T, GradeCreateArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Grades.
+     * @param {GradeCreateManyArgs} args - Arguments to create many Grades.
+     * @example
+     * // Create many Grades
+     * const grade = await prisma.grade.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GradeCreateManyArgs>(args?: SelectSubset<T, GradeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Grades and returns the data saved in the database.
+     * @param {GradeCreateManyAndReturnArgs} args - Arguments to create many Grades.
+     * @example
+     * // Create many Grades
+     * const grade = await prisma.grade.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Grades and only return the `id`
+     * const gradeWithIdOnly = await prisma.grade.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GradeCreateManyAndReturnArgs>(args?: SelectSubset<T, GradeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Grade.
+     * @param {GradeDeleteArgs} args - Arguments to delete one Grade.
+     * @example
+     * // Delete one Grade
+     * const Grade = await prisma.grade.delete({
+     *   where: {
+     *     // ... filter to delete one Grade
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GradeDeleteArgs>(args: SelectSubset<T, GradeDeleteArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Grade.
+     * @param {GradeUpdateArgs} args - Arguments to update one Grade.
+     * @example
+     * // Update one Grade
+     * const grade = await prisma.grade.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GradeUpdateArgs>(args: SelectSubset<T, GradeUpdateArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Grades.
+     * @param {GradeDeleteManyArgs} args - Arguments to filter Grades to delete.
+     * @example
+     * // Delete a few Grades
+     * const { count } = await prisma.grade.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GradeDeleteManyArgs>(args?: SelectSubset<T, GradeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Grades
+     * const grade = await prisma.grade.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GradeUpdateManyArgs>(args: SelectSubset<T, GradeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Grades and returns the data updated in the database.
+     * @param {GradeUpdateManyAndReturnArgs} args - Arguments to update many Grades.
+     * @example
+     * // Update many Grades
+     * const grade = await prisma.grade.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Grades and only return the `id`
+     * const gradeWithIdOnly = await prisma.grade.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GradeUpdateManyAndReturnArgs>(args: SelectSubset<T, GradeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Grade.
+     * @param {GradeUpsertArgs} args - Arguments to update or create a Grade.
+     * @example
+     * // Update or create a Grade
+     * const grade = await prisma.grade.upsert({
+     *   create: {
+     *     // ... data to create a Grade
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Grade we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GradeUpsertArgs>(args: SelectSubset<T, GradeUpsertArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeCountArgs} args - Arguments to filter Grades to count.
+     * @example
+     * // Count the number of Grades
+     * const count = await prisma.grade.count({
+     *   where: {
+     *     // ... the filter for the Grades we want to count
+     *   }
+     * })
+    **/
+    count<T extends GradeCountArgs>(
+      args?: Subset<T, GradeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GradeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Grade.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GradeAggregateArgs>(args: Subset<T, GradeAggregateArgs>): Prisma.PrismaPromise<GetGradeAggregateType<T>>
+
+    /**
+     * Group by Grade.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GradeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GradeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GradeGroupByArgs['orderBy'] }
+        : { orderBy?: GradeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GradeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGradeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Grade model
+   */
+  readonly fields: GradeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Grade.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GradeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    productLines<T extends Grade$productLinesArgs<ExtArgs> = {}>(args?: Subset<T, Grade$productLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kits<T extends Grade$kitsArgs<ExtArgs> = {}>(args?: Subset<T, Grade$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Grade model
+   */
+  interface GradeFieldRefs {
+    readonly id: FieldRef<"Grade", 'String'>
+    readonly name: FieldRef<"Grade", 'String'>
+    readonly slug: FieldRef<"Grade", 'String'>
+    readonly description: FieldRef<"Grade", 'String'>
+    readonly createdAt: FieldRef<"Grade", 'DateTime'>
+    readonly updatedAt: FieldRef<"Grade", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Grade findUnique
+   */
+  export type GradeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter, which Grade to fetch.
+     */
+    where: GradeWhereUniqueInput
+  }
+
+  /**
+   * Grade findUniqueOrThrow
+   */
+  export type GradeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter, which Grade to fetch.
+     */
+    where: GradeWhereUniqueInput
+  }
+
+  /**
+   * Grade findFirst
+   */
+  export type GradeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter, which Grade to fetch.
+     */
+    where?: GradeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Grades to fetch.
+     */
+    orderBy?: GradeOrderByWithRelationInput | GradeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Grades.
+     */
+    cursor?: GradeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Grades.
+     */
+    distinct?: GradeScalarFieldEnum | GradeScalarFieldEnum[]
+  }
+
+  /**
+   * Grade findFirstOrThrow
+   */
+  export type GradeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter, which Grade to fetch.
+     */
+    where?: GradeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Grades to fetch.
+     */
+    orderBy?: GradeOrderByWithRelationInput | GradeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Grades.
+     */
+    cursor?: GradeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Grades.
+     */
+    distinct?: GradeScalarFieldEnum | GradeScalarFieldEnum[]
+  }
+
+  /**
+   * Grade findMany
+   */
+  export type GradeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter, which Grades to fetch.
+     */
+    where?: GradeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Grades to fetch.
+     */
+    orderBy?: GradeOrderByWithRelationInput | GradeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Grades.
+     */
+    cursor?: GradeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Grades.
+     */
+    skip?: number
+    distinct?: GradeScalarFieldEnum | GradeScalarFieldEnum[]
+  }
+
+  /**
+   * Grade create
+   */
+  export type GradeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Grade.
+     */
+    data: XOR<GradeCreateInput, GradeUncheckedCreateInput>
+  }
+
+  /**
+   * Grade createMany
+   */
+  export type GradeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Grades.
+     */
+    data: GradeCreateManyInput | GradeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Grade createManyAndReturn
+   */
+  export type GradeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Grades.
+     */
+    data: GradeCreateManyInput | GradeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Grade update
+   */
+  export type GradeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Grade.
+     */
+    data: XOR<GradeUpdateInput, GradeUncheckedUpdateInput>
+    /**
+     * Choose, which Grade to update.
+     */
+    where: GradeWhereUniqueInput
+  }
+
+  /**
+   * Grade updateMany
+   */
+  export type GradeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Grades.
+     */
+    data: XOR<GradeUpdateManyMutationInput, GradeUncheckedUpdateManyInput>
+    /**
+     * Filter which Grades to update
+     */
+    where?: GradeWhereInput
+    /**
+     * Limit how many Grades to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Grade updateManyAndReturn
+   */
+  export type GradeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * The data used to update Grades.
+     */
+    data: XOR<GradeUpdateManyMutationInput, GradeUncheckedUpdateManyInput>
+    /**
+     * Filter which Grades to update
+     */
+    where?: GradeWhereInput
+    /**
+     * Limit how many Grades to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Grade upsert
+   */
+  export type GradeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Grade to update in case it exists.
+     */
+    where: GradeWhereUniqueInput
+    /**
+     * In case the Grade found by the `where` argument doesn't exist, create a new Grade with this data.
+     */
+    create: XOR<GradeCreateInput, GradeUncheckedCreateInput>
+    /**
+     * In case the Grade was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GradeUpdateInput, GradeUncheckedUpdateInput>
+  }
+
+  /**
+   * Grade delete
+   */
+  export type GradeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    /**
+     * Filter which Grade to delete.
+     */
+    where: GradeWhereUniqueInput
+  }
+
+  /**
+   * Grade deleteMany
+   */
+  export type GradeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Grades to delete
+     */
+    where?: GradeWhereInput
+    /**
+     * Limit how many Grades to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Grade.productLines
+   */
+  export type Grade$productLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    where?: ProductLineWhereInput
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    cursor?: ProductLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * Grade.kits
+   */
+  export type Grade$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    cursor?: KitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Grade without action
+   */
+  export type GradeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProductLine
+   */
+
+  export type AggregateProductLine = {
+    _count: ProductLineCountAggregateOutputType | null
+    _min: ProductLineMinAggregateOutputType | null
+    _max: ProductLineMaxAggregateOutputType | null
+  }
+
+  export type ProductLineMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    gradeId: string | null
+    logoId: string | null
+    scrapedImage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProductLineMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    gradeId: string | null
+    logoId: string | null
+    scrapedImage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProductLineCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    gradeId: number
+    logoId: number
+    scrapedImage: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProductLineMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    gradeId?: true
+    logoId?: true
+    scrapedImage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProductLineMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    gradeId?: true
+    logoId?: true
+    scrapedImage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProductLineCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    gradeId?: true
+    logoId?: true
+    scrapedImage?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProductLineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductLine to aggregate.
+     */
+    where?: ProductLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductLines to fetch.
+     */
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProductLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProductLines
+    **/
+    _count?: true | ProductLineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProductLineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProductLineMaxAggregateInputType
+  }
+
+  export type GetProductLineAggregateType<T extends ProductLineAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductLine]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProductLine[P]>
+      : GetScalarType<T[P], AggregateProductLine[P]>
+  }
+
+
+
+
+  export type ProductLineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductLineWhereInput
+    orderBy?: ProductLineOrderByWithAggregationInput | ProductLineOrderByWithAggregationInput[]
+    by: ProductLineScalarFieldEnum[] | ProductLineScalarFieldEnum
+    having?: ProductLineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProductLineCountAggregateInputType | true
+    _min?: ProductLineMinAggregateInputType
+    _max?: ProductLineMaxAggregateInputType
+  }
+
+  export type ProductLineGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    gradeId: string
+    logoId: string | null
+    scrapedImage: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ProductLineCountAggregateOutputType | null
+    _min: ProductLineMinAggregateOutputType | null
+    _max: ProductLineMaxAggregateOutputType | null
+  }
+
+  type GetProductLineGroupByPayload<T extends ProductLineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProductLineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProductLineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProductLineGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductLineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProductLineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    gradeId?: boolean
+    logoId?: boolean
+    scrapedImage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+    kits?: boolean | ProductLine$kitsArgs<ExtArgs>
+    _count?: boolean | ProductLineCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productLine"]>
+
+  export type ProductLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    gradeId?: boolean
+    logoId?: boolean
+    scrapedImage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+  }, ExtArgs["result"]["productLine"]>
+
+  export type ProductLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    gradeId?: boolean
+    logoId?: boolean
+    scrapedImage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+  }, ExtArgs["result"]["productLine"]>
+
+  export type ProductLineSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    gradeId?: boolean
+    logoId?: boolean
+    scrapedImage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProductLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "gradeId" | "logoId" | "scrapedImage" | "createdAt" | "updatedAt", ExtArgs["result"]["productLine"]>
+  export type ProductLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+    kits?: boolean | ProductLine$kitsArgs<ExtArgs>
+    _count?: boolean | ProductLineCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProductLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+  }
+  export type ProductLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    logo?: boolean | ProductLine$logoArgs<ExtArgs>
+  }
+
+  export type $ProductLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductLine"
+    objects: {
+      grade: Prisma.$GradePayload<ExtArgs>
+      logo: Prisma.$UploadPayload<ExtArgs> | null
+      kits: Prisma.$KitPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      gradeId: string
+      logoId: string | null
+      scrapedImage: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["productLine"]>
+    composites: {}
+  }
+
+  type ProductLineGetPayload<S extends boolean | null | undefined | ProductLineDefaultArgs> = $Result.GetResult<Prisma.$ProductLinePayload, S>
+
+  type ProductLineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductLineFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductLineCountAggregateInputType | true
+    }
+
+  export interface ProductLineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductLine'], meta: { name: 'ProductLine' } }
+    /**
+     * Find zero or one ProductLine that matches the filter.
+     * @param {ProductLineFindUniqueArgs} args - Arguments to find a ProductLine
+     * @example
+     * // Get one ProductLine
+     * const productLine = await prisma.productLine.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductLineFindUniqueArgs>(args: SelectSubset<T, ProductLineFindUniqueArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProductLine that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductLineFindUniqueOrThrowArgs} args - Arguments to find a ProductLine
+     * @example
+     * // Get one ProductLine
+     * const productLine = await prisma.productLine.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProductLineFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductLineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductLine that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineFindFirstArgs} args - Arguments to find a ProductLine
+     * @example
+     * // Get one ProductLine
+     * const productLine = await prisma.productLine.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductLineFindFirstArgs>(args?: SelectSubset<T, ProductLineFindFirstArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductLine that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineFindFirstOrThrowArgs} args - Arguments to find a ProductLine
+     * @example
+     * // Get one ProductLine
+     * const productLine = await prisma.productLine.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProductLineFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductLineFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProductLines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProductLines
+     * const productLines = await prisma.productLine.findMany()
+     * 
+     * // Get first 10 ProductLines
+     * const productLines = await prisma.productLine.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const productLineWithIdOnly = await prisma.productLine.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProductLineFindManyArgs>(args?: SelectSubset<T, ProductLineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProductLine.
+     * @param {ProductLineCreateArgs} args - Arguments to create a ProductLine.
+     * @example
+     * // Create one ProductLine
+     * const ProductLine = await prisma.productLine.create({
+     *   data: {
+     *     // ... data to create a ProductLine
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProductLineCreateArgs>(args: SelectSubset<T, ProductLineCreateArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProductLines.
+     * @param {ProductLineCreateManyArgs} args - Arguments to create many ProductLines.
+     * @example
+     * // Create many ProductLines
+     * const productLine = await prisma.productLine.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProductLineCreateManyArgs>(args?: SelectSubset<T, ProductLineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProductLines and returns the data saved in the database.
+     * @param {ProductLineCreateManyAndReturnArgs} args - Arguments to create many ProductLines.
+     * @example
+     * // Create many ProductLines
+     * const productLine = await prisma.productLine.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProductLines and only return the `id`
+     * const productLineWithIdOnly = await prisma.productLine.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProductLineCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductLineCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProductLine.
+     * @param {ProductLineDeleteArgs} args - Arguments to delete one ProductLine.
+     * @example
+     * // Delete one ProductLine
+     * const ProductLine = await prisma.productLine.delete({
+     *   where: {
+     *     // ... filter to delete one ProductLine
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProductLineDeleteArgs>(args: SelectSubset<T, ProductLineDeleteArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProductLine.
+     * @param {ProductLineUpdateArgs} args - Arguments to update one ProductLine.
+     * @example
+     * // Update one ProductLine
+     * const productLine = await prisma.productLine.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProductLineUpdateArgs>(args: SelectSubset<T, ProductLineUpdateArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProductLines.
+     * @param {ProductLineDeleteManyArgs} args - Arguments to filter ProductLines to delete.
+     * @example
+     * // Delete a few ProductLines
+     * const { count } = await prisma.productLine.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProductLineDeleteManyArgs>(args?: SelectSubset<T, ProductLineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductLines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProductLines
+     * const productLine = await prisma.productLine.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProductLineUpdateManyArgs>(args: SelectSubset<T, ProductLineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductLines and returns the data updated in the database.
+     * @param {ProductLineUpdateManyAndReturnArgs} args - Arguments to update many ProductLines.
+     * @example
+     * // Update many ProductLines
+     * const productLine = await prisma.productLine.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProductLines and only return the `id`
+     * const productLineWithIdOnly = await prisma.productLine.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProductLineUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductLineUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProductLine.
+     * @param {ProductLineUpsertArgs} args - Arguments to update or create a ProductLine.
+     * @example
+     * // Update or create a ProductLine
+     * const productLine = await prisma.productLine.upsert({
+     *   create: {
+     *     // ... data to create a ProductLine
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProductLine we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductLineUpsertArgs>(args: SelectSubset<T, ProductLineUpsertArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProductLines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineCountArgs} args - Arguments to filter ProductLines to count.
+     * @example
+     * // Count the number of ProductLines
+     * const count = await prisma.productLine.count({
+     *   where: {
+     *     // ... the filter for the ProductLines we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProductLineCountArgs>(
+      args?: Subset<T, ProductLineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProductLineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProductLine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProductLineAggregateArgs>(args: Subset<T, ProductLineAggregateArgs>): Prisma.PrismaPromise<GetProductLineAggregateType<T>>
+
+    /**
+     * Group by ProductLine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductLineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProductLineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductLineGroupByArgs['orderBy'] }
+        : { orderBy?: ProductLineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProductLineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductLineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProductLine model
+   */
+  readonly fields: ProductLineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProductLine.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductLineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    grade<T extends GradeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GradeDefaultArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    logo<T extends ProductLine$logoArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$logoArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    kits<T extends ProductLine$kitsArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProductLine model
+   */
+  interface ProductLineFieldRefs {
+    readonly id: FieldRef<"ProductLine", 'String'>
+    readonly name: FieldRef<"ProductLine", 'String'>
+    readonly slug: FieldRef<"ProductLine", 'String'>
+    readonly description: FieldRef<"ProductLine", 'String'>
+    readonly gradeId: FieldRef<"ProductLine", 'String'>
+    readonly logoId: FieldRef<"ProductLine", 'String'>
+    readonly scrapedImage: FieldRef<"ProductLine", 'String'>
+    readonly createdAt: FieldRef<"ProductLine", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProductLine", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProductLine findUnique
+   */
+  export type ProductLineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductLine to fetch.
+     */
+    where: ProductLineWhereUniqueInput
+  }
+
+  /**
+   * ProductLine findUniqueOrThrow
+   */
+  export type ProductLineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductLine to fetch.
+     */
+    where: ProductLineWhereUniqueInput
+  }
+
+  /**
+   * ProductLine findFirst
+   */
+  export type ProductLineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductLine to fetch.
+     */
+    where?: ProductLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductLines to fetch.
+     */
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductLines.
+     */
+    cursor?: ProductLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductLines.
+     */
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProductLine findFirstOrThrow
+   */
+  export type ProductLineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductLine to fetch.
+     */
+    where?: ProductLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductLines to fetch.
+     */
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductLines.
+     */
+    cursor?: ProductLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductLines.
+     */
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProductLine findMany
+   */
+  export type ProductLineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductLines to fetch.
+     */
+    where?: ProductLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductLines to fetch.
+     */
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProductLines.
+     */
+    cursor?: ProductLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductLines.
+     */
+    skip?: number
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProductLine create
+   */
+  export type ProductLineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProductLine.
+     */
+    data: XOR<ProductLineCreateInput, ProductLineUncheckedCreateInput>
+  }
+
+  /**
+   * ProductLine createMany
+   */
+  export type ProductLineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProductLines.
+     */
+    data: ProductLineCreateManyInput | ProductLineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductLine createManyAndReturn
+   */
+  export type ProductLineCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProductLines.
+     */
+    data: ProductLineCreateManyInput | ProductLineCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProductLine update
+   */
+  export type ProductLineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProductLine.
+     */
+    data: XOR<ProductLineUpdateInput, ProductLineUncheckedUpdateInput>
+    /**
+     * Choose, which ProductLine to update.
+     */
+    where: ProductLineWhereUniqueInput
+  }
+
+  /**
+   * ProductLine updateMany
+   */
+  export type ProductLineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProductLines.
+     */
+    data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductLines to update
+     */
+    where?: ProductLineWhereInput
+    /**
+     * Limit how many ProductLines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductLine updateManyAndReturn
+   */
+  export type ProductLineUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * The data used to update ProductLines.
+     */
+    data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductLines to update
+     */
+    where?: ProductLineWhereInput
+    /**
+     * Limit how many ProductLines to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProductLine upsert
+   */
+  export type ProductLineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProductLine to update in case it exists.
+     */
+    where: ProductLineWhereUniqueInput
+    /**
+     * In case the ProductLine found by the `where` argument doesn't exist, create a new ProductLine with this data.
+     */
+    create: XOR<ProductLineCreateInput, ProductLineUncheckedCreateInput>
+    /**
+     * In case the ProductLine was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProductLineUpdateInput, ProductLineUncheckedUpdateInput>
+  }
+
+  /**
+   * ProductLine delete
+   */
+  export type ProductLineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    /**
+     * Filter which ProductLine to delete.
+     */
+    where: ProductLineWhereUniqueInput
+  }
+
+  /**
+   * ProductLine deleteMany
+   */
+  export type ProductLineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductLines to delete
+     */
+    where?: ProductLineWhereInput
+    /**
+     * Limit how many ProductLines to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductLine.logo
+   */
+  export type ProductLine$logoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
+  }
+
+  /**
+   * ProductLine.kits
+   */
+  export type ProductLine$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    cursor?: KitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * ProductLine without action
+   */
+  export type ProductLineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ReleaseType
+   */
+
+  export type AggregateReleaseType = {
+    _count: ReleaseTypeCountAggregateOutputType | null
+    _min: ReleaseTypeMinAggregateOutputType | null
+    _max: ReleaseTypeMaxAggregateOutputType | null
+  }
+
+  export type ReleaseTypeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReleaseTypeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReleaseTypeCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ReleaseTypeMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReleaseTypeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReleaseTypeCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ReleaseTypeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReleaseType to aggregate.
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReleaseTypes to fetch.
+     */
+    orderBy?: ReleaseTypeOrderByWithRelationInput | ReleaseTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReleaseTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReleaseTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReleaseTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReleaseTypes
+    **/
+    _count?: true | ReleaseTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReleaseTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReleaseTypeMaxAggregateInputType
+  }
+
+  export type GetReleaseTypeAggregateType<T extends ReleaseTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateReleaseType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReleaseType[P]>
+      : GetScalarType<T[P], AggregateReleaseType[P]>
+  }
+
+
+
+
+  export type ReleaseTypeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReleaseTypeWhereInput
+    orderBy?: ReleaseTypeOrderByWithAggregationInput | ReleaseTypeOrderByWithAggregationInput[]
+    by: ReleaseTypeScalarFieldEnum[] | ReleaseTypeScalarFieldEnum
+    having?: ReleaseTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReleaseTypeCountAggregateInputType | true
+    _min?: ReleaseTypeMinAggregateInputType
+    _max?: ReleaseTypeMaxAggregateInputType
+  }
+
+  export type ReleaseTypeGroupByOutputType = {
+    id: string
+    name: string
+    slug: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ReleaseTypeCountAggregateOutputType | null
+    _min: ReleaseTypeMinAggregateOutputType | null
+    _max: ReleaseTypeMaxAggregateOutputType | null
+  }
+
+  type GetReleaseTypeGroupByPayload<T extends ReleaseTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReleaseTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReleaseTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReleaseTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], ReleaseTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReleaseTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kits?: boolean | ReleaseType$kitsArgs<ExtArgs>
+    _count?: boolean | ReleaseTypeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["releaseType"]>
+
+  export type ReleaseTypeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["releaseType"]>
+
+  export type ReleaseTypeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["releaseType"]>
+
+  export type ReleaseTypeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ReleaseTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["releaseType"]>
+  export type ReleaseTypeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kits?: boolean | ReleaseType$kitsArgs<ExtArgs>
+    _count?: boolean | ReleaseTypeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ReleaseTypeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ReleaseTypeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ReleaseTypePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReleaseType"
+    objects: {
+      kits: Prisma.$KitPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["releaseType"]>
+    composites: {}
+  }
+
+  type ReleaseTypeGetPayload<S extends boolean | null | undefined | ReleaseTypeDefaultArgs> = $Result.GetResult<Prisma.$ReleaseTypePayload, S>
+
+  type ReleaseTypeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReleaseTypeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReleaseTypeCountAggregateInputType | true
+    }
+
+  export interface ReleaseTypeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReleaseType'], meta: { name: 'ReleaseType' } }
+    /**
+     * Find zero or one ReleaseType that matches the filter.
+     * @param {ReleaseTypeFindUniqueArgs} args - Arguments to find a ReleaseType
+     * @example
+     * // Get one ReleaseType
+     * const releaseType = await prisma.releaseType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReleaseTypeFindUniqueArgs>(args: SelectSubset<T, ReleaseTypeFindUniqueArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ReleaseType that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReleaseTypeFindUniqueOrThrowArgs} args - Arguments to find a ReleaseType
+     * @example
+     * // Get one ReleaseType
+     * const releaseType = await prisma.releaseType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReleaseTypeFindUniqueOrThrowArgs>(args: SelectSubset<T, ReleaseTypeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReleaseType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeFindFirstArgs} args - Arguments to find a ReleaseType
+     * @example
+     * // Get one ReleaseType
+     * const releaseType = await prisma.releaseType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReleaseTypeFindFirstArgs>(args?: SelectSubset<T, ReleaseTypeFindFirstArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReleaseType that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeFindFirstOrThrowArgs} args - Arguments to find a ReleaseType
+     * @example
+     * // Get one ReleaseType
+     * const releaseType = await prisma.releaseType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReleaseTypeFindFirstOrThrowArgs>(args?: SelectSubset<T, ReleaseTypeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ReleaseTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReleaseTypes
+     * const releaseTypes = await prisma.releaseType.findMany()
+     * 
+     * // Get first 10 ReleaseTypes
+     * const releaseTypes = await prisma.releaseType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const releaseTypeWithIdOnly = await prisma.releaseType.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReleaseTypeFindManyArgs>(args?: SelectSubset<T, ReleaseTypeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ReleaseType.
+     * @param {ReleaseTypeCreateArgs} args - Arguments to create a ReleaseType.
+     * @example
+     * // Create one ReleaseType
+     * const ReleaseType = await prisma.releaseType.create({
+     *   data: {
+     *     // ... data to create a ReleaseType
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReleaseTypeCreateArgs>(args: SelectSubset<T, ReleaseTypeCreateArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ReleaseTypes.
+     * @param {ReleaseTypeCreateManyArgs} args - Arguments to create many ReleaseTypes.
+     * @example
+     * // Create many ReleaseTypes
+     * const releaseType = await prisma.releaseType.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReleaseTypeCreateManyArgs>(args?: SelectSubset<T, ReleaseTypeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ReleaseTypes and returns the data saved in the database.
+     * @param {ReleaseTypeCreateManyAndReturnArgs} args - Arguments to create many ReleaseTypes.
+     * @example
+     * // Create many ReleaseTypes
+     * const releaseType = await prisma.releaseType.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ReleaseTypes and only return the `id`
+     * const releaseTypeWithIdOnly = await prisma.releaseType.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReleaseTypeCreateManyAndReturnArgs>(args?: SelectSubset<T, ReleaseTypeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ReleaseType.
+     * @param {ReleaseTypeDeleteArgs} args - Arguments to delete one ReleaseType.
+     * @example
+     * // Delete one ReleaseType
+     * const ReleaseType = await prisma.releaseType.delete({
+     *   where: {
+     *     // ... filter to delete one ReleaseType
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReleaseTypeDeleteArgs>(args: SelectSubset<T, ReleaseTypeDeleteArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ReleaseType.
+     * @param {ReleaseTypeUpdateArgs} args - Arguments to update one ReleaseType.
+     * @example
+     * // Update one ReleaseType
+     * const releaseType = await prisma.releaseType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReleaseTypeUpdateArgs>(args: SelectSubset<T, ReleaseTypeUpdateArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ReleaseTypes.
+     * @param {ReleaseTypeDeleteManyArgs} args - Arguments to filter ReleaseTypes to delete.
+     * @example
+     * // Delete a few ReleaseTypes
+     * const { count } = await prisma.releaseType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReleaseTypeDeleteManyArgs>(args?: SelectSubset<T, ReleaseTypeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReleaseTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReleaseTypes
+     * const releaseType = await prisma.releaseType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReleaseTypeUpdateManyArgs>(args: SelectSubset<T, ReleaseTypeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReleaseTypes and returns the data updated in the database.
+     * @param {ReleaseTypeUpdateManyAndReturnArgs} args - Arguments to update many ReleaseTypes.
+     * @example
+     * // Update many ReleaseTypes
+     * const releaseType = await prisma.releaseType.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ReleaseTypes and only return the `id`
+     * const releaseTypeWithIdOnly = await prisma.releaseType.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReleaseTypeUpdateManyAndReturnArgs>(args: SelectSubset<T, ReleaseTypeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ReleaseType.
+     * @param {ReleaseTypeUpsertArgs} args - Arguments to update or create a ReleaseType.
+     * @example
+     * // Update or create a ReleaseType
+     * const releaseType = await prisma.releaseType.upsert({
+     *   create: {
+     *     // ... data to create a ReleaseType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReleaseType we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReleaseTypeUpsertArgs>(args: SelectSubset<T, ReleaseTypeUpsertArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ReleaseTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeCountArgs} args - Arguments to filter ReleaseTypes to count.
+     * @example
+     * // Count the number of ReleaseTypes
+     * const count = await prisma.releaseType.count({
+     *   where: {
+     *     // ... the filter for the ReleaseTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReleaseTypeCountArgs>(
+      args?: Subset<T, ReleaseTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReleaseTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReleaseType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReleaseTypeAggregateArgs>(args: Subset<T, ReleaseTypeAggregateArgs>): Prisma.PrismaPromise<GetReleaseTypeAggregateType<T>>
+
+    /**
+     * Group by ReleaseType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReleaseTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReleaseTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReleaseTypeGroupByArgs['orderBy'] }
+        : { orderBy?: ReleaseTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReleaseTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReleaseTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReleaseType model
+   */
+  readonly fields: ReleaseTypeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReleaseType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReleaseTypeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kits<T extends ReleaseType$kitsArgs<ExtArgs> = {}>(args?: Subset<T, ReleaseType$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReleaseType model
+   */
+  interface ReleaseTypeFieldRefs {
+    readonly id: FieldRef<"ReleaseType", 'String'>
+    readonly name: FieldRef<"ReleaseType", 'String'>
+    readonly slug: FieldRef<"ReleaseType", 'String'>
+    readonly createdAt: FieldRef<"ReleaseType", 'DateTime'>
+    readonly updatedAt: FieldRef<"ReleaseType", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReleaseType findUnique
+   */
+  export type ReleaseTypeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReleaseType to fetch.
+     */
+    where: ReleaseTypeWhereUniqueInput
+  }
+
+  /**
+   * ReleaseType findUniqueOrThrow
+   */
+  export type ReleaseTypeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReleaseType to fetch.
+     */
+    where: ReleaseTypeWhereUniqueInput
+  }
+
+  /**
+   * ReleaseType findFirst
+   */
+  export type ReleaseTypeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReleaseType to fetch.
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReleaseTypes to fetch.
+     */
+    orderBy?: ReleaseTypeOrderByWithRelationInput | ReleaseTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReleaseTypes.
+     */
+    cursor?: ReleaseTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReleaseTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReleaseTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReleaseTypes.
+     */
+    distinct?: ReleaseTypeScalarFieldEnum | ReleaseTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ReleaseType findFirstOrThrow
+   */
+  export type ReleaseTypeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReleaseType to fetch.
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReleaseTypes to fetch.
+     */
+    orderBy?: ReleaseTypeOrderByWithRelationInput | ReleaseTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReleaseTypes.
+     */
+    cursor?: ReleaseTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReleaseTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReleaseTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReleaseTypes.
+     */
+    distinct?: ReleaseTypeScalarFieldEnum | ReleaseTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ReleaseType findMany
+   */
+  export type ReleaseTypeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReleaseTypes to fetch.
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReleaseTypes to fetch.
+     */
+    orderBy?: ReleaseTypeOrderByWithRelationInput | ReleaseTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReleaseTypes.
+     */
+    cursor?: ReleaseTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReleaseTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReleaseTypes.
+     */
+    skip?: number
+    distinct?: ReleaseTypeScalarFieldEnum | ReleaseTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ReleaseType create
+   */
+  export type ReleaseTypeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReleaseType.
+     */
+    data: XOR<ReleaseTypeCreateInput, ReleaseTypeUncheckedCreateInput>
+  }
+
+  /**
+   * ReleaseType createMany
+   */
+  export type ReleaseTypeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReleaseTypes.
+     */
+    data: ReleaseTypeCreateManyInput | ReleaseTypeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReleaseType createManyAndReturn
+   */
+  export type ReleaseTypeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * The data used to create many ReleaseTypes.
+     */
+    data: ReleaseTypeCreateManyInput | ReleaseTypeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReleaseType update
+   */
+  export type ReleaseTypeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReleaseType.
+     */
+    data: XOR<ReleaseTypeUpdateInput, ReleaseTypeUncheckedUpdateInput>
+    /**
+     * Choose, which ReleaseType to update.
+     */
+    where: ReleaseTypeWhereUniqueInput
+  }
+
+  /**
+   * ReleaseType updateMany
+   */
+  export type ReleaseTypeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReleaseTypes.
+     */
+    data: XOR<ReleaseTypeUpdateManyMutationInput, ReleaseTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which ReleaseTypes to update
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * Limit how many ReleaseTypes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReleaseType updateManyAndReturn
+   */
+  export type ReleaseTypeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * The data used to update ReleaseTypes.
+     */
+    data: XOR<ReleaseTypeUpdateManyMutationInput, ReleaseTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which ReleaseTypes to update
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * Limit how many ReleaseTypes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReleaseType upsert
+   */
+  export type ReleaseTypeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReleaseType to update in case it exists.
+     */
+    where: ReleaseTypeWhereUniqueInput
+    /**
+     * In case the ReleaseType found by the `where` argument doesn't exist, create a new ReleaseType with this data.
+     */
+    create: XOR<ReleaseTypeCreateInput, ReleaseTypeUncheckedCreateInput>
+    /**
+     * In case the ReleaseType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReleaseTypeUpdateInput, ReleaseTypeUncheckedUpdateInput>
+  }
+
+  /**
+   * ReleaseType delete
+   */
+  export type ReleaseTypeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    /**
+     * Filter which ReleaseType to delete.
+     */
+    where: ReleaseTypeWhereUniqueInput
+  }
+
+  /**
+   * ReleaseType deleteMany
+   */
+  export type ReleaseTypeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReleaseTypes to delete
+     */
+    where?: ReleaseTypeWhereInput
+    /**
+     * Limit how many ReleaseTypes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReleaseType.kits
+   */
+  export type ReleaseType$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    cursor?: KitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * ReleaseType without action
+   */
+  export type ReleaseTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Kit
+   */
+
+  export type AggregateKit = {
+    _count: KitCountAggregateOutputType | null
+    _avg: KitAvgAggregateOutputType | null
+    _sum: KitSumAggregateOutputType | null
+    _min: KitMinAggregateOutputType | null
+    _max: KitMaxAggregateOutputType | null
+  }
+
+  export type KitAvgAggregateOutputType = {
+    priceYen: number | null
+  }
+
+  export type KitSumAggregateOutputType = {
+    priceYen: number | null
+  }
+
+  export type KitMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    number: string | null
+    variant: string | null
+    releaseDate: Date | null
+    priceYen: number | null
+    region: string | null
+    boxArt: string | null
+    notes: string | null
+    potentialBaseKit: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    gradeId: string | null
+    productLineId: string | null
+    seriesId: string | null
+    releaseTypeId: string | null
+    baseKitId: string | null
+  }
+
+  export type KitMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    number: string | null
+    variant: string | null
+    releaseDate: Date | null
+    priceYen: number | null
+    region: string | null
+    boxArt: string | null
+    notes: string | null
+    potentialBaseKit: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    gradeId: string | null
+    productLineId: string | null
+    seriesId: string | null
+    releaseTypeId: string | null
+    baseKitId: string | null
+  }
+
+  export type KitCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    number: number
+    variant: number
+    releaseDate: number
+    priceYen: number
+    region: number
+    boxArt: number
+    notes: number
+    manualLinks: number
+    scrapedImages: number
+    potentialBaseKit: number
+    createdAt: number
+    updatedAt: number
+    gradeId: number
+    productLineId: number
+    seriesId: number
+    releaseTypeId: number
+    baseKitId: number
+    _all: number
+  }
+
+
+  export type KitAvgAggregateInputType = {
+    priceYen?: true
+  }
+
+  export type KitSumAggregateInputType = {
+    priceYen?: true
+  }
+
+  export type KitMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    number?: true
+    variant?: true
+    releaseDate?: true
+    priceYen?: true
+    region?: true
+    boxArt?: true
+    notes?: true
+    potentialBaseKit?: true
+    createdAt?: true
+    updatedAt?: true
+    gradeId?: true
+    productLineId?: true
+    seriesId?: true
+    releaseTypeId?: true
+    baseKitId?: true
+  }
+
+  export type KitMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    number?: true
+    variant?: true
+    releaseDate?: true
+    priceYen?: true
+    region?: true
+    boxArt?: true
+    notes?: true
+    potentialBaseKit?: true
+    createdAt?: true
+    updatedAt?: true
+    gradeId?: true
+    productLineId?: true
+    seriesId?: true
+    releaseTypeId?: true
+    baseKitId?: true
+  }
+
+  export type KitCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    number?: true
+    variant?: true
+    releaseDate?: true
+    priceYen?: true
+    region?: true
+    boxArt?: true
+    notes?: true
+    manualLinks?: true
+    scrapedImages?: true
+    potentialBaseKit?: true
+    createdAt?: true
+    updatedAt?: true
+    gradeId?: true
+    productLineId?: true
+    seriesId?: true
+    releaseTypeId?: true
+    baseKitId?: true
+    _all?: true
+  }
+
+  export type KitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Kit to aggregate.
+     */
+    where?: KitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Kits to fetch.
+     */
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Kits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Kits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Kits
+    **/
+    _count?: true | KitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KitAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KitSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KitMaxAggregateInputType
+  }
+
+  export type GetKitAggregateType<T extends KitAggregateArgs> = {
+        [P in keyof T & keyof AggregateKit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKit[P]>
+      : GetScalarType<T[P], AggregateKit[P]>
+  }
+
+
+
+
+  export type KitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithAggregationInput | KitOrderByWithAggregationInput[]
+    by: KitScalarFieldEnum[] | KitScalarFieldEnum
+    having?: KitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KitCountAggregateInputType | true
+    _avg?: KitAvgAggregateInputType
+    _sum?: KitSumAggregateInputType
+    _min?: KitMinAggregateInputType
+    _max?: KitMaxAggregateInputType
+  }
+
+  export type KitGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    number: string
+    variant: string | null
+    releaseDate: Date | null
+    priceYen: number | null
+    region: string | null
+    boxArt: string | null
+    notes: string | null
+    manualLinks: string[]
+    scrapedImages: string[]
+    potentialBaseKit: string | null
+    createdAt: Date
+    updatedAt: Date
+    gradeId: string
+    productLineId: string | null
+    seriesId: string | null
+    releaseTypeId: string | null
+    baseKitId: string | null
+    _count: KitCountAggregateOutputType | null
+    _avg: KitAvgAggregateOutputType | null
+    _sum: KitSumAggregateOutputType | null
+    _min: KitMinAggregateOutputType | null
+    _max: KitMaxAggregateOutputType | null
+  }
+
+  type GetKitGroupByPayload<T extends KitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KitGroupByOutputType[P]>
+            : GetScalarType<T[P], KitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    number?: boolean
+    variant?: boolean
+    releaseDate?: boolean
+    priceYen?: boolean
+    region?: boolean
+    boxArt?: boolean
+    notes?: boolean
+    manualLinks?: boolean
+    scrapedImages?: boolean
+    potentialBaseKit?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    gradeId?: boolean
+    productLineId?: boolean
+    seriesId?: boolean
+    releaseTypeId?: boolean
+    baseKitId?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+    variants?: boolean | Kit$variantsArgs<ExtArgs>
+    mobileSuits?: boolean | Kit$mobileSuitsArgs<ExtArgs>
+    uploads?: boolean | Kit$uploadsArgs<ExtArgs>
+    _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kit"]>
+
+  export type KitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    number?: boolean
+    variant?: boolean
+    releaseDate?: boolean
+    priceYen?: boolean
+    region?: boolean
+    boxArt?: boolean
+    notes?: boolean
+    manualLinks?: boolean
+    scrapedImages?: boolean
+    potentialBaseKit?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    gradeId?: boolean
+    productLineId?: boolean
+    seriesId?: boolean
+    releaseTypeId?: boolean
+    baseKitId?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+  }, ExtArgs["result"]["kit"]>
+
+  export type KitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    number?: boolean
+    variant?: boolean
+    releaseDate?: boolean
+    priceYen?: boolean
+    region?: boolean
+    boxArt?: boolean
+    notes?: boolean
+    manualLinks?: boolean
+    scrapedImages?: boolean
+    potentialBaseKit?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    gradeId?: boolean
+    productLineId?: boolean
+    seriesId?: boolean
+    releaseTypeId?: boolean
+    baseKitId?: boolean
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+  }, ExtArgs["result"]["kit"]>
+
+  export type KitSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    number?: boolean
+    variant?: boolean
+    releaseDate?: boolean
+    priceYen?: boolean
+    region?: boolean
+    boxArt?: boolean
+    notes?: boolean
+    manualLinks?: boolean
+    scrapedImages?: boolean
+    potentialBaseKit?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    gradeId?: boolean
+    productLineId?: boolean
+    seriesId?: boolean
+    releaseTypeId?: boolean
+    baseKitId?: boolean
+  }
+
+  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "createdAt" | "updatedAt" | "gradeId" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
+  export type KitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+    variants?: boolean | Kit$variantsArgs<ExtArgs>
+    mobileSuits?: boolean | Kit$mobileSuitsArgs<ExtArgs>
+    uploads?: boolean | Kit$uploadsArgs<ExtArgs>
+    _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type KitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+  }
+  export type KitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    productLine?: boolean | Kit$productLineArgs<ExtArgs>
+    series?: boolean | Kit$seriesArgs<ExtArgs>
+    releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
+    baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
+  }
+
+  export type $KitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Kit"
+    objects: {
+      grade: Prisma.$GradePayload<ExtArgs>
+      productLine: Prisma.$ProductLinePayload<ExtArgs> | null
+      series: Prisma.$SeriesPayload<ExtArgs> | null
+      releaseType: Prisma.$ReleaseTypePayload<ExtArgs> | null
+      baseKit: Prisma.$KitPayload<ExtArgs> | null
+      variants: Prisma.$KitPayload<ExtArgs>[]
+      mobileSuits: Prisma.$KitMobileSuitPayload<ExtArgs>[]
+      uploads: Prisma.$KitUploadPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      number: string
+      variant: string | null
+      releaseDate: Date | null
+      priceYen: number | null
+      region: string | null
+      boxArt: string | null
+      notes: string | null
+      manualLinks: string[]
+      scrapedImages: string[]
+      potentialBaseKit: string | null
+      createdAt: Date
+      updatedAt: Date
+      gradeId: string
+      productLineId: string | null
+      seriesId: string | null
+      releaseTypeId: string | null
+      baseKitId: string | null
+    }, ExtArgs["result"]["kit"]>
+    composites: {}
+  }
+
+  type KitGetPayload<S extends boolean | null | undefined | KitDefaultArgs> = $Result.GetResult<Prisma.$KitPayload, S>
+
+  type KitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KitCountAggregateInputType | true
+    }
+
+  export interface KitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Kit'], meta: { name: 'Kit' } }
+    /**
+     * Find zero or one Kit that matches the filter.
+     * @param {KitFindUniqueArgs} args - Arguments to find a Kit
+     * @example
+     * // Get one Kit
+     * const kit = await prisma.kit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KitFindUniqueArgs>(args: SelectSubset<T, KitFindUniqueArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KitFindUniqueOrThrowArgs} args - Arguments to find a Kit
+     * @example
+     * // Get one Kit
+     * const kit = await prisma.kit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KitFindUniqueOrThrowArgs>(args: SelectSubset<T, KitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitFindFirstArgs} args - Arguments to find a Kit
+     * @example
+     * // Get one Kit
+     * const kit = await prisma.kit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KitFindFirstArgs>(args?: SelectSubset<T, KitFindFirstArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitFindFirstOrThrowArgs} args - Arguments to find a Kit
+     * @example
+     * // Get one Kit
+     * const kit = await prisma.kit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KitFindFirstOrThrowArgs>(args?: SelectSubset<T, KitFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kits
+     * const kits = await prisma.kit.findMany()
+     * 
+     * // Get first 10 Kits
+     * const kits = await prisma.kit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kitWithIdOnly = await prisma.kit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KitFindManyArgs>(args?: SelectSubset<T, KitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kit.
+     * @param {KitCreateArgs} args - Arguments to create a Kit.
+     * @example
+     * // Create one Kit
+     * const Kit = await prisma.kit.create({
+     *   data: {
+     *     // ... data to create a Kit
+     *   }
+     * })
+     * 
+     */
+    create<T extends KitCreateArgs>(args: SelectSubset<T, KitCreateArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kits.
+     * @param {KitCreateManyArgs} args - Arguments to create many Kits.
+     * @example
+     * // Create many Kits
+     * const kit = await prisma.kit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KitCreateManyArgs>(args?: SelectSubset<T, KitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Kits and returns the data saved in the database.
+     * @param {KitCreateManyAndReturnArgs} args - Arguments to create many Kits.
+     * @example
+     * // Create many Kits
+     * const kit = await prisma.kit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Kits and only return the `id`
+     * const kitWithIdOnly = await prisma.kit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KitCreateManyAndReturnArgs>(args?: SelectSubset<T, KitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Kit.
+     * @param {KitDeleteArgs} args - Arguments to delete one Kit.
+     * @example
+     * // Delete one Kit
+     * const Kit = await prisma.kit.delete({
+     *   where: {
+     *     // ... filter to delete one Kit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KitDeleteArgs>(args: SelectSubset<T, KitDeleteArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kit.
+     * @param {KitUpdateArgs} args - Arguments to update one Kit.
+     * @example
+     * // Update one Kit
+     * const kit = await prisma.kit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KitUpdateArgs>(args: SelectSubset<T, KitUpdateArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kits.
+     * @param {KitDeleteManyArgs} args - Arguments to filter Kits to delete.
+     * @example
+     * // Delete a few Kits
+     * const { count } = await prisma.kit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KitDeleteManyArgs>(args?: SelectSubset<T, KitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kits
+     * const kit = await prisma.kit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KitUpdateManyArgs>(args: SelectSubset<T, KitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kits and returns the data updated in the database.
+     * @param {KitUpdateManyAndReturnArgs} args - Arguments to update many Kits.
+     * @example
+     * // Update many Kits
+     * const kit = await prisma.kit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Kits and only return the `id`
+     * const kitWithIdOnly = await prisma.kit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KitUpdateManyAndReturnArgs>(args: SelectSubset<T, KitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Kit.
+     * @param {KitUpsertArgs} args - Arguments to update or create a Kit.
+     * @example
+     * // Update or create a Kit
+     * const kit = await prisma.kit.upsert({
+     *   create: {
+     *     // ... data to create a Kit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KitUpsertArgs>(args: SelectSubset<T, KitUpsertArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitCountArgs} args - Arguments to filter Kits to count.
+     * @example
+     * // Count the number of Kits
+     * const count = await prisma.kit.count({
+     *   where: {
+     *     // ... the filter for the Kits we want to count
+     *   }
+     * })
+    **/
+    count<T extends KitCountArgs>(
+      args?: Subset<T, KitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KitAggregateArgs>(args: Subset<T, KitAggregateArgs>): Prisma.PrismaPromise<GetKitAggregateType<T>>
+
+    /**
+     * Group by Kit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KitGroupByArgs['orderBy'] }
+        : { orderBy?: KitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Kit model
+   */
+  readonly fields: KitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Kit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    grade<T extends GradeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GradeDefaultArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    productLine<T extends Kit$productLineArgs<ExtArgs> = {}>(args?: Subset<T, Kit$productLineArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    series<T extends Kit$seriesArgs<ExtArgs> = {}>(args?: Subset<T, Kit$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    releaseType<T extends Kit$releaseTypeArgs<ExtArgs> = {}>(args?: Subset<T, Kit$releaseTypeArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    baseKit<T extends Kit$baseKitArgs<ExtArgs> = {}>(args?: Subset<T, Kit$baseKitArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    variants<T extends Kit$variantsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mobileSuits<T extends Kit$mobileSuitsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$mobileSuitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploads<T extends Kit$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Kit model
+   */
+  interface KitFieldRefs {
+    readonly id: FieldRef<"Kit", 'String'>
+    readonly name: FieldRef<"Kit", 'String'>
+    readonly slug: FieldRef<"Kit", 'String'>
+    readonly number: FieldRef<"Kit", 'String'>
+    readonly variant: FieldRef<"Kit", 'String'>
+    readonly releaseDate: FieldRef<"Kit", 'DateTime'>
+    readonly priceYen: FieldRef<"Kit", 'Int'>
+    readonly region: FieldRef<"Kit", 'String'>
+    readonly boxArt: FieldRef<"Kit", 'String'>
+    readonly notes: FieldRef<"Kit", 'String'>
+    readonly manualLinks: FieldRef<"Kit", 'String[]'>
+    readonly scrapedImages: FieldRef<"Kit", 'String[]'>
+    readonly potentialBaseKit: FieldRef<"Kit", 'String'>
+    readonly createdAt: FieldRef<"Kit", 'DateTime'>
+    readonly updatedAt: FieldRef<"Kit", 'DateTime'>
+    readonly gradeId: FieldRef<"Kit", 'String'>
+    readonly productLineId: FieldRef<"Kit", 'String'>
+    readonly seriesId: FieldRef<"Kit", 'String'>
+    readonly releaseTypeId: FieldRef<"Kit", 'String'>
+    readonly baseKitId: FieldRef<"Kit", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Kit findUnique
+   */
+  export type KitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter, which Kit to fetch.
+     */
+    where: KitWhereUniqueInput
+  }
+
+  /**
+   * Kit findUniqueOrThrow
+   */
+  export type KitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter, which Kit to fetch.
+     */
+    where: KitWhereUniqueInput
+  }
+
+  /**
+   * Kit findFirst
+   */
+  export type KitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter, which Kit to fetch.
+     */
+    where?: KitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Kits to fetch.
+     */
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Kits.
+     */
+    cursor?: KitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Kits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Kits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Kits.
+     */
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Kit findFirstOrThrow
+   */
+  export type KitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter, which Kit to fetch.
+     */
+    where?: KitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Kits to fetch.
+     */
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Kits.
+     */
+    cursor?: KitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Kits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Kits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Kits.
+     */
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Kit findMany
+   */
+  export type KitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter, which Kits to fetch.
+     */
+    where?: KitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Kits to fetch.
+     */
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Kits.
+     */
+    cursor?: KitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Kits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Kits.
+     */
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Kit create
+   */
+  export type KitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Kit.
+     */
+    data: XOR<KitCreateInput, KitUncheckedCreateInput>
+  }
+
+  /**
+   * Kit createMany
+   */
+  export type KitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Kits.
+     */
+    data: KitCreateManyInput | KitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Kit createManyAndReturn
+   */
+  export type KitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * The data used to create many Kits.
+     */
+    data: KitCreateManyInput | KitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Kit update
+   */
+  export type KitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Kit.
+     */
+    data: XOR<KitUpdateInput, KitUncheckedUpdateInput>
+    /**
+     * Choose, which Kit to update.
+     */
+    where: KitWhereUniqueInput
+  }
+
+  /**
+   * Kit updateMany
+   */
+  export type KitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Kits.
+     */
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyInput>
+    /**
+     * Filter which Kits to update
+     */
+    where?: KitWhereInput
+    /**
+     * Limit how many Kits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Kit updateManyAndReturn
+   */
+  export type KitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * The data used to update Kits.
+     */
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyInput>
+    /**
+     * Filter which Kits to update
+     */
+    where?: KitWhereInput
+    /**
+     * Limit how many Kits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Kit upsert
+   */
+  export type KitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Kit to update in case it exists.
+     */
+    where: KitWhereUniqueInput
+    /**
+     * In case the Kit found by the `where` argument doesn't exist, create a new Kit with this data.
+     */
+    create: XOR<KitCreateInput, KitUncheckedCreateInput>
+    /**
+     * In case the Kit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KitUpdateInput, KitUncheckedUpdateInput>
+  }
+
+  /**
+   * Kit delete
+   */
+  export type KitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    /**
+     * Filter which Kit to delete.
+     */
+    where: KitWhereUniqueInput
+  }
+
+  /**
+   * Kit deleteMany
+   */
+  export type KitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Kits to delete
+     */
+    where?: KitWhereInput
+    /**
+     * Limit how many Kits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Kit.productLine
+   */
+  export type Kit$productLineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    where?: ProductLineWhereInput
+  }
+
+  /**
+   * Kit.series
+   */
+  export type Kit$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Series
+     */
+    select?: SeriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Series
+     */
+    omit?: SeriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeriesInclude<ExtArgs> | null
+    where?: SeriesWhereInput
+  }
+
+  /**
+   * Kit.releaseType
+   */
+  export type Kit$releaseTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReleaseType
+     */
+    select?: ReleaseTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReleaseType
+     */
+    omit?: ReleaseTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReleaseTypeInclude<ExtArgs> | null
+    where?: ReleaseTypeWhereInput
+  }
+
+  /**
+   * Kit.baseKit
+   */
+  export type Kit$baseKitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+  }
+
+  /**
+   * Kit.variants
+   */
+  export type Kit$variantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+    where?: KitWhereInput
+    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
+    cursor?: KitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
+  }
+
+  /**
+   * Kit.mobileSuits
+   */
+  export type Kit$mobileSuitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    where?: KitMobileSuitWhereInput
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    cursor?: KitMobileSuitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitMobileSuitScalarFieldEnum | KitMobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * Kit.uploads
+   */
+  export type Kit$uploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    where?: KitUploadWhereInput
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    cursor?: KitUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitUploadScalarFieldEnum | KitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * Kit without action
+   */
+  export type KitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Kit
+     */
+    select?: KitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Kit
+     */
+    omit?: KitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KitMobileSuit
+   */
+
+  export type AggregateKitMobileSuit = {
+    _count: KitMobileSuitCountAggregateOutputType | null
+    _min: KitMobileSuitMinAggregateOutputType | null
+    _max: KitMobileSuitMaxAggregateOutputType | null
+  }
+
+  export type KitMobileSuitMinAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    mobileSuitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitMobileSuitMaxAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    mobileSuitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitMobileSuitCountAggregateOutputType = {
+    id: number
+    kitId: number
+    mobileSuitId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type KitMobileSuitMinAggregateInputType = {
+    id?: true
+    kitId?: true
+    mobileSuitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitMobileSuitMaxAggregateInputType = {
+    id?: true
+    kitId?: true
+    mobileSuitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitMobileSuitCountAggregateInputType = {
+    id?: true
+    kitId?: true
+    mobileSuitId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type KitMobileSuitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitMobileSuit to aggregate.
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitMobileSuits to fetch.
+     */
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KitMobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitMobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitMobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KitMobileSuits
+    **/
+    _count?: true | KitMobileSuitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KitMobileSuitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KitMobileSuitMaxAggregateInputType
+  }
+
+  export type GetKitMobileSuitAggregateType<T extends KitMobileSuitAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitMobileSuit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitMobileSuit[P]>
+      : GetScalarType<T[P], AggregateKitMobileSuit[P]>
+  }
+
+
+
+
+  export type KitMobileSuitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitMobileSuitWhereInput
+    orderBy?: KitMobileSuitOrderByWithAggregationInput | KitMobileSuitOrderByWithAggregationInput[]
+    by: KitMobileSuitScalarFieldEnum[] | KitMobileSuitScalarFieldEnum
+    having?: KitMobileSuitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KitMobileSuitCountAggregateInputType | true
+    _min?: KitMobileSuitMinAggregateInputType
+    _max?: KitMobileSuitMaxAggregateInputType
+  }
+
+  export type KitMobileSuitGroupByOutputType = {
+    id: string
+    kitId: string
+    mobileSuitId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: KitMobileSuitCountAggregateOutputType | null
+    _min: KitMobileSuitMinAggregateOutputType | null
+    _max: KitMobileSuitMaxAggregateOutputType | null
+  }
+
+  type GetKitMobileSuitGroupByPayload<T extends KitMobileSuitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KitMobileSuitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KitMobileSuitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KitMobileSuitGroupByOutputType[P]>
+            : GetScalarType<T[P], KitMobileSuitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KitMobileSuitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    mobileSuitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitMobileSuit"]>
+
+  export type KitMobileSuitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    mobileSuitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitMobileSuit"]>
+
+  export type KitMobileSuitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    mobileSuitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitMobileSuit"]>
+
+  export type KitMobileSuitSelectScalar = {
+    id?: boolean
+    kitId?: boolean
+    mobileSuitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type KitMobileSuitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kitId" | "mobileSuitId" | "createdAt" | "updatedAt", ExtArgs["result"]["kitMobileSuit"]>
+  export type KitMobileSuitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }
+  export type KitMobileSuitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }
+  export type KitMobileSuitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+  }
+
+  export type $KitMobileSuitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KitMobileSuit"
+    objects: {
+      kit: Prisma.$KitPayload<ExtArgs>
+      mobileSuit: Prisma.$MobileSuitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      kitId: string
+      mobileSuitId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["kitMobileSuit"]>
+    composites: {}
+  }
+
+  type KitMobileSuitGetPayload<S extends boolean | null | undefined | KitMobileSuitDefaultArgs> = $Result.GetResult<Prisma.$KitMobileSuitPayload, S>
+
+  type KitMobileSuitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KitMobileSuitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KitMobileSuitCountAggregateInputType | true
+    }
+
+  export interface KitMobileSuitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitMobileSuit'], meta: { name: 'KitMobileSuit' } }
+    /**
+     * Find zero or one KitMobileSuit that matches the filter.
+     * @param {KitMobileSuitFindUniqueArgs} args - Arguments to find a KitMobileSuit
+     * @example
+     * // Get one KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KitMobileSuitFindUniqueArgs>(args: SelectSubset<T, KitMobileSuitFindUniqueArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KitMobileSuit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KitMobileSuitFindUniqueOrThrowArgs} args - Arguments to find a KitMobileSuit
+     * @example
+     * // Get one KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KitMobileSuitFindUniqueOrThrowArgs>(args: SelectSubset<T, KitMobileSuitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitMobileSuit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitFindFirstArgs} args - Arguments to find a KitMobileSuit
+     * @example
+     * // Get one KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KitMobileSuitFindFirstArgs>(args?: SelectSubset<T, KitMobileSuitFindFirstArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitMobileSuit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitFindFirstOrThrowArgs} args - Arguments to find a KitMobileSuit
+     * @example
+     * // Get one KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KitMobileSuitFindFirstOrThrowArgs>(args?: SelectSubset<T, KitMobileSuitFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KitMobileSuits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KitMobileSuits
+     * const kitMobileSuits = await prisma.kitMobileSuit.findMany()
+     * 
+     * // Get first 10 KitMobileSuits
+     * const kitMobileSuits = await prisma.kitMobileSuit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kitMobileSuitWithIdOnly = await prisma.kitMobileSuit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KitMobileSuitFindManyArgs>(args?: SelectSubset<T, KitMobileSuitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KitMobileSuit.
+     * @param {KitMobileSuitCreateArgs} args - Arguments to create a KitMobileSuit.
+     * @example
+     * // Create one KitMobileSuit
+     * const KitMobileSuit = await prisma.kitMobileSuit.create({
+     *   data: {
+     *     // ... data to create a KitMobileSuit
+     *   }
+     * })
+     * 
+     */
+    create<T extends KitMobileSuitCreateArgs>(args: SelectSubset<T, KitMobileSuitCreateArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KitMobileSuits.
+     * @param {KitMobileSuitCreateManyArgs} args - Arguments to create many KitMobileSuits.
+     * @example
+     * // Create many KitMobileSuits
+     * const kitMobileSuit = await prisma.kitMobileSuit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KitMobileSuitCreateManyArgs>(args?: SelectSubset<T, KitMobileSuitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KitMobileSuits and returns the data saved in the database.
+     * @param {KitMobileSuitCreateManyAndReturnArgs} args - Arguments to create many KitMobileSuits.
+     * @example
+     * // Create many KitMobileSuits
+     * const kitMobileSuit = await prisma.kitMobileSuit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KitMobileSuits and only return the `id`
+     * const kitMobileSuitWithIdOnly = await prisma.kitMobileSuit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KitMobileSuitCreateManyAndReturnArgs>(args?: SelectSubset<T, KitMobileSuitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a KitMobileSuit.
+     * @param {KitMobileSuitDeleteArgs} args - Arguments to delete one KitMobileSuit.
+     * @example
+     * // Delete one KitMobileSuit
+     * const KitMobileSuit = await prisma.kitMobileSuit.delete({
+     *   where: {
+     *     // ... filter to delete one KitMobileSuit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KitMobileSuitDeleteArgs>(args: SelectSubset<T, KitMobileSuitDeleteArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KitMobileSuit.
+     * @param {KitMobileSuitUpdateArgs} args - Arguments to update one KitMobileSuit.
+     * @example
+     * // Update one KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KitMobileSuitUpdateArgs>(args: SelectSubset<T, KitMobileSuitUpdateArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KitMobileSuits.
+     * @param {KitMobileSuitDeleteManyArgs} args - Arguments to filter KitMobileSuits to delete.
+     * @example
+     * // Delete a few KitMobileSuits
+     * const { count } = await prisma.kitMobileSuit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KitMobileSuitDeleteManyArgs>(args?: SelectSubset<T, KitMobileSuitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitMobileSuits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KitMobileSuits
+     * const kitMobileSuit = await prisma.kitMobileSuit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KitMobileSuitUpdateManyArgs>(args: SelectSubset<T, KitMobileSuitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitMobileSuits and returns the data updated in the database.
+     * @param {KitMobileSuitUpdateManyAndReturnArgs} args - Arguments to update many KitMobileSuits.
+     * @example
+     * // Update many KitMobileSuits
+     * const kitMobileSuit = await prisma.kitMobileSuit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more KitMobileSuits and only return the `id`
+     * const kitMobileSuitWithIdOnly = await prisma.kitMobileSuit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KitMobileSuitUpdateManyAndReturnArgs>(args: SelectSubset<T, KitMobileSuitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one KitMobileSuit.
+     * @param {KitMobileSuitUpsertArgs} args - Arguments to update or create a KitMobileSuit.
+     * @example
+     * // Update or create a KitMobileSuit
+     * const kitMobileSuit = await prisma.kitMobileSuit.upsert({
+     *   create: {
+     *     // ... data to create a KitMobileSuit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KitMobileSuit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KitMobileSuitUpsertArgs>(args: SelectSubset<T, KitMobileSuitUpsertArgs<ExtArgs>>): Prisma__KitMobileSuitClient<$Result.GetResult<Prisma.$KitMobileSuitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KitMobileSuits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitCountArgs} args - Arguments to filter KitMobileSuits to count.
+     * @example
+     * // Count the number of KitMobileSuits
+     * const count = await prisma.kitMobileSuit.count({
+     *   where: {
+     *     // ... the filter for the KitMobileSuits we want to count
+     *   }
+     * })
+    **/
+    count<T extends KitMobileSuitCountArgs>(
+      args?: Subset<T, KitMobileSuitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KitMobileSuitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KitMobileSuit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KitMobileSuitAggregateArgs>(args: Subset<T, KitMobileSuitAggregateArgs>): Prisma.PrismaPromise<GetKitMobileSuitAggregateType<T>>
+
+    /**
+     * Group by KitMobileSuit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitMobileSuitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KitMobileSuitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KitMobileSuitGroupByArgs['orderBy'] }
+        : { orderBy?: KitMobileSuitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KitMobileSuitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitMobileSuitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KitMobileSuit model
+   */
+  readonly fields: KitMobileSuitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KitMobileSuit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KitMobileSuitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    mobileSuit<T extends MobileSuitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MobileSuitDefaultArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KitMobileSuit model
+   */
+  interface KitMobileSuitFieldRefs {
+    readonly id: FieldRef<"KitMobileSuit", 'String'>
+    readonly kitId: FieldRef<"KitMobileSuit", 'String'>
+    readonly mobileSuitId: FieldRef<"KitMobileSuit", 'String'>
+    readonly createdAt: FieldRef<"KitMobileSuit", 'DateTime'>
+    readonly updatedAt: FieldRef<"KitMobileSuit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KitMobileSuit findUnique
+   */
+  export type KitMobileSuitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which KitMobileSuit to fetch.
+     */
+    where: KitMobileSuitWhereUniqueInput
+  }
+
+  /**
+   * KitMobileSuit findUniqueOrThrow
+   */
+  export type KitMobileSuitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which KitMobileSuit to fetch.
+     */
+    where: KitMobileSuitWhereUniqueInput
+  }
+
+  /**
+   * KitMobileSuit findFirst
+   */
+  export type KitMobileSuitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which KitMobileSuit to fetch.
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitMobileSuits to fetch.
+     */
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitMobileSuits.
+     */
+    cursor?: KitMobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitMobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitMobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitMobileSuits.
+     */
+    distinct?: KitMobileSuitScalarFieldEnum | KitMobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * KitMobileSuit findFirstOrThrow
+   */
+  export type KitMobileSuitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which KitMobileSuit to fetch.
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitMobileSuits to fetch.
+     */
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitMobileSuits.
+     */
+    cursor?: KitMobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitMobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitMobileSuits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitMobileSuits.
+     */
+    distinct?: KitMobileSuitScalarFieldEnum | KitMobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * KitMobileSuit findMany
+   */
+  export type KitMobileSuitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter, which KitMobileSuits to fetch.
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitMobileSuits to fetch.
+     */
+    orderBy?: KitMobileSuitOrderByWithRelationInput | KitMobileSuitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KitMobileSuits.
+     */
+    cursor?: KitMobileSuitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitMobileSuits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitMobileSuits.
+     */
+    skip?: number
+    distinct?: KitMobileSuitScalarFieldEnum | KitMobileSuitScalarFieldEnum[]
+  }
+
+  /**
+   * KitMobileSuit create
+   */
+  export type KitMobileSuitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KitMobileSuit.
+     */
+    data: XOR<KitMobileSuitCreateInput, KitMobileSuitUncheckedCreateInput>
+  }
+
+  /**
+   * KitMobileSuit createMany
+   */
+  export type KitMobileSuitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KitMobileSuits.
+     */
+    data: KitMobileSuitCreateManyInput | KitMobileSuitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KitMobileSuit createManyAndReturn
+   */
+  export type KitMobileSuitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * The data used to create many KitMobileSuits.
+     */
+    data: KitMobileSuitCreateManyInput | KitMobileSuitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitMobileSuit update
+   */
+  export type KitMobileSuitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KitMobileSuit.
+     */
+    data: XOR<KitMobileSuitUpdateInput, KitMobileSuitUncheckedUpdateInput>
+    /**
+     * Choose, which KitMobileSuit to update.
+     */
+    where: KitMobileSuitWhereUniqueInput
+  }
+
+  /**
+   * KitMobileSuit updateMany
+   */
+  export type KitMobileSuitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KitMobileSuits.
+     */
+    data: XOR<KitMobileSuitUpdateManyMutationInput, KitMobileSuitUncheckedUpdateManyInput>
+    /**
+     * Filter which KitMobileSuits to update
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * Limit how many KitMobileSuits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitMobileSuit updateManyAndReturn
+   */
+  export type KitMobileSuitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * The data used to update KitMobileSuits.
+     */
+    data: XOR<KitMobileSuitUpdateManyMutationInput, KitMobileSuitUncheckedUpdateManyInput>
+    /**
+     * Filter which KitMobileSuits to update
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * Limit how many KitMobileSuits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitMobileSuit upsert
+   */
+  export type KitMobileSuitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KitMobileSuit to update in case it exists.
+     */
+    where: KitMobileSuitWhereUniqueInput
+    /**
+     * In case the KitMobileSuit found by the `where` argument doesn't exist, create a new KitMobileSuit with this data.
+     */
+    create: XOR<KitMobileSuitCreateInput, KitMobileSuitUncheckedCreateInput>
+    /**
+     * In case the KitMobileSuit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KitMobileSuitUpdateInput, KitMobileSuitUncheckedUpdateInput>
+  }
+
+  /**
+   * KitMobileSuit delete
+   */
+  export type KitMobileSuitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+    /**
+     * Filter which KitMobileSuit to delete.
+     */
+    where: KitMobileSuitWhereUniqueInput
+  }
+
+  /**
+   * KitMobileSuit deleteMany
+   */
+  export type KitMobileSuitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitMobileSuits to delete
+     */
+    where?: KitMobileSuitWhereInput
+    /**
+     * Limit how many KitMobileSuits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitMobileSuit without action
+   */
+  export type KitMobileSuitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitMobileSuit
+     */
+    select?: KitMobileSuitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitMobileSuit
+     */
+    omit?: KitMobileSuitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitMobileSuitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Upload
+   */
+
+  export type AggregateUpload = {
+    _count: UploadCountAggregateOutputType | null
+    _avg: UploadAvgAggregateOutputType | null
+    _sum: UploadSumAggregateOutputType | null
+    _min: UploadMinAggregateOutputType | null
+    _max: UploadMaxAggregateOutputType | null
+  }
+
+  export type UploadAvgAggregateOutputType = {
+    size: number | null
+    pages: number | null
+  }
+
+  export type UploadSumAggregateOutputType = {
+    size: number | null
+    pages: number | null
+  }
+
+  export type UploadMinAggregateOutputType = {
+    id: string | null
+    cloudinaryAssetId: string | null
+    publicId: string | null
+    url: string | null
+    eagerUrl: string | null
+    format: string | null
+    resourceType: string | null
+    size: number | null
+    pages: number | null
+    originalFilename: string | null
+    uploadedAt: Date | null
+    uploadedById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UploadMaxAggregateOutputType = {
+    id: string | null
+    cloudinaryAssetId: string | null
+    publicId: string | null
+    url: string | null
+    eagerUrl: string | null
+    format: string | null
+    resourceType: string | null
+    size: number | null
+    pages: number | null
+    originalFilename: string | null
+    uploadedAt: Date | null
+    uploadedById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UploadCountAggregateOutputType = {
+    id: number
+    cloudinaryAssetId: number
+    publicId: number
+    url: number
+    eagerUrl: number
+    format: number
+    resourceType: number
+    size: number
+    pages: number
+    originalFilename: number
+    uploadedAt: number
+    uploadedById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UploadAvgAggregateInputType = {
+    size?: true
+    pages?: true
+  }
+
+  export type UploadSumAggregateInputType = {
+    size?: true
+    pages?: true
+  }
+
+  export type UploadMinAggregateInputType = {
+    id?: true
+    cloudinaryAssetId?: true
+    publicId?: true
+    url?: true
+    eagerUrl?: true
+    format?: true
+    resourceType?: true
+    size?: true
+    pages?: true
+    originalFilename?: true
+    uploadedAt?: true
+    uploadedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UploadMaxAggregateInputType = {
+    id?: true
+    cloudinaryAssetId?: true
+    publicId?: true
+    url?: true
+    eagerUrl?: true
+    format?: true
+    resourceType?: true
+    size?: true
+    pages?: true
+    originalFilename?: true
+    uploadedAt?: true
+    uploadedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UploadCountAggregateInputType = {
+    id?: true
+    cloudinaryAssetId?: true
+    publicId?: true
+    url?: true
+    eagerUrl?: true
+    format?: true
+    resourceType?: true
+    size?: true
+    pages?: true
+    originalFilename?: true
+    uploadedAt?: true
+    uploadedById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UploadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Upload to aggregate.
+     */
+    where?: UploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Uploads to fetch.
+     */
+    orderBy?: UploadOrderByWithRelationInput | UploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Uploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Uploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Uploads
+    **/
+    _count?: true | UploadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UploadAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UploadSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UploadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UploadMaxAggregateInputType
+  }
+
+  export type GetUploadAggregateType<T extends UploadAggregateArgs> = {
+        [P in keyof T & keyof AggregateUpload]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUpload[P]>
+      : GetScalarType<T[P], AggregateUpload[P]>
+  }
+
+
+
+
+  export type UploadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UploadWhereInput
+    orderBy?: UploadOrderByWithAggregationInput | UploadOrderByWithAggregationInput[]
+    by: UploadScalarFieldEnum[] | UploadScalarFieldEnum
+    having?: UploadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UploadCountAggregateInputType | true
+    _avg?: UploadAvgAggregateInputType
+    _sum?: UploadSumAggregateInputType
+    _min?: UploadMinAggregateInputType
+    _max?: UploadMaxAggregateInputType
+  }
+
+  export type UploadGroupByOutputType = {
+    id: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages: number | null
+    originalFilename: string
+    uploadedAt: Date
+    uploadedById: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UploadCountAggregateOutputType | null
+    _avg: UploadAvgAggregateOutputType | null
+    _sum: UploadSumAggregateOutputType | null
+    _min: UploadMinAggregateOutputType | null
+    _max: UploadMaxAggregateOutputType | null
+  }
+
+  type GetUploadGroupByPayload<T extends UploadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UploadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UploadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UploadGroupByOutputType[P]>
+            : GetScalarType<T[P], UploadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UploadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cloudinaryAssetId?: boolean
+    publicId?: boolean
+    url?: boolean
+    eagerUrl?: boolean
+    format?: boolean
+    resourceType?: boolean
+    size?: boolean
+    pages?: boolean
+    originalFilename?: boolean
+    uploadedAt?: boolean
+    uploadedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kitUploads?: boolean | Upload$kitUploadsArgs<ExtArgs>
+    mobileSuitUploads?: boolean | Upload$mobileSuitUploadsArgs<ExtArgs>
+    productLineLogos?: boolean | Upload$productLineLogosArgs<ExtArgs>
+    _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["upload"]>
+
+  export type UploadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cloudinaryAssetId?: boolean
+    publicId?: boolean
+    url?: boolean
+    eagerUrl?: boolean
+    format?: boolean
+    resourceType?: boolean
+    size?: boolean
+    pages?: boolean
+    originalFilename?: boolean
+    uploadedAt?: boolean
+    uploadedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["upload"]>
+
+  export type UploadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cloudinaryAssetId?: boolean
+    publicId?: boolean
+    url?: boolean
+    eagerUrl?: boolean
+    format?: boolean
+    resourceType?: boolean
+    size?: boolean
+    pages?: boolean
+    originalFilename?: boolean
+    uploadedAt?: boolean
+    uploadedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["upload"]>
+
+  export type UploadSelectScalar = {
+    id?: boolean
+    cloudinaryAssetId?: boolean
+    publicId?: boolean
+    url?: boolean
+    eagerUrl?: boolean
+    format?: boolean
+    resourceType?: boolean
+    size?: boolean
+    pages?: boolean
+    originalFilename?: boolean
+    uploadedAt?: boolean
+    uploadedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UploadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cloudinaryAssetId" | "publicId" | "url" | "eagerUrl" | "format" | "resourceType" | "size" | "pages" | "originalFilename" | "uploadedAt" | "uploadedById" | "createdAt" | "updatedAt", ExtArgs["result"]["upload"]>
+  export type UploadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kitUploads?: boolean | Upload$kitUploadsArgs<ExtArgs>
+    mobileSuitUploads?: boolean | Upload$mobileSuitUploadsArgs<ExtArgs>
+    productLineLogos?: boolean | Upload$productLineLogosArgs<ExtArgs>
+    _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UploadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UploadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Upload"
+    objects: {
+      kitUploads: Prisma.$KitUploadPayload<ExtArgs>[]
+      mobileSuitUploads: Prisma.$MobileSuitUploadPayload<ExtArgs>[]
+      productLineLogos: Prisma.$ProductLinePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cloudinaryAssetId: string
+      publicId: string
+      url: string
+      eagerUrl: string | null
+      format: string
+      resourceType: string
+      size: number
+      pages: number | null
+      originalFilename: string
+      uploadedAt: Date
+      uploadedById: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["upload"]>
+    composites: {}
+  }
+
+  type UploadGetPayload<S extends boolean | null | undefined | UploadDefaultArgs> = $Result.GetResult<Prisma.$UploadPayload, S>
+
+  type UploadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UploadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UploadCountAggregateInputType | true
+    }
+
+  export interface UploadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Upload'], meta: { name: 'Upload' } }
+    /**
+     * Find zero or one Upload that matches the filter.
+     * @param {UploadFindUniqueArgs} args - Arguments to find a Upload
+     * @example
+     * // Get one Upload
+     * const upload = await prisma.upload.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UploadFindUniqueArgs>(args: SelectSubset<T, UploadFindUniqueArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Upload that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UploadFindUniqueOrThrowArgs} args - Arguments to find a Upload
+     * @example
+     * // Get one Upload
+     * const upload = await prisma.upload.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UploadFindUniqueOrThrowArgs>(args: SelectSubset<T, UploadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Upload that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadFindFirstArgs} args - Arguments to find a Upload
+     * @example
+     * // Get one Upload
+     * const upload = await prisma.upload.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UploadFindFirstArgs>(args?: SelectSubset<T, UploadFindFirstArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Upload that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadFindFirstOrThrowArgs} args - Arguments to find a Upload
+     * @example
+     * // Get one Upload
+     * const upload = await prisma.upload.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UploadFindFirstOrThrowArgs>(args?: SelectSubset<T, UploadFindFirstOrThrowArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Uploads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Uploads
+     * const uploads = await prisma.upload.findMany()
+     * 
+     * // Get first 10 Uploads
+     * const uploads = await prisma.upload.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const uploadWithIdOnly = await prisma.upload.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UploadFindManyArgs>(args?: SelectSubset<T, UploadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Upload.
+     * @param {UploadCreateArgs} args - Arguments to create a Upload.
+     * @example
+     * // Create one Upload
+     * const Upload = await prisma.upload.create({
+     *   data: {
+     *     // ... data to create a Upload
+     *   }
+     * })
+     * 
+     */
+    create<T extends UploadCreateArgs>(args: SelectSubset<T, UploadCreateArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Uploads.
+     * @param {UploadCreateManyArgs} args - Arguments to create many Uploads.
+     * @example
+     * // Create many Uploads
+     * const upload = await prisma.upload.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UploadCreateManyArgs>(args?: SelectSubset<T, UploadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Uploads and returns the data saved in the database.
+     * @param {UploadCreateManyAndReturnArgs} args - Arguments to create many Uploads.
+     * @example
+     * // Create many Uploads
+     * const upload = await prisma.upload.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Uploads and only return the `id`
+     * const uploadWithIdOnly = await prisma.upload.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UploadCreateManyAndReturnArgs>(args?: SelectSubset<T, UploadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Upload.
+     * @param {UploadDeleteArgs} args - Arguments to delete one Upload.
+     * @example
+     * // Delete one Upload
+     * const Upload = await prisma.upload.delete({
+     *   where: {
+     *     // ... filter to delete one Upload
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UploadDeleteArgs>(args: SelectSubset<T, UploadDeleteArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Upload.
+     * @param {UploadUpdateArgs} args - Arguments to update one Upload.
+     * @example
+     * // Update one Upload
+     * const upload = await prisma.upload.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UploadUpdateArgs>(args: SelectSubset<T, UploadUpdateArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Uploads.
+     * @param {UploadDeleteManyArgs} args - Arguments to filter Uploads to delete.
+     * @example
+     * // Delete a few Uploads
+     * const { count } = await prisma.upload.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UploadDeleteManyArgs>(args?: SelectSubset<T, UploadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Uploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Uploads
+     * const upload = await prisma.upload.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UploadUpdateManyArgs>(args: SelectSubset<T, UploadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Uploads and returns the data updated in the database.
+     * @param {UploadUpdateManyAndReturnArgs} args - Arguments to update many Uploads.
+     * @example
+     * // Update many Uploads
+     * const upload = await prisma.upload.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Uploads and only return the `id`
+     * const uploadWithIdOnly = await prisma.upload.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UploadUpdateManyAndReturnArgs>(args: SelectSubset<T, UploadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Upload.
+     * @param {UploadUpsertArgs} args - Arguments to update or create a Upload.
+     * @example
+     * // Update or create a Upload
+     * const upload = await prisma.upload.upsert({
+     *   create: {
+     *     // ... data to create a Upload
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Upload we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UploadUpsertArgs>(args: SelectSubset<T, UploadUpsertArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Uploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadCountArgs} args - Arguments to filter Uploads to count.
+     * @example
+     * // Count the number of Uploads
+     * const count = await prisma.upload.count({
+     *   where: {
+     *     // ... the filter for the Uploads we want to count
+     *   }
+     * })
+    **/
+    count<T extends UploadCountArgs>(
+      args?: Subset<T, UploadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UploadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Upload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UploadAggregateArgs>(args: Subset<T, UploadAggregateArgs>): Prisma.PrismaPromise<GetUploadAggregateType<T>>
+
+    /**
+     * Group by Upload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UploadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UploadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UploadGroupByArgs['orderBy'] }
+        : { orderBy?: UploadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UploadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUploadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Upload model
+   */
+  readonly fields: UploadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Upload.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UploadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kitUploads<T extends Upload$kitUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$kitUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mobileSuitUploads<T extends Upload$mobileSuitUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$mobileSuitUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productLineLogos<T extends Upload$productLineLogosArgs<ExtArgs> = {}>(args?: Subset<T, Upload$productLineLogosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Upload model
+   */
+  interface UploadFieldRefs {
+    readonly id: FieldRef<"Upload", 'String'>
+    readonly cloudinaryAssetId: FieldRef<"Upload", 'String'>
+    readonly publicId: FieldRef<"Upload", 'String'>
+    readonly url: FieldRef<"Upload", 'String'>
+    readonly eagerUrl: FieldRef<"Upload", 'String'>
+    readonly format: FieldRef<"Upload", 'String'>
+    readonly resourceType: FieldRef<"Upload", 'String'>
+    readonly size: FieldRef<"Upload", 'Int'>
+    readonly pages: FieldRef<"Upload", 'Int'>
+    readonly originalFilename: FieldRef<"Upload", 'String'>
+    readonly uploadedAt: FieldRef<"Upload", 'DateTime'>
+    readonly uploadedById: FieldRef<"Upload", 'String'>
+    readonly createdAt: FieldRef<"Upload", 'DateTime'>
+    readonly updatedAt: FieldRef<"Upload", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Upload findUnique
+   */
+  export type UploadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter, which Upload to fetch.
+     */
+    where: UploadWhereUniqueInput
+  }
+
+  /**
+   * Upload findUniqueOrThrow
+   */
+  export type UploadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter, which Upload to fetch.
+     */
+    where: UploadWhereUniqueInput
+  }
+
+  /**
+   * Upload findFirst
+   */
+  export type UploadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter, which Upload to fetch.
+     */
+    where?: UploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Uploads to fetch.
+     */
+    orderBy?: UploadOrderByWithRelationInput | UploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Uploads.
+     */
+    cursor?: UploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Uploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Uploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Uploads.
+     */
+    distinct?: UploadScalarFieldEnum | UploadScalarFieldEnum[]
+  }
+
+  /**
+   * Upload findFirstOrThrow
+   */
+  export type UploadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter, which Upload to fetch.
+     */
+    where?: UploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Uploads to fetch.
+     */
+    orderBy?: UploadOrderByWithRelationInput | UploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Uploads.
+     */
+    cursor?: UploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Uploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Uploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Uploads.
+     */
+    distinct?: UploadScalarFieldEnum | UploadScalarFieldEnum[]
+  }
+
+  /**
+   * Upload findMany
+   */
+  export type UploadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter, which Uploads to fetch.
+     */
+    where?: UploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Uploads to fetch.
+     */
+    orderBy?: UploadOrderByWithRelationInput | UploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Uploads.
+     */
+    cursor?: UploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Uploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Uploads.
+     */
+    skip?: number
+    distinct?: UploadScalarFieldEnum | UploadScalarFieldEnum[]
+  }
+
+  /**
+   * Upload create
+   */
+  export type UploadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Upload.
+     */
+    data: XOR<UploadCreateInput, UploadUncheckedCreateInput>
+  }
+
+  /**
+   * Upload createMany
+   */
+  export type UploadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Uploads.
+     */
+    data: UploadCreateManyInput | UploadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Upload createManyAndReturn
+   */
+  export type UploadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * The data used to create many Uploads.
+     */
+    data: UploadCreateManyInput | UploadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Upload update
+   */
+  export type UploadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Upload.
+     */
+    data: XOR<UploadUpdateInput, UploadUncheckedUpdateInput>
+    /**
+     * Choose, which Upload to update.
+     */
+    where: UploadWhereUniqueInput
+  }
+
+  /**
+   * Upload updateMany
+   */
+  export type UploadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Uploads.
+     */
+    data: XOR<UploadUpdateManyMutationInput, UploadUncheckedUpdateManyInput>
+    /**
+     * Filter which Uploads to update
+     */
+    where?: UploadWhereInput
+    /**
+     * Limit how many Uploads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Upload updateManyAndReturn
+   */
+  export type UploadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * The data used to update Uploads.
+     */
+    data: XOR<UploadUpdateManyMutationInput, UploadUncheckedUpdateManyInput>
+    /**
+     * Filter which Uploads to update
+     */
+    where?: UploadWhereInput
+    /**
+     * Limit how many Uploads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Upload upsert
+   */
+  export type UploadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Upload to update in case it exists.
+     */
+    where: UploadWhereUniqueInput
+    /**
+     * In case the Upload found by the `where` argument doesn't exist, create a new Upload with this data.
+     */
+    create: XOR<UploadCreateInput, UploadUncheckedCreateInput>
+    /**
+     * In case the Upload was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UploadUpdateInput, UploadUncheckedUpdateInput>
+  }
+
+  /**
+   * Upload delete
+   */
+  export type UploadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    /**
+     * Filter which Upload to delete.
+     */
+    where: UploadWhereUniqueInput
+  }
+
+  /**
+   * Upload deleteMany
+   */
+  export type UploadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Uploads to delete
+     */
+    where?: UploadWhereInput
+    /**
+     * Limit how many Uploads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Upload.kitUploads
+   */
+  export type Upload$kitUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    where?: KitUploadWhereInput
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    cursor?: KitUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitUploadScalarFieldEnum | KitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.mobileSuitUploads
+   */
+  export type Upload$mobileSuitUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    where?: MobileSuitUploadWhereInput
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    cursor?: MobileSuitUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MobileSuitUploadScalarFieldEnum | MobileSuitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.productLineLogos
+   */
+  export type Upload$productLineLogosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    where?: ProductLineWhereInput
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    cursor?: ProductLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * Upload without action
+   */
+  export type UploadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KitUpload
+   */
+
+  export type AggregateKitUpload = {
+    _count: KitUploadCountAggregateOutputType | null
+    _avg: KitUploadAvgAggregateOutputType | null
+    _sum: KitUploadSumAggregateOutputType | null
+    _min: KitUploadMinAggregateOutputType | null
+    _max: KitUploadMaxAggregateOutputType | null
+  }
+
+  export type KitUploadAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type KitUploadSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type KitUploadMinAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    type: $Enums.KitImageType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitUploadMaxAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    type: $Enums.KitImageType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitUploadCountAggregateOutputType = {
+    id: number
+    kitId: number
+    uploadId: number
+    caption: number
+    order: number
+    type: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type KitUploadAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type KitUploadSumAggregateInputType = {
+    order?: true
+  }
+
+  export type KitUploadMinAggregateInputType = {
+    id?: true
+    kitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitUploadMaxAggregateInputType = {
+    id?: true
+    kitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitUploadCountAggregateInputType = {
+    id?: true
+    kitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type KitUploadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitUpload to aggregate.
+     */
+    where?: KitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitUploads to fetch.
+     */
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KitUploads
+    **/
+    _count?: true | KitUploadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KitUploadAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KitUploadSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KitUploadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KitUploadMaxAggregateInputType
+  }
+
+  export type GetKitUploadAggregateType<T extends KitUploadAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitUpload]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitUpload[P]>
+      : GetScalarType<T[P], AggregateKitUpload[P]>
+  }
+
+
+
+
+  export type KitUploadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitUploadWhereInput
+    orderBy?: KitUploadOrderByWithAggregationInput | KitUploadOrderByWithAggregationInput[]
+    by: KitUploadScalarFieldEnum[] | KitUploadScalarFieldEnum
+    having?: KitUploadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KitUploadCountAggregateInputType | true
+    _avg?: KitUploadAvgAggregateInputType
+    _sum?: KitUploadSumAggregateInputType
+    _min?: KitUploadMinAggregateInputType
+    _max?: KitUploadMaxAggregateInputType
+  }
+
+  export type KitUploadGroupByOutputType = {
+    id: string
+    kitId: string
+    uploadId: string
+    caption: string | null
+    order: number | null
+    type: $Enums.KitImageType
+    createdAt: Date
+    updatedAt: Date
+    _count: KitUploadCountAggregateOutputType | null
+    _avg: KitUploadAvgAggregateOutputType | null
+    _sum: KitUploadSumAggregateOutputType | null
+    _min: KitUploadMinAggregateOutputType | null
+    _max: KitUploadMaxAggregateOutputType | null
+  }
+
+  type GetKitUploadGroupByPayload<T extends KitUploadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KitUploadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KitUploadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KitUploadGroupByOutputType[P]>
+            : GetScalarType<T[P], KitUploadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KitUploadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitUpload"]>
+
+  export type KitUploadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitUpload"]>
+
+  export type KitUploadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitUpload"]>
+
+  export type KitUploadSelectScalar = {
+    id?: boolean
+    kitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type KitUploadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kitId" | "uploadId" | "caption" | "order" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["kitUpload"]>
+  export type KitUploadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type KitUploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type KitUploadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+
+  export type $KitUploadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KitUpload"
+    objects: {
+      kit: Prisma.$KitPayload<ExtArgs>
+      upload: Prisma.$UploadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      kitId: string
+      uploadId: string
+      caption: string | null
+      order: number | null
+      type: $Enums.KitImageType
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["kitUpload"]>
+    composites: {}
+  }
+
+  type KitUploadGetPayload<S extends boolean | null | undefined | KitUploadDefaultArgs> = $Result.GetResult<Prisma.$KitUploadPayload, S>
+
+  type KitUploadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KitUploadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KitUploadCountAggregateInputType | true
+    }
+
+  export interface KitUploadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitUpload'], meta: { name: 'KitUpload' } }
+    /**
+     * Find zero or one KitUpload that matches the filter.
+     * @param {KitUploadFindUniqueArgs} args - Arguments to find a KitUpload
+     * @example
+     * // Get one KitUpload
+     * const kitUpload = await prisma.kitUpload.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KitUploadFindUniqueArgs>(args: SelectSubset<T, KitUploadFindUniqueArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KitUpload that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KitUploadFindUniqueOrThrowArgs} args - Arguments to find a KitUpload
+     * @example
+     * // Get one KitUpload
+     * const kitUpload = await prisma.kitUpload.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KitUploadFindUniqueOrThrowArgs>(args: SelectSubset<T, KitUploadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitUpload that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadFindFirstArgs} args - Arguments to find a KitUpload
+     * @example
+     * // Get one KitUpload
+     * const kitUpload = await prisma.kitUpload.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KitUploadFindFirstArgs>(args?: SelectSubset<T, KitUploadFindFirstArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitUpload that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadFindFirstOrThrowArgs} args - Arguments to find a KitUpload
+     * @example
+     * // Get one KitUpload
+     * const kitUpload = await prisma.kitUpload.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KitUploadFindFirstOrThrowArgs>(args?: SelectSubset<T, KitUploadFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KitUploads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KitUploads
+     * const kitUploads = await prisma.kitUpload.findMany()
+     * 
+     * // Get first 10 KitUploads
+     * const kitUploads = await prisma.kitUpload.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kitUploadWithIdOnly = await prisma.kitUpload.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KitUploadFindManyArgs>(args?: SelectSubset<T, KitUploadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KitUpload.
+     * @param {KitUploadCreateArgs} args - Arguments to create a KitUpload.
+     * @example
+     * // Create one KitUpload
+     * const KitUpload = await prisma.kitUpload.create({
+     *   data: {
+     *     // ... data to create a KitUpload
+     *   }
+     * })
+     * 
+     */
+    create<T extends KitUploadCreateArgs>(args: SelectSubset<T, KitUploadCreateArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KitUploads.
+     * @param {KitUploadCreateManyArgs} args - Arguments to create many KitUploads.
+     * @example
+     * // Create many KitUploads
+     * const kitUpload = await prisma.kitUpload.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KitUploadCreateManyArgs>(args?: SelectSubset<T, KitUploadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KitUploads and returns the data saved in the database.
+     * @param {KitUploadCreateManyAndReturnArgs} args - Arguments to create many KitUploads.
+     * @example
+     * // Create many KitUploads
+     * const kitUpload = await prisma.kitUpload.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KitUploads and only return the `id`
+     * const kitUploadWithIdOnly = await prisma.kitUpload.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KitUploadCreateManyAndReturnArgs>(args?: SelectSubset<T, KitUploadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a KitUpload.
+     * @param {KitUploadDeleteArgs} args - Arguments to delete one KitUpload.
+     * @example
+     * // Delete one KitUpload
+     * const KitUpload = await prisma.kitUpload.delete({
+     *   where: {
+     *     // ... filter to delete one KitUpload
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KitUploadDeleteArgs>(args: SelectSubset<T, KitUploadDeleteArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KitUpload.
+     * @param {KitUploadUpdateArgs} args - Arguments to update one KitUpload.
+     * @example
+     * // Update one KitUpload
+     * const kitUpload = await prisma.kitUpload.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KitUploadUpdateArgs>(args: SelectSubset<T, KitUploadUpdateArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KitUploads.
+     * @param {KitUploadDeleteManyArgs} args - Arguments to filter KitUploads to delete.
+     * @example
+     * // Delete a few KitUploads
+     * const { count } = await prisma.kitUpload.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KitUploadDeleteManyArgs>(args?: SelectSubset<T, KitUploadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KitUploads
+     * const kitUpload = await prisma.kitUpload.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KitUploadUpdateManyArgs>(args: SelectSubset<T, KitUploadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitUploads and returns the data updated in the database.
+     * @param {KitUploadUpdateManyAndReturnArgs} args - Arguments to update many KitUploads.
+     * @example
+     * // Update many KitUploads
+     * const kitUpload = await prisma.kitUpload.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more KitUploads and only return the `id`
+     * const kitUploadWithIdOnly = await prisma.kitUpload.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KitUploadUpdateManyAndReturnArgs>(args: SelectSubset<T, KitUploadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one KitUpload.
+     * @param {KitUploadUpsertArgs} args - Arguments to update or create a KitUpload.
+     * @example
+     * // Update or create a KitUpload
+     * const kitUpload = await prisma.kitUpload.upsert({
+     *   create: {
+     *     // ... data to create a KitUpload
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KitUpload we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KitUploadUpsertArgs>(args: SelectSubset<T, KitUploadUpsertArgs<ExtArgs>>): Prisma__KitUploadClient<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KitUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadCountArgs} args - Arguments to filter KitUploads to count.
+     * @example
+     * // Count the number of KitUploads
+     * const count = await prisma.kitUpload.count({
+     *   where: {
+     *     // ... the filter for the KitUploads we want to count
+     *   }
+     * })
+    **/
+    count<T extends KitUploadCountArgs>(
+      args?: Subset<T, KitUploadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KitUploadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KitUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KitUploadAggregateArgs>(args: Subset<T, KitUploadAggregateArgs>): Prisma.PrismaPromise<GetKitUploadAggregateType<T>>
+
+    /**
+     * Group by KitUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitUploadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KitUploadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KitUploadGroupByArgs['orderBy'] }
+        : { orderBy?: KitUploadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KitUploadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitUploadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KitUpload model
+   */
+  readonly fields: KitUploadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KitUpload.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KitUploadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    upload<T extends UploadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UploadDefaultArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KitUpload model
+   */
+  interface KitUploadFieldRefs {
+    readonly id: FieldRef<"KitUpload", 'String'>
+    readonly kitId: FieldRef<"KitUpload", 'String'>
+    readonly uploadId: FieldRef<"KitUpload", 'String'>
+    readonly caption: FieldRef<"KitUpload", 'String'>
+    readonly order: FieldRef<"KitUpload", 'Int'>
+    readonly type: FieldRef<"KitUpload", 'KitImageType'>
+    readonly createdAt: FieldRef<"KitUpload", 'DateTime'>
+    readonly updatedAt: FieldRef<"KitUpload", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KitUpload findUnique
+   */
+  export type KitUploadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which KitUpload to fetch.
+     */
+    where: KitUploadWhereUniqueInput
+  }
+
+  /**
+   * KitUpload findUniqueOrThrow
+   */
+  export type KitUploadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which KitUpload to fetch.
+     */
+    where: KitUploadWhereUniqueInput
+  }
+
+  /**
+   * KitUpload findFirst
+   */
+  export type KitUploadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which KitUpload to fetch.
+     */
+    where?: KitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitUploads to fetch.
+     */
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitUploads.
+     */
+    cursor?: KitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitUploads.
+     */
+    distinct?: KitUploadScalarFieldEnum | KitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * KitUpload findFirstOrThrow
+   */
+  export type KitUploadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which KitUpload to fetch.
+     */
+    where?: KitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitUploads to fetch.
+     */
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitUploads.
+     */
+    cursor?: KitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitUploads.
+     */
+    distinct?: KitUploadScalarFieldEnum | KitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * KitUpload findMany
+   */
+  export type KitUploadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which KitUploads to fetch.
+     */
+    where?: KitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitUploads to fetch.
+     */
+    orderBy?: KitUploadOrderByWithRelationInput | KitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KitUploads.
+     */
+    cursor?: KitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitUploads.
+     */
+    skip?: number
+    distinct?: KitUploadScalarFieldEnum | KitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * KitUpload create
+   */
+  export type KitUploadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KitUpload.
+     */
+    data: XOR<KitUploadCreateInput, KitUploadUncheckedCreateInput>
+  }
+
+  /**
+   * KitUpload createMany
+   */
+  export type KitUploadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KitUploads.
+     */
+    data: KitUploadCreateManyInput | KitUploadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KitUpload createManyAndReturn
+   */
+  export type KitUploadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * The data used to create many KitUploads.
+     */
+    data: KitUploadCreateManyInput | KitUploadCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitUpload update
+   */
+  export type KitUploadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KitUpload.
+     */
+    data: XOR<KitUploadUpdateInput, KitUploadUncheckedUpdateInput>
+    /**
+     * Choose, which KitUpload to update.
+     */
+    where: KitUploadWhereUniqueInput
+  }
+
+  /**
+   * KitUpload updateMany
+   */
+  export type KitUploadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KitUploads.
+     */
+    data: XOR<KitUploadUpdateManyMutationInput, KitUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which KitUploads to update
+     */
+    where?: KitUploadWhereInput
+    /**
+     * Limit how many KitUploads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitUpload updateManyAndReturn
+   */
+  export type KitUploadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * The data used to update KitUploads.
+     */
+    data: XOR<KitUploadUpdateManyMutationInput, KitUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which KitUploads to update
+     */
+    where?: KitUploadWhereInput
+    /**
+     * Limit how many KitUploads to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitUpload upsert
+   */
+  export type KitUploadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KitUpload to update in case it exists.
+     */
+    where: KitUploadWhereUniqueInput
+    /**
+     * In case the KitUpload found by the `where` argument doesn't exist, create a new KitUpload with this data.
+     */
+    create: XOR<KitUploadCreateInput, KitUploadUncheckedCreateInput>
+    /**
+     * In case the KitUpload was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KitUploadUpdateInput, KitUploadUncheckedUpdateInput>
+  }
+
+  /**
+   * KitUpload delete
+   */
+  export type KitUploadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+    /**
+     * Filter which KitUpload to delete.
+     */
+    where: KitUploadWhereUniqueInput
+  }
+
+  /**
+   * KitUpload deleteMany
+   */
+  export type KitUploadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitUploads to delete
+     */
+    where?: KitUploadWhereInput
+    /**
+     * Limit how many KitUploads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitUpload without action
+   */
+  export type KitUploadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitUpload
+     */
+    select?: KitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitUpload
+     */
+    omit?: KitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitUploadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MobileSuitUpload
+   */
+
+  export type AggregateMobileSuitUpload = {
+    _count: MobileSuitUploadCountAggregateOutputType | null
+    _avg: MobileSuitUploadAvgAggregateOutputType | null
+    _sum: MobileSuitUploadSumAggregateOutputType | null
+    _min: MobileSuitUploadMinAggregateOutputType | null
+    _max: MobileSuitUploadMaxAggregateOutputType | null
+  }
+
+  export type MobileSuitUploadAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type MobileSuitUploadSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type MobileSuitUploadMinAggregateOutputType = {
+    id: string | null
+    mobileSuitId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MobileSuitUploadMaxAggregateOutputType = {
+    id: string | null
+    mobileSuitId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MobileSuitUploadCountAggregateOutputType = {
+    id: number
+    mobileSuitId: number
+    uploadId: number
+    caption: number
+    order: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MobileSuitUploadAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type MobileSuitUploadSumAggregateInputType = {
+    order?: true
+  }
+
+  export type MobileSuitUploadMinAggregateInputType = {
+    id?: true
+    mobileSuitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MobileSuitUploadMaxAggregateInputType = {
+    id?: true
+    mobileSuitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MobileSuitUploadCountAggregateInputType = {
+    id?: true
+    mobileSuitId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MobileSuitUploadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileSuitUpload to aggregate.
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuitUploads to fetch.
+     */
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MobileSuitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MobileSuitUploads
+    **/
+    _count?: true | MobileSuitUploadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MobileSuitUploadAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MobileSuitUploadSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MobileSuitUploadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MobileSuitUploadMaxAggregateInputType
+  }
+
+  export type GetMobileSuitUploadAggregateType<T extends MobileSuitUploadAggregateArgs> = {
+        [P in keyof T & keyof AggregateMobileSuitUpload]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMobileSuitUpload[P]>
+      : GetScalarType<T[P], AggregateMobileSuitUpload[P]>
+  }
+
+
+
+
+  export type MobileSuitUploadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileSuitUploadWhereInput
+    orderBy?: MobileSuitUploadOrderByWithAggregationInput | MobileSuitUploadOrderByWithAggregationInput[]
+    by: MobileSuitUploadScalarFieldEnum[] | MobileSuitUploadScalarFieldEnum
+    having?: MobileSuitUploadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MobileSuitUploadCountAggregateInputType | true
+    _avg?: MobileSuitUploadAvgAggregateInputType
+    _sum?: MobileSuitUploadSumAggregateInputType
+    _min?: MobileSuitUploadMinAggregateInputType
+    _max?: MobileSuitUploadMaxAggregateInputType
+  }
+
+  export type MobileSuitUploadGroupByOutputType = {
+    id: string
+    mobileSuitId: string
+    uploadId: string
+    caption: string | null
+    order: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MobileSuitUploadCountAggregateOutputType | null
+    _avg: MobileSuitUploadAvgAggregateOutputType | null
+    _sum: MobileSuitUploadSumAggregateOutputType | null
+    _min: MobileSuitUploadMinAggregateOutputType | null
+    _max: MobileSuitUploadMaxAggregateOutputType | null
+  }
+
+  type GetMobileSuitUploadGroupByPayload<T extends MobileSuitUploadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MobileSuitUploadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MobileSuitUploadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MobileSuitUploadGroupByOutputType[P]>
+            : GetScalarType<T[P], MobileSuitUploadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MobileSuitUploadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mobileSuitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuitUpload"]>
+
+  export type MobileSuitUploadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mobileSuitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuitUpload"]>
+
+  export type MobileSuitUploadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mobileSuitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileSuitUpload"]>
+
+  export type MobileSuitUploadSelectScalar = {
+    id?: boolean
+    mobileSuitId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MobileSuitUploadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mobileSuitId" | "uploadId" | "caption" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["mobileSuitUpload"]>
+  export type MobileSuitUploadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type MobileSuitUploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type MobileSuitUploadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mobileSuit?: boolean | MobileSuitDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+
+  export type $MobileSuitUploadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MobileSuitUpload"
+    objects: {
+      mobileSuit: Prisma.$MobileSuitPayload<ExtArgs>
+      upload: Prisma.$UploadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      mobileSuitId: string
+      uploadId: string
+      caption: string | null
+      order: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["mobileSuitUpload"]>
+    composites: {}
+  }
+
+  type MobileSuitUploadGetPayload<S extends boolean | null | undefined | MobileSuitUploadDefaultArgs> = $Result.GetResult<Prisma.$MobileSuitUploadPayload, S>
+
+  type MobileSuitUploadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MobileSuitUploadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MobileSuitUploadCountAggregateInputType | true
+    }
+
+  export interface MobileSuitUploadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MobileSuitUpload'], meta: { name: 'MobileSuitUpload' } }
+    /**
+     * Find zero or one MobileSuitUpload that matches the filter.
+     * @param {MobileSuitUploadFindUniqueArgs} args - Arguments to find a MobileSuitUpload
+     * @example
+     * // Get one MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MobileSuitUploadFindUniqueArgs>(args: SelectSubset<T, MobileSuitUploadFindUniqueArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MobileSuitUpload that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MobileSuitUploadFindUniqueOrThrowArgs} args - Arguments to find a MobileSuitUpload
+     * @example
+     * // Get one MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MobileSuitUploadFindUniqueOrThrowArgs>(args: SelectSubset<T, MobileSuitUploadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileSuitUpload that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadFindFirstArgs} args - Arguments to find a MobileSuitUpload
+     * @example
+     * // Get one MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MobileSuitUploadFindFirstArgs>(args?: SelectSubset<T, MobileSuitUploadFindFirstArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileSuitUpload that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadFindFirstOrThrowArgs} args - Arguments to find a MobileSuitUpload
+     * @example
+     * // Get one MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MobileSuitUploadFindFirstOrThrowArgs>(args?: SelectSubset<T, MobileSuitUploadFindFirstOrThrowArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MobileSuitUploads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MobileSuitUploads
+     * const mobileSuitUploads = await prisma.mobileSuitUpload.findMany()
+     * 
+     * // Get first 10 MobileSuitUploads
+     * const mobileSuitUploads = await prisma.mobileSuitUpload.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mobileSuitUploadWithIdOnly = await prisma.mobileSuitUpload.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MobileSuitUploadFindManyArgs>(args?: SelectSubset<T, MobileSuitUploadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MobileSuitUpload.
+     * @param {MobileSuitUploadCreateArgs} args - Arguments to create a MobileSuitUpload.
+     * @example
+     * // Create one MobileSuitUpload
+     * const MobileSuitUpload = await prisma.mobileSuitUpload.create({
+     *   data: {
+     *     // ... data to create a MobileSuitUpload
+     *   }
+     * })
+     * 
+     */
+    create<T extends MobileSuitUploadCreateArgs>(args: SelectSubset<T, MobileSuitUploadCreateArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MobileSuitUploads.
+     * @param {MobileSuitUploadCreateManyArgs} args - Arguments to create many MobileSuitUploads.
+     * @example
+     * // Create many MobileSuitUploads
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MobileSuitUploadCreateManyArgs>(args?: SelectSubset<T, MobileSuitUploadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MobileSuitUploads and returns the data saved in the database.
+     * @param {MobileSuitUploadCreateManyAndReturnArgs} args - Arguments to create many MobileSuitUploads.
+     * @example
+     * // Create many MobileSuitUploads
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MobileSuitUploads and only return the `id`
+     * const mobileSuitUploadWithIdOnly = await prisma.mobileSuitUpload.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MobileSuitUploadCreateManyAndReturnArgs>(args?: SelectSubset<T, MobileSuitUploadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MobileSuitUpload.
+     * @param {MobileSuitUploadDeleteArgs} args - Arguments to delete one MobileSuitUpload.
+     * @example
+     * // Delete one MobileSuitUpload
+     * const MobileSuitUpload = await prisma.mobileSuitUpload.delete({
+     *   where: {
+     *     // ... filter to delete one MobileSuitUpload
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MobileSuitUploadDeleteArgs>(args: SelectSubset<T, MobileSuitUploadDeleteArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MobileSuitUpload.
+     * @param {MobileSuitUploadUpdateArgs} args - Arguments to update one MobileSuitUpload.
+     * @example
+     * // Update one MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MobileSuitUploadUpdateArgs>(args: SelectSubset<T, MobileSuitUploadUpdateArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MobileSuitUploads.
+     * @param {MobileSuitUploadDeleteManyArgs} args - Arguments to filter MobileSuitUploads to delete.
+     * @example
+     * // Delete a few MobileSuitUploads
+     * const { count } = await prisma.mobileSuitUpload.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MobileSuitUploadDeleteManyArgs>(args?: SelectSubset<T, MobileSuitUploadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileSuitUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MobileSuitUploads
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MobileSuitUploadUpdateManyArgs>(args: SelectSubset<T, MobileSuitUploadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileSuitUploads and returns the data updated in the database.
+     * @param {MobileSuitUploadUpdateManyAndReturnArgs} args - Arguments to update many MobileSuitUploads.
+     * @example
+     * // Update many MobileSuitUploads
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MobileSuitUploads and only return the `id`
+     * const mobileSuitUploadWithIdOnly = await prisma.mobileSuitUpload.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MobileSuitUploadUpdateManyAndReturnArgs>(args: SelectSubset<T, MobileSuitUploadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MobileSuitUpload.
+     * @param {MobileSuitUploadUpsertArgs} args - Arguments to update or create a MobileSuitUpload.
+     * @example
+     * // Update or create a MobileSuitUpload
+     * const mobileSuitUpload = await prisma.mobileSuitUpload.upsert({
+     *   create: {
+     *     // ... data to create a MobileSuitUpload
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MobileSuitUpload we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MobileSuitUploadUpsertArgs>(args: SelectSubset<T, MobileSuitUploadUpsertArgs<ExtArgs>>): Prisma__MobileSuitUploadClient<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MobileSuitUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadCountArgs} args - Arguments to filter MobileSuitUploads to count.
+     * @example
+     * // Count the number of MobileSuitUploads
+     * const count = await prisma.mobileSuitUpload.count({
+     *   where: {
+     *     // ... the filter for the MobileSuitUploads we want to count
+     *   }
+     * })
+    **/
+    count<T extends MobileSuitUploadCountArgs>(
+      args?: Subset<T, MobileSuitUploadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MobileSuitUploadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MobileSuitUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MobileSuitUploadAggregateArgs>(args: Subset<T, MobileSuitUploadAggregateArgs>): Prisma.PrismaPromise<GetMobileSuitUploadAggregateType<T>>
+
+    /**
+     * Group by MobileSuitUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileSuitUploadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MobileSuitUploadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MobileSuitUploadGroupByArgs['orderBy'] }
+        : { orderBy?: MobileSuitUploadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MobileSuitUploadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMobileSuitUploadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MobileSuitUpload model
+   */
+  readonly fields: MobileSuitUploadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MobileSuitUpload.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MobileSuitUploadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    mobileSuit<T extends MobileSuitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MobileSuitDefaultArgs<ExtArgs>>): Prisma__MobileSuitClient<$Result.GetResult<Prisma.$MobileSuitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    upload<T extends UploadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UploadDefaultArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MobileSuitUpload model
+   */
+  interface MobileSuitUploadFieldRefs {
+    readonly id: FieldRef<"MobileSuitUpload", 'String'>
+    readonly mobileSuitId: FieldRef<"MobileSuitUpload", 'String'>
+    readonly uploadId: FieldRef<"MobileSuitUpload", 'String'>
+    readonly caption: FieldRef<"MobileSuitUpload", 'String'>
+    readonly order: FieldRef<"MobileSuitUpload", 'Int'>
+    readonly createdAt: FieldRef<"MobileSuitUpload", 'DateTime'>
+    readonly updatedAt: FieldRef<"MobileSuitUpload", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MobileSuitUpload findUnique
+   */
+  export type MobileSuitUploadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuitUpload to fetch.
+     */
+    where: MobileSuitUploadWhereUniqueInput
+  }
+
+  /**
+   * MobileSuitUpload findUniqueOrThrow
+   */
+  export type MobileSuitUploadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuitUpload to fetch.
+     */
+    where: MobileSuitUploadWhereUniqueInput
+  }
+
+  /**
+   * MobileSuitUpload findFirst
+   */
+  export type MobileSuitUploadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuitUpload to fetch.
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuitUploads to fetch.
+     */
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileSuitUploads.
+     */
+    cursor?: MobileSuitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileSuitUploads.
+     */
+    distinct?: MobileSuitUploadScalarFieldEnum | MobileSuitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuitUpload findFirstOrThrow
+   */
+  export type MobileSuitUploadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuitUpload to fetch.
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuitUploads to fetch.
+     */
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileSuitUploads.
+     */
+    cursor?: MobileSuitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuitUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileSuitUploads.
+     */
+    distinct?: MobileSuitUploadScalarFieldEnum | MobileSuitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuitUpload findMany
+   */
+  export type MobileSuitUploadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileSuitUploads to fetch.
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileSuitUploads to fetch.
+     */
+    orderBy?: MobileSuitUploadOrderByWithRelationInput | MobileSuitUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MobileSuitUploads.
+     */
+    cursor?: MobileSuitUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileSuitUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileSuitUploads.
+     */
+    skip?: number
+    distinct?: MobileSuitUploadScalarFieldEnum | MobileSuitUploadScalarFieldEnum[]
+  }
+
+  /**
+   * MobileSuitUpload create
+   */
+  export type MobileSuitUploadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MobileSuitUpload.
+     */
+    data: XOR<MobileSuitUploadCreateInput, MobileSuitUploadUncheckedCreateInput>
+  }
+
+  /**
+   * MobileSuitUpload createMany
+   */
+  export type MobileSuitUploadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MobileSuitUploads.
+     */
+    data: MobileSuitUploadCreateManyInput | MobileSuitUploadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MobileSuitUpload createManyAndReturn
+   */
+  export type MobileSuitUploadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * The data used to create many MobileSuitUploads.
+     */
+    data: MobileSuitUploadCreateManyInput | MobileSuitUploadCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileSuitUpload update
+   */
+  export type MobileSuitUploadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MobileSuitUpload.
+     */
+    data: XOR<MobileSuitUploadUpdateInput, MobileSuitUploadUncheckedUpdateInput>
+    /**
+     * Choose, which MobileSuitUpload to update.
+     */
+    where: MobileSuitUploadWhereUniqueInput
+  }
+
+  /**
+   * MobileSuitUpload updateMany
+   */
+  export type MobileSuitUploadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MobileSuitUploads.
+     */
+    data: XOR<MobileSuitUploadUpdateManyMutationInput, MobileSuitUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileSuitUploads to update
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * Limit how many MobileSuitUploads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileSuitUpload updateManyAndReturn
+   */
+  export type MobileSuitUploadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * The data used to update MobileSuitUploads.
+     */
+    data: XOR<MobileSuitUploadUpdateManyMutationInput, MobileSuitUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileSuitUploads to update
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * Limit how many MobileSuitUploads to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileSuitUpload upsert
+   */
+  export type MobileSuitUploadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MobileSuitUpload to update in case it exists.
+     */
+    where: MobileSuitUploadWhereUniqueInput
+    /**
+     * In case the MobileSuitUpload found by the `where` argument doesn't exist, create a new MobileSuitUpload with this data.
+     */
+    create: XOR<MobileSuitUploadCreateInput, MobileSuitUploadUncheckedCreateInput>
+    /**
+     * In case the MobileSuitUpload was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MobileSuitUploadUpdateInput, MobileSuitUploadUncheckedUpdateInput>
+  }
+
+  /**
+   * MobileSuitUpload delete
+   */
+  export type MobileSuitUploadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+    /**
+     * Filter which MobileSuitUpload to delete.
+     */
+    where: MobileSuitUploadWhereUniqueInput
+  }
+
+  /**
+   * MobileSuitUpload deleteMany
+   */
+  export type MobileSuitUploadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileSuitUploads to delete
+     */
+    where?: MobileSuitUploadWhereInput
+    /**
+     * Limit how many MobileSuitUploads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileSuitUpload without action
+   */
+  export type MobileSuitUploadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileSuitUpload
+     */
+    select?: MobileSuitUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileSuitUpload
+     */
+    omit?: MobileSuitUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileSuitUploadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Enums
+   */
+
+  export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
+    Serializable: 'Serializable'
+  };
+
+  export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+  export const TimelineScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TimelineScalarFieldEnum = (typeof TimelineScalarFieldEnum)[keyof typeof TimelineScalarFieldEnum]
+
+
+  export const SeriesScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    timelineId: 'timelineId',
+    scrapedImages: 'scrapedImages',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SeriesScalarFieldEnum = (typeof SeriesScalarFieldEnum)[keyof typeof SeriesScalarFieldEnum]
+
+
+  export const MobileSuitScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    seriesId: 'seriesId',
+    scrapedImages: 'scrapedImages',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MobileSuitScalarFieldEnum = (typeof MobileSuitScalarFieldEnum)[keyof typeof MobileSuitScalarFieldEnum]
+
+
+  export const GradeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GradeScalarFieldEnum = (typeof GradeScalarFieldEnum)[keyof typeof GradeScalarFieldEnum]
+
+
+  export const ProductLineScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    gradeId: 'gradeId',
+    logoId: 'logoId',
+    scrapedImage: 'scrapedImage',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProductLineScalarFieldEnum = (typeof ProductLineScalarFieldEnum)[keyof typeof ProductLineScalarFieldEnum]
+
+
+  export const ReleaseTypeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ReleaseTypeScalarFieldEnum = (typeof ReleaseTypeScalarFieldEnum)[keyof typeof ReleaseTypeScalarFieldEnum]
+
+
+  export const KitScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    number: 'number',
+    variant: 'variant',
+    releaseDate: 'releaseDate',
+    priceYen: 'priceYen',
+    region: 'region',
+    boxArt: 'boxArt',
+    notes: 'notes',
+    manualLinks: 'manualLinks',
+    scrapedImages: 'scrapedImages',
+    potentialBaseKit: 'potentialBaseKit',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    gradeId: 'gradeId',
+    productLineId: 'productLineId',
+    seriesId: 'seriesId',
+    releaseTypeId: 'releaseTypeId',
+    baseKitId: 'baseKitId'
+  };
+
+  export type KitScalarFieldEnum = (typeof KitScalarFieldEnum)[keyof typeof KitScalarFieldEnum]
+
+
+  export const KitMobileSuitScalarFieldEnum: {
+    id: 'id',
+    kitId: 'kitId',
+    mobileSuitId: 'mobileSuitId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type KitMobileSuitScalarFieldEnum = (typeof KitMobileSuitScalarFieldEnum)[keyof typeof KitMobileSuitScalarFieldEnum]
+
+
+  export const UploadScalarFieldEnum: {
+    id: 'id',
+    cloudinaryAssetId: 'cloudinaryAssetId',
+    publicId: 'publicId',
+    url: 'url',
+    eagerUrl: 'eagerUrl',
+    format: 'format',
+    resourceType: 'resourceType',
+    size: 'size',
+    pages: 'pages',
+    originalFilename: 'originalFilename',
+    uploadedAt: 'uploadedAt',
+    uploadedById: 'uploadedById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UploadScalarFieldEnum = (typeof UploadScalarFieldEnum)[keyof typeof UploadScalarFieldEnum]
+
+
+  export const KitUploadScalarFieldEnum: {
+    id: 'id',
+    kitId: 'kitId',
+    uploadId: 'uploadId',
+    caption: 'caption',
+    order: 'order',
+    type: 'type',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type KitUploadScalarFieldEnum = (typeof KitUploadScalarFieldEnum)[keyof typeof KitUploadScalarFieldEnum]
+
+
+  export const MobileSuitUploadScalarFieldEnum: {
+    id: 'id',
+    mobileSuitId: 'mobileSuitId',
+    uploadId: 'uploadId',
+    caption: 'caption',
+    order: 'order',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MobileSuitUploadScalarFieldEnum = (typeof MobileSuitUploadScalarFieldEnum)[keyof typeof MobileSuitUploadScalarFieldEnum]
+
+
+  export const SortOrder: {
+    asc: 'asc',
+    desc: 'desc'
+  };
+
+  export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  /**
+   * Field references
+   */
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'KitImageType'
+   */
+  export type EnumKitImageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitImageType'>
+    
+
+
+  /**
+   * Reference to a field of type 'KitImageType[]'
+   */
+  export type ListEnumKitImageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitImageType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+  /**
+   * Deep Input Types
+   */
+
+
+  export type TimelineWhereInput = {
+    AND?: TimelineWhereInput | TimelineWhereInput[]
+    OR?: TimelineWhereInput[]
+    NOT?: TimelineWhereInput | TimelineWhereInput[]
+    id?: StringFilter<"Timeline"> | string
+    name?: StringFilter<"Timeline"> | string
+    slug?: StringNullableFilter<"Timeline"> | string | null
+    description?: StringNullableFilter<"Timeline"> | string | null
+    createdAt?: DateTimeFilter<"Timeline"> | Date | string
+    updatedAt?: DateTimeFilter<"Timeline"> | Date | string
+    series?: SeriesListRelationFilter
+  }
+
+  export type TimelineOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    series?: SeriesOrderByRelationAggregateInput
+  }
+
+  export type TimelineWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: TimelineWhereInput | TimelineWhereInput[]
+    OR?: TimelineWhereInput[]
+    NOT?: TimelineWhereInput | TimelineWhereInput[]
+    description?: StringNullableFilter<"Timeline"> | string | null
+    createdAt?: DateTimeFilter<"Timeline"> | Date | string
+    updatedAt?: DateTimeFilter<"Timeline"> | Date | string
+    series?: SeriesListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type TimelineOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TimelineCountOrderByAggregateInput
+    _max?: TimelineMaxOrderByAggregateInput
+    _min?: TimelineMinOrderByAggregateInput
+  }
+
+  export type TimelineScalarWhereWithAggregatesInput = {
+    AND?: TimelineScalarWhereWithAggregatesInput | TimelineScalarWhereWithAggregatesInput[]
+    OR?: TimelineScalarWhereWithAggregatesInput[]
+    NOT?: TimelineScalarWhereWithAggregatesInput | TimelineScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Timeline"> | string
+    name?: StringWithAggregatesFilter<"Timeline"> | string
+    slug?: StringNullableWithAggregatesFilter<"Timeline"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Timeline"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Timeline"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Timeline"> | Date | string
+  }
+
+  export type SeriesWhereInput = {
+    AND?: SeriesWhereInput | SeriesWhereInput[]
+    OR?: SeriesWhereInput[]
+    NOT?: SeriesWhereInput | SeriesWhereInput[]
+    id?: StringFilter<"Series"> | string
+    name?: StringFilter<"Series"> | string
+    slug?: StringNullableFilter<"Series"> | string | null
+    description?: StringNullableFilter<"Series"> | string | null
+    timelineId?: StringNullableFilter<"Series"> | string | null
+    scrapedImages?: StringNullableListFilter<"Series">
+    createdAt?: DateTimeFilter<"Series"> | Date | string
+    updatedAt?: DateTimeFilter<"Series"> | Date | string
+    timeline?: XOR<TimelineNullableScalarRelationFilter, TimelineWhereInput> | null
+    mobileSuits?: MobileSuitListRelationFilter
+    kits?: KitListRelationFilter
+  }
+
+  export type SeriesOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    timelineId?: SortOrderInput | SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timeline?: TimelineOrderByWithRelationInput
+    mobileSuits?: MobileSuitOrderByRelationAggregateInput
+    kits?: KitOrderByRelationAggregateInput
+  }
+
+  export type SeriesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: SeriesWhereInput | SeriesWhereInput[]
+    OR?: SeriesWhereInput[]
+    NOT?: SeriesWhereInput | SeriesWhereInput[]
+    description?: StringNullableFilter<"Series"> | string | null
+    timelineId?: StringNullableFilter<"Series"> | string | null
+    scrapedImages?: StringNullableListFilter<"Series">
+    createdAt?: DateTimeFilter<"Series"> | Date | string
+    updatedAt?: DateTimeFilter<"Series"> | Date | string
+    timeline?: XOR<TimelineNullableScalarRelationFilter, TimelineWhereInput> | null
+    mobileSuits?: MobileSuitListRelationFilter
+    kits?: KitListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type SeriesOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    timelineId?: SortOrderInput | SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SeriesCountOrderByAggregateInput
+    _max?: SeriesMaxOrderByAggregateInput
+    _min?: SeriesMinOrderByAggregateInput
+  }
+
+  export type SeriesScalarWhereWithAggregatesInput = {
+    AND?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
+    OR?: SeriesScalarWhereWithAggregatesInput[]
+    NOT?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Series"> | string
+    name?: StringWithAggregatesFilter<"Series"> | string
+    slug?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    timelineId?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    scrapedImages?: StringNullableListFilter<"Series">
+    createdAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
+  }
+
+  export type MobileSuitWhereInput = {
+    AND?: MobileSuitWhereInput | MobileSuitWhereInput[]
+    OR?: MobileSuitWhereInput[]
+    NOT?: MobileSuitWhereInput | MobileSuitWhereInput[]
+    id?: StringFilter<"MobileSuit"> | string
+    name?: StringFilter<"MobileSuit"> | string
+    slug?: StringNullableFilter<"MobileSuit"> | string | null
+    description?: StringNullableFilter<"MobileSuit"> | string | null
+    seriesId?: StringNullableFilter<"MobileSuit"> | string | null
+    scrapedImages?: StringNullableListFilter<"MobileSuit">
+    createdAt?: DateTimeFilter<"MobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuit"> | Date | string
+    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    kits?: KitMobileSuitListRelationFilter
+    uploads?: MobileSuitUploadListRelationFilter
+  }
+
+  export type MobileSuitOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    seriesId?: SortOrderInput | SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    series?: SeriesOrderByWithRelationInput
+    kits?: KitMobileSuitOrderByRelationAggregateInput
+    uploads?: MobileSuitUploadOrderByRelationAggregateInput
+  }
+
+  export type MobileSuitWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: MobileSuitWhereInput | MobileSuitWhereInput[]
+    OR?: MobileSuitWhereInput[]
+    NOT?: MobileSuitWhereInput | MobileSuitWhereInput[]
+    description?: StringNullableFilter<"MobileSuit"> | string | null
+    seriesId?: StringNullableFilter<"MobileSuit"> | string | null
+    scrapedImages?: StringNullableListFilter<"MobileSuit">
+    createdAt?: DateTimeFilter<"MobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuit"> | Date | string
+    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    kits?: KitMobileSuitListRelationFilter
+    uploads?: MobileSuitUploadListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type MobileSuitOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    seriesId?: SortOrderInput | SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MobileSuitCountOrderByAggregateInput
+    _max?: MobileSuitMaxOrderByAggregateInput
+    _min?: MobileSuitMinOrderByAggregateInput
+  }
+
+  export type MobileSuitScalarWhereWithAggregatesInput = {
+    AND?: MobileSuitScalarWhereWithAggregatesInput | MobileSuitScalarWhereWithAggregatesInput[]
+    OR?: MobileSuitScalarWhereWithAggregatesInput[]
+    NOT?: MobileSuitScalarWhereWithAggregatesInput | MobileSuitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MobileSuit"> | string
+    name?: StringWithAggregatesFilter<"MobileSuit"> | string
+    slug?: StringNullableWithAggregatesFilter<"MobileSuit"> | string | null
+    description?: StringNullableWithAggregatesFilter<"MobileSuit"> | string | null
+    seriesId?: StringNullableWithAggregatesFilter<"MobileSuit"> | string | null
+    scrapedImages?: StringNullableListFilter<"MobileSuit">
+    createdAt?: DateTimeWithAggregatesFilter<"MobileSuit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MobileSuit"> | Date | string
+  }
+
+  export type GradeWhereInput = {
+    AND?: GradeWhereInput | GradeWhereInput[]
+    OR?: GradeWhereInput[]
+    NOT?: GradeWhereInput | GradeWhereInput[]
+    id?: StringFilter<"Grade"> | string
+    name?: StringFilter<"Grade"> | string
+    slug?: StringNullableFilter<"Grade"> | string | null
+    description?: StringNullableFilter<"Grade"> | string | null
+    createdAt?: DateTimeFilter<"Grade"> | Date | string
+    updatedAt?: DateTimeFilter<"Grade"> | Date | string
+    productLines?: ProductLineListRelationFilter
+    kits?: KitListRelationFilter
+  }
+
+  export type GradeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productLines?: ProductLineOrderByRelationAggregateInput
+    kits?: KitOrderByRelationAggregateInput
+  }
+
+  export type GradeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: GradeWhereInput | GradeWhereInput[]
+    OR?: GradeWhereInput[]
+    NOT?: GradeWhereInput | GradeWhereInput[]
+    description?: StringNullableFilter<"Grade"> | string | null
+    createdAt?: DateTimeFilter<"Grade"> | Date | string
+    updatedAt?: DateTimeFilter<"Grade"> | Date | string
+    productLines?: ProductLineListRelationFilter
+    kits?: KitListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type GradeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GradeCountOrderByAggregateInput
+    _max?: GradeMaxOrderByAggregateInput
+    _min?: GradeMinOrderByAggregateInput
+  }
+
+  export type GradeScalarWhereWithAggregatesInput = {
+    AND?: GradeScalarWhereWithAggregatesInput | GradeScalarWhereWithAggregatesInput[]
+    OR?: GradeScalarWhereWithAggregatesInput[]
+    NOT?: GradeScalarWhereWithAggregatesInput | GradeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Grade"> | string
+    name?: StringWithAggregatesFilter<"Grade"> | string
+    slug?: StringNullableWithAggregatesFilter<"Grade"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Grade"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Grade"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Grade"> | Date | string
+  }
+
+  export type ProductLineWhereInput = {
+    AND?: ProductLineWhereInput | ProductLineWhereInput[]
+    OR?: ProductLineWhereInput[]
+    NOT?: ProductLineWhereInput | ProductLineWhereInput[]
+    id?: StringFilter<"ProductLine"> | string
+    name?: StringFilter<"ProductLine"> | string
+    slug?: StringNullableFilter<"ProductLine"> | string | null
+    description?: StringNullableFilter<"ProductLine"> | string | null
+    gradeId?: StringFilter<"ProductLine"> | string
+    logoId?: StringNullableFilter<"ProductLine"> | string | null
+    scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
+    createdAt?: DateTimeFilter<"ProductLine"> | Date | string
+    updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
+    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    logo?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    kits?: KitListRelationFilter
+  }
+
+  export type ProductLineOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    gradeId?: SortOrder
+    logoId?: SortOrderInput | SortOrder
+    scrapedImage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    grade?: GradeOrderByWithRelationInput
+    logo?: UploadOrderByWithRelationInput
+    kits?: KitOrderByRelationAggregateInput
+  }
+
+  export type ProductLineWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: ProductLineWhereInput | ProductLineWhereInput[]
+    OR?: ProductLineWhereInput[]
+    NOT?: ProductLineWhereInput | ProductLineWhereInput[]
+    description?: StringNullableFilter<"ProductLine"> | string | null
+    gradeId?: StringFilter<"ProductLine"> | string
+    logoId?: StringNullableFilter<"ProductLine"> | string | null
+    scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
+    createdAt?: DateTimeFilter<"ProductLine"> | Date | string
+    updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
+    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    logo?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    kits?: KitListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type ProductLineOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    gradeId?: SortOrder
+    logoId?: SortOrderInput | SortOrder
+    scrapedImage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProductLineCountOrderByAggregateInput
+    _max?: ProductLineMaxOrderByAggregateInput
+    _min?: ProductLineMinOrderByAggregateInput
+  }
+
+  export type ProductLineScalarWhereWithAggregatesInput = {
+    AND?: ProductLineScalarWhereWithAggregatesInput | ProductLineScalarWhereWithAggregatesInput[]
+    OR?: ProductLineScalarWhereWithAggregatesInput[]
+    NOT?: ProductLineScalarWhereWithAggregatesInput | ProductLineScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProductLine"> | string
+    name?: StringWithAggregatesFilter<"ProductLine"> | string
+    slug?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    description?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    gradeId?: StringWithAggregatesFilter<"ProductLine"> | string
+    logoId?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    scrapedImage?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ProductLine"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProductLine"> | Date | string
+  }
+
+  export type ReleaseTypeWhereInput = {
+    AND?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
+    OR?: ReleaseTypeWhereInput[]
+    NOT?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
+    id?: StringFilter<"ReleaseType"> | string
+    name?: StringFilter<"ReleaseType"> | string
+    slug?: StringFilter<"ReleaseType"> | string
+    createdAt?: DateTimeFilter<"ReleaseType"> | Date | string
+    updatedAt?: DateTimeFilter<"ReleaseType"> | Date | string
+    kits?: KitListRelationFilter
+  }
+
+  export type ReleaseTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kits?: KitOrderByRelationAggregateInput
+  }
+
+  export type ReleaseTypeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
+    OR?: ReleaseTypeWhereInput[]
+    NOT?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
+    createdAt?: DateTimeFilter<"ReleaseType"> | Date | string
+    updatedAt?: DateTimeFilter<"ReleaseType"> | Date | string
+    kits?: KitListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type ReleaseTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ReleaseTypeCountOrderByAggregateInput
+    _max?: ReleaseTypeMaxOrderByAggregateInput
+    _min?: ReleaseTypeMinOrderByAggregateInput
+  }
+
+  export type ReleaseTypeScalarWhereWithAggregatesInput = {
+    AND?: ReleaseTypeScalarWhereWithAggregatesInput | ReleaseTypeScalarWhereWithAggregatesInput[]
+    OR?: ReleaseTypeScalarWhereWithAggregatesInput[]
+    NOT?: ReleaseTypeScalarWhereWithAggregatesInput | ReleaseTypeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ReleaseType"> | string
+    name?: StringWithAggregatesFilter<"ReleaseType"> | string
+    slug?: StringWithAggregatesFilter<"ReleaseType"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ReleaseType"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ReleaseType"> | Date | string
+  }
+
+  export type KitWhereInput = {
+    AND?: KitWhereInput | KitWhereInput[]
+    OR?: KitWhereInput[]
+    NOT?: KitWhereInput | KitWhereInput[]
+    id?: StringFilter<"Kit"> | string
+    name?: StringFilter<"Kit"> | string
+    slug?: StringNullableFilter<"Kit"> | string | null
+    number?: StringFilter<"Kit"> | string
+    variant?: StringNullableFilter<"Kit"> | string | null
+    releaseDate?: DateTimeNullableFilter<"Kit"> | Date | string | null
+    priceYen?: IntNullableFilter<"Kit"> | number | null
+    region?: StringNullableFilter<"Kit"> | string | null
+    boxArt?: StringNullableFilter<"Kit"> | string | null
+    notes?: StringNullableFilter<"Kit"> | string | null
+    manualLinks?: StringNullableListFilter<"Kit">
+    scrapedImages?: StringNullableListFilter<"Kit">
+    potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    createdAt?: DateTimeFilter<"Kit"> | Date | string
+    updatedAt?: DateTimeFilter<"Kit"> | Date | string
+    gradeId?: StringFilter<"Kit"> | string
+    productLineId?: StringNullableFilter<"Kit"> | string | null
+    seriesId?: StringNullableFilter<"Kit"> | string | null
+    releaseTypeId?: StringNullableFilter<"Kit"> | string | null
+    baseKitId?: StringNullableFilter<"Kit"> | string | null
+    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    productLine?: XOR<ProductLineNullableScalarRelationFilter, ProductLineWhereInput> | null
+    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    releaseType?: XOR<ReleaseTypeNullableScalarRelationFilter, ReleaseTypeWhereInput> | null
+    baseKit?: XOR<KitNullableScalarRelationFilter, KitWhereInput> | null
+    variants?: KitListRelationFilter
+    mobileSuits?: KitMobileSuitListRelationFilter
+    uploads?: KitUploadListRelationFilter
+  }
+
+  export type KitOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    number?: SortOrder
+    variant?: SortOrderInput | SortOrder
+    releaseDate?: SortOrderInput | SortOrder
+    priceYen?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    boxArt?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    manualLinks?: SortOrder
+    scrapedImages?: SortOrder
+    potentialBaseKit?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    gradeId?: SortOrder
+    productLineId?: SortOrderInput | SortOrder
+    seriesId?: SortOrderInput | SortOrder
+    releaseTypeId?: SortOrderInput | SortOrder
+    baseKitId?: SortOrderInput | SortOrder
+    grade?: GradeOrderByWithRelationInput
+    productLine?: ProductLineOrderByWithRelationInput
+    series?: SeriesOrderByWithRelationInput
+    releaseType?: ReleaseTypeOrderByWithRelationInput
+    baseKit?: KitOrderByWithRelationInput
+    variants?: KitOrderByRelationAggregateInput
+    mobileSuits?: KitMobileSuitOrderByRelationAggregateInput
+    uploads?: KitUploadOrderByRelationAggregateInput
+  }
+
+  export type KitWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: KitWhereInput | KitWhereInput[]
+    OR?: KitWhereInput[]
+    NOT?: KitWhereInput | KitWhereInput[]
+    name?: StringFilter<"Kit"> | string
+    number?: StringFilter<"Kit"> | string
+    variant?: StringNullableFilter<"Kit"> | string | null
+    releaseDate?: DateTimeNullableFilter<"Kit"> | Date | string | null
+    priceYen?: IntNullableFilter<"Kit"> | number | null
+    region?: StringNullableFilter<"Kit"> | string | null
+    boxArt?: StringNullableFilter<"Kit"> | string | null
+    notes?: StringNullableFilter<"Kit"> | string | null
+    manualLinks?: StringNullableListFilter<"Kit">
+    scrapedImages?: StringNullableListFilter<"Kit">
+    potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    createdAt?: DateTimeFilter<"Kit"> | Date | string
+    updatedAt?: DateTimeFilter<"Kit"> | Date | string
+    gradeId?: StringFilter<"Kit"> | string
+    productLineId?: StringNullableFilter<"Kit"> | string | null
+    seriesId?: StringNullableFilter<"Kit"> | string | null
+    releaseTypeId?: StringNullableFilter<"Kit"> | string | null
+    baseKitId?: StringNullableFilter<"Kit"> | string | null
+    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    productLine?: XOR<ProductLineNullableScalarRelationFilter, ProductLineWhereInput> | null
+    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    releaseType?: XOR<ReleaseTypeNullableScalarRelationFilter, ReleaseTypeWhereInput> | null
+    baseKit?: XOR<KitNullableScalarRelationFilter, KitWhereInput> | null
+    variants?: KitListRelationFilter
+    mobileSuits?: KitMobileSuitListRelationFilter
+    uploads?: KitUploadListRelationFilter
+  }, "id" | "slug">
+
+  export type KitOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    number?: SortOrder
+    variant?: SortOrderInput | SortOrder
+    releaseDate?: SortOrderInput | SortOrder
+    priceYen?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    boxArt?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    manualLinks?: SortOrder
+    scrapedImages?: SortOrder
+    potentialBaseKit?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    gradeId?: SortOrder
+    productLineId?: SortOrderInput | SortOrder
+    seriesId?: SortOrderInput | SortOrder
+    releaseTypeId?: SortOrderInput | SortOrder
+    baseKitId?: SortOrderInput | SortOrder
+    _count?: KitCountOrderByAggregateInput
+    _avg?: KitAvgOrderByAggregateInput
+    _max?: KitMaxOrderByAggregateInput
+    _min?: KitMinOrderByAggregateInput
+    _sum?: KitSumOrderByAggregateInput
+  }
+
+  export type KitScalarWhereWithAggregatesInput = {
+    AND?: KitScalarWhereWithAggregatesInput | KitScalarWhereWithAggregatesInput[]
+    OR?: KitScalarWhereWithAggregatesInput[]
+    NOT?: KitScalarWhereWithAggregatesInput | KitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Kit"> | string
+    name?: StringWithAggregatesFilter<"Kit"> | string
+    slug?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    number?: StringWithAggregatesFilter<"Kit"> | string
+    variant?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    releaseDate?: DateTimeNullableWithAggregatesFilter<"Kit"> | Date | string | null
+    priceYen?: IntNullableWithAggregatesFilter<"Kit"> | number | null
+    region?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    boxArt?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    manualLinks?: StringNullableListFilter<"Kit">
+    scrapedImages?: StringNullableListFilter<"Kit">
+    potentialBaseKit?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
+    gradeId?: StringWithAggregatesFilter<"Kit"> | string
+    productLineId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    seriesId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    releaseTypeId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    baseKitId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+  }
+
+  export type KitMobileSuitWhereInput = {
+    AND?: KitMobileSuitWhereInput | KitMobileSuitWhereInput[]
+    OR?: KitMobileSuitWhereInput[]
+    NOT?: KitMobileSuitWhereInput | KitMobileSuitWhereInput[]
+    id?: StringFilter<"KitMobileSuit"> | string
+    kitId?: StringFilter<"KitMobileSuit"> | string
+    mobileSuitId?: StringFilter<"KitMobileSuit"> | string
+    createdAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    mobileSuit?: XOR<MobileSuitScalarRelationFilter, MobileSuitWhereInput>
+  }
+
+  export type KitMobileSuitOrderByWithRelationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    mobileSuitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kit?: KitOrderByWithRelationInput
+    mobileSuit?: MobileSuitOrderByWithRelationInput
+  }
+
+  export type KitMobileSuitWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    kitId_mobileSuitId?: KitMobileSuitKitIdMobileSuitIdCompoundUniqueInput
+    AND?: KitMobileSuitWhereInput | KitMobileSuitWhereInput[]
+    OR?: KitMobileSuitWhereInput[]
+    NOT?: KitMobileSuitWhereInput | KitMobileSuitWhereInput[]
+    kitId?: StringFilter<"KitMobileSuit"> | string
+    mobileSuitId?: StringFilter<"KitMobileSuit"> | string
+    createdAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    mobileSuit?: XOR<MobileSuitScalarRelationFilter, MobileSuitWhereInput>
+  }, "id" | "kitId_mobileSuitId">
+
+  export type KitMobileSuitOrderByWithAggregationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    mobileSuitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: KitMobileSuitCountOrderByAggregateInput
+    _max?: KitMobileSuitMaxOrderByAggregateInput
+    _min?: KitMobileSuitMinOrderByAggregateInput
+  }
+
+  export type KitMobileSuitScalarWhereWithAggregatesInput = {
+    AND?: KitMobileSuitScalarWhereWithAggregatesInput | KitMobileSuitScalarWhereWithAggregatesInput[]
+    OR?: KitMobileSuitScalarWhereWithAggregatesInput[]
+    NOT?: KitMobileSuitScalarWhereWithAggregatesInput | KitMobileSuitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KitMobileSuit"> | string
+    kitId?: StringWithAggregatesFilter<"KitMobileSuit"> | string
+    mobileSuitId?: StringWithAggregatesFilter<"KitMobileSuit"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"KitMobileSuit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KitMobileSuit"> | Date | string
+  }
+
+  export type UploadWhereInput = {
+    AND?: UploadWhereInput | UploadWhereInput[]
+    OR?: UploadWhereInput[]
+    NOT?: UploadWhereInput | UploadWhereInput[]
+    id?: StringFilter<"Upload"> | string
+    cloudinaryAssetId?: StringFilter<"Upload"> | string
+    publicId?: StringFilter<"Upload"> | string
+    url?: StringFilter<"Upload"> | string
+    eagerUrl?: StringNullableFilter<"Upload"> | string | null
+    format?: StringFilter<"Upload"> | string
+    resourceType?: StringFilter<"Upload"> | string
+    size?: IntFilter<"Upload"> | number
+    pages?: IntNullableFilter<"Upload"> | number | null
+    originalFilename?: StringFilter<"Upload"> | string
+    uploadedAt?: DateTimeFilter<"Upload"> | Date | string
+    uploadedById?: StringFilter<"Upload"> | string
+    createdAt?: DateTimeFilter<"Upload"> | Date | string
+    updatedAt?: DateTimeFilter<"Upload"> | Date | string
+    kitUploads?: KitUploadListRelationFilter
+    mobileSuitUploads?: MobileSuitUploadListRelationFilter
+    productLineLogos?: ProductLineListRelationFilter
+  }
+
+  export type UploadOrderByWithRelationInput = {
+    id?: SortOrder
+    cloudinaryAssetId?: SortOrder
+    publicId?: SortOrder
+    url?: SortOrder
+    eagerUrl?: SortOrderInput | SortOrder
+    format?: SortOrder
+    resourceType?: SortOrder
+    size?: SortOrder
+    pages?: SortOrderInput | SortOrder
+    originalFilename?: SortOrder
+    uploadedAt?: SortOrder
+    uploadedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kitUploads?: KitUploadOrderByRelationAggregateInput
+    mobileSuitUploads?: MobileSuitUploadOrderByRelationAggregateInput
+    productLineLogos?: ProductLineOrderByRelationAggregateInput
+  }
+
+  export type UploadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    cloudinaryAssetId?: string
+    AND?: UploadWhereInput | UploadWhereInput[]
+    OR?: UploadWhereInput[]
+    NOT?: UploadWhereInput | UploadWhereInput[]
+    publicId?: StringFilter<"Upload"> | string
+    url?: StringFilter<"Upload"> | string
+    eagerUrl?: StringNullableFilter<"Upload"> | string | null
+    format?: StringFilter<"Upload"> | string
+    resourceType?: StringFilter<"Upload"> | string
+    size?: IntFilter<"Upload"> | number
+    pages?: IntNullableFilter<"Upload"> | number | null
+    originalFilename?: StringFilter<"Upload"> | string
+    uploadedAt?: DateTimeFilter<"Upload"> | Date | string
+    uploadedById?: StringFilter<"Upload"> | string
+    createdAt?: DateTimeFilter<"Upload"> | Date | string
+    updatedAt?: DateTimeFilter<"Upload"> | Date | string
+    kitUploads?: KitUploadListRelationFilter
+    mobileSuitUploads?: MobileSuitUploadListRelationFilter
+    productLineLogos?: ProductLineListRelationFilter
+  }, "id" | "cloudinaryAssetId">
+
+  export type UploadOrderByWithAggregationInput = {
+    id?: SortOrder
+    cloudinaryAssetId?: SortOrder
+    publicId?: SortOrder
+    url?: SortOrder
+    eagerUrl?: SortOrderInput | SortOrder
+    format?: SortOrder
+    resourceType?: SortOrder
+    size?: SortOrder
+    pages?: SortOrderInput | SortOrder
+    originalFilename?: SortOrder
+    uploadedAt?: SortOrder
+    uploadedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UploadCountOrderByAggregateInput
+    _avg?: UploadAvgOrderByAggregateInput
+    _max?: UploadMaxOrderByAggregateInput
+    _min?: UploadMinOrderByAggregateInput
+    _sum?: UploadSumOrderByAggregateInput
+  }
+
+  export type UploadScalarWhereWithAggregatesInput = {
+    AND?: UploadScalarWhereWithAggregatesInput | UploadScalarWhereWithAggregatesInput[]
+    OR?: UploadScalarWhereWithAggregatesInput[]
+    NOT?: UploadScalarWhereWithAggregatesInput | UploadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Upload"> | string
+    cloudinaryAssetId?: StringWithAggregatesFilter<"Upload"> | string
+    publicId?: StringWithAggregatesFilter<"Upload"> | string
+    url?: StringWithAggregatesFilter<"Upload"> | string
+    eagerUrl?: StringNullableWithAggregatesFilter<"Upload"> | string | null
+    format?: StringWithAggregatesFilter<"Upload"> | string
+    resourceType?: StringWithAggregatesFilter<"Upload"> | string
+    size?: IntWithAggregatesFilter<"Upload"> | number
+    pages?: IntNullableWithAggregatesFilter<"Upload"> | number | null
+    originalFilename?: StringWithAggregatesFilter<"Upload"> | string
+    uploadedAt?: DateTimeWithAggregatesFilter<"Upload"> | Date | string
+    uploadedById?: StringWithAggregatesFilter<"Upload"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Upload"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Upload"> | Date | string
+  }
+
+  export type KitUploadWhereInput = {
+    AND?: KitUploadWhereInput | KitUploadWhereInput[]
+    OR?: KitUploadWhereInput[]
+    NOT?: KitUploadWhereInput | KitUploadWhereInput[]
+    id?: StringFilter<"KitUpload"> | string
+    kitId?: StringFilter<"KitUpload"> | string
+    uploadId?: StringFilter<"KitUpload"> | string
+    caption?: StringNullableFilter<"KitUpload"> | string | null
+    order?: IntNullableFilter<"KitUpload"> | number | null
+    type?: EnumKitImageTypeFilter<"KitUpload"> | $Enums.KitImageType
+    createdAt?: DateTimeFilter<"KitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"KitUpload"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }
+
+  export type KitUploadOrderByWithRelationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kit?: KitOrderByWithRelationInput
+    upload?: UploadOrderByWithRelationInput
+  }
+
+  export type KitUploadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    kitId_uploadId?: KitUploadKitIdUploadIdCompoundUniqueInput
+    AND?: KitUploadWhereInput | KitUploadWhereInput[]
+    OR?: KitUploadWhereInput[]
+    NOT?: KitUploadWhereInput | KitUploadWhereInput[]
+    kitId?: StringFilter<"KitUpload"> | string
+    uploadId?: StringFilter<"KitUpload"> | string
+    caption?: StringNullableFilter<"KitUpload"> | string | null
+    order?: IntNullableFilter<"KitUpload"> | number | null
+    type?: EnumKitImageTypeFilter<"KitUpload"> | $Enums.KitImageType
+    createdAt?: DateTimeFilter<"KitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"KitUpload"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }, "id" | "kitId_uploadId">
+
+  export type KitUploadOrderByWithAggregationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: KitUploadCountOrderByAggregateInput
+    _avg?: KitUploadAvgOrderByAggregateInput
+    _max?: KitUploadMaxOrderByAggregateInput
+    _min?: KitUploadMinOrderByAggregateInput
+    _sum?: KitUploadSumOrderByAggregateInput
+  }
+
+  export type KitUploadScalarWhereWithAggregatesInput = {
+    AND?: KitUploadScalarWhereWithAggregatesInput | KitUploadScalarWhereWithAggregatesInput[]
+    OR?: KitUploadScalarWhereWithAggregatesInput[]
+    NOT?: KitUploadScalarWhereWithAggregatesInput | KitUploadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KitUpload"> | string
+    kitId?: StringWithAggregatesFilter<"KitUpload"> | string
+    uploadId?: StringWithAggregatesFilter<"KitUpload"> | string
+    caption?: StringNullableWithAggregatesFilter<"KitUpload"> | string | null
+    order?: IntNullableWithAggregatesFilter<"KitUpload"> | number | null
+    type?: EnumKitImageTypeWithAggregatesFilter<"KitUpload"> | $Enums.KitImageType
+    createdAt?: DateTimeWithAggregatesFilter<"KitUpload"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KitUpload"> | Date | string
+  }
+
+  export type MobileSuitUploadWhereInput = {
+    AND?: MobileSuitUploadWhereInput | MobileSuitUploadWhereInput[]
+    OR?: MobileSuitUploadWhereInput[]
+    NOT?: MobileSuitUploadWhereInput | MobileSuitUploadWhereInput[]
+    id?: StringFilter<"MobileSuitUpload"> | string
+    mobileSuitId?: StringFilter<"MobileSuitUpload"> | string
+    uploadId?: StringFilter<"MobileSuitUpload"> | string
+    caption?: StringNullableFilter<"MobileSuitUpload"> | string | null
+    order?: IntNullableFilter<"MobileSuitUpload"> | number | null
+    createdAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+    mobileSuit?: XOR<MobileSuitScalarRelationFilter, MobileSuitWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }
+
+  export type MobileSuitUploadOrderByWithRelationInput = {
+    id?: SortOrder
+    mobileSuitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    mobileSuit?: MobileSuitOrderByWithRelationInput
+    upload?: UploadOrderByWithRelationInput
+  }
+
+  export type MobileSuitUploadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    mobileSuitId_uploadId?: MobileSuitUploadMobileSuitIdUploadIdCompoundUniqueInput
+    AND?: MobileSuitUploadWhereInput | MobileSuitUploadWhereInput[]
+    OR?: MobileSuitUploadWhereInput[]
+    NOT?: MobileSuitUploadWhereInput | MobileSuitUploadWhereInput[]
+    mobileSuitId?: StringFilter<"MobileSuitUpload"> | string
+    uploadId?: StringFilter<"MobileSuitUpload"> | string
+    caption?: StringNullableFilter<"MobileSuitUpload"> | string | null
+    order?: IntNullableFilter<"MobileSuitUpload"> | number | null
+    createdAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+    mobileSuit?: XOR<MobileSuitScalarRelationFilter, MobileSuitWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }, "id" | "mobileSuitId_uploadId">
+
+  export type MobileSuitUploadOrderByWithAggregationInput = {
+    id?: SortOrder
+    mobileSuitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MobileSuitUploadCountOrderByAggregateInput
+    _avg?: MobileSuitUploadAvgOrderByAggregateInput
+    _max?: MobileSuitUploadMaxOrderByAggregateInput
+    _min?: MobileSuitUploadMinOrderByAggregateInput
+    _sum?: MobileSuitUploadSumOrderByAggregateInput
+  }
+
+  export type MobileSuitUploadScalarWhereWithAggregatesInput = {
+    AND?: MobileSuitUploadScalarWhereWithAggregatesInput | MobileSuitUploadScalarWhereWithAggregatesInput[]
+    OR?: MobileSuitUploadScalarWhereWithAggregatesInput[]
+    NOT?: MobileSuitUploadScalarWhereWithAggregatesInput | MobileSuitUploadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MobileSuitUpload"> | string
+    mobileSuitId?: StringWithAggregatesFilter<"MobileSuitUpload"> | string
+    uploadId?: StringWithAggregatesFilter<"MobileSuitUpload"> | string
+    caption?: StringNullableWithAggregatesFilter<"MobileSuitUpload"> | string | null
+    order?: IntNullableWithAggregatesFilter<"MobileSuitUpload"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"MobileSuitUpload"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MobileSuitUpload"> | Date | string
+  }
+
+  export type TimelineCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    series?: SeriesCreateNestedManyWithoutTimelineInput
+  }
+
+  export type TimelineUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    series?: SeriesUncheckedCreateNestedManyWithoutTimelineInput
+  }
+
+  export type TimelineUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    series?: SeriesUpdateManyWithoutTimelineNestedInput
+  }
+
+  export type TimelineUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    series?: SeriesUncheckedUpdateManyWithoutTimelineNestedInput
+  }
+
+  export type TimelineCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TimelineUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TimelineUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeriesCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timeline?: TimelineCreateNestedOneWithoutSeriesInput
+    mobileSuits?: MobileSuitCreateNestedManyWithoutSeriesInput
+    kits?: KitCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    timelineId?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuits?: MobileSuitUncheckedCreateNestedManyWithoutSeriesInput
+    kits?: KitUncheckedCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timeline?: TimelineUpdateOneWithoutSeriesNestedInput
+    mobileSuits?: MobileSuitUpdateManyWithoutSeriesNestedInput
+    kits?: KitUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuits?: MobileSuitUncheckedUpdateManyWithoutSeriesNestedInput
+    kits?: KitUncheckedUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    timelineId?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SeriesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeriesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    series?: SeriesCreateNestedOneWithoutMobileSuitsInput
+    kits?: KitMobileSuitCreateNestedManyWithoutMobileSuitInput
+    uploads?: MobileSuitUploadCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    seriesId?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitMobileSuitUncheckedCreateNestedManyWithoutMobileSuitInput
+    uploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    series?: SeriesUpdateOneWithoutMobileSuitsNestedInput
+    kits?: KitMobileSuitUpdateManyWithoutMobileSuitNestedInput
+    uploads?: MobileSuitUploadUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitMobileSuitUncheckedUpdateManyWithoutMobileSuitNestedInput
+    uploads?: MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    seriesId?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GradeCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineCreateNestedManyWithoutGradeInput
+    kits?: KitCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineUncheckedCreateNestedManyWithoutGradeInput
+    kits?: KitUncheckedCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUpdateManyWithoutGradeNestedInput
+    kits?: KitUpdateManyWithoutGradeNestedInput
+  }
+
+  export type GradeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUncheckedUpdateManyWithoutGradeNestedInput
+    kits?: KitUncheckedUpdateManyWithoutGradeNestedInput
+  }
+
+  export type GradeCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GradeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GradeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductLineCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutProductLinesInput
+    logo?: UploadCreateNestedOneWithoutProductLineLogosInput
+    kits?: KitCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId: string
+    logoId?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
+    kits?: KitUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: StringFieldUpdateOperationsInput | string
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId: string
+    logoId?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductLineUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductLineUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: StringFieldUpdateOperationsInput | string
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReleaseTypeCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitCreateNestedManyWithoutReleaseTypeInput
+  }
+
+  export type ReleaseTypeUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutReleaseTypeInput
+  }
+
+  export type ReleaseTypeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUpdateManyWithoutReleaseTypeNestedInput
+  }
+
+  export type ReleaseTypeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutReleaseTypeNestedInput
+  }
+
+  export type ReleaseTypeCreateManyInput = {
+    id?: string
+    name: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReleaseTypeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReleaseTypeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+  }
+
+  export type KitUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitMobileSuitCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutMobileSuitsInput
+    mobileSuit: MobileSuitCreateNestedOneWithoutKitsInput
+  }
+
+  export type KitMobileSuitUncheckedCreateInput = {
+    id?: string
+    kitId: string
+    mobileSuitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitMobileSuitUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutMobileSuitsNestedInput
+    mobileSuit?: MobileSuitUpdateOneRequiredWithoutKitsNestedInput
+  }
+
+  export type KitMobileSuitUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitMobileSuitCreateManyInput = {
+    id?: string
+    kitId: string
+    mobileSuitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitMobileSuitUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitMobileSuitUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadCreateInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadUncheckedCreateInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+  }
+
+  export type UploadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+  }
+
+  export type UploadCreateManyInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UploadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UploadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadCreateInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutUploadsInput
+    upload: UploadCreateNestedOneWithoutKitUploadsInput
+  }
+
+  export type KitUploadUncheckedCreateInput = {
+    id?: string
+    kitId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutUploadsNestedInput
+    upload?: UploadUpdateOneRequiredWithoutKitUploadsNestedInput
+  }
+
+  export type KitUploadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadCreateManyInput = {
+    id?: string
+    kitId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadCreateInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuit: MobileSuitCreateNestedOneWithoutUploadsInput
+    upload: UploadCreateNestedOneWithoutMobileSuitUploadsInput
+  }
+
+  export type MobileSuitUploadUncheckedCreateInput = {
+    id?: string
+    mobileSuitId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuit?: MobileSuitUpdateOneRequiredWithoutUploadsNestedInput
+    upload?: UploadUpdateOneRequiredWithoutMobileSuitUploadsNestedInput
+  }
+
+  export type MobileSuitUploadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadCreateManyInput = {
+    id?: string
+    mobileSuitId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type SeriesListRelationFilter = {
+    every?: SeriesWhereInput
+    some?: SeriesWhereInput
+    none?: SeriesWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type SeriesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TimelineCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TimelineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TimelineMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type TimelineNullableScalarRelationFilter = {
+    is?: TimelineWhereInput | null
+    isNot?: TimelineWhereInput | null
+  }
+
+  export type MobileSuitListRelationFilter = {
+    every?: MobileSuitWhereInput
+    some?: MobileSuitWhereInput
+    none?: MobileSuitWhereInput
+  }
+
+  export type KitListRelationFilter = {
+    every?: KitWhereInput
+    some?: KitWhereInput
+    none?: KitWhereInput
+  }
+
+  export type MobileSuitOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KitOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SeriesCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    timelineId?: SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SeriesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    timelineId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SeriesMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    timelineId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SeriesNullableScalarRelationFilter = {
+    is?: SeriesWhereInput | null
+    isNot?: SeriesWhereInput | null
+  }
+
+  export type KitMobileSuitListRelationFilter = {
+    every?: KitMobileSuitWhereInput
+    some?: KitMobileSuitWhereInput
+    none?: KitMobileSuitWhereInput
+  }
+
+  export type MobileSuitUploadListRelationFilter = {
+    every?: MobileSuitUploadWhereInput
+    some?: MobileSuitUploadWhereInput
+    none?: MobileSuitUploadWhereInput
+  }
+
+  export type KitMobileSuitOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MobileSuitUploadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MobileSuitCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    seriesId?: SortOrder
+    scrapedImages?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MobileSuitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    seriesId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MobileSuitMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    seriesId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductLineListRelationFilter = {
+    every?: ProductLineWhereInput
+    some?: ProductLineWhereInput
+    none?: ProductLineWhereInput
+  }
+
+  export type ProductLineOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GradeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GradeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GradeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GradeScalarRelationFilter = {
+    is?: GradeWhereInput
+    isNot?: GradeWhereInput
+  }
+
+  export type UploadNullableScalarRelationFilter = {
+    is?: UploadWhereInput | null
+    isNot?: UploadWhereInput | null
+  }
+
+  export type ProductLineCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    gradeId?: SortOrder
+    logoId?: SortOrder
+    scrapedImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductLineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    gradeId?: SortOrder
+    logoId?: SortOrder
+    scrapedImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductLineMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    gradeId?: SortOrder
+    logoId?: SortOrder
+    scrapedImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReleaseTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReleaseTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReleaseTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ProductLineNullableScalarRelationFilter = {
+    is?: ProductLineWhereInput | null
+    isNot?: ProductLineWhereInput | null
+  }
+
+  export type ReleaseTypeNullableScalarRelationFilter = {
+    is?: ReleaseTypeWhereInput | null
+    isNot?: ReleaseTypeWhereInput | null
+  }
+
+  export type KitNullableScalarRelationFilter = {
+    is?: KitWhereInput | null
+    isNot?: KitWhereInput | null
+  }
+
+  export type KitUploadListRelationFilter = {
+    every?: KitUploadWhereInput
+    some?: KitUploadWhereInput
+    none?: KitUploadWhereInput
+  }
+
+  export type KitUploadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KitCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    number?: SortOrder
+    variant?: SortOrder
+    releaseDate?: SortOrder
+    priceYen?: SortOrder
+    region?: SortOrder
+    boxArt?: SortOrder
+    notes?: SortOrder
+    manualLinks?: SortOrder
+    scrapedImages?: SortOrder
+    potentialBaseKit?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    gradeId?: SortOrder
+    productLineId?: SortOrder
+    seriesId?: SortOrder
+    releaseTypeId?: SortOrder
+    baseKitId?: SortOrder
+  }
+
+  export type KitAvgOrderByAggregateInput = {
+    priceYen?: SortOrder
+  }
+
+  export type KitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    number?: SortOrder
+    variant?: SortOrder
+    releaseDate?: SortOrder
+    priceYen?: SortOrder
+    region?: SortOrder
+    boxArt?: SortOrder
+    notes?: SortOrder
+    potentialBaseKit?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    gradeId?: SortOrder
+    productLineId?: SortOrder
+    seriesId?: SortOrder
+    releaseTypeId?: SortOrder
+    baseKitId?: SortOrder
+  }
+
+  export type KitMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    number?: SortOrder
+    variant?: SortOrder
+    releaseDate?: SortOrder
+    priceYen?: SortOrder
+    region?: SortOrder
+    boxArt?: SortOrder
+    notes?: SortOrder
+    potentialBaseKit?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    gradeId?: SortOrder
+    productLineId?: SortOrder
+    seriesId?: SortOrder
+    releaseTypeId?: SortOrder
+    baseKitId?: SortOrder
+  }
+
+  export type KitSumOrderByAggregateInput = {
+    priceYen?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type KitScalarRelationFilter = {
+    is?: KitWhereInput
+    isNot?: KitWhereInput
+  }
+
+  export type MobileSuitScalarRelationFilter = {
+    is?: MobileSuitWhereInput
+    isNot?: MobileSuitWhereInput
+  }
+
+  export type KitMobileSuitKitIdMobileSuitIdCompoundUniqueInput = {
+    kitId: string
+    mobileSuitId: string
+  }
+
+  export type KitMobileSuitCountOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    mobileSuitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitMobileSuitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    mobileSuitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitMobileSuitMinOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    mobileSuitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type UploadCountOrderByAggregateInput = {
+    id?: SortOrder
+    cloudinaryAssetId?: SortOrder
+    publicId?: SortOrder
+    url?: SortOrder
+    eagerUrl?: SortOrder
+    format?: SortOrder
+    resourceType?: SortOrder
+    size?: SortOrder
+    pages?: SortOrder
+    originalFilename?: SortOrder
+    uploadedAt?: SortOrder
+    uploadedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UploadAvgOrderByAggregateInput = {
+    size?: SortOrder
+    pages?: SortOrder
+  }
+
+  export type UploadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cloudinaryAssetId?: SortOrder
+    publicId?: SortOrder
+    url?: SortOrder
+    eagerUrl?: SortOrder
+    format?: SortOrder
+    resourceType?: SortOrder
+    size?: SortOrder
+    pages?: SortOrder
+    originalFilename?: SortOrder
+    uploadedAt?: SortOrder
+    uploadedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UploadMinOrderByAggregateInput = {
+    id?: SortOrder
+    cloudinaryAssetId?: SortOrder
+    publicId?: SortOrder
+    url?: SortOrder
+    eagerUrl?: SortOrder
+    format?: SortOrder
+    resourceType?: SortOrder
+    size?: SortOrder
+    pages?: SortOrder
+    originalFilename?: SortOrder
+    uploadedAt?: SortOrder
+    uploadedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UploadSumOrderByAggregateInput = {
+    size?: SortOrder
+    pages?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumKitImageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitImageType | EnumKitImageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumKitImageTypeFilter<$PrismaModel> | $Enums.KitImageType
+  }
+
+  export type UploadScalarRelationFilter = {
+    is?: UploadWhereInput
+    isNot?: UploadWhereInput
+  }
+
+  export type KitUploadKitIdUploadIdCompoundUniqueInput = {
+    kitId: string
+    uploadId: string
+  }
+
+  export type KitUploadCountOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitUploadAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type KitUploadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitUploadMinOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitUploadSumOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type EnumKitImageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitImageType | EnumKitImageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumKitImageTypeWithAggregatesFilter<$PrismaModel> | $Enums.KitImageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKitImageTypeFilter<$PrismaModel>
+    _max?: NestedEnumKitImageTypeFilter<$PrismaModel>
+  }
+
+  export type MobileSuitUploadMobileSuitIdUploadIdCompoundUniqueInput = {
+    mobileSuitId: string
+    uploadId: string
+  }
+
+  export type MobileSuitUploadCountOrderByAggregateInput = {
+    id?: SortOrder
+    mobileSuitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MobileSuitUploadAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type MobileSuitUploadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    mobileSuitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MobileSuitUploadMinOrderByAggregateInput = {
+    id?: SortOrder
+    mobileSuitId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MobileSuitUploadSumOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type SeriesCreateNestedManyWithoutTimelineInput = {
+    create?: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput> | SeriesCreateWithoutTimelineInput[] | SeriesUncheckedCreateWithoutTimelineInput[]
+    connectOrCreate?: SeriesCreateOrConnectWithoutTimelineInput | SeriesCreateOrConnectWithoutTimelineInput[]
+    createMany?: SeriesCreateManyTimelineInputEnvelope
+    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+  }
+
+  export type SeriesUncheckedCreateNestedManyWithoutTimelineInput = {
+    create?: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput> | SeriesCreateWithoutTimelineInput[] | SeriesUncheckedCreateWithoutTimelineInput[]
+    connectOrCreate?: SeriesCreateOrConnectWithoutTimelineInput | SeriesCreateOrConnectWithoutTimelineInput[]
+    createMany?: SeriesCreateManyTimelineInputEnvelope
+    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type SeriesUpdateManyWithoutTimelineNestedInput = {
+    create?: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput> | SeriesCreateWithoutTimelineInput[] | SeriesUncheckedCreateWithoutTimelineInput[]
+    connectOrCreate?: SeriesCreateOrConnectWithoutTimelineInput | SeriesCreateOrConnectWithoutTimelineInput[]
+    upsert?: SeriesUpsertWithWhereUniqueWithoutTimelineInput | SeriesUpsertWithWhereUniqueWithoutTimelineInput[]
+    createMany?: SeriesCreateManyTimelineInputEnvelope
+    set?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    disconnect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    delete?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    update?: SeriesUpdateWithWhereUniqueWithoutTimelineInput | SeriesUpdateWithWhereUniqueWithoutTimelineInput[]
+    updateMany?: SeriesUpdateManyWithWhereWithoutTimelineInput | SeriesUpdateManyWithWhereWithoutTimelineInput[]
+    deleteMany?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
+  }
+
+  export type SeriesUncheckedUpdateManyWithoutTimelineNestedInput = {
+    create?: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput> | SeriesCreateWithoutTimelineInput[] | SeriesUncheckedCreateWithoutTimelineInput[]
+    connectOrCreate?: SeriesCreateOrConnectWithoutTimelineInput | SeriesCreateOrConnectWithoutTimelineInput[]
+    upsert?: SeriesUpsertWithWhereUniqueWithoutTimelineInput | SeriesUpsertWithWhereUniqueWithoutTimelineInput[]
+    createMany?: SeriesCreateManyTimelineInputEnvelope
+    set?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    disconnect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    delete?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
+    update?: SeriesUpdateWithWhereUniqueWithoutTimelineInput | SeriesUpdateWithWhereUniqueWithoutTimelineInput[]
+    updateMany?: SeriesUpdateManyWithWhereWithoutTimelineInput | SeriesUpdateManyWithWhereWithoutTimelineInput[]
+    deleteMany?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
+  }
+
+  export type SeriesCreatescrapedImagesInput = {
+    set: string[]
+  }
+
+  export type TimelineCreateNestedOneWithoutSeriesInput = {
+    create?: XOR<TimelineCreateWithoutSeriesInput, TimelineUncheckedCreateWithoutSeriesInput>
+    connectOrCreate?: TimelineCreateOrConnectWithoutSeriesInput
+    connect?: TimelineWhereUniqueInput
+  }
+
+  export type MobileSuitCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput> | MobileSuitCreateWithoutSeriesInput[] | MobileSuitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutSeriesInput | MobileSuitCreateOrConnectWithoutSeriesInput[]
+    createMany?: MobileSuitCreateManySeriesInputEnvelope
+    connect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+  }
+
+  export type KitCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput> | KitCreateWithoutSeriesInput[] | KitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutSeriesInput | KitCreateOrConnectWithoutSeriesInput[]
+    createMany?: KitCreateManySeriesInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type MobileSuitUncheckedCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput> | MobileSuitCreateWithoutSeriesInput[] | MobileSuitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutSeriesInput | MobileSuitCreateOrConnectWithoutSeriesInput[]
+    createMany?: MobileSuitCreateManySeriesInputEnvelope
+    connect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+  }
+
+  export type KitUncheckedCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput> | KitCreateWithoutSeriesInput[] | KitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutSeriesInput | KitCreateOrConnectWithoutSeriesInput[]
+    createMany?: KitCreateManySeriesInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type SeriesUpdatescrapedImagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type TimelineUpdateOneWithoutSeriesNestedInput = {
+    create?: XOR<TimelineCreateWithoutSeriesInput, TimelineUncheckedCreateWithoutSeriesInput>
+    connectOrCreate?: TimelineCreateOrConnectWithoutSeriesInput
+    upsert?: TimelineUpsertWithoutSeriesInput
+    disconnect?: TimelineWhereInput | boolean
+    delete?: TimelineWhereInput | boolean
+    connect?: TimelineWhereUniqueInput
+    update?: XOR<XOR<TimelineUpdateToOneWithWhereWithoutSeriesInput, TimelineUpdateWithoutSeriesInput>, TimelineUncheckedUpdateWithoutSeriesInput>
+  }
+
+  export type MobileSuitUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput> | MobileSuitCreateWithoutSeriesInput[] | MobileSuitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutSeriesInput | MobileSuitCreateOrConnectWithoutSeriesInput[]
+    upsert?: MobileSuitUpsertWithWhereUniqueWithoutSeriesInput | MobileSuitUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: MobileSuitCreateManySeriesInputEnvelope
+    set?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    disconnect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    delete?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    connect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    update?: MobileSuitUpdateWithWhereUniqueWithoutSeriesInput | MobileSuitUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: MobileSuitUpdateManyWithWhereWithoutSeriesInput | MobileSuitUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: MobileSuitScalarWhereInput | MobileSuitScalarWhereInput[]
+  }
+
+  export type KitUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput> | KitCreateWithoutSeriesInput[] | KitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutSeriesInput | KitCreateOrConnectWithoutSeriesInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutSeriesInput | KitUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: KitCreateManySeriesInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutSeriesInput | KitUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutSeriesInput | KitUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type MobileSuitUncheckedUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput> | MobileSuitCreateWithoutSeriesInput[] | MobileSuitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutSeriesInput | MobileSuitCreateOrConnectWithoutSeriesInput[]
+    upsert?: MobileSuitUpsertWithWhereUniqueWithoutSeriesInput | MobileSuitUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: MobileSuitCreateManySeriesInputEnvelope
+    set?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    disconnect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    delete?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    connect?: MobileSuitWhereUniqueInput | MobileSuitWhereUniqueInput[]
+    update?: MobileSuitUpdateWithWhereUniqueWithoutSeriesInput | MobileSuitUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: MobileSuitUpdateManyWithWhereWithoutSeriesInput | MobileSuitUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: MobileSuitScalarWhereInput | MobileSuitScalarWhereInput[]
+  }
+
+  export type KitUncheckedUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput> | KitCreateWithoutSeriesInput[] | KitUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutSeriesInput | KitCreateOrConnectWithoutSeriesInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutSeriesInput | KitUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: KitCreateManySeriesInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutSeriesInput | KitUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutSeriesInput | KitUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type MobileSuitCreatescrapedImagesInput = {
+    set: string[]
+  }
+
+  export type SeriesCreateNestedOneWithoutMobileSuitsInput = {
+    create?: XOR<SeriesCreateWithoutMobileSuitsInput, SeriesUncheckedCreateWithoutMobileSuitsInput>
+    connectOrCreate?: SeriesCreateOrConnectWithoutMobileSuitsInput
+    connect?: SeriesWhereUniqueInput
+  }
+
+  export type KitMobileSuitCreateNestedManyWithoutMobileSuitInput = {
+    create?: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput> | KitMobileSuitCreateWithoutMobileSuitInput[] | KitMobileSuitUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutMobileSuitInput | KitMobileSuitCreateOrConnectWithoutMobileSuitInput[]
+    createMany?: KitMobileSuitCreateManyMobileSuitInputEnvelope
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+  }
+
+  export type MobileSuitUploadCreateNestedManyWithoutMobileSuitInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput> | MobileSuitUploadCreateWithoutMobileSuitInput[] | MobileSuitUploadUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutMobileSuitInput | MobileSuitUploadCreateOrConnectWithoutMobileSuitInput[]
+    createMany?: MobileSuitUploadCreateManyMobileSuitInputEnvelope
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+  }
+
+  export type KitMobileSuitUncheckedCreateNestedManyWithoutMobileSuitInput = {
+    create?: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput> | KitMobileSuitCreateWithoutMobileSuitInput[] | KitMobileSuitUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutMobileSuitInput | KitMobileSuitCreateOrConnectWithoutMobileSuitInput[]
+    createMany?: KitMobileSuitCreateManyMobileSuitInputEnvelope
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+  }
+
+  export type MobileSuitUploadUncheckedCreateNestedManyWithoutMobileSuitInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput> | MobileSuitUploadCreateWithoutMobileSuitInput[] | MobileSuitUploadUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutMobileSuitInput | MobileSuitUploadCreateOrConnectWithoutMobileSuitInput[]
+    createMany?: MobileSuitUploadCreateManyMobileSuitInputEnvelope
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+  }
+
+  export type MobileSuitUpdatescrapedImagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type SeriesUpdateOneWithoutMobileSuitsNestedInput = {
+    create?: XOR<SeriesCreateWithoutMobileSuitsInput, SeriesUncheckedCreateWithoutMobileSuitsInput>
+    connectOrCreate?: SeriesCreateOrConnectWithoutMobileSuitsInput
+    upsert?: SeriesUpsertWithoutMobileSuitsInput
+    disconnect?: SeriesWhereInput | boolean
+    delete?: SeriesWhereInput | boolean
+    connect?: SeriesWhereUniqueInput
+    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutMobileSuitsInput, SeriesUpdateWithoutMobileSuitsInput>, SeriesUncheckedUpdateWithoutMobileSuitsInput>
+  }
+
+  export type KitMobileSuitUpdateManyWithoutMobileSuitNestedInput = {
+    create?: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput> | KitMobileSuitCreateWithoutMobileSuitInput[] | KitMobileSuitUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutMobileSuitInput | KitMobileSuitCreateOrConnectWithoutMobileSuitInput[]
+    upsert?: KitMobileSuitUpsertWithWhereUniqueWithoutMobileSuitInput | KitMobileSuitUpsertWithWhereUniqueWithoutMobileSuitInput[]
+    createMany?: KitMobileSuitCreateManyMobileSuitInputEnvelope
+    set?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    disconnect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    delete?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    update?: KitMobileSuitUpdateWithWhereUniqueWithoutMobileSuitInput | KitMobileSuitUpdateWithWhereUniqueWithoutMobileSuitInput[]
+    updateMany?: KitMobileSuitUpdateManyWithWhereWithoutMobileSuitInput | KitMobileSuitUpdateManyWithWhereWithoutMobileSuitInput[]
+    deleteMany?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+  }
+
+  export type MobileSuitUploadUpdateManyWithoutMobileSuitNestedInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput> | MobileSuitUploadCreateWithoutMobileSuitInput[] | MobileSuitUploadUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutMobileSuitInput | MobileSuitUploadCreateOrConnectWithoutMobileSuitInput[]
+    upsert?: MobileSuitUploadUpsertWithWhereUniqueWithoutMobileSuitInput | MobileSuitUploadUpsertWithWhereUniqueWithoutMobileSuitInput[]
+    createMany?: MobileSuitUploadCreateManyMobileSuitInputEnvelope
+    set?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    disconnect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    delete?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    update?: MobileSuitUploadUpdateWithWhereUniqueWithoutMobileSuitInput | MobileSuitUploadUpdateWithWhereUniqueWithoutMobileSuitInput[]
+    updateMany?: MobileSuitUploadUpdateManyWithWhereWithoutMobileSuitInput | MobileSuitUploadUpdateManyWithWhereWithoutMobileSuitInput[]
+    deleteMany?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+  }
+
+  export type KitMobileSuitUncheckedUpdateManyWithoutMobileSuitNestedInput = {
+    create?: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput> | KitMobileSuitCreateWithoutMobileSuitInput[] | KitMobileSuitUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutMobileSuitInput | KitMobileSuitCreateOrConnectWithoutMobileSuitInput[]
+    upsert?: KitMobileSuitUpsertWithWhereUniqueWithoutMobileSuitInput | KitMobileSuitUpsertWithWhereUniqueWithoutMobileSuitInput[]
+    createMany?: KitMobileSuitCreateManyMobileSuitInputEnvelope
+    set?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    disconnect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    delete?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    update?: KitMobileSuitUpdateWithWhereUniqueWithoutMobileSuitInput | KitMobileSuitUpdateWithWhereUniqueWithoutMobileSuitInput[]
+    updateMany?: KitMobileSuitUpdateManyWithWhereWithoutMobileSuitInput | KitMobileSuitUpdateManyWithWhereWithoutMobileSuitInput[]
+    deleteMany?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+  }
+
+  export type MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitNestedInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput> | MobileSuitUploadCreateWithoutMobileSuitInput[] | MobileSuitUploadUncheckedCreateWithoutMobileSuitInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutMobileSuitInput | MobileSuitUploadCreateOrConnectWithoutMobileSuitInput[]
+    upsert?: MobileSuitUploadUpsertWithWhereUniqueWithoutMobileSuitInput | MobileSuitUploadUpsertWithWhereUniqueWithoutMobileSuitInput[]
+    createMany?: MobileSuitUploadCreateManyMobileSuitInputEnvelope
+    set?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    disconnect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    delete?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    update?: MobileSuitUploadUpdateWithWhereUniqueWithoutMobileSuitInput | MobileSuitUploadUpdateWithWhereUniqueWithoutMobileSuitInput[]
+    updateMany?: MobileSuitUploadUpdateManyWithWhereWithoutMobileSuitInput | MobileSuitUploadUpdateManyWithWhereWithoutMobileSuitInput[]
+    deleteMany?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+  }
+
+  export type ProductLineCreateNestedManyWithoutGradeInput = {
+    create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
+    createMany?: ProductLineCreateManyGradeInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type KitCreateNestedManyWithoutGradeInput = {
+    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
+    createMany?: KitCreateManyGradeInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type ProductLineUncheckedCreateNestedManyWithoutGradeInput = {
+    create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
+    createMany?: ProductLineCreateManyGradeInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type KitUncheckedCreateNestedManyWithoutGradeInput = {
+    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
+    createMany?: KitCreateManyGradeInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type ProductLineUpdateManyWithoutGradeNestedInput = {
+    create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutGradeInput | ProductLineUpsertWithWhereUniqueWithoutGradeInput[]
+    createMany?: ProductLineCreateManyGradeInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutGradeInput | ProductLineUpdateWithWhereUniqueWithoutGradeInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutGradeInput | ProductLineUpdateManyWithWhereWithoutGradeInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type KitUpdateManyWithoutGradeNestedInput = {
+    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutGradeInput | KitUpsertWithWhereUniqueWithoutGradeInput[]
+    createMany?: KitCreateManyGradeInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutGradeInput | KitUpdateWithWhereUniqueWithoutGradeInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutGradeInput | KitUpdateManyWithWhereWithoutGradeInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutGradeNestedInput = {
+    create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutGradeInput | ProductLineUpsertWithWhereUniqueWithoutGradeInput[]
+    createMany?: ProductLineCreateManyGradeInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutGradeInput | ProductLineUpdateWithWhereUniqueWithoutGradeInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutGradeInput | ProductLineUpdateManyWithWhereWithoutGradeInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type KitUncheckedUpdateManyWithoutGradeNestedInput = {
+    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutGradeInput | KitUpsertWithWhereUniqueWithoutGradeInput[]
+    createMany?: KitCreateManyGradeInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutGradeInput | KitUpdateWithWhereUniqueWithoutGradeInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutGradeInput | KitUpdateManyWithWhereWithoutGradeInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type GradeCreateNestedOneWithoutProductLinesInput = {
+    create?: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
+    connectOrCreate?: GradeCreateOrConnectWithoutProductLinesInput
+    connect?: GradeWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutProductLineLogosInput = {
+    create?: XOR<UploadCreateWithoutProductLineLogosInput, UploadUncheckedCreateWithoutProductLineLogosInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutProductLineLogosInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type KitCreateNestedManyWithoutProductLineInput = {
+    create?: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput> | KitCreateWithoutProductLineInput[] | KitUncheckedCreateWithoutProductLineInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutProductLineInput | KitCreateOrConnectWithoutProductLineInput[]
+    createMany?: KitCreateManyProductLineInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type KitUncheckedCreateNestedManyWithoutProductLineInput = {
+    create?: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput> | KitCreateWithoutProductLineInput[] | KitUncheckedCreateWithoutProductLineInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutProductLineInput | KitCreateOrConnectWithoutProductLineInput[]
+    createMany?: KitCreateManyProductLineInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type GradeUpdateOneRequiredWithoutProductLinesNestedInput = {
+    create?: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
+    connectOrCreate?: GradeCreateOrConnectWithoutProductLinesInput
+    upsert?: GradeUpsertWithoutProductLinesInput
+    connect?: GradeWhereUniqueInput
+    update?: XOR<XOR<GradeUpdateToOneWithWhereWithoutProductLinesInput, GradeUpdateWithoutProductLinesInput>, GradeUncheckedUpdateWithoutProductLinesInput>
+  }
+
+  export type UploadUpdateOneWithoutProductLineLogosNestedInput = {
+    create?: XOR<UploadCreateWithoutProductLineLogosInput, UploadUncheckedCreateWithoutProductLineLogosInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutProductLineLogosInput
+    upsert?: UploadUpsertWithoutProductLineLogosInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutProductLineLogosInput, UploadUpdateWithoutProductLineLogosInput>, UploadUncheckedUpdateWithoutProductLineLogosInput>
+  }
+
+  export type KitUpdateManyWithoutProductLineNestedInput = {
+    create?: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput> | KitCreateWithoutProductLineInput[] | KitUncheckedCreateWithoutProductLineInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutProductLineInput | KitCreateOrConnectWithoutProductLineInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutProductLineInput | KitUpsertWithWhereUniqueWithoutProductLineInput[]
+    createMany?: KitCreateManyProductLineInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutProductLineInput | KitUpdateWithWhereUniqueWithoutProductLineInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutProductLineInput | KitUpdateManyWithWhereWithoutProductLineInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitUncheckedUpdateManyWithoutProductLineNestedInput = {
+    create?: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput> | KitCreateWithoutProductLineInput[] | KitUncheckedCreateWithoutProductLineInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutProductLineInput | KitCreateOrConnectWithoutProductLineInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutProductLineInput | KitUpsertWithWhereUniqueWithoutProductLineInput[]
+    createMany?: KitCreateManyProductLineInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutProductLineInput | KitUpdateWithWhereUniqueWithoutProductLineInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutProductLineInput | KitUpdateManyWithWhereWithoutProductLineInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitCreateNestedManyWithoutReleaseTypeInput = {
+    create?: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput> | KitCreateWithoutReleaseTypeInput[] | KitUncheckedCreateWithoutReleaseTypeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutReleaseTypeInput | KitCreateOrConnectWithoutReleaseTypeInput[]
+    createMany?: KitCreateManyReleaseTypeInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type KitUncheckedCreateNestedManyWithoutReleaseTypeInput = {
+    create?: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput> | KitCreateWithoutReleaseTypeInput[] | KitUncheckedCreateWithoutReleaseTypeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutReleaseTypeInput | KitCreateOrConnectWithoutReleaseTypeInput[]
+    createMany?: KitCreateManyReleaseTypeInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type KitUpdateManyWithoutReleaseTypeNestedInput = {
+    create?: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput> | KitCreateWithoutReleaseTypeInput[] | KitUncheckedCreateWithoutReleaseTypeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutReleaseTypeInput | KitCreateOrConnectWithoutReleaseTypeInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutReleaseTypeInput | KitUpsertWithWhereUniqueWithoutReleaseTypeInput[]
+    createMany?: KitCreateManyReleaseTypeInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutReleaseTypeInput | KitUpdateWithWhereUniqueWithoutReleaseTypeInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutReleaseTypeInput | KitUpdateManyWithWhereWithoutReleaseTypeInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitUncheckedUpdateManyWithoutReleaseTypeNestedInput = {
+    create?: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput> | KitCreateWithoutReleaseTypeInput[] | KitUncheckedCreateWithoutReleaseTypeInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutReleaseTypeInput | KitCreateOrConnectWithoutReleaseTypeInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutReleaseTypeInput | KitUpsertWithWhereUniqueWithoutReleaseTypeInput[]
+    createMany?: KitCreateManyReleaseTypeInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutReleaseTypeInput | KitUpdateWithWhereUniqueWithoutReleaseTypeInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutReleaseTypeInput | KitUpdateManyWithWhereWithoutReleaseTypeInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitCreatemanualLinksInput = {
+    set: string[]
+  }
+
+  export type KitCreatescrapedImagesInput = {
+    set: string[]
+  }
+
+  export type GradeCreateNestedOneWithoutKitsInput = {
+    create?: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: GradeCreateOrConnectWithoutKitsInput
+    connect?: GradeWhereUniqueInput
+  }
+
+  export type ProductLineCreateNestedOneWithoutKitsInput = {
+    create?: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: ProductLineCreateOrConnectWithoutKitsInput
+    connect?: ProductLineWhereUniqueInput
+  }
+
+  export type SeriesCreateNestedOneWithoutKitsInput = {
+    create?: XOR<SeriesCreateWithoutKitsInput, SeriesUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: SeriesCreateOrConnectWithoutKitsInput
+    connect?: SeriesWhereUniqueInput
+  }
+
+  export type ReleaseTypeCreateNestedOneWithoutKitsInput = {
+    create?: XOR<ReleaseTypeCreateWithoutKitsInput, ReleaseTypeUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: ReleaseTypeCreateOrConnectWithoutKitsInput
+    connect?: ReleaseTypeWhereUniqueInput
+  }
+
+  export type KitCreateNestedOneWithoutVariantsInput = {
+    create?: XOR<KitCreateWithoutVariantsInput, KitUncheckedCreateWithoutVariantsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutVariantsInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type KitCreateNestedManyWithoutBaseKitInput = {
+    create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
+    createMany?: KitCreateManyBaseKitInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type KitMobileSuitCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput> | KitMobileSuitCreateWithoutKitInput[] | KitMobileSuitUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutKitInput | KitMobileSuitCreateOrConnectWithoutKitInput[]
+    createMany?: KitMobileSuitCreateManyKitInputEnvelope
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+  }
+
+  export type KitUploadCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput> | KitUploadCreateWithoutKitInput[] | KitUploadUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutKitInput | KitUploadCreateOrConnectWithoutKitInput[]
+    createMany?: KitUploadCreateManyKitInputEnvelope
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+  }
+
+  export type KitUncheckedCreateNestedManyWithoutBaseKitInput = {
+    create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
+    createMany?: KitCreateManyBaseKitInputEnvelope
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+  }
+
+  export type KitMobileSuitUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput> | KitMobileSuitCreateWithoutKitInput[] | KitMobileSuitUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutKitInput | KitMobileSuitCreateOrConnectWithoutKitInput[]
+    createMany?: KitMobileSuitCreateManyKitInputEnvelope
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+  }
+
+  export type KitUploadUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput> | KitUploadCreateWithoutKitInput[] | KitUploadUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutKitInput | KitUploadCreateOrConnectWithoutKitInput[]
+    createMany?: KitUploadCreateManyKitInputEnvelope
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type KitUpdatemanualLinksInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type KitUpdatescrapedImagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type GradeUpdateOneRequiredWithoutKitsNestedInput = {
+    create?: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: GradeCreateOrConnectWithoutKitsInput
+    upsert?: GradeUpsertWithoutKitsInput
+    connect?: GradeWhereUniqueInput
+    update?: XOR<XOR<GradeUpdateToOneWithWhereWithoutKitsInput, GradeUpdateWithoutKitsInput>, GradeUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type ProductLineUpdateOneWithoutKitsNestedInput = {
+    create?: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: ProductLineCreateOrConnectWithoutKitsInput
+    upsert?: ProductLineUpsertWithoutKitsInput
+    disconnect?: ProductLineWhereInput | boolean
+    delete?: ProductLineWhereInput | boolean
+    connect?: ProductLineWhereUniqueInput
+    update?: XOR<XOR<ProductLineUpdateToOneWithWhereWithoutKitsInput, ProductLineUpdateWithoutKitsInput>, ProductLineUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type SeriesUpdateOneWithoutKitsNestedInput = {
+    create?: XOR<SeriesCreateWithoutKitsInput, SeriesUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: SeriesCreateOrConnectWithoutKitsInput
+    upsert?: SeriesUpsertWithoutKitsInput
+    disconnect?: SeriesWhereInput | boolean
+    delete?: SeriesWhereInput | boolean
+    connect?: SeriesWhereUniqueInput
+    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutKitsInput, SeriesUpdateWithoutKitsInput>, SeriesUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type ReleaseTypeUpdateOneWithoutKitsNestedInput = {
+    create?: XOR<ReleaseTypeCreateWithoutKitsInput, ReleaseTypeUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: ReleaseTypeCreateOrConnectWithoutKitsInput
+    upsert?: ReleaseTypeUpsertWithoutKitsInput
+    disconnect?: ReleaseTypeWhereInput | boolean
+    delete?: ReleaseTypeWhereInput | boolean
+    connect?: ReleaseTypeWhereUniqueInput
+    update?: XOR<XOR<ReleaseTypeUpdateToOneWithWhereWithoutKitsInput, ReleaseTypeUpdateWithoutKitsInput>, ReleaseTypeUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type KitUpdateOneWithoutVariantsNestedInput = {
+    create?: XOR<KitCreateWithoutVariantsInput, KitUncheckedCreateWithoutVariantsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutVariantsInput
+    upsert?: KitUpsertWithoutVariantsInput
+    disconnect?: KitWhereInput | boolean
+    delete?: KitWhereInput | boolean
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutVariantsInput, KitUpdateWithoutVariantsInput>, KitUncheckedUpdateWithoutVariantsInput>
+  }
+
+  export type KitUpdateManyWithoutBaseKitNestedInput = {
+    create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutBaseKitInput | KitUpsertWithWhereUniqueWithoutBaseKitInput[]
+    createMany?: KitCreateManyBaseKitInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutBaseKitInput | KitUpdateWithWhereUniqueWithoutBaseKitInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutBaseKitInput | KitUpdateManyWithWhereWithoutBaseKitInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitMobileSuitUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput> | KitMobileSuitCreateWithoutKitInput[] | KitMobileSuitUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutKitInput | KitMobileSuitCreateOrConnectWithoutKitInput[]
+    upsert?: KitMobileSuitUpsertWithWhereUniqueWithoutKitInput | KitMobileSuitUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitMobileSuitCreateManyKitInputEnvelope
+    set?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    disconnect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    delete?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    update?: KitMobileSuitUpdateWithWhereUniqueWithoutKitInput | KitMobileSuitUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitMobileSuitUpdateManyWithWhereWithoutKitInput | KitMobileSuitUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+  }
+
+  export type KitUploadUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput> | KitUploadCreateWithoutKitInput[] | KitUploadUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutKitInput | KitUploadCreateOrConnectWithoutKitInput[]
+    upsert?: KitUploadUpsertWithWhereUniqueWithoutKitInput | KitUploadUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitUploadCreateManyKitInputEnvelope
+    set?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    disconnect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    delete?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    update?: KitUploadUpdateWithWhereUniqueWithoutKitInput | KitUploadUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitUploadUpdateManyWithWhereWithoutKitInput | KitUploadUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+  }
+
+  export type KitUncheckedUpdateManyWithoutBaseKitNestedInput = {
+    create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
+    connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
+    upsert?: KitUpsertWithWhereUniqueWithoutBaseKitInput | KitUpsertWithWhereUniqueWithoutBaseKitInput[]
+    createMany?: KitCreateManyBaseKitInputEnvelope
+    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
+    update?: KitUpdateWithWhereUniqueWithoutBaseKitInput | KitUpdateWithWhereUniqueWithoutBaseKitInput[]
+    updateMany?: KitUpdateManyWithWhereWithoutBaseKitInput | KitUpdateManyWithWhereWithoutBaseKitInput[]
+    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
+  }
+
+  export type KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput> | KitMobileSuitCreateWithoutKitInput[] | KitMobileSuitUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitMobileSuitCreateOrConnectWithoutKitInput | KitMobileSuitCreateOrConnectWithoutKitInput[]
+    upsert?: KitMobileSuitUpsertWithWhereUniqueWithoutKitInput | KitMobileSuitUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitMobileSuitCreateManyKitInputEnvelope
+    set?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    disconnect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    delete?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    connect?: KitMobileSuitWhereUniqueInput | KitMobileSuitWhereUniqueInput[]
+    update?: KitMobileSuitUpdateWithWhereUniqueWithoutKitInput | KitMobileSuitUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitMobileSuitUpdateManyWithWhereWithoutKitInput | KitMobileSuitUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+  }
+
+  export type KitUploadUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput> | KitUploadCreateWithoutKitInput[] | KitUploadUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutKitInput | KitUploadCreateOrConnectWithoutKitInput[]
+    upsert?: KitUploadUpsertWithWhereUniqueWithoutKitInput | KitUploadUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitUploadCreateManyKitInputEnvelope
+    set?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    disconnect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    delete?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    update?: KitUploadUpdateWithWhereUniqueWithoutKitInput | KitUploadUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitUploadUpdateManyWithWhereWithoutKitInput | KitUploadUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+  }
+
+  export type KitCreateNestedOneWithoutMobileSuitsInput = {
+    create?: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutMobileSuitsInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type MobileSuitCreateNestedOneWithoutKitsInput = {
+    create?: XOR<MobileSuitCreateWithoutKitsInput, MobileSuitUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutKitsInput
+    connect?: MobileSuitWhereUniqueInput
+  }
+
+  export type KitUpdateOneRequiredWithoutMobileSuitsNestedInput = {
+    create?: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutMobileSuitsInput
+    upsert?: KitUpsertWithoutMobileSuitsInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutMobileSuitsInput, KitUpdateWithoutMobileSuitsInput>, KitUncheckedUpdateWithoutMobileSuitsInput>
+  }
+
+  export type MobileSuitUpdateOneRequiredWithoutKitsNestedInput = {
+    create?: XOR<MobileSuitCreateWithoutKitsInput, MobileSuitUncheckedCreateWithoutKitsInput>
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutKitsInput
+    upsert?: MobileSuitUpsertWithoutKitsInput
+    connect?: MobileSuitWhereUniqueInput
+    update?: XOR<XOR<MobileSuitUpdateToOneWithWhereWithoutKitsInput, MobileSuitUpdateWithoutKitsInput>, MobileSuitUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type KitUploadCreateNestedManyWithoutUploadInput = {
+    create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: KitUploadCreateManyUploadInputEnvelope
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+  }
+
+  export type MobileSuitUploadCreateNestedManyWithoutUploadInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput> | MobileSuitUploadCreateWithoutUploadInput[] | MobileSuitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutUploadInput | MobileSuitUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: MobileSuitUploadCreateManyUploadInputEnvelope
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+  }
+
+  export type ProductLineCreateNestedManyWithoutLogoInput = {
+    create?: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput> | ProductLineCreateWithoutLogoInput[] | ProductLineUncheckedCreateWithoutLogoInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutLogoInput | ProductLineCreateOrConnectWithoutLogoInput[]
+    createMany?: ProductLineCreateManyLogoInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type KitUploadUncheckedCreateNestedManyWithoutUploadInput = {
+    create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: KitUploadCreateManyUploadInputEnvelope
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+  }
+
+  export type MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput> | MobileSuitUploadCreateWithoutUploadInput[] | MobileSuitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutUploadInput | MobileSuitUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: MobileSuitUploadCreateManyUploadInputEnvelope
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+  }
+
+  export type ProductLineUncheckedCreateNestedManyWithoutLogoInput = {
+    create?: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput> | ProductLineCreateWithoutLogoInput[] | ProductLineUncheckedCreateWithoutLogoInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutLogoInput | ProductLineCreateOrConnectWithoutLogoInput[]
+    createMany?: ProductLineCreateManyLogoInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type KitUploadUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: KitUploadUpsertWithWhereUniqueWithoutUploadInput | KitUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: KitUploadCreateManyUploadInputEnvelope
+    set?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    disconnect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    delete?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    update?: KitUploadUpdateWithWhereUniqueWithoutUploadInput | KitUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: KitUploadUpdateManyWithWhereWithoutUploadInput | KitUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+  }
+
+  export type MobileSuitUploadUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput> | MobileSuitUploadCreateWithoutUploadInput[] | MobileSuitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutUploadInput | MobileSuitUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: MobileSuitUploadUpsertWithWhereUniqueWithoutUploadInput | MobileSuitUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: MobileSuitUploadCreateManyUploadInputEnvelope
+    set?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    disconnect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    delete?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    update?: MobileSuitUploadUpdateWithWhereUniqueWithoutUploadInput | MobileSuitUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: MobileSuitUploadUpdateManyWithWhereWithoutUploadInput | MobileSuitUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+  }
+
+  export type ProductLineUpdateManyWithoutLogoNestedInput = {
+    create?: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput> | ProductLineCreateWithoutLogoInput[] | ProductLineUncheckedCreateWithoutLogoInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutLogoInput | ProductLineCreateOrConnectWithoutLogoInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutLogoInput | ProductLineUpsertWithWhereUniqueWithoutLogoInput[]
+    createMany?: ProductLineCreateManyLogoInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutLogoInput | ProductLineUpdateWithWhereUniqueWithoutLogoInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutLogoInput | ProductLineUpdateManyWithWhereWithoutLogoInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type KitUploadUncheckedUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: KitUploadUpsertWithWhereUniqueWithoutUploadInput | KitUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: KitUploadCreateManyUploadInputEnvelope
+    set?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    disconnect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    delete?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    connect?: KitUploadWhereUniqueInput | KitUploadWhereUniqueInput[]
+    update?: KitUploadUpdateWithWhereUniqueWithoutUploadInput | KitUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: KitUploadUpdateManyWithWhereWithoutUploadInput | KitUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+  }
+
+  export type MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput> | MobileSuitUploadCreateWithoutUploadInput[] | MobileSuitUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: MobileSuitUploadCreateOrConnectWithoutUploadInput | MobileSuitUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: MobileSuitUploadUpsertWithWhereUniqueWithoutUploadInput | MobileSuitUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: MobileSuitUploadCreateManyUploadInputEnvelope
+    set?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    disconnect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    delete?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    connect?: MobileSuitUploadWhereUniqueInput | MobileSuitUploadWhereUniqueInput[]
+    update?: MobileSuitUploadUpdateWithWhereUniqueWithoutUploadInput | MobileSuitUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: MobileSuitUploadUpdateManyWithWhereWithoutUploadInput | MobileSuitUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutLogoNestedInput = {
+    create?: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput> | ProductLineCreateWithoutLogoInput[] | ProductLineUncheckedCreateWithoutLogoInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutLogoInput | ProductLineCreateOrConnectWithoutLogoInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutLogoInput | ProductLineUpsertWithWhereUniqueWithoutLogoInput[]
+    createMany?: ProductLineCreateManyLogoInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutLogoInput | ProductLineUpdateWithWhereUniqueWithoutLogoInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutLogoInput | ProductLineUpdateManyWithWhereWithoutLogoInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type KitCreateNestedOneWithoutUploadsInput = {
+    create?: XOR<KitCreateWithoutUploadsInput, KitUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutUploadsInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutKitUploadsInput = {
+    create?: XOR<UploadCreateWithoutKitUploadsInput, UploadUncheckedCreateWithoutKitUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutKitUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type EnumKitImageTypeFieldUpdateOperationsInput = {
+    set?: $Enums.KitImageType
+  }
+
+  export type KitUpdateOneRequiredWithoutUploadsNestedInput = {
+    create?: XOR<KitCreateWithoutUploadsInput, KitUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutUploadsInput
+    upsert?: KitUpsertWithoutUploadsInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutUploadsInput, KitUpdateWithoutUploadsInput>, KitUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type UploadUpdateOneRequiredWithoutKitUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutKitUploadsInput, UploadUncheckedCreateWithoutKitUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutKitUploadsInput
+    upsert?: UploadUpsertWithoutKitUploadsInput
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutKitUploadsInput, UploadUpdateWithoutKitUploadsInput>, UploadUncheckedUpdateWithoutKitUploadsInput>
+  }
+
+  export type MobileSuitCreateNestedOneWithoutUploadsInput = {
+    create?: XOR<MobileSuitCreateWithoutUploadsInput, MobileSuitUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutUploadsInput
+    connect?: MobileSuitWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutMobileSuitUploadsInput = {
+    create?: XOR<UploadCreateWithoutMobileSuitUploadsInput, UploadUncheckedCreateWithoutMobileSuitUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutMobileSuitUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type MobileSuitUpdateOneRequiredWithoutUploadsNestedInput = {
+    create?: XOR<MobileSuitCreateWithoutUploadsInput, MobileSuitUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: MobileSuitCreateOrConnectWithoutUploadsInput
+    upsert?: MobileSuitUpsertWithoutUploadsInput
+    connect?: MobileSuitWhereUniqueInput
+    update?: XOR<XOR<MobileSuitUpdateToOneWithWhereWithoutUploadsInput, MobileSuitUpdateWithoutUploadsInput>, MobileSuitUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type UploadUpdateOneRequiredWithoutMobileSuitUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutMobileSuitUploadsInput, UploadUncheckedCreateWithoutMobileSuitUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutMobileSuitUploadsInput
+    upsert?: UploadUpsertWithoutMobileSuitUploadsInput
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutMobileSuitUploadsInput, UploadUpdateWithoutMobileSuitUploadsInput>, UploadUncheckedUpdateWithoutMobileSuitUploadsInput>
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumKitImageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitImageType | EnumKitImageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumKitImageTypeFilter<$PrismaModel> | $Enums.KitImageType
+  }
+
+  export type NestedEnumKitImageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitImageType | EnumKitImageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumKitImageTypeWithAggregatesFilter<$PrismaModel> | $Enums.KitImageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKitImageTypeFilter<$PrismaModel>
+    _max?: NestedEnumKitImageTypeFilter<$PrismaModel>
+  }
+
+  export type SeriesCreateWithoutTimelineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuits?: MobileSuitCreateNestedManyWithoutSeriesInput
+    kits?: KitCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesUncheckedCreateWithoutTimelineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuits?: MobileSuitUncheckedCreateNestedManyWithoutSeriesInput
+    kits?: KitUncheckedCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesCreateOrConnectWithoutTimelineInput = {
+    where: SeriesWhereUniqueInput
+    create: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput>
+  }
+
+  export type SeriesCreateManyTimelineInputEnvelope = {
+    data: SeriesCreateManyTimelineInput | SeriesCreateManyTimelineInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SeriesUpsertWithWhereUniqueWithoutTimelineInput = {
+    where: SeriesWhereUniqueInput
+    update: XOR<SeriesUpdateWithoutTimelineInput, SeriesUncheckedUpdateWithoutTimelineInput>
+    create: XOR<SeriesCreateWithoutTimelineInput, SeriesUncheckedCreateWithoutTimelineInput>
+  }
+
+  export type SeriesUpdateWithWhereUniqueWithoutTimelineInput = {
+    where: SeriesWhereUniqueInput
+    data: XOR<SeriesUpdateWithoutTimelineInput, SeriesUncheckedUpdateWithoutTimelineInput>
+  }
+
+  export type SeriesUpdateManyWithWhereWithoutTimelineInput = {
+    where: SeriesScalarWhereInput
+    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyWithoutTimelineInput>
+  }
+
+  export type SeriesScalarWhereInput = {
+    AND?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
+    OR?: SeriesScalarWhereInput[]
+    NOT?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
+    id?: StringFilter<"Series"> | string
+    name?: StringFilter<"Series"> | string
+    slug?: StringNullableFilter<"Series"> | string | null
+    description?: StringNullableFilter<"Series"> | string | null
+    timelineId?: StringNullableFilter<"Series"> | string | null
+    scrapedImages?: StringNullableListFilter<"Series">
+    createdAt?: DateTimeFilter<"Series"> | Date | string
+    updatedAt?: DateTimeFilter<"Series"> | Date | string
+  }
+
+  export type TimelineCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TimelineUncheckedCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TimelineCreateOrConnectWithoutSeriesInput = {
+    where: TimelineWhereUniqueInput
+    create: XOR<TimelineCreateWithoutSeriesInput, TimelineUncheckedCreateWithoutSeriesInput>
+  }
+
+  export type MobileSuitCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitMobileSuitCreateNestedManyWithoutMobileSuitInput
+    uploads?: MobileSuitUploadCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitUncheckedCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitMobileSuitUncheckedCreateNestedManyWithoutMobileSuitInput
+    uploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitCreateOrConnectWithoutSeriesInput = {
+    where: MobileSuitWhereUniqueInput
+    create: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput>
+  }
+
+  export type MobileSuitCreateManySeriesInputEnvelope = {
+    data: MobileSuitCreateManySeriesInput | MobileSuitCreateManySeriesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutSeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutSeriesInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput>
+  }
+
+  export type KitCreateManySeriesInputEnvelope = {
+    data: KitCreateManySeriesInput | KitCreateManySeriesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TimelineUpsertWithoutSeriesInput = {
+    update: XOR<TimelineUpdateWithoutSeriesInput, TimelineUncheckedUpdateWithoutSeriesInput>
+    create: XOR<TimelineCreateWithoutSeriesInput, TimelineUncheckedCreateWithoutSeriesInput>
+    where?: TimelineWhereInput
+  }
+
+  export type TimelineUpdateToOneWithWhereWithoutSeriesInput = {
+    where?: TimelineWhereInput
+    data: XOR<TimelineUpdateWithoutSeriesInput, TimelineUncheckedUpdateWithoutSeriesInput>
+  }
+
+  export type TimelineUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TimelineUncheckedUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUpsertWithWhereUniqueWithoutSeriesInput = {
+    where: MobileSuitWhereUniqueInput
+    update: XOR<MobileSuitUpdateWithoutSeriesInput, MobileSuitUncheckedUpdateWithoutSeriesInput>
+    create: XOR<MobileSuitCreateWithoutSeriesInput, MobileSuitUncheckedCreateWithoutSeriesInput>
+  }
+
+  export type MobileSuitUpdateWithWhereUniqueWithoutSeriesInput = {
+    where: MobileSuitWhereUniqueInput
+    data: XOR<MobileSuitUpdateWithoutSeriesInput, MobileSuitUncheckedUpdateWithoutSeriesInput>
+  }
+
+  export type MobileSuitUpdateManyWithWhereWithoutSeriesInput = {
+    where: MobileSuitScalarWhereInput
+    data: XOR<MobileSuitUpdateManyMutationInput, MobileSuitUncheckedUpdateManyWithoutSeriesInput>
+  }
+
+  export type MobileSuitScalarWhereInput = {
+    AND?: MobileSuitScalarWhereInput | MobileSuitScalarWhereInput[]
+    OR?: MobileSuitScalarWhereInput[]
+    NOT?: MobileSuitScalarWhereInput | MobileSuitScalarWhereInput[]
+    id?: StringFilter<"MobileSuit"> | string
+    name?: StringFilter<"MobileSuit"> | string
+    slug?: StringNullableFilter<"MobileSuit"> | string | null
+    description?: StringNullableFilter<"MobileSuit"> | string | null
+    seriesId?: StringNullableFilter<"MobileSuit"> | string | null
+    scrapedImages?: StringNullableListFilter<"MobileSuit">
+    createdAt?: DateTimeFilter<"MobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuit"> | Date | string
+  }
+
+  export type KitUpsertWithWhereUniqueWithoutSeriesInput = {
+    where: KitWhereUniqueInput
+    update: XOR<KitUpdateWithoutSeriesInput, KitUncheckedUpdateWithoutSeriesInput>
+    create: XOR<KitCreateWithoutSeriesInput, KitUncheckedCreateWithoutSeriesInput>
+  }
+
+  export type KitUpdateWithWhereUniqueWithoutSeriesInput = {
+    where: KitWhereUniqueInput
+    data: XOR<KitUpdateWithoutSeriesInput, KitUncheckedUpdateWithoutSeriesInput>
+  }
+
+  export type KitUpdateManyWithWhereWithoutSeriesInput = {
+    where: KitScalarWhereInput
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutSeriesInput>
+  }
+
+  export type KitScalarWhereInput = {
+    AND?: KitScalarWhereInput | KitScalarWhereInput[]
+    OR?: KitScalarWhereInput[]
+    NOT?: KitScalarWhereInput | KitScalarWhereInput[]
+    id?: StringFilter<"Kit"> | string
+    name?: StringFilter<"Kit"> | string
+    slug?: StringNullableFilter<"Kit"> | string | null
+    number?: StringFilter<"Kit"> | string
+    variant?: StringNullableFilter<"Kit"> | string | null
+    releaseDate?: DateTimeNullableFilter<"Kit"> | Date | string | null
+    priceYen?: IntNullableFilter<"Kit"> | number | null
+    region?: StringNullableFilter<"Kit"> | string | null
+    boxArt?: StringNullableFilter<"Kit"> | string | null
+    notes?: StringNullableFilter<"Kit"> | string | null
+    manualLinks?: StringNullableListFilter<"Kit">
+    scrapedImages?: StringNullableListFilter<"Kit">
+    potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    createdAt?: DateTimeFilter<"Kit"> | Date | string
+    updatedAt?: DateTimeFilter<"Kit"> | Date | string
+    gradeId?: StringFilter<"Kit"> | string
+    productLineId?: StringNullableFilter<"Kit"> | string | null
+    seriesId?: StringNullableFilter<"Kit"> | string | null
+    releaseTypeId?: StringNullableFilter<"Kit"> | string | null
+    baseKitId?: StringNullableFilter<"Kit"> | string | null
+  }
+
+  export type SeriesCreateWithoutMobileSuitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timeline?: TimelineCreateNestedOneWithoutSeriesInput
+    kits?: KitCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesUncheckedCreateWithoutMobileSuitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    timelineId?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesCreateOrConnectWithoutMobileSuitsInput = {
+    where: SeriesWhereUniqueInput
+    create: XOR<SeriesCreateWithoutMobileSuitsInput, SeriesUncheckedCreateWithoutMobileSuitsInput>
+  }
+
+  export type KitMobileSuitCreateWithoutMobileSuitInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutMobileSuitsInput
+  }
+
+  export type KitMobileSuitUncheckedCreateWithoutMobileSuitInput = {
+    id?: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitMobileSuitCreateOrConnectWithoutMobileSuitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    create: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput>
+  }
+
+  export type KitMobileSuitCreateManyMobileSuitInputEnvelope = {
+    data: KitMobileSuitCreateManyMobileSuitInput | KitMobileSuitCreateManyMobileSuitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MobileSuitUploadCreateWithoutMobileSuitInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutMobileSuitUploadsInput
+  }
+
+  export type MobileSuitUploadUncheckedCreateWithoutMobileSuitInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadCreateOrConnectWithoutMobileSuitInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    create: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput>
+  }
+
+  export type MobileSuitUploadCreateManyMobileSuitInputEnvelope = {
+    data: MobileSuitUploadCreateManyMobileSuitInput | MobileSuitUploadCreateManyMobileSuitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SeriesUpsertWithoutMobileSuitsInput = {
+    update: XOR<SeriesUpdateWithoutMobileSuitsInput, SeriesUncheckedUpdateWithoutMobileSuitsInput>
+    create: XOR<SeriesCreateWithoutMobileSuitsInput, SeriesUncheckedCreateWithoutMobileSuitsInput>
+    where?: SeriesWhereInput
+  }
+
+  export type SeriesUpdateToOneWithWhereWithoutMobileSuitsInput = {
+    where?: SeriesWhereInput
+    data: XOR<SeriesUpdateWithoutMobileSuitsInput, SeriesUncheckedUpdateWithoutMobileSuitsInput>
+  }
+
+  export type SeriesUpdateWithoutMobileSuitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timeline?: TimelineUpdateOneWithoutSeriesNestedInput
+    kits?: KitUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesUncheckedUpdateWithoutMobileSuitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type KitMobileSuitUpsertWithWhereUniqueWithoutMobileSuitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    update: XOR<KitMobileSuitUpdateWithoutMobileSuitInput, KitMobileSuitUncheckedUpdateWithoutMobileSuitInput>
+    create: XOR<KitMobileSuitCreateWithoutMobileSuitInput, KitMobileSuitUncheckedCreateWithoutMobileSuitInput>
+  }
+
+  export type KitMobileSuitUpdateWithWhereUniqueWithoutMobileSuitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    data: XOR<KitMobileSuitUpdateWithoutMobileSuitInput, KitMobileSuitUncheckedUpdateWithoutMobileSuitInput>
+  }
+
+  export type KitMobileSuitUpdateManyWithWhereWithoutMobileSuitInput = {
+    where: KitMobileSuitScalarWhereInput
+    data: XOR<KitMobileSuitUpdateManyMutationInput, KitMobileSuitUncheckedUpdateManyWithoutMobileSuitInput>
+  }
+
+  export type KitMobileSuitScalarWhereInput = {
+    AND?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+    OR?: KitMobileSuitScalarWhereInput[]
+    NOT?: KitMobileSuitScalarWhereInput | KitMobileSuitScalarWhereInput[]
+    id?: StringFilter<"KitMobileSuit"> | string
+    kitId?: StringFilter<"KitMobileSuit"> | string
+    mobileSuitId?: StringFilter<"KitMobileSuit"> | string
+    createdAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+    updatedAt?: DateTimeFilter<"KitMobileSuit"> | Date | string
+  }
+
+  export type MobileSuitUploadUpsertWithWhereUniqueWithoutMobileSuitInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    update: XOR<MobileSuitUploadUpdateWithoutMobileSuitInput, MobileSuitUploadUncheckedUpdateWithoutMobileSuitInput>
+    create: XOR<MobileSuitUploadCreateWithoutMobileSuitInput, MobileSuitUploadUncheckedCreateWithoutMobileSuitInput>
+  }
+
+  export type MobileSuitUploadUpdateWithWhereUniqueWithoutMobileSuitInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    data: XOR<MobileSuitUploadUpdateWithoutMobileSuitInput, MobileSuitUploadUncheckedUpdateWithoutMobileSuitInput>
+  }
+
+  export type MobileSuitUploadUpdateManyWithWhereWithoutMobileSuitInput = {
+    where: MobileSuitUploadScalarWhereInput
+    data: XOR<MobileSuitUploadUpdateManyMutationInput, MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitInput>
+  }
+
+  export type MobileSuitUploadScalarWhereInput = {
+    AND?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+    OR?: MobileSuitUploadScalarWhereInput[]
+    NOT?: MobileSuitUploadScalarWhereInput | MobileSuitUploadScalarWhereInput[]
+    id?: StringFilter<"MobileSuitUpload"> | string
+    mobileSuitId?: StringFilter<"MobileSuitUpload"> | string
+    uploadId?: StringFilter<"MobileSuitUpload"> | string
+    caption?: StringNullableFilter<"MobileSuitUpload"> | string | null
+    order?: IntNullableFilter<"MobileSuitUpload"> | number | null
+    createdAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"MobileSuitUpload"> | Date | string
+  }
+
+  export type ProductLineCreateWithoutGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logo?: UploadCreateNestedOneWithoutProductLineLogosInput
+    kits?: KitCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineUncheckedCreateWithoutGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoId?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineCreateOrConnectWithoutGradeInput = {
+    where: ProductLineWhereUniqueInput
+    create: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput>
+  }
+
+  export type ProductLineCreateManyGradeInputEnvelope = {
+    data: ProductLineCreateManyGradeInput | ProductLineCreateManyGradeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitCreateWithoutGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutGradeInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput>
+  }
+
+  export type KitCreateManyGradeInputEnvelope = {
+    data: KitCreateManyGradeInput | KitCreateManyGradeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductLineUpsertWithWhereUniqueWithoutGradeInput = {
+    where: ProductLineWhereUniqueInput
+    update: XOR<ProductLineUpdateWithoutGradeInput, ProductLineUncheckedUpdateWithoutGradeInput>
+    create: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput>
+  }
+
+  export type ProductLineUpdateWithWhereUniqueWithoutGradeInput = {
+    where: ProductLineWhereUniqueInput
+    data: XOR<ProductLineUpdateWithoutGradeInput, ProductLineUncheckedUpdateWithoutGradeInput>
+  }
+
+  export type ProductLineUpdateManyWithWhereWithoutGradeInput = {
+    where: ProductLineScalarWhereInput
+    data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyWithoutGradeInput>
+  }
+
+  export type ProductLineScalarWhereInput = {
+    AND?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+    OR?: ProductLineScalarWhereInput[]
+    NOT?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+    id?: StringFilter<"ProductLine"> | string
+    name?: StringFilter<"ProductLine"> | string
+    slug?: StringNullableFilter<"ProductLine"> | string | null
+    description?: StringNullableFilter<"ProductLine"> | string | null
+    gradeId?: StringFilter<"ProductLine"> | string
+    logoId?: StringNullableFilter<"ProductLine"> | string | null
+    scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
+    createdAt?: DateTimeFilter<"ProductLine"> | Date | string
+    updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
+  }
+
+  export type KitUpsertWithWhereUniqueWithoutGradeInput = {
+    where: KitWhereUniqueInput
+    update: XOR<KitUpdateWithoutGradeInput, KitUncheckedUpdateWithoutGradeInput>
+    create: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput>
+  }
+
+  export type KitUpdateWithWhereUniqueWithoutGradeInput = {
+    where: KitWhereUniqueInput
+    data: XOR<KitUpdateWithoutGradeInput, KitUncheckedUpdateWithoutGradeInput>
+  }
+
+  export type KitUpdateManyWithWhereWithoutGradeInput = {
+    where: KitScalarWhereInput
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutGradeInput>
+  }
+
+  export type GradeCreateWithoutProductLinesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeUncheckedCreateWithoutProductLinesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeCreateOrConnectWithoutProductLinesInput = {
+    where: GradeWhereUniqueInput
+    create: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
+  }
+
+  export type UploadCreateWithoutProductLineLogosInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutProductLineLogosInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutProductLineLogosInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutProductLineLogosInput, UploadUncheckedCreateWithoutProductLineLogosInput>
+  }
+
+  export type KitCreateWithoutProductLineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutProductLineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutProductLineInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput>
+  }
+
+  export type KitCreateManyProductLineInputEnvelope = {
+    data: KitCreateManyProductLineInput | KitCreateManyProductLineInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GradeUpsertWithoutProductLinesInput = {
+    update: XOR<GradeUpdateWithoutProductLinesInput, GradeUncheckedUpdateWithoutProductLinesInput>
+    create: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
+    where?: GradeWhereInput
+  }
+
+  export type GradeUpdateToOneWithWhereWithoutProductLinesInput = {
+    where?: GradeWhereInput
+    data: XOR<GradeUpdateWithoutProductLinesInput, GradeUncheckedUpdateWithoutProductLinesInput>
+  }
+
+  export type GradeUpdateWithoutProductLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUpdateManyWithoutGradeNestedInput
+  }
+
+  export type GradeUncheckedUpdateWithoutProductLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutGradeNestedInput
+  }
+
+  export type UploadUpsertWithoutProductLineLogosInput = {
+    update: XOR<UploadUpdateWithoutProductLineLogosInput, UploadUncheckedUpdateWithoutProductLineLogosInput>
+    create: XOR<UploadCreateWithoutProductLineLogosInput, UploadUncheckedCreateWithoutProductLineLogosInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutProductLineLogosInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutProductLineLogosInput, UploadUncheckedUpdateWithoutProductLineLogosInput>
+  }
+
+  export type UploadUpdateWithoutProductLineLogosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutProductLineLogosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+  }
+
+  export type KitUpsertWithWhereUniqueWithoutProductLineInput = {
+    where: KitWhereUniqueInput
+    update: XOR<KitUpdateWithoutProductLineInput, KitUncheckedUpdateWithoutProductLineInput>
+    create: XOR<KitCreateWithoutProductLineInput, KitUncheckedCreateWithoutProductLineInput>
+  }
+
+  export type KitUpdateWithWhereUniqueWithoutProductLineInput = {
+    where: KitWhereUniqueInput
+    data: XOR<KitUpdateWithoutProductLineInput, KitUncheckedUpdateWithoutProductLineInput>
+  }
+
+  export type KitUpdateManyWithWhereWithoutProductLineInput = {
+    where: KitScalarWhereInput
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutProductLineInput>
+  }
+
+  export type KitCreateWithoutReleaseTypeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutReleaseTypeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutReleaseTypeInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput>
+  }
+
+  export type KitCreateManyReleaseTypeInputEnvelope = {
+    data: KitCreateManyReleaseTypeInput | KitCreateManyReleaseTypeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitUpsertWithWhereUniqueWithoutReleaseTypeInput = {
+    where: KitWhereUniqueInput
+    update: XOR<KitUpdateWithoutReleaseTypeInput, KitUncheckedUpdateWithoutReleaseTypeInput>
+    create: XOR<KitCreateWithoutReleaseTypeInput, KitUncheckedCreateWithoutReleaseTypeInput>
+  }
+
+  export type KitUpdateWithWhereUniqueWithoutReleaseTypeInput = {
+    where: KitWhereUniqueInput
+    data: XOR<KitUpdateWithoutReleaseTypeInput, KitUncheckedUpdateWithoutReleaseTypeInput>
+  }
+
+  export type KitUpdateManyWithWhereWithoutReleaseTypeInput = {
+    where: KitScalarWhereInput
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutReleaseTypeInput>
+  }
+
+  export type GradeCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeUncheckedCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineUncheckedCreateNestedManyWithoutGradeInput
+  }
+
+  export type GradeCreateOrConnectWithoutKitsInput = {
+    where: GradeWhereUniqueInput
+    create: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
+  }
+
+  export type ProductLineCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutProductLinesInput
+    logo?: UploadCreateNestedOneWithoutProductLineLogosInput
+  }
+
+  export type ProductLineUncheckedCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId: string
+    logoId?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductLineCreateOrConnectWithoutKitsInput = {
+    where: ProductLineWhereUniqueInput
+    create: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
+  }
+
+  export type SeriesCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timeline?: TimelineCreateNestedOneWithoutSeriesInput
+    mobileSuits?: MobileSuitCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesUncheckedCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    timelineId?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuits?: MobileSuitUncheckedCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SeriesCreateOrConnectWithoutKitsInput = {
+    where: SeriesWhereUniqueInput
+    create: XOR<SeriesCreateWithoutKitsInput, SeriesUncheckedCreateWithoutKitsInput>
+  }
+
+  export type ReleaseTypeCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReleaseTypeUncheckedCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReleaseTypeCreateOrConnectWithoutKitsInput = {
+    where: ReleaseTypeWhereUniqueInput
+    create: XOR<ReleaseTypeCreateWithoutKitsInput, ReleaseTypeUncheckedCreateWithoutKitsInput>
+  }
+
+  export type KitCreateWithoutVariantsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutVariantsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutVariantsInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutVariantsInput, KitUncheckedCreateWithoutVariantsInput>
+  }
+
+  export type KitCreateWithoutBaseKitInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutBaseKitInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutBaseKitInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput>
+  }
+
+  export type KitCreateManyBaseKitInputEnvelope = {
+    data: KitCreateManyBaseKitInput | KitCreateManyBaseKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitMobileSuitCreateWithoutKitInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuit: MobileSuitCreateNestedOneWithoutKitsInput
+  }
+
+  export type KitMobileSuitUncheckedCreateWithoutKitInput = {
+    id?: string
+    mobileSuitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitMobileSuitCreateOrConnectWithoutKitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    create: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitMobileSuitCreateManyKitInputEnvelope = {
+    data: KitMobileSuitCreateManyKitInput | KitMobileSuitCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitUploadCreateWithoutKitInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutKitUploadsInput
+  }
+
+  export type KitUploadUncheckedCreateWithoutKitInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadCreateOrConnectWithoutKitInput = {
+    where: KitUploadWhereUniqueInput
+    create: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitUploadCreateManyKitInputEnvelope = {
+    data: KitUploadCreateManyKitInput | KitUploadCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GradeUpsertWithoutKitsInput = {
+    update: XOR<GradeUpdateWithoutKitsInput, GradeUncheckedUpdateWithoutKitsInput>
+    create: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
+    where?: GradeWhereInput
+  }
+
+  export type GradeUpdateToOneWithWhereWithoutKitsInput = {
+    where?: GradeWhereInput
+    data: XOR<GradeUpdateWithoutKitsInput, GradeUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type GradeUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUpdateManyWithoutGradeNestedInput
+  }
+
+  export type GradeUncheckedUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUncheckedUpdateManyWithoutGradeNestedInput
+  }
+
+  export type ProductLineUpsertWithoutKitsInput = {
+    update: XOR<ProductLineUpdateWithoutKitsInput, ProductLineUncheckedUpdateWithoutKitsInput>
+    create: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
+    where?: ProductLineWhereInput
+  }
+
+  export type ProductLineUpdateToOneWithWhereWithoutKitsInput = {
+    where?: ProductLineWhereInput
+    data: XOR<ProductLineUpdateWithoutKitsInput, ProductLineUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type ProductLineUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: StringFieldUpdateOperationsInput | string
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeriesUpsertWithoutKitsInput = {
+    update: XOR<SeriesUpdateWithoutKitsInput, SeriesUncheckedUpdateWithoutKitsInput>
+    create: XOR<SeriesCreateWithoutKitsInput, SeriesUncheckedCreateWithoutKitsInput>
+    where?: SeriesWhereInput
+  }
+
+  export type SeriesUpdateToOneWithWhereWithoutKitsInput = {
+    where?: SeriesWhereInput
+    data: XOR<SeriesUpdateWithoutKitsInput, SeriesUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type SeriesUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timeline?: TimelineUpdateOneWithoutSeriesNestedInput
+    mobileSuits?: MobileSuitUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesUncheckedUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuits?: MobileSuitUncheckedUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type ReleaseTypeUpsertWithoutKitsInput = {
+    update: XOR<ReleaseTypeUpdateWithoutKitsInput, ReleaseTypeUncheckedUpdateWithoutKitsInput>
+    create: XOR<ReleaseTypeCreateWithoutKitsInput, ReleaseTypeUncheckedCreateWithoutKitsInput>
+    where?: ReleaseTypeWhereInput
+  }
+
+  export type ReleaseTypeUpdateToOneWithWhereWithoutKitsInput = {
+    where?: ReleaseTypeWhereInput
+    data: XOR<ReleaseTypeUpdateWithoutKitsInput, ReleaseTypeUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type ReleaseTypeUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReleaseTypeUncheckedUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUpsertWithoutVariantsInput = {
+    update: XOR<KitUpdateWithoutVariantsInput, KitUncheckedUpdateWithoutVariantsInput>
+    create: XOR<KitCreateWithoutVariantsInput, KitUncheckedCreateWithoutVariantsInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutVariantsInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutVariantsInput, KitUncheckedUpdateWithoutVariantsInput>
+  }
+
+  export type KitUpdateWithoutVariantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutVariantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUpsertWithWhereUniqueWithoutBaseKitInput = {
+    where: KitWhereUniqueInput
+    update: XOR<KitUpdateWithoutBaseKitInput, KitUncheckedUpdateWithoutBaseKitInput>
+    create: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput>
+  }
+
+  export type KitUpdateWithWhereUniqueWithoutBaseKitInput = {
+    where: KitWhereUniqueInput
+    data: XOR<KitUpdateWithoutBaseKitInput, KitUncheckedUpdateWithoutBaseKitInput>
+  }
+
+  export type KitUpdateManyWithWhereWithoutBaseKitInput = {
+    where: KitScalarWhereInput
+    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutBaseKitInput>
+  }
+
+  export type KitMobileSuitUpsertWithWhereUniqueWithoutKitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    update: XOR<KitMobileSuitUpdateWithoutKitInput, KitMobileSuitUncheckedUpdateWithoutKitInput>
+    create: XOR<KitMobileSuitCreateWithoutKitInput, KitMobileSuitUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitMobileSuitUpdateWithWhereUniqueWithoutKitInput = {
+    where: KitMobileSuitWhereUniqueInput
+    data: XOR<KitMobileSuitUpdateWithoutKitInput, KitMobileSuitUncheckedUpdateWithoutKitInput>
+  }
+
+  export type KitMobileSuitUpdateManyWithWhereWithoutKitInput = {
+    where: KitMobileSuitScalarWhereInput
+    data: XOR<KitMobileSuitUpdateManyMutationInput, KitMobileSuitUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type KitUploadUpsertWithWhereUniqueWithoutKitInput = {
+    where: KitUploadWhereUniqueInput
+    update: XOR<KitUploadUpdateWithoutKitInput, KitUploadUncheckedUpdateWithoutKitInput>
+    create: XOR<KitUploadCreateWithoutKitInput, KitUploadUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitUploadUpdateWithWhereUniqueWithoutKitInput = {
+    where: KitUploadWhereUniqueInput
+    data: XOR<KitUploadUpdateWithoutKitInput, KitUploadUncheckedUpdateWithoutKitInput>
+  }
+
+  export type KitUploadUpdateManyWithWhereWithoutKitInput = {
+    where: KitUploadScalarWhereInput
+    data: XOR<KitUploadUpdateManyMutationInput, KitUploadUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type KitUploadScalarWhereInput = {
+    AND?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+    OR?: KitUploadScalarWhereInput[]
+    NOT?: KitUploadScalarWhereInput | KitUploadScalarWhereInput[]
+    id?: StringFilter<"KitUpload"> | string
+    kitId?: StringFilter<"KitUpload"> | string
+    uploadId?: StringFilter<"KitUpload"> | string
+    caption?: StringNullableFilter<"KitUpload"> | string | null
+    order?: IntNullableFilter<"KitUpload"> | number | null
+    type?: EnumKitImageTypeFilter<"KitUpload"> | $Enums.KitImageType
+    createdAt?: DateTimeFilter<"KitUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"KitUpload"> | Date | string
+  }
+
+  export type KitCreateWithoutMobileSuitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutMobileSuitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutMobileSuitsInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
+  }
+
+  export type MobileSuitCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    series?: SeriesCreateNestedOneWithoutMobileSuitsInput
+    uploads?: MobileSuitUploadCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitUncheckedCreateWithoutKitsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    seriesId?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitCreateOrConnectWithoutKitsInput = {
+    where: MobileSuitWhereUniqueInput
+    create: XOR<MobileSuitCreateWithoutKitsInput, MobileSuitUncheckedCreateWithoutKitsInput>
+  }
+
+  export type KitUpsertWithoutMobileSuitsInput = {
+    update: XOR<KitUpdateWithoutMobileSuitsInput, KitUncheckedUpdateWithoutMobileSuitsInput>
+    create: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutMobileSuitsInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutMobileSuitsInput, KitUncheckedUpdateWithoutMobileSuitsInput>
+  }
+
+  export type KitUpdateWithoutMobileSuitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutMobileSuitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type MobileSuitUpsertWithoutKitsInput = {
+    update: XOR<MobileSuitUpdateWithoutKitsInput, MobileSuitUncheckedUpdateWithoutKitsInput>
+    create: XOR<MobileSuitCreateWithoutKitsInput, MobileSuitUncheckedCreateWithoutKitsInput>
+    where?: MobileSuitWhereInput
+  }
+
+  export type MobileSuitUpdateToOneWithWhereWithoutKitsInput = {
+    where?: MobileSuitWhereInput
+    data: XOR<MobileSuitUpdateWithoutKitsInput, MobileSuitUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type MobileSuitUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    series?: SeriesUpdateOneWithoutMobileSuitsNestedInput
+    uploads?: MobileSuitUploadUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitUncheckedUpdateWithoutKitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type KitUploadCreateWithoutUploadInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutUploadsInput
+  }
+
+  export type KitUploadUncheckedCreateWithoutUploadInput = {
+    id?: string
+    kitId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadCreateOrConnectWithoutUploadInput = {
+    where: KitUploadWhereUniqueInput
+    create: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type KitUploadCreateManyUploadInputEnvelope = {
+    data: KitUploadCreateManyUploadInput | KitUploadCreateManyUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MobileSuitUploadCreateWithoutUploadInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuit: MobileSuitCreateNestedOneWithoutUploadsInput
+  }
+
+  export type MobileSuitUploadUncheckedCreateWithoutUploadInput = {
+    id?: string
+    mobileSuitId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadCreateOrConnectWithoutUploadInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    create: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type MobileSuitUploadCreateManyUploadInputEnvelope = {
+    data: MobileSuitUploadCreateManyUploadInput | MobileSuitUploadCreateManyUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductLineCreateWithoutLogoInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutProductLinesInput
+    kits?: KitCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineUncheckedCreateWithoutLogoInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId: string
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineCreateOrConnectWithoutLogoInput = {
+    where: ProductLineWhereUniqueInput
+    create: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput>
+  }
+
+  export type ProductLineCreateManyLogoInputEnvelope = {
+    data: ProductLineCreateManyLogoInput | ProductLineCreateManyLogoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitUploadUpsertWithWhereUniqueWithoutUploadInput = {
+    where: KitUploadWhereUniqueInput
+    update: XOR<KitUploadUpdateWithoutUploadInput, KitUploadUncheckedUpdateWithoutUploadInput>
+    create: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type KitUploadUpdateWithWhereUniqueWithoutUploadInput = {
+    where: KitUploadWhereUniqueInput
+    data: XOR<KitUploadUpdateWithoutUploadInput, KitUploadUncheckedUpdateWithoutUploadInput>
+  }
+
+  export type KitUploadUpdateManyWithWhereWithoutUploadInput = {
+    where: KitUploadScalarWhereInput
+    data: XOR<KitUploadUpdateManyMutationInput, KitUploadUncheckedUpdateManyWithoutUploadInput>
+  }
+
+  export type MobileSuitUploadUpsertWithWhereUniqueWithoutUploadInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    update: XOR<MobileSuitUploadUpdateWithoutUploadInput, MobileSuitUploadUncheckedUpdateWithoutUploadInput>
+    create: XOR<MobileSuitUploadCreateWithoutUploadInput, MobileSuitUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type MobileSuitUploadUpdateWithWhereUniqueWithoutUploadInput = {
+    where: MobileSuitUploadWhereUniqueInput
+    data: XOR<MobileSuitUploadUpdateWithoutUploadInput, MobileSuitUploadUncheckedUpdateWithoutUploadInput>
+  }
+
+  export type MobileSuitUploadUpdateManyWithWhereWithoutUploadInput = {
+    where: MobileSuitUploadScalarWhereInput
+    data: XOR<MobileSuitUploadUpdateManyMutationInput, MobileSuitUploadUncheckedUpdateManyWithoutUploadInput>
+  }
+
+  export type ProductLineUpsertWithWhereUniqueWithoutLogoInput = {
+    where: ProductLineWhereUniqueInput
+    update: XOR<ProductLineUpdateWithoutLogoInput, ProductLineUncheckedUpdateWithoutLogoInput>
+    create: XOR<ProductLineCreateWithoutLogoInput, ProductLineUncheckedCreateWithoutLogoInput>
+  }
+
+  export type ProductLineUpdateWithWhereUniqueWithoutLogoInput = {
+    where: ProductLineWhereUniqueInput
+    data: XOR<ProductLineUpdateWithoutLogoInput, ProductLineUncheckedUpdateWithoutLogoInput>
+  }
+
+  export type ProductLineUpdateManyWithWhereWithoutLogoInput = {
+    where: ProductLineScalarWhereInput
+    data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyWithoutLogoInput>
+  }
+
+  export type KitCreateWithoutUploadsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade: GradeCreateNestedOneWithoutKitsInput
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutUploadsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutUploadsInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutUploadsInput, KitUncheckedCreateWithoutUploadsInput>
+  }
+
+  export type UploadCreateWithoutKitUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadUncheckedCreateWithoutKitUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadCreateOrConnectWithoutKitUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutKitUploadsInput, UploadUncheckedCreateWithoutKitUploadsInput>
+  }
+
+  export type KitUpsertWithoutUploadsInput = {
+    update: XOR<KitUpdateWithoutUploadsInput, KitUncheckedUpdateWithoutUploadsInput>
+    create: XOR<KitCreateWithoutUploadsInput, KitUncheckedCreateWithoutUploadsInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutUploadsInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutUploadsInput, KitUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type KitUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type UploadUpsertWithoutKitUploadsInput = {
+    update: XOR<UploadUpdateWithoutKitUploadsInput, UploadUncheckedUpdateWithoutKitUploadsInput>
+    create: XOR<UploadCreateWithoutKitUploadsInput, UploadUncheckedCreateWithoutKitUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutKitUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutKitUploadsInput, UploadUncheckedUpdateWithoutKitUploadsInput>
+  }
+
+  export type UploadUpdateWithoutKitUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutKitUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+  }
+
+  export type MobileSuitCreateWithoutUploadsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    series?: SeriesCreateNestedOneWithoutMobileSuitsInput
+    kits?: KitMobileSuitCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitUncheckedCreateWithoutUploadsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    seriesId?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitMobileSuitUncheckedCreateNestedManyWithoutMobileSuitInput
+  }
+
+  export type MobileSuitCreateOrConnectWithoutUploadsInput = {
+    where: MobileSuitWhereUniqueInput
+    create: XOR<MobileSuitCreateWithoutUploadsInput, MobileSuitUncheckedCreateWithoutUploadsInput>
+  }
+
+  export type UploadCreateWithoutMobileSuitUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadUncheckedCreateWithoutMobileSuitUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+  }
+
+  export type UploadCreateOrConnectWithoutMobileSuitUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutMobileSuitUploadsInput, UploadUncheckedCreateWithoutMobileSuitUploadsInput>
+  }
+
+  export type MobileSuitUpsertWithoutUploadsInput = {
+    update: XOR<MobileSuitUpdateWithoutUploadsInput, MobileSuitUncheckedUpdateWithoutUploadsInput>
+    create: XOR<MobileSuitCreateWithoutUploadsInput, MobileSuitUncheckedCreateWithoutUploadsInput>
+    where?: MobileSuitWhereInput
+  }
+
+  export type MobileSuitUpdateToOneWithWhereWithoutUploadsInput = {
+    where?: MobileSuitWhereInput
+    data: XOR<MobileSuitUpdateWithoutUploadsInput, MobileSuitUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type MobileSuitUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    series?: SeriesUpdateOneWithoutMobileSuitsNestedInput
+    kits?: KitMobileSuitUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitUncheckedUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitMobileSuitUncheckedUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type UploadUpsertWithoutMobileSuitUploadsInput = {
+    update: XOR<UploadUpdateWithoutMobileSuitUploadsInput, UploadUncheckedUpdateWithoutMobileSuitUploadsInput>
+    create: XOR<UploadCreateWithoutMobileSuitUploadsInput, UploadUncheckedCreateWithoutMobileSuitUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutMobileSuitUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutMobileSuitUploadsInput, UploadUncheckedUpdateWithoutMobileSuitUploadsInput>
+  }
+
+  export type UploadUpdateWithoutMobileSuitUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutMobileSuitUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+  }
+
+  export type SeriesCreateManyTimelineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: SeriesCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SeriesUpdateWithoutTimelineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuits?: MobileSuitUpdateManyWithoutSeriesNestedInput
+    kits?: KitUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesUncheckedUpdateWithoutTimelineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuits?: MobileSuitUncheckedUpdateManyWithoutSeriesNestedInput
+    kits?: KitUncheckedUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SeriesUncheckedUpdateManyWithoutTimelineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitCreateManySeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    scrapedImages?: MobileSuitCreatescrapedImagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitCreateManySeriesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+  }
+
+  export type MobileSuitUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitMobileSuitUpdateManyWithoutMobileSuitNestedInput
+    uploads?: MobileSuitUploadUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitUncheckedUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitMobileSuitUncheckedUpdateManyWithoutMobileSuitNestedInput
+    uploads?: MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type MobileSuitUncheckedUpdateManyWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImages?: MobileSuitUpdatescrapedImagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateManyWithoutSeriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitMobileSuitCreateManyMobileSuitInput = {
+    id?: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadCreateManyMobileSuitInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitMobileSuitUpdateWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutMobileSuitsNestedInput
+  }
+
+  export type KitMobileSuitUncheckedUpdateWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitMobileSuitUncheckedUpdateManyWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadUpdateWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutMobileSuitUploadsNestedInput
+  }
+
+  export type MobileSuitUploadUncheckedUpdateWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductLineCreateManyGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoId?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitCreateManyGradeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+  }
+
+  export type ProductLineUpdateWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
+    kits?: KitUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUpdateWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateManyWithoutGradeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitCreateManyProductLineInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+  }
+
+  export type KitUpdateWithoutProductLineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutProductLineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateManyWithoutProductLineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitCreateManyReleaseTypeInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    baseKitId?: string | null
+  }
+
+  export type KitUpdateWithoutReleaseTypeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutReleaseTypeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateManyWithoutReleaseTypeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitCreateManyBaseKitInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gradeId: string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+  }
+
+  export type KitMobileSuitCreateManyKitInput = {
+    id?: string
+    mobileSuitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadCreateManyKitInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUpdateWithoutBaseKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutBaseKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateManyWithoutBaseKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gradeId?: StringFieldUpdateOperationsInput | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KitMobileSuitUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuit?: MobileSuitUpdateOneRequiredWithoutKitsNestedInput
+  }
+
+  export type KitMobileSuitUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitMobileSuitUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutKitUploadsNestedInput
+  }
+
+  export type KitUploadUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadCreateManyUploadInput = {
+    id?: string
+    kitId: string
+    caption?: string | null
+    order?: number | null
+    type: $Enums.KitImageType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileSuitUploadCreateManyUploadInput = {
+    id?: string
+    mobileSuitId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductLineCreateManyLogoInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId: string
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitUploadUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutUploadsNestedInput
+  }
+
+  export type KitUploadUncheckedUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitUploadUncheckedUpdateManyWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumKitImageTypeFieldUpdateOperationsInput | $Enums.KitImageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mobileSuit?: MobileSuitUpdateOneRequiredWithoutUploadsNestedInput
+  }
+
+  export type MobileSuitUploadUncheckedUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileSuitUploadUncheckedUpdateManyWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileSuitId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductLineUpdateWithoutLogoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    kits?: KitUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateWithoutLogoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: StringFieldUpdateOperationsInput | string
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutLogoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: StringFieldUpdateOperationsInput | string
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+
+
+  /**
+   * Batch Payload for updateMany & deleteMany & createMany
+   */
+
+  export type BatchPayload = {
+    count: number
+  }
+
+  /**
+   * DMMF
+   */
+  export const dmmf: runtime.BaseDMMF
+}

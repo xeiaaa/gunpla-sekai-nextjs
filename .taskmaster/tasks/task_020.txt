@@ -1,0 +1,11 @@
+# Task ID: 20
+# Title: Create Buyer-Seller Communication System
+# Status: pending
+# Dependencies: 19
+# Priority: medium
+# Description: Implement in-platform messaging between buyers and sellers
+# Details:
+Build messaging system for buyer-seller communication with proper privacy and safety features.
+
+# Test Strategy:
+Messaging functionality tests, privacy tests, safety feature tests

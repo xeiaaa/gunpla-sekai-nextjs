@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Implement Timeline and Series Browsing Structure
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Create hierarchical browsing through Timeline → Series → Mobile Suits → Kits
+# Details:
+Build the universe browsing structure allowing users to navigate through timelines, series, and mobile suits to find kits.
+
+# Test Strategy:
+Navigation structure tests, hierarchy display tests, relationship navigation tests

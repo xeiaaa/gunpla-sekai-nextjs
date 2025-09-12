@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Build User Profile Pages
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Create public user profiles displaying collections, activity, and statistics
+# Details:
+Design and implement user profile pages showing collection statistics, recent activity, and public build galleries.
+
+# Test Strategy:
+Profile display tests, privacy setting tests, performance tests for large collections
