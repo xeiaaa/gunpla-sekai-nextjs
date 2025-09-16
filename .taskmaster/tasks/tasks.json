@@ -165,12 +165,13 @@
         "description": "Build wishlist, backlog, built, and starred collection categories with status transitions",
         "details": "Create the core collection management system allowing users to organize kits across four categories with seamless status transitions.",
         "priority": "high",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           "2",
           "3"
         ],
-        "testStrategy": "Collection CRUD tests, status transition tests, user permission tests"
+        "testStrategy": "Collection CRUD tests, status transition tests, user permission tests",
+        "subtasks": []
       },
       {
         "id": 7,
@@ -418,7 +419,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T05:32:42.746Z"
+      "updated": "2025-09-16T06:05:28.963Z"
     }
   }
 }

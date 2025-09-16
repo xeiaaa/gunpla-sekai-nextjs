@@ -271,11 +271,13 @@ model User {
 // Collection status enum
 enum CollectionStatus {
   WISHLIST
+  PREORDER
   BACKLOG
+  IN_PROGRESS
   BUILT
 }
 
-// User kit collections (wishlist, backlog, built, starred)
+// User kit collections (wishlist, backlog, built)
 model UserKitCollection {
   id        String           @id @default(cuid())
   userId    String

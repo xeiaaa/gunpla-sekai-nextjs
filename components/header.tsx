@@ -46,6 +46,14 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
+            <SignedIn>
+              <Link
+                href="/collections"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                My Collection
+              </Link>
+            </SignedIn>
           </nav>
 
           {/* Desktop Actions */}
@@ -98,6 +106,15 @@ export function Header() {
                   {item.name}
                 </Link>
               ))}
+              <SignedIn>
+                <Link
+                  href="/collections"
+                  className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  My Collection
+                </Link>
+              </SignedIn>
               <div className="pt-4 space-y-2">
                 <SignedOut>
                   <SignInButton>

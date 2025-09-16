@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getKitBySlug } from "@/lib/actions/kits";
+import { getKitCollectionStatus } from "@/lib/actions/collections";
 import { KitDetailPage } from "@/components/kit-detail-page";
 
 interface KitDetailPageProps {
@@ -30,5 +31,7 @@ export default async function KitDetail({ params }: KitDetailPageProps) {
     notFound();
   }
 
-  return <KitDetailPage kit={kit} />;
+  const collectionStatus = await getKitCollectionStatus(kit.id);
+
+  return <KitDetailPage kit={kit} collectionStatus={collectionStatus} />;
 }

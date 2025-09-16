@@ -68,7 +68,7 @@ export default function KitsPage() {
   const [appliedOrder, setAppliedOrder] = useState("most-relevant");
   const [pendingSortBy, setPendingSortBy] = useState("relevance");
   const [pendingOrder, setPendingOrder] = useState("most-relevant");
-  const [wishlistedKits, setWishlistedKits] = useState<Set<string>>(new Set());
+  const [kitCollectionStatuses, setKitCollectionStatuses] = useState<Map<string, string>>(new Map());
 
   const loadKits = useCallback(async () => {
     setLoading(true);
@@ -273,17 +273,6 @@ export default function KitsPage() {
     setIsFilterOpen(false);
   };
 
-  const handleWishlistToggle = (kitId: string) => {
-    setWishlistedKits(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(kitId)) {
-        newSet.delete(kitId);
-      } else {
-        newSet.add(kitId);
-      }
-      return newSet;
-    });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -472,8 +461,7 @@ export default function KitsPage() {
               <KitCard
                 key={kit.id}
                 kit={kit}
-                onWishlistToggle={handleWishlistToggle}
-                isWishlisted={wishlistedKits.has(kit.id)}
+                collectionStatus={kitCollectionStatuses.get(kit.id) as any}
               />
             ))}
           </div>

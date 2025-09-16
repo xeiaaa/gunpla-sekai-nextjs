@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { KitImage } from "@/components/kit-image";
+import { CollectionControls } from "@/components/collection-controls";
 import {
   Calendar,
   DollarSign,
   Tag,
-  Heart,
   ExternalLink,
   ArrowLeft,
   Package,
@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { CollectionStatus } from "@/generated/prisma";
 
 interface KitDetailPageProps {
   kit: {
@@ -90,10 +91,10 @@ interface KitDetailPageProps {
       grade: string | null;
     }>;
   };
+  collectionStatus?: CollectionStatus | null;
 }
 
-export function KitDetailPage({ kit }: KitDetailPageProps) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const formatPrice = (priceYen: number | null | undefined) => {
@@ -110,10 +111,6 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
     });
   };
 
-  const handleWishlistToggle = () => {
-    setIsWishlisted(!isWishlisted);
-    // TODO: Implement wishlist functionality
-  };
 
   const allImages = [
     kit.boxArt,
@@ -172,15 +169,11 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
             </div>
           )}
 
-          {/* Wishlist Button */}
-          <Button
-            onClick={handleWishlistToggle}
-            variant={isWishlisted ? "default" : "outline"}
-            className="w-full gap-2"
-          >
-            <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
-            {isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-          </Button>
+          {/* Collection Controls */}
+          <CollectionControls
+            kitId={kit.id}
+            currentStatus={collectionStatus}
+          />
         </div>
 
         {/* Right Column - Details */}

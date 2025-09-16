@@ -3,9 +3,11 @@
 # Status: pending
 # Dependencies: 2, 3
 # Priority: high
-# Description: Build wishlist, backlog, built, and starred collection categories with status transitions
+# Description: Build wishlist, backlog, and built collection categories with status transitions
 # Details:
-Create the core collection management system allowing users to organize kits across four categories with seamless status transitions.
+Create the core collection management system allowing users to organize kits across three categories (wishlist, backlog, built) with seamless status transitions. Ensure that collection controls (add to wishlist/backlog/built) are only visible when the user is signed in.
 
 # Test Strategy:
-Collection CRUD tests, status transition tests, user permission tests
+- Collection CRUD tests
+- Status transition tests
+- User permission tests (controls hidden when not signed in, visible when signed in)

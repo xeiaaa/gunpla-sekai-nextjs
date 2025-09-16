@@ -373,7 +373,9 @@ exports.KitImageType = exports.$Enums.KitImageType = {
 
 exports.CollectionStatus = exports.$Enums.CollectionStatus = {
   WISHLIST: 'WISHLIST',
+  PREORDER: 'PREORDER',
   BACKLOG: 'BACKLOG',
+  IN_PROGRESS: 'IN_PROGRESS',
   BUILT: 'BUILT'
 };
 

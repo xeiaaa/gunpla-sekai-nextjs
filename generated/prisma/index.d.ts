@@ -131,7 +131,9 @@ export type KitImageType = (typeof KitImageType)[keyof typeof KitImageType]
 
 export const CollectionStatus: {
   WISHLIST: 'WISHLIST',
+  PREORDER: 'PREORDER',
   BACKLOG: 'BACKLOG',
+  IN_PROGRESS: 'IN_PROGRESS',
   BUILT: 'BUILT'
 };
 

@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { KitImage } from "@/components/kit-image";
-import { Button } from "@/components/ui/button";
-import { Heart, Calendar, DollarSign, Tag } from "lucide-react";
+import { CollectionControlsCompact } from "@/components/collection-controls";
+import { Calendar, DollarSign, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CollectionStatus } from "@/generated/prisma";
 import Link from "next/link";
 
 interface KitCardProps {
@@ -24,15 +25,13 @@ interface KitCardProps {
     releaseType?: string | null;
     mobileSuits: string[];
   };
-  onWishlistToggle?: (kitId: string) => void;
-  isWishlisted?: boolean;
+  collectionStatus?: CollectionStatus | null;
   className?: string;
 }
 
 export function KitCard({
   kit,
-  onWishlistToggle,
-  isWishlisted = false,
+  collectionStatus,
   className
 }: KitCardProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -50,11 +49,6 @@ export function KitCard({
     });
   };
 
-  const handleWishlistClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onWishlistToggle?.(kit.id);
-  };
 
   const cardContent = (
     <Card
@@ -67,27 +61,6 @@ export function KitCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Wishlist Button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className={cn(
-          "absolute top-2 right-2 z-10 h-8 w-8 p-0 rounded-full",
-          "bg-background/80 backdrop-blur-sm border border-border/50",
-          "opacity-0 group-hover:opacity-100 transition-opacity duration-200",
-          "hover:bg-background hover:border-border",
-          isWishlisted && "opacity-100 bg-primary/10 border-primary/30"
-        )}
-        onClick={handleWishlistClick}
-        aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-      >
-        <Heart
-          className={cn(
-            "h-4 w-4 transition-colors",
-            isWishlisted ? "fill-primary text-primary" : "text-muted-foreground hover:text-primary"
-          )}
-        />
-      </Button>
 
       {/* Kit Image */}
       <div className="relative">
