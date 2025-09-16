@@ -5,10 +5,12 @@ import { PrismaClient } from "@/generated/prisma";
 const prisma = new PrismaClient();
 
 interface KitFilters {
+  gradeIds?: string[];
   productLineIds?: string[];
   mobileSuitIds?: string[];
   seriesIds?: string[];
   releaseTypeIds?: string[];
+  searchTerm?: string;
   sortBy?: string;
   order?: string;
 }
@@ -16,16 +18,24 @@ interface KitFilters {
 export async function getFilteredKits(filters: KitFilters = {}) {
   try {
     const {
+      gradeIds = [],
       productLineIds = [],
       mobileSuitIds = [],
       seriesIds = [],
       releaseTypeIds = [],
+      searchTerm = "",
       sortBy = "relevance",
       order = "most-relevant"
     } = filters;
 
     // Build where clause
     const where: any = {};
+
+    if (gradeIds.length > 0) {
+      where.productLine = {
+        gradeId: { in: gradeIds }
+      };
+    }
 
     if (productLineIds.length > 0) {
       where.productLineId = { in: productLineIds };
@@ -45,6 +55,23 @@ export async function getFilteredKits(filters: KitFilters = {}) {
           mobileSuitId: { in: mobileSuitIds }
         }
       };
+    }
+
+    if (searchTerm) {
+      where.OR = [
+        { name: { contains: searchTerm, mode: 'insensitive' } },
+        { number: { contains: searchTerm, mode: 'insensitive' } },
+        { variant: { contains: searchTerm, mode: 'insensitive' } },
+        {
+          mobileSuits: {
+            some: {
+              mobileSuit: {
+                name: { contains: searchTerm, mode: 'insensitive' }
+              }
+            }
+          }
+        }
+      ];
     }
 
     // Build orderBy clause

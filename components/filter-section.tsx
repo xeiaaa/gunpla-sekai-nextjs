@@ -24,7 +24,7 @@ export function FilterSection({
   onSelectionChange,
   searchPlaceholder,
 }: FilterSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredOptions = options.filter(option =>

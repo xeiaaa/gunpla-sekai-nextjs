@@ -6,7 +6,17 @@ const prisma = new PrismaClient();
 
 export async function getFilterData() {
   try {
-    const [productLines, mobileSuits, series, releaseTypes] = await Promise.all([
+    const [grades, productLines, mobileSuits, series, releaseTypes] = await Promise.all([
+      prisma.grade.findMany({
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+        orderBy: {
+          name: 'asc',
+        },
+      }),
       prisma.productLine.findMany({
         select: {
           id: true,
@@ -50,6 +60,7 @@ export async function getFilterData() {
     ]);
 
     return {
+      grades,
       productLines,
       mobileSuits,
       series,
@@ -58,6 +69,7 @@ export async function getFilterData() {
   } catch (error) {
     console.error('Error fetching filter data:', error);
     return {
+      grades: [],
       productLines: [],
       mobileSuits: [],
       series: [],
