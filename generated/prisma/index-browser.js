@@ -20,11 +20,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.0
+ * Prisma Client JS version: 6.16.1
  * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.16.0",
+  client: "6.16.1",
   engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
@@ -248,6 +248,16 @@ exports.Prisma.MobileSuitUploadScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BuildMilestoneUploadScalarFieldEnum = {
+  id: 'id',
+  buildMilestoneId: 'buildMilestoneId',
+  uploadId: 'uploadId',
+  caption: 'caption',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -299,6 +309,7 @@ exports.Prisma.BuildScalarFieldEnum = {
   status: 'status',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
+  featuredImageId: 'featuredImageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -419,6 +430,7 @@ exports.Prisma.ModelName = {
   Upload: 'Upload',
   KitUpload: 'KitUpload',
   MobileSuitUpload: 'MobileSuitUpload',
+  BuildMilestoneUpload: 'BuildMilestoneUpload',
   User: 'User',
   UserKitCollection: 'UserKitCollection',
   Review: 'Review',

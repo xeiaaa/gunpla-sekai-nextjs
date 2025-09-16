@@ -402,6 +402,19 @@
           "23"
         ],
         "testStrategy": "Analytics accuracy tests, recommendation quality tests, dashboard functionality tests"
+      },
+      {
+        "id": 26,
+        "title": "Implement User Builds with Milestones Feature",
+        "description": "Allow users to create build journals with step-by-step milestones, each containing images, titles, and descriptions. Include build creation form, milestone management, image uploads via Cloudinary, build viewing pages, and community build discovery on kit pages and homepage.",
+        "details": "Implementation includes:\n\n1. Kit Detail Page Integration:\n   - Add \"Start a Build\" button (auth-gated)\n   - Display \"Community Builds\" section with build cards\n   - Build cards show title, user info, preview image, progress\n\n2. Build Creation Flow:\n   - /builds/new?kit=<kitslug> page with kit preview\n   - Build form with title, description, status\n   - Milestone management with add/edit functionality\n   - Image uploader with Cloudinary integration\n   - Save via BuildMilestoneUpload junction table\n\n3. Build Viewing:\n   - /builds/[id] page with build details\n   - Milestones displayed in order with image galleries\n   - Sidebar with kit info and related builds\n\n4. Discovery Features:\n   - Recent builds section on homepage\n   - Build cards with kit info and user details\n\n5. API Routes/Actions:\n   - createBuild, updateBuild, deleteBuild\n   - createMilestone, updateMilestone, deleteMilestone\n   - Upload handling via Cloudinary signature endpoint\n\nThe database schema already supports this with Build, BuildMilestone, Upload, and BuildMilestoneUpload models.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          6
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
@@ -419,7 +432,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T06:21:10.414Z"
+      "updated": "2025-09-16T07:25:31.748Z"
     }
   }
 }

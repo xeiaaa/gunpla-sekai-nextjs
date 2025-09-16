@@ -20,7 +20,6 @@ export function Header() {
     { name: "Kits", href: "/kits" },
     { name: "Grades", href: "/grades" },
     { name: "Timelines", href: "/timelines" },
-    { name: "Gallery", href: "/gallery" },
   ];
 
   return (

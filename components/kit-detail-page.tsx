@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { KitImage } from "@/components/kit-image";
 import { CollectionControls } from "@/components/collection-controls";
 import { ReviewSection } from "@/components/review-section";
+import StartBuildButton from "@/components/start-build-button";
+import CommunityBuilds from "@/components/community-builds";
 import {
   Calendar,
   DollarSign,
@@ -171,6 +173,11 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
           <CollectionControls
             kitId={kit.id}
             currentStatus={collectionStatus}
+          />
+
+          {/* Start Build Button */}
+          <StartBuildButton
+            kit={kit}
           />
         </div>
 
@@ -436,6 +443,12 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
             kitId={kit.id}
             kitName={kit.name}
             kitSlug={kit.slug || kit.id}
+          />
+
+          {/* Community Builds */}
+          <CommunityBuilds
+            kitId={kit.id}
+            kitSlug={kit.slug}
           />
 
           {/* Uploads */}

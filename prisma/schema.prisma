@@ -190,10 +190,12 @@ model Upload {
   updatedAt         DateTime @updatedAt
 
   // Relations
-  uploadedBy        User               @relation("UploadedBy", fields: [uploadedById], references: [id], onDelete: Cascade)
-  kitUploads        KitUpload[]
-  mobileSuitUploads MobileSuitUpload[]
-  productLineLogos  ProductLine[]
+  uploadedBy            User                   @relation("UploadedBy", fields: [uploadedById], references: [id], onDelete: Cascade)
+  kitUploads            KitUpload[]
+  mobileSuitUploads     MobileSuitUpload[]
+  productLineLogos      ProductLine[]
+  buildMilestoneUploads BuildMilestoneUpload[]
+  buildFeaturedImages   Build[]                @relation("BuildFeaturedImage")
 
   @@map("uploads")
 }
@@ -242,6 +244,24 @@ model MobileSuitUpload {
 
   @@unique([mobileSuitId, uploadId])
   @@map("mobile_suit_uploads")
+}
+
+// Junction table for many-to-many relationship between BuildMilestone and Upload
+model BuildMilestoneUpload {
+  id               String   @id @default(cuid())
+  buildMilestoneId String
+  uploadId         String
+  caption          String?
+  order            Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  buildMilestone BuildMilestone @relation(fields: [buildMilestoneId], references: [id], onDelete: Cascade)
+  upload         Upload         @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+
+  @@unique([buildMilestoneId, uploadId])
+  @@map("build_milestone_uploads")
 }
 
 // User model for Clerk integration
@@ -358,22 +378,24 @@ enum BuildStatus {
 
 // Main build model
 model Build {
-  id          String      @id @default(cuid())
-  userId      String
-  kitId       String
-  title       String
-  description String?
-  status      BuildStatus @default(PLANNING)
-  startedAt   DateTime?
-  completedAt DateTime?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id              String      @id @default(cuid())
+  userId          String
+  kitId           String
+  title           String
+  description     String?
+  status          BuildStatus @default(PLANNING)
+  startedAt       DateTime?
+  completedAt     DateTime?
+  featuredImageId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
   // Relations
-  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  kit        Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
-  milestones BuildMilestone[]
-  comments   BuildComment[]
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit           Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  featuredImage Upload?          @relation("BuildFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
+  milestones    BuildMilestone[]
+  comments      BuildComment[]
 
   @@index([userId])
   @@index([kitId])
@@ -409,7 +431,8 @@ model BuildMilestone {
   updatedAt   DateTime      @updatedAt
 
   // Relations
-  build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  build   Build                  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  uploads BuildMilestoneUpload[]
 
   @@map("build_milestones")
 }
