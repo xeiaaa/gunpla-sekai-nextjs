@@ -16,41 +16,35 @@
             "title": "Set up testing framework and environment",
             "description": "Configure Jest, Prisma test database, and testing utilities for database testing",
             "details": "Install and configure Jest with TypeScript support, set up separate test database, configure Prisma test client, and create test utilities for database operations.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 1
           },
           {
             "id": 2,
-            "title": "Create unit tests for all Prisma models",
-            "description": "Write comprehensive unit tests for CRUD operations on all models including User, Kit, Review, Build, etc.",
-            "details": "Test model creation, updates, deletions, and basic queries for User, UserKitCollection, Review, ReviewScore, Build, BuildMilestone, BuildComment, UserStore, MarketplaceListing, and existing models (Kit, Upload, etc.). Verify field validation, default values, and basic constraints.",
+            "title": "Create comprehensive unit tests for all Prisma models",
+            "description": "Write comprehensive unit tests covering CRUD operations, constraints, enums, defaults, and business logic for all models",
+            "details": "**Model-Level CRUD Tests**: For each model, verify basic create, read, update, delete operations work. Examples: Timeline (create, fetch by slug, update description, delete), Kit (create with grade/series/release type, verify relations), User (create with Clerk ID, ensure uniqueness constraints on email/username). **Constraint Tests**: Check @unique, @@unique, and @@index constraints. Examples: Two Kits cannot have same slug, Two Users cannot have same email/username, Compound unique constraints like KitMobileSuit (kitId, mobileSuitId), ReviewScore (reviewId, category), Business logic constraints like Review (one per user per kit), UserKitCollection (one per user-kit pair). **Enum Validation Tests**: Verify only valid enum values allowed for CollectionStatus (WISHLIST|BACKLOG|BUILT), BuildStatus (PLANNING|IN_PROGRESS|COMPLETED|ON_HOLD), ReviewCategory, MilestoneType, etc. Test that inserting invalid enum values throws errors. **Default Values & Auto Fields**: Ensure defaults and auto-calculated fields work correctly - createdAt auto sets to now(), updatedAt updates on every update, arrays default to [] (scrapedImages, manualLinks), MarketplaceListing currency defaults to \"JPY\". Test all models: User, UserKitCollection, Review, ReviewScore, Build, BuildMilestone, BuildComment, UserStore, MarketplaceListing, Kit, Upload, Timeline, Series, Grade, ProductLine, MobileSuit, ReleaseType, and all junction tables.",
             "status": "pending",
-            "dependencies": [
-              "[\"1.1\"]"
-            ],
+            "dependencies": ["[\"1.1\"]"],
             "parentTaskId": 1
           },
           {
             "id": 3,
-            "title": "Create integration tests for complex relationships",
-            "description": "Test complex multi-model relationships, foreign key constraints, and cascade behaviors",
-            "details": "Test User->UserKitCollection->Kit relationships, Review->ReviewScore aggregations, Build->BuildMilestone->BuildComment chains, UserStore->MarketplaceListing connections, and Upload->User references. Verify cascade deletes, constraint violations, and relationship integrity.",
+            "title": "Create comprehensive integration tests for relationships and constraints",
+            "description": "Test complex multi-model relationships, foreign key constraints, cascade behaviors, and junction table integrity",
+            "details": "**Relation Integrity Tests**: Prisma enforces referential integrity via @relation. Test that creating a Series with a valid timelineId works, but with an invalid one throws an error. **Cascade/SetNull Behavior Tests**: Prisma lets you configure onDelete. Test these explicitly: Series → Timeline (onDelete: SetNull) - deleting a Timeline should not delete its Series, just null the timelineId; Grade → ProductLine (onDelete: Cascade) - deleting a Grade should delete all its ProductLines; Kit → BaseKit (onDelete: SetNull) - deleting a base kit should not delete variants, just nullify baseKitId. **Junction Table Behavior Tests**: Your schema has multiple M:N junctions: KitMobileSuit, KitUpload, MobileSuitUpload. Test that creating associations works, duplicate association should fail (@@unique), deleting one side of the relation deletes the join row (onDelete: Cascade). **Complex Relationship Chains**: Test User->UserKitCollection->Kit relationships, Review->ReviewScore aggregations, Build->BuildMilestone->BuildComment chains, UserStore->MarketplaceListing connections, and Upload->User references. Verify cascade deletes, constraint violations, and relationship integrity.",
             "status": "pending",
-            "dependencies": [
-              "[\"1.2\"]"
-            ],
+            "dependencies": ["[\"1.2\"]"],
             "parentTaskId": 1
           },
           {
             "id": 4,
-            "title": "Create performance tests for queries",
-            "description": "Test query performance with indexes, large datasets, and complex filtering operations",
-            "details": "Create performance benchmarks for common queries like kit searches with filters, user collection lookups, review aggregations, and build listings. Test with sample datasets of varying sizes. Verify that indexes are being used effectively and identify any slow queries that need optimization.",
+            "title": "Create comprehensive performance tests and query optimization",
+            "description": "Test query performance with indexes, large datasets, complex filtering operations, and constraint validation performance",
+            "details": "**Query Performance Tests**: Create performance benchmarks for common queries like kit searches with filters, user collection lookups, review aggregations, and build listings. Test with sample datasets of varying sizes (100, 1000, 10000+ records). **Index Effectiveness Tests**: Verify that indexes are being used effectively for all @unique, @@unique, and @@index constraints. Test query performance on Kit.slug, User.email, User.username, compound indexes like KitMobileSuit (kitId, mobileSuitId), ReviewScore (reviewId, category). **Constraint Performance Tests**: Test that unique constraint validation performs well with large datasets. Verify that foreign key constraint checks don't cause performance bottlenecks. **Complex Relationship Query Performance**: Test performance of queries involving multiple joins (User->UserKitCollection->Kit->Series->Timeline), aggregation queries (Review->ReviewScore averages), and cascade operations. **Optimization Identification**: Identify any slow queries that need optimization and document recommended index additions or query restructuring.",
             "status": "pending",
-            "dependencies": [
-              "[\"1.3\"]"
-            ],
+            "dependencies": ["[\"1.3\"]"],
             "parentTaskId": 1
           }
         ]
@@ -62,9 +56,7 @@
         "details": "Implement complete user authentication flow including sign-up, sign-in, profile management, and session handling. This enables all user-specific features.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "1"
-        ],
+        "dependencies": ["1"],
         "testStrategy": "Authentication flow tests, session management tests, user profile CRUD tests"
       },
       {
@@ -74,9 +66,7 @@
         "details": "Build the fundamental UI components for displaying kits including list views, card components, and detail pages. This validates the core data model and establishes UI patterns.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "1"
-        ],
+        "dependencies": ["1"],
         "testStrategy": "Component tests for all UI elements, responsive design tests, accessibility tests"
       },
       {
@@ -86,9 +76,7 @@
         "details": "Configure Meilisearch server, implement indexing pipeline for kit data, create search API endpoints with filtering capabilities.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "1"
-        ],
+        "dependencies": ["1"],
         "testStrategy": "Search functionality tests, indexing performance tests, search result accuracy tests"
       },
       {
@@ -98,10 +86,7 @@
         "details": "Implement sophisticated filtering UI with collapsible sidebar, multi-select options, range sliders, and integration with search functionality.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "3",
-          "4"
-        ],
+        "dependencies": ["3", "4"],
         "testStrategy": "Filter functionality tests, UI interaction tests, performance tests with large datasets"
       },
       {
@@ -111,10 +96,7 @@
         "details": "Create the core collection management system allowing users to organize kits across four categories with seamless status transitions.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "2",
-          "3"
-        ],
+        "dependencies": ["2", "3"],
         "testStrategy": "Collection CRUD tests, status transition tests, user permission tests"
       },
       {
@@ -124,9 +106,7 @@
         "details": "Design and implement user profile pages showing collection statistics, recent activity, and public build galleries.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "6"
-        ],
+        "dependencies": ["6"],
         "testStrategy": "Profile display tests, privacy setting tests, performance tests for large collections"
       },
       {
@@ -136,9 +116,7 @@
         "details": "Configure Cloudinary for image storage, implement upload components, set up image optimization and transformation pipelines.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "2"
-        ],
+        "dependencies": ["2"],
         "testStrategy": "Upload functionality tests, image optimization tests, storage quota tests"
       },
       {
@@ -148,10 +126,7 @@
         "details": "Build basic build creation and display functionality that can be extended with milestones later.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "6",
-          "8"
-        ],
+        "dependencies": ["6", "8"],
         "testStrategy": "Build creation tests, image association tests, build display tests"
       },
       {
@@ -161,9 +136,7 @@
         "details": "Implement the comprehensive 6-category review system with proper validation, aggregate scoring, and access controls.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "6"
-        ],
+        "dependencies": ["6"],
         "testStrategy": "Review validation tests, scoring calculation tests, access control tests"
       },
       {
@@ -173,9 +146,7 @@
         "details": "Create systems for aggregating review scores, displaying averages, and visualizing review data with charts/graphs.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "10"
-        ],
+        "dependencies": ["10"],
         "testStrategy": "Aggregation calculation tests, visualization component tests, performance tests"
       },
       {
@@ -185,10 +156,7 @@
         "details": "Enhance the search system to support filtering by review scores and specific review criteria.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "5",
-          "11"
-        ],
+        "dependencies": ["5", "11"],
         "testStrategy": "Advanced search tests, filter combination tests, search performance tests"
       },
       {
@@ -198,9 +166,7 @@
         "details": "Implement review reporting functionality, moderation interface, and automated quality checks.",
         "priority": "low",
         "status": "pending",
-        "dependencies": [
-          "10"
-        ],
+        "dependencies": ["10"],
         "testStrategy": "Moderation workflow tests, reporting functionality tests, automated detection tests"
       },
       {
@@ -210,9 +176,7 @@
         "details": "Add milestone functionality to build documentation allowing detailed progress tracking through build phases.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "9"
-        ],
+        "dependencies": ["9"],
         "testStrategy": "Milestone creation tests, progress tracking tests, milestone ordering tests"
       },
       {
@@ -222,9 +186,7 @@
         "details": "Implement rich media galleries for completed builds with multiple images, captions, and organized presentation.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "14"
-        ],
+        "dependencies": ["14"],
         "testStrategy": "Gallery display tests, image organization tests, caption functionality tests"
       },
       {
@@ -234,9 +196,7 @@
         "details": "Create commenting system for builds, community engagement features, and social interaction tools.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "15"
-        ],
+        "dependencies": ["15"],
         "testStrategy": "Comment functionality tests, moderation tests, engagement tracking tests"
       },
       {
@@ -246,9 +206,7 @@
         "details": "Add social media sharing capabilities with proper Open Graph meta tags and shareable build pages.",
         "priority": "low",
         "status": "pending",
-        "dependencies": [
-          "15"
-        ],
+        "dependencies": ["15"],
         "testStrategy": "Social sharing tests, Open Graph validation tests, external link tests"
       },
       {
@@ -258,9 +216,7 @@
         "details": "Implement user store creation, branding customization, and basic inventory management functionality.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "7"
-        ],
+        "dependencies": ["7"],
         "testStrategy": "Store creation tests, inventory management tests, branding customization tests"
       },
       {
@@ -270,9 +226,7 @@
         "details": "Create marketplace listing functionality allowing users to list kits from the database with custom descriptions and pricing.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "18"
-        ],
+        "dependencies": ["18"],
         "testStrategy": "Listing creation tests, kit association tests, pricing validation tests"
       },
       {
@@ -282,9 +236,7 @@
         "details": "Build messaging system for buyer-seller communication with proper privacy and safety features.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "19"
-        ],
+        "dependencies": ["19"],
         "testStrategy": "Messaging functionality tests, privacy tests, safety feature tests"
       },
       {
@@ -294,9 +246,7 @@
         "details": "Build the universe browsing structure allowing users to navigate through timelines, series, and mobile suits to find kits.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "3"
-        ],
+        "dependencies": ["3"],
         "testStrategy": "Navigation structure tests, hierarchy display tests, relationship navigation tests"
       },
       {
@@ -306,9 +256,7 @@
         "details": "Create UI components and logic for displaying kit relationships including base kits, variants, and related mobile suits.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "21"
-        ],
+        "dependencies": ["21"],
         "testStrategy": "Relationship display tests, navigation between related kits tests, relationship accuracy tests"
       },
       {
@@ -318,9 +266,7 @@
         "details": "Implement performance optimizations including query optimization, caching strategies, image optimization, and mobile performance improvements.",
         "priority": "high",
         "status": "pending",
-        "dependencies": [
-          "12"
-        ],
+        "dependencies": ["12"],
         "testStrategy": "Performance benchmarks, load testing, mobile performance tests, caching effectiveness tests"
       },
       {
@@ -330,9 +276,7 @@
         "details": "Add SEO features including meta tags, structured data, sitemaps, and ensure WCAG 2.1 AA accessibility compliance.",
         "priority": "medium",
         "status": "pending",
-        "dependencies": [
-          "3"
-        ],
+        "dependencies": ["3"],
         "testStrategy": "SEO validation tests, accessibility compliance tests, structured data validation"
       },
       {
@@ -342,9 +286,7 @@
         "details": "Create analytics dashboards for users and community, implement machine learning-based recommendation engine for kit suggestions.",
         "priority": "low",
         "status": "pending",
-        "dependencies": [
-          "23"
-        ],
+        "dependencies": ["23"],
         "testStrategy": "Analytics accuracy tests, recommendation quality tests, dashboard functionality tests"
       }
     ],
@@ -363,7 +305,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T00:25:56.588Z"
+      "updated": "2025-09-16T00:49:26.349Z"
     }
   }
 }
