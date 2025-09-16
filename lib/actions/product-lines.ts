@@ -91,14 +91,14 @@ export async function getProductLineKits(productLineId: string, limit: number = 
     const kits = await prisma.kit.findMany({
       where: { productLineId },
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             name: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -138,7 +138,7 @@ export async function getProductLineKits(productLineId: string, limit: number = 
       releaseDate: kit.releaseDate,
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name,
       productLine: kit.productLine?.name || null,
       series: kit.series?.name || null,
       releaseType: kit.releaseType?.name || null,

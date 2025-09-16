@@ -41,14 +41,34 @@ export const createTestData = {
     });
   },
 
-  // Create a test kit
+  // Create a test product line
+  async productLine(gradeId: string, overrides: any = {}) {
+    const { prisma } = await import("./prisma");
+    return prisma.productLine.create({
+      data: {
+        name: "Test Product Line",
+        slug: "test-product-line",
+        gradeId: gradeId,
+        ...overrides,
+      },
+    });
+  },
+
+  // Create a test kit with product line
   async kit(overrides: any = {}) {
     const { prisma } = await import("./prisma");
+
+    // If productLineId is not provided, create a product line
+    if (!overrides.productLineId) {
+      const grade = await this.grade();
+      const productLine = await this.productLine(grade.id);
+      overrides.productLineId = productLine.id;
+    }
+
     return prisma.kit.create({
       data: {
         name: "Test Kit",
         number: "TEST-001",
-        gradeId: "test-grade-id", // This will need to be set properly
         ...overrides,
       },
     });

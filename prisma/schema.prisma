@@ -78,7 +78,6 @@ model Grade {
 
   // Relations
   productLines ProductLine[]
-  kits         Kit[]
 
   @@map("grades")
 }
@@ -136,14 +135,12 @@ model Kit {
   updatedAt        DateTime  @updatedAt
 
   // Foreign keys
-  gradeId       String
   productLineId String?
   seriesId      String?
   releaseTypeId String?
   baseKitId     String?
 
   // Relations
-  grade       Grade                @relation(fields: [gradeId], references: [id], onDelete: Cascade)
   productLine ProductLine?         @relation(fields: [productLineId], references: [id], onDelete: SetNull)
   series      Series?              @relation(fields: [seriesId], references: [id], onDelete: SetNull)
   releaseType ReleaseType?         @relation(fields: [releaseTypeId], references: [id], onDelete: SetNull)

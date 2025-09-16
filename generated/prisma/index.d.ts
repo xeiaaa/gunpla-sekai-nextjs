@@ -2783,12 +2783,10 @@ export namespace Prisma {
 
   export type GradeCountOutputType = {
     productLines: number
-    kits: number
   }
 
   export type GradeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     productLines?: boolean | GradeCountOutputTypeCountProductLinesArgs
-    kits?: boolean | GradeCountOutputTypeCountKitsArgs
   }
 
   // Custom InputTypes
@@ -2807,13 +2805,6 @@ export namespace Prisma {
    */
   export type GradeCountOutputTypeCountProductLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductLineWhereInput
-  }
-
-  /**
-   * GradeCountOutputType without action
-   */
-  export type GradeCountOutputTypeCountKitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: KitWhereInput
   }
 
 
@@ -6782,7 +6773,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     productLines?: boolean | Grade$productLinesArgs<ExtArgs>
-    kits?: boolean | Grade$kitsArgs<ExtArgs>
     _count?: boolean | GradeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["grade"]>
 
@@ -6816,7 +6806,6 @@ export namespace Prisma {
   export type GradeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["grade"]>
   export type GradeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     productLines?: boolean | Grade$productLinesArgs<ExtArgs>
-    kits?: boolean | Grade$kitsArgs<ExtArgs>
     _count?: boolean | GradeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GradeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6826,7 +6815,6 @@ export namespace Prisma {
     name: "Grade"
     objects: {
       productLines: Prisma.$ProductLinePayload<ExtArgs>[]
-      kits: Prisma.$KitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7230,7 +7218,6 @@ export namespace Prisma {
   export interface Prisma__GradeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     productLines<T extends Grade$productLinesArgs<ExtArgs> = {}>(args?: Subset<T, Grade$productLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    kits<T extends Grade$kitsArgs<ExtArgs> = {}>(args?: Subset<T, Grade$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7675,30 +7662,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
-  }
-
-  /**
-   * Grade.kits
-   */
-  export type Grade$kitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Kit
-     */
-    select?: KitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Kit
-     */
-    omit?: KitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KitInclude<ExtArgs> | null
-    where?: KitWhereInput
-    orderBy?: KitOrderByWithRelationInput | KitOrderByWithRelationInput[]
-    cursor?: KitWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: KitScalarFieldEnum | KitScalarFieldEnum[]
   }
 
   /**
@@ -9991,7 +9954,6 @@ export namespace Prisma {
     potentialBaseKit: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    gradeId: string | null
     productLineId: string | null
     seriesId: string | null
     releaseTypeId: string | null
@@ -10012,7 +9974,6 @@ export namespace Prisma {
     potentialBaseKit: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    gradeId: string | null
     productLineId: string | null
     seriesId: string | null
     releaseTypeId: string | null
@@ -10035,7 +9996,6 @@ export namespace Prisma {
     potentialBaseKit: number
     createdAt: number
     updatedAt: number
-    gradeId: number
     productLineId: number
     seriesId: number
     releaseTypeId: number
@@ -10066,7 +10026,6 @@ export namespace Prisma {
     potentialBaseKit?: true
     createdAt?: true
     updatedAt?: true
-    gradeId?: true
     productLineId?: true
     seriesId?: true
     releaseTypeId?: true
@@ -10087,7 +10046,6 @@ export namespace Prisma {
     potentialBaseKit?: true
     createdAt?: true
     updatedAt?: true
-    gradeId?: true
     productLineId?: true
     seriesId?: true
     releaseTypeId?: true
@@ -10110,7 +10068,6 @@ export namespace Prisma {
     potentialBaseKit?: true
     createdAt?: true
     updatedAt?: true
-    gradeId?: true
     productLineId?: true
     seriesId?: true
     releaseTypeId?: true
@@ -10220,7 +10177,6 @@ export namespace Prisma {
     potentialBaseKit: string | null
     createdAt: Date
     updatedAt: Date
-    gradeId: string
     productLineId: string | null
     seriesId: string | null
     releaseTypeId: string | null
@@ -10262,12 +10218,10 @@ export namespace Prisma {
     potentialBaseKit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    gradeId?: boolean
     productLineId?: boolean
     seriesId?: boolean
     releaseTypeId?: boolean
     baseKitId?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
@@ -10298,12 +10252,10 @@ export namespace Prisma {
     potentialBaseKit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    gradeId?: boolean
     productLineId?: boolean
     seriesId?: boolean
     releaseTypeId?: boolean
     baseKitId?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
@@ -10326,12 +10278,10 @@ export namespace Prisma {
     potentialBaseKit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    gradeId?: boolean
     productLineId?: boolean
     seriesId?: boolean
     releaseTypeId?: boolean
     baseKitId?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
@@ -10354,16 +10304,14 @@ export namespace Prisma {
     potentialBaseKit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    gradeId?: boolean
     productLineId?: boolean
     seriesId?: boolean
     releaseTypeId?: boolean
     baseKitId?: boolean
   }
 
-  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "createdAt" | "updatedAt" | "gradeId" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
+  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "createdAt" | "updatedAt" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
   export type KitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
@@ -10378,14 +10326,12 @@ export namespace Prisma {
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type KitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
     baseKit?: boolean | Kit$baseKitArgs<ExtArgs>
   }
   export type KitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
     releaseType?: boolean | Kit$releaseTypeArgs<ExtArgs>
@@ -10395,7 +10341,6 @@ export namespace Prisma {
   export type $KitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Kit"
     objects: {
-      grade: Prisma.$GradePayload<ExtArgs>
       productLine: Prisma.$ProductLinePayload<ExtArgs> | null
       series: Prisma.$SeriesPayload<ExtArgs> | null
       releaseType: Prisma.$ReleaseTypePayload<ExtArgs> | null
@@ -10424,7 +10369,6 @@ export namespace Prisma {
       potentialBaseKit: string | null
       createdAt: Date
       updatedAt: Date
-      gradeId: string
       productLineId: string | null
       seriesId: string | null
       releaseTypeId: string | null
@@ -10823,7 +10767,6 @@ export namespace Prisma {
    */
   export interface Prisma__KitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    grade<T extends GradeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GradeDefaultArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     productLine<T extends Kit$productLineArgs<ExtArgs> = {}>(args?: Subset<T, Kit$productLineArgs<ExtArgs>>): Prisma__ProductLineClient<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     series<T extends Kit$seriesArgs<ExtArgs> = {}>(args?: Subset<T, Kit$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     releaseType<T extends Kit$releaseTypeArgs<ExtArgs> = {}>(args?: Subset<T, Kit$releaseTypeArgs<ExtArgs>>): Prisma__ReleaseTypeClient<$Result.GetResult<Prisma.$ReleaseTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -10879,7 +10822,6 @@ export namespace Prisma {
     readonly potentialBaseKit: FieldRef<"Kit", 'String'>
     readonly createdAt: FieldRef<"Kit", 'DateTime'>
     readonly updatedAt: FieldRef<"Kit", 'DateTime'>
-    readonly gradeId: FieldRef<"Kit", 'String'>
     readonly productLineId: FieldRef<"Kit", 'String'>
     readonly seriesId: FieldRef<"Kit", 'String'>
     readonly releaseTypeId: FieldRef<"Kit", 'String'>
@@ -26612,7 +26554,6 @@ export namespace Prisma {
     potentialBaseKit: 'potentialBaseKit',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    gradeId: 'gradeId',
     productLineId: 'productLineId',
     seriesId: 'seriesId',
     releaseTypeId: 'releaseTypeId',
@@ -27196,7 +27137,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Grade"> | Date | string
     updatedAt?: DateTimeFilter<"Grade"> | Date | string
     productLines?: ProductLineListRelationFilter
-    kits?: KitListRelationFilter
   }
 
   export type GradeOrderByWithRelationInput = {
@@ -27207,7 +27147,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLines?: ProductLineOrderByRelationAggregateInput
-    kits?: KitOrderByRelationAggregateInput
   }
 
   export type GradeWhereUniqueInput = Prisma.AtLeast<{
@@ -27221,7 +27160,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Grade"> | Date | string
     updatedAt?: DateTimeFilter<"Grade"> | Date | string
     productLines?: ProductLineListRelationFilter
-    kits?: KitListRelationFilter
   }, "id" | "name" | "slug">
 
   export type GradeOrderByWithAggregationInput = {
@@ -27403,12 +27341,10 @@ export namespace Prisma {
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
-    gradeId?: StringFilter<"Kit"> | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
     seriesId?: StringNullableFilter<"Kit"> | string | null
     releaseTypeId?: StringNullableFilter<"Kit"> | string | null
     baseKitId?: StringNullableFilter<"Kit"> | string | null
-    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
     productLine?: XOR<ProductLineNullableScalarRelationFilter, ProductLineWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
     releaseType?: XOR<ReleaseTypeNullableScalarRelationFilter, ReleaseTypeWhereInput> | null
@@ -27438,12 +27374,10 @@ export namespace Prisma {
     potentialBaseKit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    gradeId?: SortOrder
     productLineId?: SortOrderInput | SortOrder
     seriesId?: SortOrderInput | SortOrder
     releaseTypeId?: SortOrderInput | SortOrder
     baseKitId?: SortOrderInput | SortOrder
-    grade?: GradeOrderByWithRelationInput
     productLine?: ProductLineOrderByWithRelationInput
     series?: SeriesOrderByWithRelationInput
     releaseType?: ReleaseTypeOrderByWithRelationInput
@@ -27476,12 +27410,10 @@ export namespace Prisma {
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
-    gradeId?: StringFilter<"Kit"> | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
     seriesId?: StringNullableFilter<"Kit"> | string | null
     releaseTypeId?: StringNullableFilter<"Kit"> | string | null
     baseKitId?: StringNullableFilter<"Kit"> | string | null
-    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
     productLine?: XOR<ProductLineNullableScalarRelationFilter, ProductLineWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
     releaseType?: XOR<ReleaseTypeNullableScalarRelationFilter, ReleaseTypeWhereInput> | null
@@ -27511,7 +27443,6 @@ export namespace Prisma {
     potentialBaseKit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    gradeId?: SortOrder
     productLineId?: SortOrderInput | SortOrder
     seriesId?: SortOrderInput | SortOrder
     releaseTypeId?: SortOrderInput | SortOrder
@@ -27542,7 +27473,6 @@ export namespace Prisma {
     potentialBaseKit?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
-    gradeId?: StringWithAggregatesFilter<"Kit"> | string
     productLineId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     seriesId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     releaseTypeId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
@@ -28802,7 +28732,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productLines?: ProductLineCreateNestedManyWithoutGradeInput
-    kits?: KitCreateNestedManyWithoutGradeInput
   }
 
   export type GradeUncheckedCreateInput = {
@@ -28813,7 +28742,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     productLines?: ProductLineUncheckedCreateNestedManyWithoutGradeInput
-    kits?: KitUncheckedCreateNestedManyWithoutGradeInput
   }
 
   export type GradeUpdateInput = {
@@ -28824,7 +28752,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLines?: ProductLineUpdateManyWithoutGradeNestedInput
-    kits?: KitUpdateManyWithoutGradeNestedInput
   }
 
   export type GradeUncheckedUpdateInput = {
@@ -28835,7 +28762,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLines?: ProductLineUncheckedUpdateManyWithoutGradeNestedInput
-    kits?: KitUncheckedUpdateManyWithoutGradeNestedInput
   }
 
   export type GradeCreateManyInput = {
@@ -29027,7 +28953,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -29057,7 +28982,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -29087,7 +29011,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -29117,7 +29040,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29147,7 +29069,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -29188,7 +29109,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30719,7 +30639,6 @@ export namespace Prisma {
     potentialBaseKit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    gradeId?: SortOrder
     productLineId?: SortOrder
     seriesId?: SortOrder
     releaseTypeId?: SortOrder
@@ -30744,7 +30663,6 @@ export namespace Prisma {
     potentialBaseKit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    gradeId?: SortOrder
     productLineId?: SortOrder
     seriesId?: SortOrder
     releaseTypeId?: SortOrder
@@ -30765,7 +30683,6 @@ export namespace Prisma {
     potentialBaseKit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    gradeId?: SortOrder
     productLineId?: SortOrder
     seriesId?: SortOrder
     releaseTypeId?: SortOrder
@@ -31842,25 +31759,11 @@ export namespace Prisma {
     connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
   }
 
-  export type KitCreateNestedManyWithoutGradeInput = {
-    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
-    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
-    createMany?: KitCreateManyGradeInputEnvelope
-    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
-  }
-
   export type ProductLineUncheckedCreateNestedManyWithoutGradeInput = {
     create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
     connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
     createMany?: ProductLineCreateManyGradeInputEnvelope
     connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
-  }
-
-  export type KitUncheckedCreateNestedManyWithoutGradeInput = {
-    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
-    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
-    createMany?: KitCreateManyGradeInputEnvelope
-    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
   }
 
   export type ProductLineUpdateManyWithoutGradeNestedInput = {
@@ -31877,20 +31780,6 @@ export namespace Prisma {
     deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
   }
 
-  export type KitUpdateManyWithoutGradeNestedInput = {
-    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
-    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
-    upsert?: KitUpsertWithWhereUniqueWithoutGradeInput | KitUpsertWithWhereUniqueWithoutGradeInput[]
-    createMany?: KitCreateManyGradeInputEnvelope
-    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    update?: KitUpdateWithWhereUniqueWithoutGradeInput | KitUpdateWithWhereUniqueWithoutGradeInput[]
-    updateMany?: KitUpdateManyWithWhereWithoutGradeInput | KitUpdateManyWithWhereWithoutGradeInput[]
-    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
-  }
-
   export type ProductLineUncheckedUpdateManyWithoutGradeNestedInput = {
     create?: XOR<ProductLineCreateWithoutGradeInput, ProductLineUncheckedCreateWithoutGradeInput> | ProductLineCreateWithoutGradeInput[] | ProductLineUncheckedCreateWithoutGradeInput[]
     connectOrCreate?: ProductLineCreateOrConnectWithoutGradeInput | ProductLineCreateOrConnectWithoutGradeInput[]
@@ -31903,20 +31792,6 @@ export namespace Prisma {
     update?: ProductLineUpdateWithWhereUniqueWithoutGradeInput | ProductLineUpdateWithWhereUniqueWithoutGradeInput[]
     updateMany?: ProductLineUpdateManyWithWhereWithoutGradeInput | ProductLineUpdateManyWithWhereWithoutGradeInput[]
     deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
-  }
-
-  export type KitUncheckedUpdateManyWithoutGradeNestedInput = {
-    create?: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput> | KitCreateWithoutGradeInput[] | KitUncheckedCreateWithoutGradeInput[]
-    connectOrCreate?: KitCreateOrConnectWithoutGradeInput | KitCreateOrConnectWithoutGradeInput[]
-    upsert?: KitUpsertWithWhereUniqueWithoutGradeInput | KitUpsertWithWhereUniqueWithoutGradeInput[]
-    createMany?: KitCreateManyGradeInputEnvelope
-    set?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    disconnect?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    delete?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
-    update?: KitUpdateWithWhereUniqueWithoutGradeInput | KitUpdateWithWhereUniqueWithoutGradeInput[]
-    updateMany?: KitUpdateManyWithWhereWithoutGradeInput | KitUpdateManyWithWhereWithoutGradeInput[]
-    deleteMany?: KitScalarWhereInput | KitScalarWhereInput[]
   }
 
   export type GradeCreateNestedOneWithoutProductLinesInput = {
@@ -32039,12 +31914,6 @@ export namespace Prisma {
 
   export type KitCreatescrapedImagesInput = {
     set: string[]
-  }
-
-  export type GradeCreateNestedOneWithoutKitsInput = {
-    create?: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
-    connectOrCreate?: GradeCreateOrConnectWithoutKitsInput
-    connect?: GradeWhereUniqueInput
   }
 
   export type ProductLineCreateNestedOneWithoutKitsInput = {
@@ -32189,14 +32058,6 @@ export namespace Prisma {
   export type KitUpdatescrapedImagesInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type GradeUpdateOneRequiredWithoutKitsNestedInput = {
-    create?: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
-    connectOrCreate?: GradeCreateOrConnectWithoutKitsInput
-    upsert?: GradeUpsertWithoutKitsInput
-    connect?: GradeWhereUniqueInput
-    update?: XOR<XOR<GradeUpdateToOneWithWhereWithoutKitsInput, GradeUpdateWithoutKitsInput>, GradeUncheckedUpdateWithoutKitsInput>
   }
 
   export type ProductLineUpdateOneWithoutKitsNestedInput = {
@@ -33748,7 +33609,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
     baseKit?: KitCreateNestedOneWithoutVariantsInput
@@ -33777,7 +33637,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     releaseTypeId?: string | null
     baseKitId?: string | null
@@ -33894,7 +33753,6 @@ export namespace Prisma {
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
-    gradeId?: StringFilter<"Kit"> | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
     seriesId?: StringNullableFilter<"Kit"> | string | null
     releaseTypeId?: StringNullableFilter<"Kit"> | string | null
@@ -34107,74 +33965,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type KitCreateWithoutGradeInput = {
-    id?: string
-    name: string
-    slug?: string | null
-    number: string
-    variant?: string | null
-    releaseDate?: Date | string | null
-    priceYen?: number | null
-    region?: string | null
-    boxArt?: string | null
-    notes?: string | null
-    manualLinks?: KitCreatemanualLinksInput | string[]
-    scrapedImages?: KitCreatescrapedImagesInput | string[]
-    potentialBaseKit?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    productLine?: ProductLineCreateNestedOneWithoutKitsInput
-    series?: SeriesCreateNestedOneWithoutKitsInput
-    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
-    baseKit?: KitCreateNestedOneWithoutVariantsInput
-    variants?: KitCreateNestedManyWithoutBaseKitInput
-    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
-    uploads?: KitUploadCreateNestedManyWithoutKitInput
-    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
-    reviews?: ReviewCreateNestedManyWithoutKitInput
-    builds?: BuildCreateNestedManyWithoutKitInput
-    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
-  }
-
-  export type KitUncheckedCreateWithoutGradeInput = {
-    id?: string
-    name: string
-    slug?: string | null
-    number: string
-    variant?: string | null
-    releaseDate?: Date | string | null
-    priceYen?: number | null
-    region?: string | null
-    boxArt?: string | null
-    notes?: string | null
-    manualLinks?: KitCreatemanualLinksInput | string[]
-    scrapedImages?: KitCreatescrapedImagesInput | string[]
-    potentialBaseKit?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    productLineId?: string | null
-    seriesId?: string | null
-    releaseTypeId?: string | null
-    baseKitId?: string | null
-    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
-    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
-    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
-    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
-    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
-    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
-  }
-
-  export type KitCreateOrConnectWithoutGradeInput = {
-    where: KitWhereUniqueInput
-    create: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput>
-  }
-
-  export type KitCreateManyGradeInputEnvelope = {
-    data: KitCreateManyGradeInput | KitCreateManyGradeInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ProductLineUpsertWithWhereUniqueWithoutGradeInput = {
     where: ProductLineWhereUniqueInput
     update: XOR<ProductLineUpdateWithoutGradeInput, ProductLineUncheckedUpdateWithoutGradeInput>
@@ -34206,22 +33996,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
   }
 
-  export type KitUpsertWithWhereUniqueWithoutGradeInput = {
-    where: KitWhereUniqueInput
-    update: XOR<KitUpdateWithoutGradeInput, KitUncheckedUpdateWithoutGradeInput>
-    create: XOR<KitCreateWithoutGradeInput, KitUncheckedCreateWithoutGradeInput>
-  }
-
-  export type KitUpdateWithWhereUniqueWithoutGradeInput = {
-    where: KitWhereUniqueInput
-    data: XOR<KitUpdateWithoutGradeInput, KitUncheckedUpdateWithoutGradeInput>
-  }
-
-  export type KitUpdateManyWithWhereWithoutGradeInput = {
-    where: KitScalarWhereInput
-    data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutGradeInput>
-  }
-
   export type GradeCreateWithoutProductLinesInput = {
     id?: string
     name: string
@@ -34229,7 +34003,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    kits?: KitCreateNestedManyWithoutGradeInput
   }
 
   export type GradeUncheckedCreateWithoutProductLinesInput = {
@@ -34239,7 +34012,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    kits?: KitUncheckedCreateNestedManyWithoutGradeInput
   }
 
   export type GradeCreateOrConnectWithoutProductLinesInput = {
@@ -34306,7 +34078,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
     baseKit?: KitCreateNestedOneWithoutVariantsInput
@@ -34335,7 +34106,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     seriesId?: string | null
     releaseTypeId?: string | null
     baseKitId?: string | null
@@ -34376,7 +34146,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kits?: KitUpdateManyWithoutGradeNestedInput
   }
 
   export type GradeUncheckedUpdateWithoutProductLinesInput = {
@@ -34386,7 +34155,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kits?: KitUncheckedUpdateManyWithoutGradeNestedInput
   }
 
   export type UploadUpsertWithoutProductLineLogosInput = {
@@ -34470,7 +34238,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     baseKit?: KitCreateNestedOneWithoutVariantsInput
@@ -34499,7 +34266,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     baseKitId?: string | null
@@ -34536,31 +34302,6 @@ export namespace Prisma {
   export type KitUpdateManyWithWhereWithoutReleaseTypeInput = {
     where: KitScalarWhereInput
     data: XOR<KitUpdateManyMutationInput, KitUncheckedUpdateManyWithoutReleaseTypeInput>
-  }
-
-  export type GradeCreateWithoutKitsInput = {
-    id?: string
-    name: string
-    slug?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    productLines?: ProductLineCreateNestedManyWithoutGradeInput
-  }
-
-  export type GradeUncheckedCreateWithoutKitsInput = {
-    id?: string
-    name: string
-    slug?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    productLines?: ProductLineUncheckedCreateNestedManyWithoutGradeInput
-  }
-
-  export type GradeCreateOrConnectWithoutKitsInput = {
-    where: GradeWhereUniqueInput
-    create: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
   }
 
   export type ProductLineCreateWithoutKitsInput = {
@@ -34658,7 +34399,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -34687,7 +34427,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -34721,7 +34460,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -34750,7 +34488,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -34961,37 +34698,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type GradeUpsertWithoutKitsInput = {
-    update: XOR<GradeUpdateWithoutKitsInput, GradeUncheckedUpdateWithoutKitsInput>
-    create: XOR<GradeCreateWithoutKitsInput, GradeUncheckedCreateWithoutKitsInput>
-    where?: GradeWhereInput
-  }
-
-  export type GradeUpdateToOneWithWhereWithoutKitsInput = {
-    where?: GradeWhereInput
-    data: XOR<GradeUpdateWithoutKitsInput, GradeUncheckedUpdateWithoutKitsInput>
-  }
-
-  export type GradeUpdateWithoutKitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productLines?: ProductLineUpdateManyWithoutGradeNestedInput
-  }
-
-  export type GradeUncheckedUpdateWithoutKitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productLines?: ProductLineUncheckedUpdateManyWithoutGradeNestedInput
-  }
-
   export type ProductLineUpsertWithoutKitsInput = {
     update: XOR<ProductLineUpdateWithoutKitsInput, ProductLineUncheckedUpdateWithoutKitsInput>
     create: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
@@ -35116,7 +34822,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -35145,7 +34850,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35360,7 +35064,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -35389,7 +35092,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -35463,7 +35165,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -35492,7 +35193,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35784,7 +35484,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -35813,7 +35512,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -35901,7 +35599,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -35930,7 +35627,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36545,7 +36241,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -36574,7 +36269,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -36666,7 +36360,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -36695,7 +36388,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36765,7 +36457,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -36794,7 +36485,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -36910,7 +36600,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -36939,7 +36628,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37096,7 +36784,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -37125,7 +36812,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -37277,7 +36963,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -37306,7 +36991,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37780,7 +37464,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutKitsInput
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
     series?: SeriesCreateNestedOneWithoutKitsInput
     releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
@@ -37809,7 +37492,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -37885,7 +37567,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -37914,7 +37595,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37997,7 +37677,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     releaseTypeId?: string | null
     baseKitId?: string | null
@@ -38053,7 +37732,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
     baseKit?: KitUpdateOneWithoutVariantsNestedInput
@@ -38082,7 +37760,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38111,7 +37788,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38192,28 +37868,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type KitCreateManyGradeInput = {
-    id?: string
-    name: string
-    slug?: string | null
-    number: string
-    variant?: string | null
-    releaseDate?: Date | string | null
-    priceYen?: number | null
-    region?: string | null
-    boxArt?: string | null
-    notes?: string | null
-    manualLinks?: KitCreatemanualLinksInput | string[]
-    scrapedImages?: KitCreatescrapedImagesInput | string[]
-    potentialBaseKit?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    productLineId?: string | null
-    seriesId?: string | null
-    releaseTypeId?: string | null
-    baseKitId?: string | null
-  }
-
   export type ProductLineUpdateWithoutGradeInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -38249,86 +37903,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type KitUpdateWithoutGradeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: StringFieldUpdateOperationsInput | string
-    variant?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
-    region?: NullableStringFieldUpdateOperationsInput | string | null
-    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    manualLinks?: KitUpdatemanualLinksInput | string[]
-    scrapedImages?: KitUpdatescrapedImagesInput | string[]
-    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
-    series?: SeriesUpdateOneWithoutKitsNestedInput
-    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
-    baseKit?: KitUpdateOneWithoutVariantsNestedInput
-    variants?: KitUpdateManyWithoutBaseKitNestedInput
-    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
-    uploads?: KitUploadUpdateManyWithoutKitNestedInput
-    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
-    reviews?: ReviewUpdateManyWithoutKitNestedInput
-    builds?: BuildUpdateManyWithoutKitNestedInput
-    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
-  }
-
-  export type KitUncheckedUpdateWithoutGradeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: StringFieldUpdateOperationsInput | string
-    variant?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
-    region?: NullableStringFieldUpdateOperationsInput | string | null
-    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    manualLinks?: KitUpdatemanualLinksInput | string[]
-    scrapedImages?: KitUpdatescrapedImagesInput | string[]
-    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
-    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
-    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
-    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
-    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
-    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
-    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
-    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
-    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
-  }
-
-  export type KitUncheckedUpdateManyWithoutGradeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: StringFieldUpdateOperationsInput | string
-    variant?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
-    region?: NullableStringFieldUpdateOperationsInput | string | null
-    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    manualLinks?: KitUpdatemanualLinksInput | string[]
-    scrapedImages?: KitUpdatescrapedImagesInput | string[]
-    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
-    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
-    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type KitCreateManyProductLineInput = {
     id?: string
     name: string
@@ -38345,7 +37919,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     seriesId?: string | null
     releaseTypeId?: string | null
     baseKitId?: string | null
@@ -38367,7 +37940,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
     baseKit?: KitUpdateOneWithoutVariantsNestedInput
@@ -38396,7 +37968,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38425,7 +37996,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38447,7 +38017,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     baseKitId?: string | null
@@ -38469,7 +38038,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     baseKit?: KitUpdateOneWithoutVariantsNestedInput
@@ -38498,7 +38066,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38527,7 +38094,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38549,7 +38115,6 @@ export namespace Prisma {
     potentialBaseKit?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    gradeId: string
     productLineId?: string | null
     seriesId?: string | null
     releaseTypeId?: string | null
@@ -38632,7 +38197,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutKitsNestedInput
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
     series?: SeriesUpdateOneWithoutKitsNestedInput
     releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
@@ -38661,7 +38225,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38690,7 +38253,6 @@ export namespace Prisma {
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gradeId?: StringFieldUpdateOperationsInput | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null

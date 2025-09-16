@@ -8,9 +8,17 @@ export async function getAllGrades() {
   try {
     const grades = await prisma.grade.findMany({
       include: {
+        productLines: {
+          include: {
+            _count: {
+              select: {
+                kits: true,
+              },
+            },
+          },
+        },
         _count: {
           select: {
-            kits: true,
             productLines: true,
           },
         },
@@ -25,7 +33,7 @@ export async function getAllGrades() {
       name: grade.name,
       slug: grade.slug,
       description: grade.description,
-      kitsCount: grade._count.kits,
+      kitsCount: grade.productLines.reduce((total, productLine) => total + productLine._count.kits, 0),
       productLinesCount: grade._count.productLines,
     }));
   } catch (error) {
@@ -53,7 +61,6 @@ export async function getGradeBySlug(slug: string) {
         },
         _count: {
           select: {
-            kits: true,
             productLines: true,
           },
         },
@@ -69,7 +76,7 @@ export async function getGradeBySlug(slug: string) {
       name: grade.name,
       slug: grade.slug,
       description: grade.description,
-      kitsCount: grade._count.kits,
+      kitsCount: grade.productLines.reduce((total, productLine) => total + productLine._count.kits, 0),
       productLinesCount: grade._count.productLines,
       productLines: grade.productLines.map(productLine => ({
         id: productLine.id,
@@ -89,16 +96,20 @@ export async function getGradeBySlug(slug: string) {
 export async function getGradeKits(gradeId: string, limit: number = 20, offset: number = 0) {
   try {
     const kits = await prisma.kit.findMany({
-      where: { gradeId },
+      where: {
+        productLine: {
+          gradeId: gradeId
+        }
+      },
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             name: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -138,7 +149,7 @@ export async function getGradeKits(gradeId: string, limit: number = 20, offset: 
       releaseDate: kit.releaseDate,
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name,
       productLine: kit.productLine?.name || null,
       series: kit.series?.name || null,
       releaseType: kit.releaseType?.name || null,

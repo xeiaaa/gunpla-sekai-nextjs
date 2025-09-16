@@ -17,7 +17,7 @@ interface Kit {
   priceYen: number | null;
   boxArt: string | null;
   scrapedImages: string[];
-  grade: string;
+  grade: string | null;
   productLine: {
     id: string;
     name: string;
@@ -86,7 +86,7 @@ export default function AddKitsToProductLinesPage() {
     kit.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (kit.productLine?.name.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
     (kit.series?.name.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
-    kit.grade.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (kit.grade?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
     kit.mobileSuits.some(ms => ms.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 

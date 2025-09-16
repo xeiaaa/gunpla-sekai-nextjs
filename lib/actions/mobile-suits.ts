@@ -27,14 +27,14 @@ export async function getMobileSuitBySlug(slug: string) {
           include: {
             kit: {
               include: {
-                grade: {
-                  select: {
-                    name: true,
-                  },
-                },
                 productLine: {
                   select: {
                     name: true,
+                    grade: {
+                      select: {
+                        name: true,
+                      },
+                    },
                   },
                 },
                 releaseType: {
@@ -80,7 +80,7 @@ export async function getMobileSuitBySlug(slug: string) {
         releaseDate: kitRelation.kit.releaseDate,
         priceYen: kitRelation.kit.priceYen,
         boxArt: kitRelation.kit.boxArt,
-        grade: kitRelation.kit.grade.name,
+        grade: kitRelation.kit.productLine?.grade.name,
         productLine: kitRelation.kit.productLine?.name,
         releaseType: kitRelation.kit.releaseType?.name,
       })),

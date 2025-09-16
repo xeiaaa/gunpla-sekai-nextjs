@@ -17,7 +17,7 @@ interface Kit {
   releaseDate?: Date | null;
   priceYen?: number | null;
   boxArt?: string | null;
-  grade: string;
+  grade?: string | null;
   productLine?: string | null;
   series?: string | null;
   releaseType?: string | null;

@@ -36,24 +36,26 @@ describe("Prisma Test Setup", () => {
     const timeline = await createTestData.timeline();
     const series = await createTestData.series({ timelineId: timeline.id });
     const grade = await createTestData.grade();
+    const productLine = await createTestData.productLine(grade.id);
     const kit = await createTestData.kit({
       seriesId: series.id,
-      gradeId: grade.id
+      productLineId: productLine.id
     });
 
     expect(kit).toBeDefined();
     expect(kit.seriesId).toBe(series.id);
-    expect(kit.gradeId).toBe(grade.id);
+    expect(kit.productLineId).toBe(productLine.id);
 
     // Test relationship
     const kitWithSeries = await prisma.kit.findUnique({
       where: { id: kit.id },
-      include: { series: true, grade: true },
+      include: { series: true, productLine: { include: { grade: true } } },
     });
 
     expect(kitWithSeries?.series).toBeDefined();
     expect(kitWithSeries?.series?.timelineId).toBe(timeline.id);
-    expect(kitWithSeries?.grade).toBeDefined();
-    expect(kitWithSeries?.grade?.name).toBe("HG");
+    expect(kitWithSeries?.productLine).toBeDefined();
+    expect(kitWithSeries?.productLine?.grade).toBeDefined();
+    expect(kitWithSeries?.productLine?.grade?.name).toBe("HG");
   });
 });

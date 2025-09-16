@@ -65,14 +65,14 @@ export async function getReleaseTypeKits(releaseTypeId: string, limit: number = 
     const kits = await prisma.kit.findMany({
       where: { releaseTypeId },
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             name: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -112,7 +112,7 @@ export async function getReleaseTypeKits(releaseTypeId: string, limit: number = 
       releaseDate: kit.releaseDate,
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name,
       productLine: kit.productLine?.name || null,
       series: kit.series?.name || null,
       releaseType: kit.releaseType?.name || null,
@@ -146,16 +146,20 @@ export async function getReleaseTypeAnalytics(releaseTypeId: string) {
     const gradeCounts = await prisma.kit.findMany({
       where: { releaseTypeId },
       select: {
-        grade: {
+        productLine: {
           select: {
-            name: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },
     });
 
     const gradeAnalytics = gradeCounts.reduce((acc, kit) => {
-      const gradeName = kit.grade.name;
+      const gradeName = kit.productLine?.grade.name;
       acc[gradeName] = (acc[gradeName] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);

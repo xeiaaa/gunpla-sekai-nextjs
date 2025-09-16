@@ -150,8 +150,24 @@ export const generatePerformanceTestData = {
     await prisma.series.createMany({ data: series });
     console.log(`Created ${config.series} series`);
 
-    // Create kits
+    // Create product lines
     const createdGrades = await prisma.grade.findMany();
+    const productLines = [];
+    const productLineNames = ['HGUC', 'MG', 'RG', 'PG', 'SD', 'RE/100', 'FM', 'HG'];
+
+    for (let i = 0; i < config.productLines || 8; i++) {
+      productLines.push({
+        name: `${productLineNames[i % productLineNames.length]} ${i}`,
+        slug: `${productLineNames[i % productLineNames.length].toLowerCase()}-${i}`,
+        description: `Performance test product line ${i}`,
+        gradeId: createdGrades[i % createdGrades.length].id,
+      });
+    }
+    await prisma.productLine.createMany({ data: productLines });
+    console.log(`Created ${productLines.length} product lines`);
+
+    // Create kits
+    const createdProductLines = await prisma.productLine.findMany();
     const createdSeries = await prisma.series.findMany();
 
     const kits = [];
@@ -171,7 +187,7 @@ export const generatePerformanceTestData = {
         releaseDate: new Date(2020 + (i % 4), i % 12, (i % 28) + 1),
         priceYen: 1000 + (i * 50),
         region: i % 3 === 0 ? 'Japan' : i % 3 === 1 ? 'International' : 'Asia',
-        gradeId: createdGrades[i % createdGrades.length].id,
+        productLineId: createdProductLines[i % createdProductLines.length].id,
         seriesId: createdSeries[i % createdSeries.length].id,
       });
     }

@@ -69,14 +69,14 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       where,
       orderBy,
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             name: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -113,7 +113,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       releaseDate: kit.releaseDate,
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name || null,
       productLine: kit.productLine?.name,
       series: kit.series?.name,
       releaseType: kit.releaseType?.name,
@@ -129,16 +129,16 @@ export async function getAllKits() {
   try {
     const kits = await prisma.kit.findMany({
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             id: true,
             name: true,
             slug: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -178,7 +178,7 @@ export async function getAllKits() {
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
       scrapedImages: kit.scrapedImages,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name || null,
       productLine: kit.productLine,
       series: kit.series,
       mobileSuitsCount: kit._count.mobileSuits,
@@ -219,15 +219,15 @@ export async function getKitBySlug(slug: string) {
     const kit = await prisma.kit.findUnique({
       where: { slug },
       include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
         productLine: {
           select: {
             name: true,
             logo: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         series: {
@@ -249,9 +249,13 @@ export async function getKitBySlug(slug: string) {
             slug: true,
             number: true,
             boxArt: true,
-            grade: {
+            productLine: {
               select: {
-                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
           },
@@ -266,9 +270,13 @@ export async function getKitBySlug(slug: string) {
             boxArt: true,
             releaseDate: true,
             priceYen: true,
-            grade: {
+            productLine: {
               select: {
-                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
           },
@@ -335,9 +343,13 @@ export async function getKitBySlug(slug: string) {
           boxArt: true,
           releaseDate: true,
           priceYen: true,
-          grade: {
+          productLine: {
             select: {
-              name: true,
+              grade: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
         },
@@ -360,17 +372,23 @@ export async function getKitBySlug(slug: string) {
       notes: kit.notes,
       manualLinks: kit.manualLinks,
       scrapedImages: kit.scrapedImages,
-      grade: kit.grade.name,
+      grade: kit.productLine?.grade.name || null,
       productLine: kit.productLine ? {
         name: kit.productLine.name,
-        logo: kit.productLine.logo,
+        logo: kit.productLine.logo?.url || null,
       } : null,
       series: kit.series?.name,
       seriesSlug: kit.series?.slug,
       releaseType: kit.releaseType?.name,
       releaseTypeSlug: kit.releaseType?.slug,
-      baseKit: kit.baseKit,
-      variants: kit.variants,
+      baseKit: kit.baseKit ? {
+        ...kit.baseKit,
+        grade: kit.baseKit.productLine?.grade.name,
+      } : null,
+      variants: kit.variants.map(variant => ({
+        ...variant,
+        grade: variant.productLine?.grade.name,
+      })),
       mobileSuits: kit.mobileSuits.map(ms => ({
         id: ms.mobileSuit.id,
         name: ms.mobileSuit.name,
@@ -387,7 +405,10 @@ export async function getKitBySlug(slug: string) {
         description: u.caption,
         createdAt: u.upload.createdAt,
       })),
-      otherVariants: otherVariants,
+      otherVariants: otherVariants.map(variant => ({
+        ...variant,
+        grade: variant.productLine?.grade.name,
+      })),
     };
   } catch (error) {
     console.error('Error fetching kit by slug:', error);

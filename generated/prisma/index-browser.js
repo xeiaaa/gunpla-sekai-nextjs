@@ -196,7 +196,6 @@ exports.Prisma.KitScalarFieldEnum = {
   potentialBaseKit: 'potentialBaseKit',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  gradeId: 'gradeId',
   productLineId: 'productLineId',
   seriesId: 'seriesId',
   releaseTypeId: 'releaseTypeId',

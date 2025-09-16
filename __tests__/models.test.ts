@@ -60,6 +60,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { name: "Original Name" }
       });
 
+      // Add a small delay to ensure updatedAt timestamp is different
+      await new Promise(resolve => setTimeout(resolve, 10));
+
       const updated = await prisma.timeline.update({
         where: { id: timeline.id },
         data: { name: "Updated Name" }
@@ -321,19 +324,20 @@ describe("Prisma Model Unit Tests", () => {
   describe("Kit Model", () => {
     it("should create a kit with required fields", async () => {
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
 
       const kit = await prisma.kit.create({
         data: {
           name: "RX-78-2 Gundam",
           number: "HG-001",
-          gradeId: grade.id
+          productLineId: productLine.id
         }
       });
 
       expect(kit.id).toBeDefined();
       expect(kit.name).toBe("RX-78-2 Gundam");
       expect(kit.number).toBe("HG-001");
-      expect(kit.gradeId).toBe(grade.id);
+      expect(kit.productLineId).toBe(productLine.id);
       expect(kit.slug).toBeNull();
       expect(kit.variant).toBeNull();
       expect(kit.releaseDate).toBeNull();
@@ -344,7 +348,6 @@ describe("Prisma Model Unit Tests", () => {
       expect(kit.manualLinks).toEqual([]);
       expect(kit.scrapedImages).toEqual([]);
       expect(kit.potentialBaseKit).toBeNull();
-      expect(kit.productLineId).toBeNull();
       expect(kit.seriesId).toBeNull();
       expect(kit.releaseTypeId).toBeNull();
       expect(kit.baseKitId).toBeNull();
@@ -354,6 +357,7 @@ describe("Prisma Model Unit Tests", () => {
 
     it("should create a kit with all optional fields", async () => {
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const series = await createTestData.series();
       const releaseType = await prisma.releaseType.create({
         data: { name: "Retail", slug: "retail" }
@@ -373,7 +377,7 @@ describe("Prisma Model Unit Tests", () => {
           manualLinks: ["https://example.com/manual.pdf"],
           scrapedImages: ["https://example.com/image1.jpg"],
           potentialBaseKit: "HG-001",
-          gradeId: grade.id,
+          productLineId: productLine.id,
           seriesId: series.id,
           releaseTypeId: releaseType.id
         }
@@ -396,46 +400,52 @@ describe("Prisma Model Unit Tests", () => {
     it("should enforce unique constraint on slug", async () => {
       const grade = await createTestData.grade();
 
+      const productLine = await createTestData.productLine(grade.id);
       await prisma.kit.create({
-        data: { name: "Kit 1", slug: "test-slug", number: "001", gradeId: grade.id }
+        data: { name: "Kit 1", slug: "test-slug", number: "001", productLineId: productLine.id }
       });
 
+      const productLine2 = await createTestData.productLine(grade.id, { name: "Test Product Line 2", slug: "test-product-line-2" });
       await expect(
         prisma.kit.create({
-          data: { name: "Kit 2", slug: "test-slug", number: "002", gradeId: grade.id }
+          data: { name: "Kit 2", slug: "test-slug", number: "002", productLineId: productLine2.id }
         })
       ).rejects.toThrow();
     });
 
-    it("should cascade delete when grade is deleted", async () => {
+    it("should not cascade delete kit when grade is deleted (kit is now related through productLine)", async () => {
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       await prisma.grade.delete({
         where: { id: grade.id }
       });
 
-      const deletedKit = await prisma.kit.findUnique({
+      const remainingKit = await prisma.kit.findUnique({
         where: { id: kit.id }
       });
 
-      expect(deletedKit).toBeNull();
+      // Kit should still exist because it's related through ProductLine, not directly to Grade
+      expect(remainingKit).toBeDefined();
+      expect(remainingKit?.name).toBe("Test Kit");
     });
 
     it("should handle base kit relationship", async () => {
       const grade = await createTestData.grade();
 
+      const productLine = await createTestData.productLine(grade.id);
       const baseKit = await prisma.kit.create({
-        data: { name: "Base Kit", number: "001", gradeId: grade.id }
+        data: { name: "Base Kit", number: "001", productLineId: productLine.id }
       });
 
       const variantKit = await prisma.kit.create({
         data: {
           name: "Variant Kit",
           number: "002",
-          gradeId: grade.id,
+          productLineId: productLine.id,
           baseKitId: baseKit.id
         }
       });
@@ -537,8 +547,9 @@ describe("Prisma Model Unit Tests", () => {
     describe("KitMobileSuit", () => {
       it("should create kit-mobile suit relationship", async () => {
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const mobileSuit = await prisma.mobileSuit.create({
           data: { name: "Test Mobile Suit" }
@@ -560,8 +571,9 @@ describe("Prisma Model Unit Tests", () => {
 
       it("should enforce unique constraint on kit-mobile suit pair", async () => {
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const mobileSuit = await prisma.mobileSuit.create({
           data: { name: "Test Mobile Suit" }
@@ -586,8 +598,9 @@ describe("Prisma Model Unit Tests", () => {
 
       it("should cascade delete when kit is deleted", async () => {
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const mobileSuit = await prisma.mobileSuit.create({
           data: { name: "Test Mobile Suit" }
@@ -613,8 +626,9 @@ describe("Prisma Model Unit Tests", () => {
 
       it("should cascade delete when mobile suit is deleted", async () => {
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const mobileSuit = await prisma.mobileSuit.create({
           data: { name: "Test Mobile Suit" }
@@ -722,8 +736,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       const collection = await prisma.userKitCollection.create({
@@ -748,8 +763,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       const collection = await prisma.userKitCollection.create({
@@ -770,8 +786,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       await prisma.userKitCollection.create({
@@ -798,8 +815,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       // Valid enum values
@@ -834,8 +852,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       const collection = await prisma.userKitCollection.create({
@@ -862,8 +881,9 @@ describe("Prisma Model Unit Tests", () => {
         data: { id: "test-user", email: "test@example.com" }
       });
       const grade = await createTestData.grade();
+      const productLine = await createTestData.productLine(grade.id);
       const kit = await prisma.kit.create({
-        data: { name: "Test Kit", number: "001", gradeId: grade.id }
+        data: { name: "Test Kit", number: "001", productLineId: productLine.id }
       });
 
       const collection = await prisma.userKitCollection.create({
@@ -893,8 +913,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const review = await prisma.review.create({
@@ -922,8 +943,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const review = await prisma.review.create({
@@ -944,8 +966,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         await prisma.review.create({
@@ -972,8 +995,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const review = await prisma.review.create({
@@ -1000,8 +1024,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const review = await prisma.review.create({
@@ -1030,8 +1055,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const review = await prisma.review.create({
           data: {
@@ -1062,8 +1088,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const review = await prisma.review.create({
           data: {
@@ -1089,8 +1116,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const review = await prisma.review.create({
           data: {
@@ -1124,8 +1152,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const review = await prisma.review.create({
           data: {
@@ -1172,8 +1201,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const review = await prisma.review.create({
           data: {
@@ -1211,8 +1241,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const build = await prisma.build.create({
@@ -1242,8 +1273,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const build = await prisma.build.create({
@@ -1262,8 +1294,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const validStatuses = ["PLANNING", "IN_PROGRESS", "COMPLETED", "ON_HOLD"];
@@ -1298,8 +1331,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const build = await prisma.build.create({
@@ -1326,8 +1360,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const build = await prisma.build.create({
@@ -1356,8 +1391,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1394,8 +1430,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1440,8 +1477,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1478,8 +1516,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1510,8 +1549,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1545,8 +1585,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const build = await prisma.build.create({
           data: {
@@ -1712,8 +1753,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const upload = await prisma.upload.create({
           data: {
@@ -1754,8 +1796,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const upload = await prisma.upload.create({
           data: {
@@ -1803,8 +1846,9 @@ describe("Prisma Model Unit Tests", () => {
           data: { id: "test-user", email: "test@example.com" }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
         const upload = await prisma.upload.create({
           data: {
@@ -1940,8 +1984,9 @@ describe("Prisma Model Unit Tests", () => {
           }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const listing = await prisma.marketplaceListing.create({
@@ -1981,8 +2026,9 @@ describe("Prisma Model Unit Tests", () => {
           }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const listing = await prisma.marketplaceListing.create({
@@ -2011,8 +2057,9 @@ describe("Prisma Model Unit Tests", () => {
           }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const listing = await prisma.marketplaceListing.create({
@@ -2046,8 +2093,9 @@ describe("Prisma Model Unit Tests", () => {
           }
         });
         const grade = await createTestData.grade();
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
-          data: { name: "Test Kit", number: "001", gradeId: grade.id }
+          data: { name: "Test Kit", number: "001", productLineId: productLine.id }
         });
 
         const listing = await prisma.marketplaceListing.create({
@@ -2125,26 +2173,25 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id,
             productLineId: productLine.id,
             seriesId: series.id,
             releaseTypeId: releaseType.id
           }
         });
 
-        expect(kit.gradeId).toBe(grade.id);
+        // Grade is now accessed through productLine.grade
         expect(kit.productLineId).toBe(productLine.id);
         expect(kit.seriesId).toBe(series.id);
         expect(kit.releaseTypeId).toBe(releaseType.id);
       });
 
-      it("should fail to create Kit with invalid gradeId", async () => {
+      it("should fail to create Kit with invalid productLineId", async () => {
         await expect(
           prisma.kit.create({
             data: {
               name: "RX-78-2 Gundam",
               number: "001",
-              gradeId: "invalid-grade-id"
+              productLineId: "invalid-product-line-id"
             }
           })
         ).rejects.toThrow();
@@ -2208,11 +2255,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const baseKit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2220,7 +2268,7 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam (Ver. GFT)",
             number: "001",
-            gradeId: grade.id,
+            productLineId: productLine.id,
             baseKitId: baseKit.id
           }
         });
@@ -2246,6 +2294,10 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await prisma.productLine.create({
+          data: { name: "HGUC", gradeId: grade.id }
+        });
+
         const series = await prisma.series.create({
           data: { name: "Mobile Suit Gundam" }
         });
@@ -2254,7 +2306,7 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id,
+            productLineId: productLine.id,
             seriesId: series.id
           }
         });
@@ -2282,6 +2334,10 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await prisma.productLine.create({
+          data: { name: "HGUC", gradeId: grade.id }
+        });
+
         const series = await prisma.series.create({
           data: { name: "Mobile Suit Gundam" }
         });
@@ -2290,7 +2346,7 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id,
+            productLineId: productLine.id,
             seriesId: series.id
           }
         });
@@ -2326,6 +2382,10 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await prisma.productLine.create({
+          data: { name: "HGUC", gradeId: grade.id }
+        });
+
         const series = await prisma.series.create({
           data: { name: "Mobile Suit Gundam" }
         });
@@ -2334,7 +2394,7 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id,
+            productLineId: productLine.id,
             seriesId: series.id
           }
         });
@@ -2375,11 +2435,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2421,11 +2482,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2475,11 +2537,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2518,11 +2581,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2576,11 +2640,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2641,11 +2706,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2745,11 +2811,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit1 = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2757,7 +2824,7 @@ describe("Prisma Model Unit Tests", () => {
           data: {
             name: "RX-78-2 Gundam Ver.2",
             number: "001", // Same number - should be allowed
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2775,11 +2842,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 
@@ -2811,11 +2879,12 @@ describe("Prisma Model Unit Tests", () => {
           data: { name: "HG" }
         });
 
+        const productLine = await createTestData.productLine(grade.id);
         const kit = await prisma.kit.create({
           data: {
             name: "RX-78-2 Gundam",
             number: "001",
-            gradeId: grade.id
+            productLineId: productLine.id
           }
         });
 

@@ -18,7 +18,7 @@ interface KitCardProps {
     releaseDate?: Date | null;
     priceYen?: number | null;
     boxArt?: string | null;
-    grade: string;
+    grade?: string | null;
     productLine?: string | null;
     series?: string | null;
     releaseType?: string | null;
@@ -98,11 +98,13 @@ export function KitCard({
         />
 
         {/* Grade Badge */}
-        <div className="absolute bottom-2 left-2">
-          <div className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm">
-            {kit.grade}
+        {kit.grade && (
+          <div className="absolute bottom-2 left-2">
+            <div className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm">
+              {kit.grade}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Product Line Badge */}
         {kit.productLine && (

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: KitDetailPageProps) {
 
   return {
     title: `${kit.name} - Gunpla Sekai`,
-    description: `View details for ${kit.name} (${kit.number}) - ${kit.grade} grade Gunpla kit`,
+    description: `View details for ${kit.name} (${kit.number}) - ${kit.grade || 'Unknown'} grade Gunpla kit`,
   };
 }
 

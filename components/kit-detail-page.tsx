@@ -24,7 +24,7 @@ interface KitDetailPageProps {
   kit: {
     id: string;
     name: string;
-    slug: string;
+    slug: string | null;
     number: string;
     variant?: string | null;
     releaseDate?: Date | null;
@@ -34,7 +34,7 @@ interface KitDetailPageProps {
     notes?: string | null;
     manualLinks: string[];
     scrapedImages: string[];
-    grade: string;
+    grade: string | null;
     productLine?: {
       name: string;
       logo?: string | null;
@@ -46,25 +46,21 @@ interface KitDetailPageProps {
     baseKit?: {
       id: string;
       name: string;
-      slug: string;
+      slug: string | null;
       number: string;
       boxArt?: string | null;
-      grade: {
-        name: string;
-      };
+      grade: string | null;
     } | null;
     variants: Array<{
       id: string;
       name: string;
-      slug: string;
+      slug: string | null;
       number: string;
       variant?: string | null;
       boxArt?: string | null;
       releaseDate?: Date | null;
       priceYen?: number | null;
-      grade: {
-        name: string;
-      };
+      grade: string | null;
     }>;
     mobileSuits: Array<{
       id: string;
@@ -85,15 +81,13 @@ interface KitDetailPageProps {
     otherVariants: Array<{
       id: string;
       name: string;
-      slug: string;
+      slug: string | null;
       number: string;
       variant?: string | null;
       boxArt?: string | null;
       releaseDate?: Date | null;
       priceYen?: number | null;
-      grade: {
-        name: string;
-      };
+      grade: string | null;
     }>;
   };
 }
@@ -357,7 +351,7 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium">{kit.baseKit.name}</h4>
                       <p className="text-sm text-muted-foreground">#{kit.baseKit.number}</p>
-                      <p className="text-sm text-muted-foreground">{kit.baseKit.grade.name}</p>
+                      <p className="text-sm text-muted-foreground">{kit.baseKit.grade}</p>
                     </div>
                     <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                   </div>
@@ -390,7 +384,7 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
                             <p className="text-sm text-muted-foreground">{variant.variant}</p>
                           )}
                           <p className="text-sm text-muted-foreground">#{variant.number}</p>
-                          <p className="text-sm text-muted-foreground">{variant.grade.name}</p>
+                          <p className="text-sm text-muted-foreground">{variant.grade}</p>
                           {variant.releaseDate && (
                             <p className="text-sm text-muted-foreground">
                               {formatReleaseDate(variant.releaseDate)}
@@ -430,7 +424,7 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
                             <p className="text-sm text-muted-foreground">{otherVariant.variant}</p>
                           )}
                           <p className="text-sm text-muted-foreground">#{otherVariant.number}</p>
-                          <p className="text-sm text-muted-foreground">{otherVariant.grade.name}</p>
+                          <p className="text-sm text-muted-foreground">{otherVariant.grade}</p>
                           {otherVariant.releaseDate && (
                             <p className="text-sm text-muted-foreground">
                               {formatReleaseDate(otherVariant.releaseDate)}
