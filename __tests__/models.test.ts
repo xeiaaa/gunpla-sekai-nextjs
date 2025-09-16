@@ -2071,4 +2071,772 @@ describe("Prisma Model Unit Tests", () => {
       });
     });
   });
+
+  // Integration Tests for Relationships and Constraints
+  describe("Integration Tests - Relationships and Constraints", () => {
+    describe("Relation Integrity Tests", () => {
+      it("should create Series with valid timelineId", async () => {
+        const timeline = await prisma.timeline.create({
+          data: { name: "Universal Century" }
+        });
+
+        const series = await prisma.series.create({
+          data: {
+            name: "Mobile Suit Gundam",
+            timelineId: timeline.id
+          }
+        });
+
+        expect(series.timelineId).toBe(timeline.id);
+      });
+
+      it("should fail to create Series with invalid timelineId", async () => {
+        await expect(
+          prisma.series.create({
+            data: {
+              name: "Mobile Suit Gundam",
+              timelineId: "invalid-timeline-id"
+            }
+          })
+        ).rejects.toThrow();
+      });
+
+      it("should create Kit with valid foreign keys", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const productLine = await prisma.productLine.create({
+          data: {
+            name: "HGUC",
+            gradeId: grade.id
+          }
+        });
+
+        const series = await prisma.series.create({
+          data: { name: "Mobile Suit Gundam" }
+        });
+
+        const releaseType = await prisma.releaseType.create({
+          data: { name: "Retail", slug: "retail" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id,
+            productLineId: productLine.id,
+            seriesId: series.id,
+            releaseTypeId: releaseType.id
+          }
+        });
+
+        expect(kit.gradeId).toBe(grade.id);
+        expect(kit.productLineId).toBe(productLine.id);
+        expect(kit.seriesId).toBe(series.id);
+        expect(kit.releaseTypeId).toBe(releaseType.id);
+      });
+
+      it("should fail to create Kit with invalid gradeId", async () => {
+        await expect(
+          prisma.kit.create({
+            data: {
+              name: "RX-78-2 Gundam",
+              number: "001",
+              gradeId: "invalid-grade-id"
+            }
+          })
+        ).rejects.toThrow();
+      });
+    });
+
+    describe("Cascade/SetNull Behavior Tests", () => {
+      it("should set timelineId to null when Timeline is deleted (SetNull)", async () => {
+        const timeline = await prisma.timeline.create({
+          data: { name: "Universal Century" }
+        });
+
+        const series = await prisma.series.create({
+          data: {
+            name: "Mobile Suit Gundam",
+            timelineId: timeline.id
+          }
+        });
+
+        // Delete the timeline
+        await prisma.timeline.delete({
+          where: { id: timeline.id }
+        });
+
+        // Check that series still exists but timelineId is null
+        const updatedSeries = await prisma.series.findUnique({
+          where: { id: series.id }
+        });
+
+        expect(updatedSeries).toBeDefined();
+        expect(updatedSeries?.timelineId).toBeNull();
+      });
+
+      it("should cascade delete ProductLines when Grade is deleted", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const productLine = await prisma.productLine.create({
+          data: {
+            name: "HGUC",
+            gradeId: grade.id
+          }
+        });
+
+        // Delete the grade
+        await prisma.grade.delete({
+          where: { id: grade.id }
+        });
+
+        // Check that productLine is also deleted
+        const deletedProductLine = await prisma.productLine.findUnique({
+          where: { id: productLine.id }
+        });
+
+        expect(deletedProductLine).toBeNull();
+      });
+
+      it("should set baseKitId to null when base Kit is deleted (SetNull)", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const baseKit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const variantKit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam (Ver. GFT)",
+            number: "001",
+            gradeId: grade.id,
+            baseKitId: baseKit.id
+          }
+        });
+
+        // Delete the base kit
+        await prisma.kit.delete({
+          where: { id: baseKit.id }
+        });
+
+        // Check that variant kit still exists but baseKitId is null
+        const updatedVariant = await prisma.kit.findUnique({
+          where: { id: variantKit.id }
+        });
+
+        expect(updatedVariant).toBeDefined();
+        expect(updatedVariant?.baseKitId).toBeNull();
+      });
+    });
+
+    describe("Junction Table Behavior Tests", () => {
+      it("should create KitMobileSuit association", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const series = await prisma.series.create({
+          data: { name: "Mobile Suit Gundam" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id,
+            seriesId: series.id
+          }
+        });
+
+        const mobileSuit = await prisma.mobileSuit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            seriesId: series.id
+          }
+        });
+
+        const association = await prisma.kitMobileSuit.create({
+          data: {
+            kitId: kit.id,
+            mobileSuitId: mobileSuit.id
+          }
+        });
+
+        expect(association.kitId).toBe(kit.id);
+        expect(association.mobileSuitId).toBe(mobileSuit.id);
+      });
+
+      it("should fail to create duplicate KitMobileSuit association", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const series = await prisma.series.create({
+          data: { name: "Mobile Suit Gundam" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id,
+            seriesId: series.id
+          }
+        });
+
+        const mobileSuit = await prisma.mobileSuit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            seriesId: series.id
+          }
+        });
+
+        // Create first association
+        await prisma.kitMobileSuit.create({
+          data: {
+            kitId: kit.id,
+            mobileSuitId: mobileSuit.id
+          }
+        });
+
+        // Try to create duplicate association
+        await expect(
+          prisma.kitMobileSuit.create({
+            data: {
+              kitId: kit.id,
+              mobileSuitId: mobileSuit.id
+            }
+          })
+        ).rejects.toThrow();
+      });
+
+      it("should cascade delete KitMobileSuit when Kit is deleted", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const series = await prisma.series.create({
+          data: { name: "Mobile Suit Gundam" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id,
+            seriesId: series.id
+          }
+        });
+
+        const mobileSuit = await prisma.mobileSuit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            seriesId: series.id
+          }
+        });
+
+        const association = await prisma.kitMobileSuit.create({
+          data: {
+            kitId: kit.id,
+            mobileSuitId: mobileSuit.id
+          }
+        });
+
+        // Delete the kit
+        await prisma.kit.delete({
+          where: { id: kit.id }
+        });
+
+        // Check that association is also deleted
+        const deletedAssociation = await prisma.kitMobileSuit.findUnique({
+          where: { id: association.id }
+        });
+
+        expect(deletedAssociation).toBeNull();
+      });
+
+      it("should create KitUpload association with proper constraints", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const upload = await prisma.upload.create({
+          data: {
+            cloudinaryAssetId: "test-asset-123",
+            publicId: "test-public-id",
+            url: "https://example.com/image.jpg",
+            format: "jpg",
+            resourceType: "image",
+            size: 1024000,
+            originalFilename: "test-image.jpg",
+            uploadedAt: new Date(),
+            uploadedById: user.id
+          }
+        });
+
+        const kitUpload = await prisma.kitUpload.create({
+          data: {
+            kitId: kit.id,
+            uploadId: upload.id,
+            caption: "Box art",
+            order: 1,
+            type: "BOX_ART"
+          }
+        });
+
+        expect(kitUpload.kitId).toBe(kit.id);
+        expect(kitUpload.uploadId).toBe(upload.id);
+        expect(kitUpload.type).toBe("BOX_ART");
+      });
+
+      it("should fail to create duplicate KitUpload association", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const upload = await prisma.upload.create({
+          data: {
+            cloudinaryAssetId: "test-asset-123",
+            publicId: "test-public-id",
+            url: "https://example.com/image.jpg",
+            format: "jpg",
+            resourceType: "image",
+            size: 1024000,
+            originalFilename: "test-image.jpg",
+            uploadedAt: new Date(),
+            uploadedById: user.id
+          }
+        });
+
+        // Create first association
+        await prisma.kitUpload.create({
+          data: {
+            kitId: kit.id,
+            uploadId: upload.id,
+            type: "BOX_ART"
+          }
+        });
+
+        // Try to create duplicate association
+        await expect(
+          prisma.kitUpload.create({
+            data: {
+              kitId: kit.id,
+              uploadId: upload.id,
+              type: "PRODUCT_SHOTS"
+            }
+          })
+        ).rejects.toThrow();
+      });
+    });
+
+    describe("Complex Relationship Chains", () => {
+      it("should handle User->UserKitCollection->Kit relationship chain", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        await prisma.userKitCollection.create({
+          data: {
+            userId: user.id,
+            kitId: kit.id,
+            status: "WISHLIST",
+            notes: "Want to build this"
+          }
+        });
+
+        // Verify the relationship chain
+        const userWithCollection = await prisma.user.findUnique({
+          where: { id: user.id },
+          include: {
+            collections: {
+              include: {
+                kit: true
+              }
+            }
+          }
+        });
+
+        expect(userWithCollection?.collections).toHaveLength(1);
+        expect(userWithCollection?.collections[0].kit.name).toBe("RX-78-2 Gundam");
+        expect(userWithCollection?.collections[0].status).toBe("WISHLIST");
+      });
+
+      it("should handle Review->ReviewScore aggregation relationship", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const review = await prisma.review.create({
+          data: {
+            userId: user.id,
+            kitId: kit.id,
+            title: "Great kit!",
+            content: "Really enjoyed building this",
+            overallScore: 8.5
+          }
+        });
+
+        const scores = [
+          { category: "BUILD_QUALITY_ENGINEERING" as const, score: 9 },
+          { category: "ARTICULATION_POSEABILITY" as const, score: 8 },
+          { category: "DETAIL_ACCURACY" as const, score: 8 },
+          { category: "AESTHETICS_PROPORTIONS" as const, score: 9 },
+          { category: "ACCESSORIES_GIMMICKS" as const, score: 7 },
+          { category: "VALUE_EXPERIENCE" as const, score: 9 }
+        ];
+
+        for (const score of scores) {
+          await prisma.reviewScore.create({
+            data: {
+              reviewId: review.id,
+              category: score.category,
+              score: score.score
+            }
+          });
+        }
+
+        // Verify the relationship
+        const reviewWithScores = await prisma.review.findUnique({
+          where: { id: review.id },
+          include: {
+            categoryScores: true
+          }
+        });
+
+        expect(reviewWithScores?.categoryScores).toHaveLength(6);
+        expect(reviewWithScores?.overallScore).toBe(8.5);
+      });
+
+      it("should handle Build->BuildMilestone->BuildComment chain", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const build = await prisma.build.create({
+          data: {
+            userId: user.id,
+            kitId: kit.id,
+            title: "My RX-78-2 Build",
+            description: "First time building this kit",
+            status: "IN_PROGRESS"
+          }
+        });
+
+        await prisma.buildMilestone.create({
+          data: {
+            buildId: build.id,
+            type: "BUILD",
+            title: "Completed main body",
+            description: "Finished assembling the torso and head",
+            order: 1
+          }
+        });
+
+        await prisma.buildComment.create({
+          data: {
+            buildId: build.id,
+            userId: user.id,
+            content: "Looking great so far!"
+          }
+        });
+
+        // Verify the relationship chain
+        const buildWithDetails = await prisma.build.findUnique({
+          where: { id: build.id },
+          include: {
+            milestones: true,
+            comments: {
+              include: {
+                user: true
+              }
+            }
+          }
+        });
+
+        expect(buildWithDetails?.milestones).toHaveLength(1);
+        expect(buildWithDetails?.milestones[0].type).toBe("BUILD");
+        expect(buildWithDetails?.comments).toHaveLength(1);
+        expect(buildWithDetails?.comments[0].content).toBe("Looking great so far!");
+        expect(buildWithDetails?.comments[0].user.id).toBe(user.id);
+      });
+
+      it("should handle UserStore->MarketplaceListing connections", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const store = await prisma.userStore.create({
+          data: {
+            userId: user.id,
+            name: "My Gunpla Store",
+            description: "Selling my collection"
+          }
+        });
+
+        await prisma.marketplaceListing.create({
+          data: {
+            storeId: store.id,
+            kitId: kit.id,
+            title: "RX-78-2 Gundam HG",
+            description: "New in box",
+            price: 1500, // 15.00 JPY
+            currency: "JPY"
+          }
+        });
+
+        // Verify the relationship chain
+        const storeWithListings = await prisma.userStore.findUnique({
+          where: { id: store.id },
+          include: {
+            listings: {
+              include: {
+                kit: true
+              }
+            }
+          }
+        });
+
+        expect(storeWithListings?.listings).toHaveLength(1);
+        expect(storeWithListings?.listings[0].kit.name).toBe("RX-78-2 Gundam");
+        expect(storeWithListings?.listings[0].price).toBe(1500);
+      });
+
+      it("should handle Upload->User references with cascade delete", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const upload = await prisma.upload.create({
+          data: {
+            cloudinaryAssetId: "test-asset-123",
+            publicId: "test-public-id",
+            url: "https://example.com/image.jpg",
+            format: "jpg",
+            resourceType: "image",
+            size: 1024000,
+            originalFilename: "test-image.jpg",
+            uploadedAt: new Date(),
+            uploadedById: user.id
+          }
+        });
+
+        // Verify the relationship
+        const uploadWithUser = await prisma.upload.findUnique({
+          where: { id: upload.id },
+          include: {
+            uploadedBy: true
+          }
+        });
+
+        expect(uploadWithUser?.uploadedBy.id).toBe(user.id);
+
+        // Delete the user and verify cascade delete
+        await prisma.user.delete({
+          where: { id: user.id }
+        });
+
+        const deletedUpload = await prisma.upload.findUnique({
+          where: { id: upload.id }
+        });
+
+        expect(deletedUpload).toBeNull();
+      });
+    });
+
+    describe("Constraint Violation Tests", () => {
+      it("should enforce unique constraints on User email", async () => {
+        await prisma.user.create({
+          data: { id: "user1", email: "test@example.com" }
+        });
+
+        await expect(
+          prisma.user.create({
+            data: { id: "user2", email: "test@example.com" }
+          })
+        ).rejects.toThrow();
+      });
+
+      it("should allow duplicate Kit numbers (unique constraint was removed)", async () => {
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit1 = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        const kit2 = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam Ver.2",
+            number: "001", // Same number - should be allowed
+            gradeId: grade.id
+          }
+        });
+
+        expect(kit1.number).toBe("001");
+        expect(kit2.number).toBe("001");
+        expect(kit1.id).not.toBe(kit2.id);
+      });
+
+      it("should enforce unique constraints on UserKitCollection", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        await prisma.userKitCollection.create({
+          data: {
+            userId: user.id,
+            kitId: kit.id,
+            status: "WISHLIST"
+          }
+        });
+
+        await expect(
+          prisma.userKitCollection.create({
+            data: {
+              userId: user.id,
+              kitId: kit.id,
+              status: "BACKLOG" // Same user-kit combination
+            }
+          })
+        ).rejects.toThrow();
+      });
+
+      it("should enforce unique constraints on Review per user-kit", async () => {
+        const user = await prisma.user.create({
+          data: { id: "test-user", email: "test@example.com" }
+        });
+
+        const grade = await prisma.grade.create({
+          data: { name: "HG" }
+        });
+
+        const kit = await prisma.kit.create({
+          data: {
+            name: "RX-78-2 Gundam",
+            number: "001",
+            gradeId: grade.id
+          }
+        });
+
+        await prisma.review.create({
+          data: {
+            userId: user.id,
+            kitId: kit.id,
+            overallScore: 8.0
+          }
+        });
+
+        await expect(
+          prisma.review.create({
+            data: {
+              userId: user.id,
+              kitId: kit.id,
+              overallScore: 9.0 // Same user-kit combination
+            }
+          })
+        ).rejects.toThrow();
+      });
+    });
+  });
 });
