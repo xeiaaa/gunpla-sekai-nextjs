@@ -18,7 +18,7 @@ export function Header() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Kits", href: "/kits" },
-    { name: "Mobile Suits", href: "/mobile-suits" },
+    { name: "Timelines", href: "/timelines" },
     { name: "Gallery", href: "/gallery" },
   ];
 

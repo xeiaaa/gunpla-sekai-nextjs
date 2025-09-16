@@ -295,26 +295,29 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {kit.mobileSuits.map((mobileSuit) => (
-                    <div key={mobileSuit.id} className="flex gap-3">
-                      <div className="w-16 h-16 flex-shrink-0">
-                        <KitImage
-                          src={mobileSuit.scrapedImages[0] || ''}
-                          alt={mobileSuit.name}
-                          className="w-full h-full rounded-md"
-                        />
+                    <Link key={mobileSuit.id} href={`/mobile-suits/${mobileSuit.slug}`}>
+                      <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="w-16 h-16 flex-shrink-0">
+                          <KitImage
+                            src={mobileSuit.scrapedImages[0] || ''}
+                            alt={mobileSuit.name}
+                            className="w-full h-full rounded-md"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium truncate">{mobileSuit.name}</h4>
+                          {mobileSuit.series && (
+                            <p className="text-sm text-muted-foreground">{mobileSuit.series}</p>
+                          )}
+                          {mobileSuit.description && (
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {mobileSuit.description}
+                            </p>
+                          )}
+                        </div>
+                        <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium truncate">{mobileSuit.name}</h4>
-                        {mobileSuit.series && (
-                          <p className="text-sm text-muted-foreground">{mobileSuit.series}</p>
-                        )}
-                        {mobileSuit.description && (
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {mobileSuit.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </CardContent>
