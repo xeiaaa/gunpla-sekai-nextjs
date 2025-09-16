@@ -249,6 +249,107 @@ exports.Prisma.MobileSuitUploadScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  username: 'username',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  imageUrl: 'imageUrl',
+  avatarUrl: 'avatarUrl',
+  isAdmin: 'isAdmin',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserKitCollectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kitId: 'kitId',
+  status: 'status',
+  notes: 'notes',
+  addedAt: 'addedAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kitId: 'kitId',
+  title: 'title',
+  content: 'content',
+  overallScore: 'overallScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReviewScoreScalarFieldEnum = {
+  id: 'id',
+  reviewId: 'reviewId',
+  category: 'category',
+  score: 'score',
+  notes: 'notes'
+};
+
+exports.Prisma.BuildScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kitId: 'kitId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BuildMilestoneScalarFieldEnum = {
+  id: 'id',
+  buildId: 'buildId',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  imageUrls: 'imageUrls',
+  completedAt: 'completedAt',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BuildCommentScalarFieldEnum = {
+  id: 'id',
+  buildId: 'buildId',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserStoreScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  description: 'description',
+  location: 'location',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MarketplaceListingScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  kitId: 'kitId',
+  title: 'title',
+  description: 'description',
+  price: 'price',
+  currency: 'currency',
+  imageUrls: 'imageUrls',
+  available: 'available',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -271,6 +372,40 @@ exports.KitImageType = exports.$Enums.KitImageType = {
   PROTOTYPE: 'PROTOTYPE'
 };
 
+exports.CollectionStatus = exports.$Enums.CollectionStatus = {
+  WISHLIST: 'WISHLIST',
+  BACKLOG: 'BACKLOG',
+  BUILT: 'BUILT'
+};
+
+exports.ReviewCategory = exports.$Enums.ReviewCategory = {
+  BUILD_QUALITY_ENGINEERING: 'BUILD_QUALITY_ENGINEERING',
+  ARTICULATION_POSEABILITY: 'ARTICULATION_POSEABILITY',
+  DETAIL_ACCURACY: 'DETAIL_ACCURACY',
+  AESTHETICS_PROPORTIONS: 'AESTHETICS_PROPORTIONS',
+  ACCESSORIES_GIMMICKS: 'ACCESSORIES_GIMMICKS',
+  VALUE_EXPERIENCE: 'VALUE_EXPERIENCE'
+};
+
+exports.BuildStatus = exports.$Enums.BuildStatus = {
+  PLANNING: 'PLANNING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  ON_HOLD: 'ON_HOLD'
+};
+
+exports.MilestoneType = exports.$Enums.MilestoneType = {
+  ACQUISITION: 'ACQUISITION',
+  PLANNING: 'PLANNING',
+  BUILD: 'BUILD',
+  PAINTING: 'PAINTING',
+  PANEL_LINING: 'PANEL_LINING',
+  DECALS: 'DECALS',
+  TOPCOAT: 'TOPCOAT',
+  PHOTOGRAPHY: 'PHOTOGRAPHY',
+  COMPLETION: 'COMPLETION'
+};
+
 exports.Prisma.ModelName = {
   Timeline: 'Timeline',
   Series: 'Series',
@@ -282,7 +417,16 @@ exports.Prisma.ModelName = {
   KitMobileSuit: 'KitMobileSuit',
   Upload: 'Upload',
   KitUpload: 'KitUpload',
-  MobileSuitUpload: 'MobileSuitUpload'
+  MobileSuitUpload: 'MobileSuitUpload',
+  User: 'User',
+  UserKitCollection: 'UserKitCollection',
+  Review: 'Review',
+  ReviewScore: 'ReviewScore',
+  Build: 'Build',
+  BuildMilestone: 'BuildMilestone',
+  BuildComment: 'BuildComment',
+  UserStore: 'UserStore',
+  MarketplaceListing: 'MarketplaceListing'
 };
 
 /**

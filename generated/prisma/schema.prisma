@@ -143,14 +143,18 @@ model Kit {
   baseKitId     String?
 
   // Relations
-  grade       Grade           @relation(fields: [gradeId], references: [id], onDelete: Cascade)
-  productLine ProductLine?    @relation(fields: [productLineId], references: [id], onDelete: SetNull)
-  series      Series?         @relation(fields: [seriesId], references: [id], onDelete: SetNull)
-  releaseType ReleaseType?    @relation(fields: [releaseTypeId], references: [id], onDelete: SetNull)
-  baseKit     Kit?            @relation("KitVariants", fields: [baseKitId], references: [id], onDelete: SetNull)
-  variants    Kit[]           @relation("KitVariants")
+  grade       Grade                @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  productLine ProductLine?         @relation(fields: [productLineId], references: [id], onDelete: SetNull)
+  series      Series?              @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  releaseType ReleaseType?         @relation(fields: [releaseTypeId], references: [id], onDelete: SetNull)
+  baseKit     Kit?                 @relation("KitVariants", fields: [baseKitId], references: [id], onDelete: SetNull)
+  variants    Kit[]                @relation("KitVariants")
   mobileSuits KitMobileSuit[]
   uploads     KitUpload[]
+  collections UserKitCollection[]
+  reviews     Review[]
+  builds      Build[]
+  listings    MarketplaceListing[]
 
   @@map("kits")
 }
@@ -189,6 +193,7 @@ model Upload {
   updatedAt         DateTime @updatedAt
 
   // Relations
+  uploadedBy        User               @relation("UploadedBy", fields: [uploadedById], references: [id], onDelete: Cascade)
   kitUploads        KitUpload[]
   mobileSuitUploads MobileSuitUpload[]
   productLineLogos  ProductLine[]
@@ -240,4 +245,231 @@ model MobileSuitUpload {
 
   @@unique([mobileSuitId, uploadId])
   @@map("mobile_suit_uploads")
+}
+
+// User model for Clerk integration
+model User {
+  id        String   @id // Clerk user ID
+  email     String   @unique
+  username  String?  @unique
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+  avatarUrl String?
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  collections   UserKitCollection[]
+  builds        Build[]
+  reviews       Review[]
+  store         UserStore?
+  uploads       Upload[]            @relation("UploadedBy")
+  buildComments BuildComment[]
+
+  @@map("users")
+}
+
+// Collection status enum
+enum CollectionStatus {
+  WISHLIST
+  BACKLOG
+  BUILT
+}
+
+// User kit collections (wishlist, backlog, built, starred)
+model UserKitCollection {
+  id        String           @id @default(cuid())
+  userId    String
+  kitId     String
+  status    CollectionStatus
+  notes     String?
+  addedAt   DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit  Kit  @relation(fields: [kitId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kitId])
+  @@index([userId])
+  @@index([kitId])
+  @@index([status])
+  @@index([userId, status])
+  @@map("user_kit_collections")
+}
+
+// Review categories enum
+enum ReviewCategory {
+  BUILD_QUALITY_ENGINEERING
+  ARTICULATION_POSEABILITY
+  DETAIL_ACCURACY
+  AESTHETICS_PROPORTIONS
+  ACCESSORIES_GIMMICKS
+  VALUE_EXPERIENCE
+}
+
+// Main review model
+model Review {
+  id           String   @id @default(cuid())
+  userId       String
+  kitId        String
+  title        String?
+  content      String?
+  overallScore Float // Auto-calculated average of category scores (not user input)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit            Kit           @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  categoryScores ReviewScore[]
+
+  @@unique([userId, kitId]) // One review per user per kit
+  @@index([kitId])
+  @@index([userId])
+  @@index([overallScore])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+// Individual category scores
+model ReviewScore {
+  id       String         @id @default(cuid())
+  reviewId String
+  category ReviewCategory
+  score    Int // 1-10 scale
+  notes    String?
+
+  // Relations
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewId, category])
+  @@map("review_scores")
+}
+
+// Build status enum
+enum BuildStatus {
+  PLANNING
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+}
+
+// Main build model
+model Build {
+  id          String      @id @default(cuid())
+  userId      String
+  kitId       String
+  title       String
+  description String?
+  status      BuildStatus @default(PLANNING)
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit        Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  milestones BuildMilestone[]
+  comments   BuildComment[]
+
+  @@index([userId])
+  @@index([kitId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("builds")
+}
+
+// Build milestone types
+enum MilestoneType {
+  ACQUISITION
+  PLANNING
+  BUILD
+  PAINTING
+  PANEL_LINING
+  DECALS
+  TOPCOAT
+  PHOTOGRAPHY
+  COMPLETION
+}
+
+// Build milestones for progress tracking
+model BuildMilestone {
+  id          String        @id @default(cuid())
+  buildId     String
+  type        MilestoneType
+  title       String
+  description String?
+  imageUrls   String[]      @default([])
+  completedAt DateTime?
+  order       Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  @@map("build_milestones")
+}
+
+// Build comments for community engagement
+model BuildComment {
+  id        String   @id @default(cuid())
+  buildId   String
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("build_comments")
+}
+
+// User store model
+model UserStore {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  name        String
+  description String?
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user     User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listings MarketplaceListing[]
+
+  @@map("user_stores")
+}
+
+// Marketplace listings
+model MarketplaceListing {
+  id          String   @id @default(cuid())
+  storeId     String
+  kitId       String
+  title       String
+  description String?
+  price       Int // Price in cents
+  currency    String   @default("JPY")
+  imageUrls   String[] @default([])
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  store UserStore @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  kit   Kit       @relation(fields: [kitId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+  @@index([kitId])
+  @@index([available])
+  @@index([price])
+  @@index([createdAt])
+  @@map("marketplace_listings")
 }
