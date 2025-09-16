@@ -82,11 +82,13 @@ export async function getFilteredKits(filters: KitFilters = {}) {
         series: {
           select: {
             name: true,
+            slug: true,
           },
         },
         releaseType: {
           select: {
             name: true,
+            slug: true,
           },
         },
         mobileSuits: {
@@ -142,11 +144,13 @@ export async function getKitBySlug(slug: string) {
         series: {
           select: {
             name: true,
+            slug: true,
           },
         },
         releaseType: {
           select: {
             name: true,
+            slug: true,
           },
         },
         baseKit: {
@@ -273,7 +277,9 @@ export async function getKitBySlug(slug: string) {
         logo: kit.productLine.logo,
       } : null,
       series: kit.series?.name,
+      seriesSlug: kit.series?.slug,
       releaseType: kit.releaseType?.name,
+      releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit,
       variants: kit.variants,
       mobileSuits: kit.mobileSuits.map(ms => ({

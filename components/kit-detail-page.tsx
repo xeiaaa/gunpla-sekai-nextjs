@@ -40,7 +40,9 @@ interface KitDetailPageProps {
       logo?: string | null;
     } | null;
     series?: string | null;
+    seriesSlug?: string | null;
     releaseType?: string | null;
+    releaseTypeSlug?: string | null;
     baseKit?: {
       id: string;
       name: string;
@@ -244,7 +246,13 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">Series:</span>
-                    <span className="font-medium">{kit.series}</span>
+                    {kit.seriesSlug ? (
+                      <Link href={`/series/${kit.seriesSlug}`} className="font-medium text-primary hover:underline">
+                        {kit.series}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">{kit.series}</span>
+                    )}
                   </div>
                 )}
 
@@ -252,7 +260,13 @@ export function KitDetailPage({ kit }: KitDetailPageProps) {
                   <div className="flex items-center gap-2">
                     <Tag className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">Release Type:</span>
-                    <span className="font-medium">{kit.releaseType}</span>
+                    {kit.releaseTypeSlug ? (
+                      <Link href={`/release-types/${kit.releaseTypeSlug}`} className="font-medium text-primary hover:underline">
+                        {kit.releaseType}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">{kit.releaseType}</span>
+                    )}
                   </div>
                 )}
               </div>
