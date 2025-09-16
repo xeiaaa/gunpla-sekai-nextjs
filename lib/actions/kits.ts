@@ -125,6 +125,95 @@ export async function getFilteredKits(filters: KitFilters = {}) {
   }
 }
 
+export async function getAllKits() {
+  try {
+    const kits = await prisma.kit.findMany({
+      include: {
+        grade: {
+          select: {
+            name: true,
+          },
+        },
+        productLine: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        series: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        mobileSuits: {
+          include: {
+            mobileSuit: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            mobileSuits: true,
+          },
+        },
+      },
+      orderBy: [
+        { name: "asc" },
+      ],
+    });
+
+    return kits.map(kit => ({
+      id: kit.id,
+      name: kit.name,
+      slug: kit.slug,
+      number: kit.number,
+      variant: kit.variant,
+      releaseDate: kit.releaseDate,
+      priceYen: kit.priceYen,
+      boxArt: kit.boxArt,
+      scrapedImages: kit.scrapedImages,
+      grade: kit.grade.name,
+      productLine: kit.productLine,
+      series: kit.series,
+      mobileSuitsCount: kit._count.mobileSuits,
+      mobileSuits: kit.mobileSuits.map(ms => ms.mobileSuit.name),
+    }));
+  } catch (error) {
+    console.error('Error fetching all kits:', error);
+    return [];
+  }
+}
+
+export async function updateKitProductLine(kitIds: string[], productLineId: string | null) {
+  try {
+    const result = await prisma.kit.updateMany({
+      where: {
+        id: { in: kitIds },
+      },
+      data: {
+        productLineId: productLineId,
+      },
+    });
+
+    return {
+      success: true,
+      updatedCount: result.count,
+    };
+  } catch (error) {
+    console.error('Error updating kit product lines:', error);
+    return {
+      success: false,
+      error: 'Failed to update kit product lines',
+    };
+  }
+}
+
 export async function getKitBySlug(slug: string) {
   try {
     const kit = await prisma.kit.findUnique({
