@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { KitImage } from "@/components/kit-image";
 import { CollectionControls } from "@/components/collection-controls";
+import { ReviewSection } from "@/components/review-section";
 import {
   Calendar,
   DollarSign,
@@ -12,10 +13,7 @@ import {
   ExternalLink,
   ArrowLeft,
   Package,
-  Users,
-  Image as ImageIcon,
-  FileText,
-  Download
+  Users
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -432,6 +430,13 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
               </CardContent>
             </Card>
           )}
+
+          {/* Reviews */}
+          <ReviewSection
+            kitId={kit.id}
+            kitName={kit.name}
+            kitSlug={kit.slug || kit.id}
+          />
 
           {/* Uploads */}
           {kit.uploads.length > 0 && (
