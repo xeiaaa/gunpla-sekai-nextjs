@@ -70,14 +70,70 @@
       {
         "id": 3,
         "title": "Build Core Kit Listing and Display Components",
-        "description": "Create responsive kit listing pages with basic filtering and kit detail pages",
-        "details": "Build the fundamental UI components for displaying kits including list views, card components, and detail pages. This validates the core data model and establishes UI patterns.",
+        "description": "Create responsive kit listing pages with basic filtering and complete kit detail pages",
+        "details": "Build the fundamental UI components for displaying kits including list views, card components, and detail pages. This validates the core data model and establishes UI patterns. \n\nKit Detail Pages:\n- Show full kit information (number, grade, product line, release type, price, box art, notes).\n- Display mobile suits related to the kit (with image and series).\n- Show Base Kit if baseKitId is present.\n- Show Variants if the kit is a baseKit for other kits.\n- Show Other Variants if a kit has a baseKitId (find sibling kits with the same baseKitId).\n\nNavigation Pages:\n- /timelines → show all timelines.\n- /timelines/[slug] → show timeline details and all series under it.\n- /series/[slug] → show series details and all mobile suits under it.\n- /mobile-suits/[slug] → show the related kits.\n- /grades → show all grades.\n- /grades/[slug] → show grade details and all product lines related to it.\n- /product-lines/[slug] → show product line details.\n- /release-type/[slug] → show release type details and analytics of kits (e.g. 8 kits released: 5 MG, 3 HG).",
         "priority": "high",
         "status": "pending",
         "dependencies": [
           "1"
         ],
-        "testStrategy": "Component tests for all UI elements, responsive design tests, accessibility tests"
+        "testStrategy": "Component tests for all UI elements, responsive design tests, accessibility tests, relationship rendering tests (base kit/variants/other variants), navigation and routing tests",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Enhance Kit Cards",
+            "description": "Enhance existing kit cards with grade/product line badges, release date, price, wishlist button, hover states",
+            "details": "Improve the existing kit cards in the listing page to show more information and better visual design. Add grade and product line badges, display release date and price, add wishlist functionality, and implement hover states for better user interaction.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 2,
+            "title": "Build Kit Detail Pages",
+            "description": "Create comprehensive kit detail pages showing full kit info, related mobile suits, base kit relationships, variants, other variants, and related uploads",
+            "details": "Build individual kit detail pages that serve as the central hub for all kit-related information. Display complete kit metadata, show relationships to mobile suits with images and series info, display base kit relationships, show variants and other variants, and include related uploads like box art, manuals, runners, prototypes, and product shots.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 3,
+            "title": "Create Universe/Hierarchy Browse Pages",
+            "description": "Create timeline, series, and mobile suit browsing pages (/timelines, /timelines/[slug], /series/[slug], /mobile-suits/[slug])",
+            "details": "Build the hierarchical browsing system that allows users to explore kits through the universe structure. Create timeline listing page, individual timeline pages showing all series, series pages showing all mobile suits, and mobile suit pages showing all related kits. This provides intuitive navigation through the Gundam universe hierarchy.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 4,
+            "title": "Create Grade/Product Line/Release Type Browse Pages",
+            "description": "Create grade, product line, and release type browsing pages (/grades, /grades/[slug], /product-lines/[slug], /release-type/[slug])",
+            "details": "Build browsing pages for different kit categorization systems. Create grade listing page, individual grade pages showing related product lines, product line pages showing related kits, and release type pages with analytics (e.g., \"8 kits released: 5 MG, 3 HG\"). This provides alternative ways to discover kits beyond the universe hierarchy.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 5,
+            "title": "Add Navigation Between Related Kits",
+            "description": "Add related kits sections, navigation buttons, and cross-linking between related kits",
+            "details": "Implement navigation features that help users discover related kits. Add \"Related Kits\" sections in detail pages, implement navigation buttons (e.g., \"Next Kit / Previous Kit\" in listings), and create cross-linking from mobile suit pages to related kits. This improves user experience by making it easy to explore related content.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 6,
+            "title": "Implement Comprehensive Testing",
+            "description": "Component tests, responsive design tests, relationship rendering tests, and routing tests for all new pages",
+            "details": "Create comprehensive test coverage for all the new kit browsing components and pages. Include component tests for kit cards, detail pages, and navigation components. Add responsive design tests for mobile, tablet, and desktop views. Implement relationship rendering tests for base kit, variants, and other variants functionality. Create routing tests for all new pages to ensure proper navigation and data loading.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          }
+        ]
       },
       {
         "id": 4,
@@ -363,7 +419,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T01:33:18.192Z"
+      "updated": "2025-09-16T02:31:08.231Z"
     }
   }
 }

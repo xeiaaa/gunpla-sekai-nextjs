@@ -2,10 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Filter, X, RotateCcw } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
-import { KitImage } from "@/components/kit-image";
+import { KitCard } from "@/components/kit-card";
 import { getFilterData } from "@/lib/actions/filters";
 import { getFilteredKits } from "@/lib/actions/kits";
 
@@ -47,6 +46,7 @@ export default function KitsPage() {
   const [selectedReleaseTypes, setSelectedReleaseTypes] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("relevance");
   const [order, setOrder] = useState("most-relevant");
+  const [wishlistedKits, setWishlistedKits] = useState<Set<string>>(new Set());
 
   const loadKits = useCallback(async () => {
     setLoading(true);
@@ -94,6 +94,18 @@ export default function KitsPage() {
   const applyFilters = () => {
     setIsFilterOpen(false);
     // Kits will be automatically reloaded due to useEffect dependency
+  };
+
+  const handleWishlistToggle = (kitId: string) => {
+    setWishlistedKits(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(kitId)) {
+        newSet.delete(kitId);
+      } else {
+        newSet.add(kitId);
+      }
+      return newSet;
+    });
   };
 
   return (
@@ -259,22 +271,12 @@ export default function KitsPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {kits.map((kit) => (
-              <Card key={kit.id} className="overflow-hidden hover:shadow-lg transition-shadow py-2 gap-2">
-                <KitImage
-                  src={kit.boxArt || ''}
-                  alt={kit.name}
-                  className="aspect-[4/3]"
-                />
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-base mb-2 line-clamp-2">{kit.name}</h3>
-                  <p className="text-xs text-muted-foreground mb-2">
-                    {kit.releaseDate ? new Date(kit.releaseDate).toLocaleDateString() : "TBA"}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-primary">{kit.grade}</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <KitCard
+                key={kit.id}
+                kit={kit}
+                onWishlistToggle={handleWishlistToggle}
+                isWishlisted={wishlistedKits.has(kit.id)}
+              />
             ))}
           </div>
         )}
