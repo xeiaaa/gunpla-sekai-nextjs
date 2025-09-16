@@ -11,6 +11,7 @@ import { getFilteredKits } from "@/lib/actions/kits";
 interface Kit {
   id: string;
   name: string;
+  slug?: string | null;
   number: string;
   variant?: string | null;
   releaseDate?: Date | null;

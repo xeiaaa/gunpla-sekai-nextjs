@@ -93,7 +93,7 @@
             "title": "Build Kit Detail Pages",
             "description": "Create comprehensive kit detail pages showing full kit info, related mobile suits, base kit relationships, variants, other variants, and related uploads",
             "details": "Build individual kit detail pages that serve as the central hub for all kit-related information. Display complete kit metadata, show relationships to mobile suits with images and series info, display base kit relationships, show variants and other variants, and include related uploads like box art, manuals, runners, prototypes, and product shots.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 3
           },
@@ -419,7 +419,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T02:31:08.231Z"
+      "updated": "2025-09-16T02:35:55.674Z"
     }
   }
 }

@@ -105,6 +105,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
     return kits.map(kit => ({
       id: kit.id,
       name: kit.name,
+      slug: kit.slug,
       number: kit.number,
       variant: kit.variant,
       releaseDate: kit.releaseDate,
@@ -119,5 +120,182 @@ export async function getFilteredKits(filters: KitFilters = {}) {
   } catch (error) {
     console.error('Error fetching filtered kits:', error);
     return [];
+  }
+}
+
+export async function getKitBySlug(slug: string) {
+  try {
+    const kit = await prisma.kit.findUnique({
+      where: { slug },
+      include: {
+        grade: {
+          select: {
+            name: true,
+          },
+        },
+        productLine: {
+          select: {
+            name: true,
+            logo: true,
+          },
+        },
+        series: {
+          select: {
+            name: true,
+          },
+        },
+        releaseType: {
+          select: {
+            name: true,
+          },
+        },
+        baseKit: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            number: true,
+            boxArt: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        variants: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            number: true,
+            variant: true,
+            boxArt: true,
+            releaseDate: true,
+            priceYen: true,
+            grade: {
+              select: {
+                name: true,
+              },
+            },
+          },
+          orderBy: {
+            releaseDate: 'asc',
+          },
+        },
+        mobileSuits: {
+          include: {
+            mobileSuit: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                description: true,
+                scrapedImages: true,
+                series: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        uploads: {
+          include: {
+            upload: {
+              select: {
+                id: true,
+                url: true,
+                originalFilename: true,
+                createdAt: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+    });
+
+    if (!kit) {
+      return null;
+    }
+
+    // Fetch other variants (sibling kits that share the same base kit, excluding current kit)
+    let otherVariants: any[] = [];
+    if (kit.baseKitId) {
+      otherVariants = await prisma.kit.findMany({
+        where: {
+          baseKitId: kit.baseKitId,
+          id: {
+            not: kit.id
+          }
+        },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          number: true,
+          variant: true,
+          boxArt: true,
+          releaseDate: true,
+          priceYen: true,
+          grade: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          releaseDate: 'asc',
+        },
+      });
+    }
+
+    return {
+      id: kit.id,
+      name: kit.name,
+      slug: kit.slug,
+      number: kit.number,
+      variant: kit.variant,
+      releaseDate: kit.releaseDate,
+      priceYen: kit.priceYen,
+      region: kit.region,
+      boxArt: kit.boxArt,
+      notes: kit.notes,
+      manualLinks: kit.manualLinks,
+      scrapedImages: kit.scrapedImages,
+      grade: kit.grade.name,
+      productLine: kit.productLine ? {
+        name: kit.productLine.name,
+        logo: kit.productLine.logo,
+      } : null,
+      series: kit.series?.name,
+      releaseType: kit.releaseType?.name,
+      baseKit: kit.baseKit,
+      variants: kit.variants,
+      mobileSuits: kit.mobileSuits.map(ms => ({
+        id: ms.mobileSuit.id,
+        name: ms.mobileSuit.name,
+        slug: ms.mobileSuit.slug,
+        description: ms.mobileSuit.description,
+        scrapedImages: ms.mobileSuit.scrapedImages,
+        series: ms.mobileSuit.series?.name,
+      })),
+      uploads: kit.uploads.map(u => ({
+        id: u.upload.id,
+        url: u.upload.url,
+        type: u.type,
+        title: u.caption || u.upload.originalFilename,
+        description: u.caption,
+        createdAt: u.upload.createdAt,
+      })),
+      otherVariants: otherVariants,
+    };
+  } catch (error) {
+    console.error('Error fetching kit by slug:', error);
+    return null;
   }
 }

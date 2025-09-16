@@ -6,11 +6,13 @@ import { KitImage } from "@/components/kit-image";
 import { Button } from "@/components/ui/button";
 import { Heart, Calendar, DollarSign, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface KitCardProps {
   kit: {
     id: string;
     name: string;
+    slug?: string | null;
     number: string;
     variant?: string | null;
     releaseDate?: Date | null;
@@ -54,7 +56,7 @@ export function KitCard({
     onWishlistToggle?.(kit.id);
   };
 
-  return (
+  const cardContent = (
     <Card
       className={cn(
         "group relative overflow-hidden transition-all duration-300 cursor-pointer",
@@ -174,4 +176,15 @@ export function KitCard({
       </CardContent>
     </Card>
   );
+
+  // If kit has a slug, wrap in Link, otherwise return card directly
+  if (kit.slug) {
+    return (
+      <Link href={`/kits/${kit.slug}`} className="block">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 }
