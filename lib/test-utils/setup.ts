@@ -24,7 +24,6 @@ export const createTestData = {
       data: {
         id: "test-user-1",
         email: "test@example.com",
-        name: "Test User",
         ...overrides,
       },
     });
