@@ -183,7 +183,47 @@
         "dependencies": [
           "6"
         ],
-        "testStrategy": "Profile display tests, privacy setting tests, performance tests for large collections"
+        "testStrategy": "Profile display tests, privacy setting tests, performance tests for large collections",
+        "subtasks": [
+          {
+            "id": 2,
+            "title": "Create Profile Edit Page",
+            "description": "Build /settings/profile route for users to edit their profile details and privacy settings",
+            "details": "- Route: /settings/profile (or /profile/edit)\n- Change avatar functionality\n- Edit bio, location, preferences\n- Privacy settings (make profile public/private)\n- Form validation and error handling",
+            "status": "done",
+            "dependencies": [
+              "7.1"
+            ],
+            "parentTaskId": 7
+          },
+          {
+            "id": 1,
+            "title": "Create Public Profile Page",
+            "description": "Build /users/[username] route with user info, collection stats, public builds gallery, and reviews",
+            "details": "- Route: /users/[username]\n- Display user info (avatar, username, bio, join date)\n- Show collection stats (wishlist, backlog, built counts)\n- Public builds gallery (latest 3-5 builds)\n- Reviews given by this user\n- Read-only presentation of collection data",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 3,
+            "title": "Create User Builds Page",
+            "description": "Build /users/[username]/builds route for dedicated build gallery browsing",
+            "details": "- Route: /users/[username]/builds\n- Dedicated page to browse all user builds (like a gallery)\n- Public profile might only show latest 3-5 builds; this page shows all\n- Build filtering and sorting options\n- Pagination for large build collections",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 4,
+            "title": "Create User Reviews Page",
+            "description": "Build /users/[username]/reviews route to show all reviews written by the user",
+            "details": "- Route: /users/[username]/reviews\n- Show all reviews written by that user\n- Review history and statistics\n- Review filtering and sorting\n- Link back to reviewed kits",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 7
+          }
+        ]
       },
       {
         "id": 8,
@@ -432,7 +472,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-16T07:25:31.748Z"
+      "updated": "2025-09-17T08:20:02.080Z"
     }
   }
 }

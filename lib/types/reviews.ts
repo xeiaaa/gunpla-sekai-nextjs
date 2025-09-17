@@ -26,6 +26,7 @@ export interface ReviewWithDetails {
     firstName?: string;
     lastName?: string;
     imageUrl?: string;
+    username?: string;
   };
   categoryScores: CategoryScore[];
 }

@@ -20,11 +20,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.1
+ * Prisma Client JS version: 6.16.0
  * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.16.1",
+  client: "6.16.0",
   engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
@@ -268,7 +268,20 @@ exports.Prisma.UserScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   isAdmin: 'isAdmin',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  bio: 'bio',
+  instagramUrl: 'instagramUrl',
+  twitterUrl: 'twitterUrl',
+  youtubeUrl: 'youtubeUrl',
+  portfolioUrl: 'portfolioUrl',
+  bannerImageUrl: 'bannerImageUrl',
+  themeColor: 'themeColor',
+  isPublic: 'isPublic',
+  showCollections: 'showCollections',
+  showBuilds: 'showBuilds',
+  showActivity: 'showActivity',
+  showBadges: 'showBadges',
+  emailNotifications: 'emailNotifications'
 };
 
 exports.Prisma.UserKitCollectionScalarFieldEnum = {

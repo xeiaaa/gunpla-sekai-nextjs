@@ -588,7 +588,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.1
+   * Prisma Client JS version: 6.16.0
    * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
@@ -17459,6 +17459,19 @@ export namespace Prisma {
     isAdmin: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
+    instagramUrl: string | null
+    twitterUrl: string | null
+    youtubeUrl: string | null
+    portfolioUrl: string | null
+    bannerImageUrl: string | null
+    themeColor: string | null
+    isPublic: boolean | null
+    showCollections: boolean | null
+    showBuilds: boolean | null
+    showActivity: boolean | null
+    showBadges: boolean | null
+    emailNotifications: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -17472,6 +17485,19 @@ export namespace Prisma {
     isAdmin: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
+    instagramUrl: string | null
+    twitterUrl: string | null
+    youtubeUrl: string | null
+    portfolioUrl: string | null
+    bannerImageUrl: string | null
+    themeColor: string | null
+    isPublic: boolean | null
+    showCollections: boolean | null
+    showBuilds: boolean | null
+    showActivity: boolean | null
+    showBadges: boolean | null
+    emailNotifications: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -17485,6 +17511,19 @@ export namespace Prisma {
     isAdmin: number
     createdAt: number
     updatedAt: number
+    bio: number
+    instagramUrl: number
+    twitterUrl: number
+    youtubeUrl: number
+    portfolioUrl: number
+    bannerImageUrl: number
+    themeColor: number
+    isPublic: number
+    showCollections: number
+    showBuilds: number
+    showActivity: number
+    showBadges: number
+    emailNotifications: number
     _all: number
   }
 
@@ -17500,6 +17539,19 @@ export namespace Prisma {
     isAdmin?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    instagramUrl?: true
+    twitterUrl?: true
+    youtubeUrl?: true
+    portfolioUrl?: true
+    bannerImageUrl?: true
+    themeColor?: true
+    isPublic?: true
+    showCollections?: true
+    showBuilds?: true
+    showActivity?: true
+    showBadges?: true
+    emailNotifications?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -17513,6 +17565,19 @@ export namespace Prisma {
     isAdmin?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    instagramUrl?: true
+    twitterUrl?: true
+    youtubeUrl?: true
+    portfolioUrl?: true
+    bannerImageUrl?: true
+    themeColor?: true
+    isPublic?: true
+    showCollections?: true
+    showBuilds?: true
+    showActivity?: true
+    showBadges?: true
+    emailNotifications?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -17526,6 +17591,19 @@ export namespace Prisma {
     isAdmin?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    instagramUrl?: true
+    twitterUrl?: true
+    youtubeUrl?: true
+    portfolioUrl?: true
+    bannerImageUrl?: true
+    themeColor?: true
+    isPublic?: true
+    showCollections?: true
+    showBuilds?: true
+    showActivity?: true
+    showBadges?: true
+    emailNotifications?: true
     _all?: true
   }
 
@@ -17612,6 +17690,19 @@ export namespace Prisma {
     isAdmin: boolean
     createdAt: Date
     updatedAt: Date
+    bio: string | null
+    instagramUrl: string | null
+    twitterUrl: string | null
+    youtubeUrl: string | null
+    portfolioUrl: string | null
+    bannerImageUrl: string | null
+    themeColor: string | null
+    isPublic: boolean
+    showCollections: boolean
+    showBuilds: boolean
+    showActivity: boolean
+    showBadges: boolean
+    emailNotifications: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -17642,6 +17733,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    instagramUrl?: boolean
+    twitterUrl?: boolean
+    youtubeUrl?: boolean
+    portfolioUrl?: boolean
+    bannerImageUrl?: boolean
+    themeColor?: boolean
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: boolean | User$collectionsArgs<ExtArgs>
     builds?: boolean | User$buildsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
@@ -17662,6 +17766,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    instagramUrl?: boolean
+    twitterUrl?: boolean
+    youtubeUrl?: boolean
+    portfolioUrl?: boolean
+    bannerImageUrl?: boolean
+    themeColor?: boolean
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17675,6 +17792,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    instagramUrl?: boolean
+    twitterUrl?: boolean
+    youtubeUrl?: boolean
+    portfolioUrl?: boolean
+    bannerImageUrl?: boolean
+    themeColor?: boolean
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -17688,9 +17818,22 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    instagramUrl?: boolean
+    twitterUrl?: boolean
+    youtubeUrl?: boolean
+    portfolioUrl?: boolean
+    bannerImageUrl?: boolean
+    themeColor?: boolean
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "firstName" | "lastName" | "imageUrl" | "avatarUrl" | "isAdmin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "firstName" | "lastName" | "imageUrl" | "avatarUrl" | "isAdmin" | "createdAt" | "updatedAt" | "bio" | "instagramUrl" | "twitterUrl" | "youtubeUrl" | "portfolioUrl" | "bannerImageUrl" | "themeColor" | "isPublic" | "showCollections" | "showBuilds" | "showActivity" | "showBadges" | "emailNotifications", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     collections?: boolean | User$collectionsArgs<ExtArgs>
     builds?: boolean | User$buildsArgs<ExtArgs>
@@ -17724,6 +17867,19 @@ export namespace Prisma {
       isAdmin: boolean
       createdAt: Date
       updatedAt: Date
+      bio: string | null
+      instagramUrl: string | null
+      twitterUrl: string | null
+      youtubeUrl: string | null
+      portfolioUrl: string | null
+      bannerImageUrl: string | null
+      themeColor: string | null
+      isPublic: boolean
+      showCollections: boolean
+      showBuilds: boolean
+      showActivity: boolean
+      showBadges: boolean
+      emailNotifications: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -18163,6 +18319,19 @@ export namespace Prisma {
     readonly isAdmin: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly instagramUrl: FieldRef<"User", 'String'>
+    readonly twitterUrl: FieldRef<"User", 'String'>
+    readonly youtubeUrl: FieldRef<"User", 'String'>
+    readonly portfolioUrl: FieldRef<"User", 'String'>
+    readonly bannerImageUrl: FieldRef<"User", 'String'>
+    readonly themeColor: FieldRef<"User", 'String'>
+    readonly isPublic: FieldRef<"User", 'Boolean'>
+    readonly showCollections: FieldRef<"User", 'Boolean'>
+    readonly showBuilds: FieldRef<"User", 'Boolean'>
+    readonly showActivity: FieldRef<"User", 'Boolean'>
+    readonly showBadges: FieldRef<"User", 'Boolean'>
+    readonly emailNotifications: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -28038,7 +28207,20 @@ export namespace Prisma {
     avatarUrl: 'avatarUrl',
     isAdmin: 'isAdmin',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    bio: 'bio',
+    instagramUrl: 'instagramUrl',
+    twitterUrl: 'twitterUrl',
+    youtubeUrl: 'youtubeUrl',
+    portfolioUrl: 'portfolioUrl',
+    bannerImageUrl: 'bannerImageUrl',
+    themeColor: 'themeColor',
+    isPublic: 'isPublic',
+    showCollections: 'showCollections',
+    showBuilds: 'showBuilds',
+    showActivity: 'showActivity',
+    showBadges: 'showBadges',
+    emailNotifications: 'emailNotifications'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -29295,6 +29477,19 @@ export namespace Prisma {
     isAdmin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
+    instagramUrl?: StringNullableFilter<"User"> | string | null
+    twitterUrl?: StringNullableFilter<"User"> | string | null
+    youtubeUrl?: StringNullableFilter<"User"> | string | null
+    portfolioUrl?: StringNullableFilter<"User"> | string | null
+    bannerImageUrl?: StringNullableFilter<"User"> | string | null
+    themeColor?: StringNullableFilter<"User"> | string | null
+    isPublic?: BoolFilter<"User"> | boolean
+    showCollections?: BoolFilter<"User"> | boolean
+    showBuilds?: BoolFilter<"User"> | boolean
+    showActivity?: BoolFilter<"User"> | boolean
+    showBadges?: BoolFilter<"User"> | boolean
+    emailNotifications?: BoolFilter<"User"> | boolean
     collections?: UserKitCollectionListRelationFilter
     builds?: BuildListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -29314,6 +29509,19 @@ export namespace Prisma {
     isAdmin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    youtubeUrl?: SortOrderInput | SortOrder
+    portfolioUrl?: SortOrderInput | SortOrder
+    bannerImageUrl?: SortOrderInput | SortOrder
+    themeColor?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    showCollections?: SortOrder
+    showBuilds?: SortOrder
+    showActivity?: SortOrder
+    showBadges?: SortOrder
+    emailNotifications?: SortOrder
     collections?: UserKitCollectionOrderByRelationAggregateInput
     builds?: BuildOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
@@ -29336,6 +29544,19 @@ export namespace Prisma {
     isAdmin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
+    instagramUrl?: StringNullableFilter<"User"> | string | null
+    twitterUrl?: StringNullableFilter<"User"> | string | null
+    youtubeUrl?: StringNullableFilter<"User"> | string | null
+    portfolioUrl?: StringNullableFilter<"User"> | string | null
+    bannerImageUrl?: StringNullableFilter<"User"> | string | null
+    themeColor?: StringNullableFilter<"User"> | string | null
+    isPublic?: BoolFilter<"User"> | boolean
+    showCollections?: BoolFilter<"User"> | boolean
+    showBuilds?: BoolFilter<"User"> | boolean
+    showActivity?: BoolFilter<"User"> | boolean
+    showBadges?: BoolFilter<"User"> | boolean
+    emailNotifications?: BoolFilter<"User"> | boolean
     collections?: UserKitCollectionListRelationFilter
     builds?: BuildListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -29355,6 +29576,19 @@ export namespace Prisma {
     isAdmin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    youtubeUrl?: SortOrderInput | SortOrder
+    portfolioUrl?: SortOrderInput | SortOrder
+    bannerImageUrl?: SortOrderInput | SortOrder
+    themeColor?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    showCollections?: SortOrder
+    showBuilds?: SortOrder
+    showActivity?: SortOrder
+    showBadges?: SortOrder
+    emailNotifications?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -29374,6 +29608,19 @@ export namespace Prisma {
     isAdmin?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    instagramUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twitterUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    youtubeUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    portfolioUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    bannerImageUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    themeColor?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isPublic?: BoolWithAggregatesFilter<"User"> | boolean
+    showCollections?: BoolWithAggregatesFilter<"User"> | boolean
+    showBuilds?: BoolWithAggregatesFilter<"User"> | boolean
+    showActivity?: BoolWithAggregatesFilter<"User"> | boolean
+    showBadges?: BoolWithAggregatesFilter<"User"> | boolean
+    emailNotifications?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type UserKitCollectionWhereInput = {
@@ -31025,6 +31272,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -31044,6 +31304,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -31063,6 +31336,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -31082,6 +31368,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -31101,6 +31400,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -31114,6 +31426,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -31127,6 +31452,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserKitCollectionCreateInput = {
@@ -32647,6 +32985,19 @@ export namespace Prisma {
     isAdmin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
+    instagramUrl?: SortOrder
+    twitterUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    portfolioUrl?: SortOrder
+    bannerImageUrl?: SortOrder
+    themeColor?: SortOrder
+    isPublic?: SortOrder
+    showCollections?: SortOrder
+    showBuilds?: SortOrder
+    showActivity?: SortOrder
+    showBadges?: SortOrder
+    emailNotifications?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -32660,6 +33011,19 @@ export namespace Prisma {
     isAdmin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
+    instagramUrl?: SortOrder
+    twitterUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    portfolioUrl?: SortOrder
+    bannerImageUrl?: SortOrder
+    themeColor?: SortOrder
+    isPublic?: SortOrder
+    showCollections?: SortOrder
+    showBuilds?: SortOrder
+    showActivity?: SortOrder
+    showBadges?: SortOrder
+    emailNotifications?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -32673,6 +33037,19 @@ export namespace Prisma {
     isAdmin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
+    instagramUrl?: SortOrder
+    twitterUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    portfolioUrl?: SortOrder
+    bannerImageUrl?: SortOrder
+    themeColor?: SortOrder
+    isPublic?: SortOrder
+    showCollections?: SortOrder
+    showBuilds?: SortOrder
+    showActivity?: SortOrder
+    showBadges?: SortOrder
+    emailNotifications?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -37075,6 +37452,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -37093,6 +37483,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -37287,6 +37690,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -37305,6 +37721,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -38322,6 +38751,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
@@ -38340,6 +38782,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
@@ -38435,6 +38890,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
@@ -38453,6 +38921,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -38538,6 +39019,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     builds?: BuildCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
@@ -38556,6 +39050,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
@@ -38675,6 +39182,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     builds?: BuildUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
@@ -38693,6 +39213,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -38865,6 +39398,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
@@ -38883,6 +39429,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
@@ -39087,6 +39646,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
@@ -39105,6 +39677,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
@@ -39446,6 +40031,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -39464,6 +40062,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -39539,6 +40150,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -39557,6 +40181,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -39575,6 +40212,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionCreateNestedManyWithoutUserInput
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -39593,6 +40243,19 @@ export namespace Prisma {
     isAdmin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -39663,6 +40326,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -39681,6 +40357,19 @@ export namespace Prisma {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
     collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput

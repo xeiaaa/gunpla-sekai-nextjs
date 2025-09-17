@@ -1,0 +1,17 @@
+-- AlterTable
+ALTER TABLE "public"."users" ADD COLUMN     "bannerImageUrl" TEXT,
+ADD COLUMN     "bio" TEXT,
+ADD COLUMN     "defaultSortOrder" TEXT NOT NULL DEFAULT 'RECENT',
+ADD COLUMN     "emailNotifications" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "instagramUrl" TEXT,
+ADD COLUMN     "isPublic" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "kitReleaseAlerts" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "portfolioUrl" TEXT,
+ADD COLUMN     "preferredTimeline" TEXT,
+ADD COLUMN     "showActivity" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "showBadges" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "showBuilds" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "showCollections" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "themeColor" TEXT,
+ADD COLUMN     "twitterUrl" TEXT,
+ADD COLUMN     "youtubeUrl" TEXT;

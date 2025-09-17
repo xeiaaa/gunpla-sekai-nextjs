@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BuildDetailPublicViewProps {
   build: {
@@ -24,6 +25,7 @@ interface BuildDetailPublicViewProps {
       name: string;
       number: string;
       slug: string | null;
+      boxArt: string | null;
       productLine: {
         name: string;
         grade: {
@@ -115,9 +117,16 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
               <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
                 <div className="flex items-center gap-1">
                   <User className="h-4 w-4" />
-                  <span>{build.user.firstName} {build.user.lastName}</span>
-                  {build.user.username && (
-                    <span className="text-gray-400">(@{build.user.username})</span>
+                  {build.user.username ? (
+                    <Link
+                      href={`/users/${build.user.username}`}
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {build.user.firstName} {build.user.lastName}
+                      <span className="text-gray-400"> (@{build.user.username})</span>
+                    </Link>
+                  ) : (
+                    <span>{build.user.firstName} {build.user.lastName}</span>
                   )}
                 </div>
                 <div className="flex items-center gap-1">

@@ -12,6 +12,26 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.gravatar.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "gravatar.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.clerk.dev",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "clerk.dev",
+        pathname: "/**",
+      },
     ],
   },
 };

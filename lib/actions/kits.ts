@@ -241,6 +241,57 @@ export async function updateKitProductLine(kitIds: string[], productLineId: stri
   }
 }
 
+export async function addKitToMobileSuits(kitIds: string[], mobileSuitIds: string[]) {
+  try {
+    // Create all combinations of kit-mobile suit pairs
+    const kitMobileSuitPairs = kitIds.flatMap(kitId =>
+      mobileSuitIds.map(mobileSuitId => ({
+        kitId,
+        mobileSuitId
+      }))
+    );
+
+    // Use createMany with skipDuplicates to handle existing relationships
+    const result = await prisma.kitMobileSuit.createMany({
+      data: kitMobileSuitPairs,
+      skipDuplicates: true
+    });
+
+    return {
+      success: true,
+      createdCount: result.count
+    };
+  } catch (error) {
+    console.error('Error adding kits to mobile suits:', error);
+    return {
+      success: false,
+      error: 'Failed to add kits to mobile suits'
+    };
+  }
+}
+
+export async function removeKitFromMobileSuits(kitIds: string[], mobileSuitIds: string[]) {
+  try {
+    const result = await prisma.kitMobileSuit.deleteMany({
+      where: {
+        kitId: { in: kitIds },
+        mobileSuitId: { in: mobileSuitIds }
+      }
+    });
+
+    return {
+      success: true,
+      deletedCount: result.count
+    };
+  } catch (error) {
+    console.error('Error removing kits from mobile suits:', error);
+    return {
+      success: false,
+      error: 'Failed to remove kits from mobile suits'
+    };
+  }
+}
+
 export async function getKitBySlug(slug: string) {
   try {
     const kit = await prisma.kit.findUnique({

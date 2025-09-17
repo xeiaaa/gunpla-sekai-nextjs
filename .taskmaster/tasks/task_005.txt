@@ -1,7 +1,7 @@
 # Task ID: 5
 # Title: Create Advanced Filtering System
-# Status: pending
-# Dependencies: 3, 4
+# Status: done
+# Dependencies: 3
 # Priority: medium
 # Description: Build multi-select and range filters for grade, product line, series, timeline, and review scores
 # Details:

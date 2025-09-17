@@ -305,12 +305,39 @@ export async function getRecentBuilds(limit: number = 10) {
   }
 }
 
-export async function getUserBuilds(userId: string, limit: number = 20) {
+export async function getUserBuilds(
+  userId: string,
+  limit: number = 20,
+  status?: string,
+  sort: string = "newest"
+) {
   try {
+    // Build where clause
+    const where: any = { userId };
+    if (status) {
+      where.status = status;
+    }
+
+    // Build orderBy clause
+    let orderBy: any = { createdAt: "desc" };
+    switch (sort) {
+      case "oldest":
+        orderBy = { createdAt: "asc" };
+        break;
+      case "completed":
+        orderBy = { completedAt: "desc" };
+        break;
+      case "status":
+        orderBy = { status: "asc" };
+        break;
+      default:
+        orderBy = { createdAt: "desc" };
+    }
+
     const builds = await prisma.build.findMany({
-      where: { userId },
+      where,
       take: limit,
-      orderBy: { createdAt: "desc" },
+      orderBy,
       include: {
         kit: {
           include: {
@@ -322,6 +349,7 @@ export async function getUserBuilds(userId: string, limit: number = 20) {
             series: true,
           },
         },
+        featuredImage: true,
         milestones: {
           orderBy: { order: "asc" },
           include: {

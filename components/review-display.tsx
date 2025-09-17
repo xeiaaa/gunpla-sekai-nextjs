@@ -11,6 +11,7 @@ import {
   getScoreLabel
 } from "@/lib/types/reviews";
 import { ReviewCategory } from "@/generated/prisma";
+import Link from "next/link";
 
 interface ReviewDisplayProps {
   review: ReviewWithDetails;
@@ -67,9 +68,18 @@ export function ReviewDisplay({
                 />
               )}
               <div>
-                <p className="font-medium">
-                  {review.user?.firstName} {review.user?.lastName}
-                </p>
+                {review.user?.username ? (
+                  <Link
+                    href={`/users/${review.user.username}`}
+                    className="font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {review.user?.firstName} {review.user?.lastName}
+                  </Link>
+                ) : (
+                  <p className="font-medium">
+                    {review.user?.firstName} {review.user?.lastName}
+                  </p>
+                )}
                 <p className="text-sm text-muted-foreground">
                   {formatDate(review.createdAt)}
                   {review.updatedAt.getTime() !== review.createdAt.getTime() && (

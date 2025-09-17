@@ -277,6 +277,21 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Gunpla Sekai specific fields
+  bio                String? // User bio/description
+  instagramUrl       String? // Instagram profile URL
+  twitterUrl         String? // Twitter/X profile URL
+  youtubeUrl         String? // YouTube channel URL
+  portfolioUrl       String? // Personal portfolio/hobby site
+  bannerImageUrl     String? // Profile banner image
+  themeColor         String? // Profile theme color (hex)
+  isPublic           Boolean @default(true) // Profile visibility
+  showCollections    Boolean @default(true) // Show collections publicly
+  showBuilds         Boolean @default(true) // Show builds publicly
+  showActivity       Boolean @default(true) // Show activity feed publicly
+  showBadges         Boolean @default(true) // Show badges publicly
+  emailNotifications Boolean @default(true) // Email notification preferences
+
   // Relations
   collections   UserKitCollection[]
   builds        Build[]

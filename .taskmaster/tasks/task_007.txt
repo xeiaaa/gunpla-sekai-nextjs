@@ -9,3 +9,46 @@ Design and implement user profile pages showing collection statistics, recent ac
 
 # Test Strategy:
 Profile display tests, privacy setting tests, performance tests for large collections
+
+# Subtasks:
+## 2. Create Profile Edit Page [pending]
+### Dependencies: 7.1
+### Description: Build /settings/profile route for users to edit their profile details and privacy settings
+### Details:
+- Route: /settings/profile (or /profile/edit)
+- Change avatar functionality
+- Edit bio, location, preferences
+- Privacy settings (make profile public/private)
+- Form validation and error handling
+
+## 1. Create Public Profile Page [pending]
+### Dependencies: None
+### Description: Build /users/[username] route with user info, collection stats, public builds gallery, and reviews
+### Details:
+- Route: /users/[username]
+- Display user info (avatar, username, bio, join date)
+- Show collection stats (wishlist, backlog, built counts)
+- Public builds gallery (latest 3-5 builds)
+- Reviews given by this user
+- Read-only presentation of collection data
+
+## 3. Create User Builds Page [pending]
+### Dependencies: None
+### Description: Build /users/[username]/builds route for dedicated build gallery browsing
+### Details:
+- Route: /users/[username]/builds
+- Dedicated page to browse all user builds (like a gallery)
+- Public profile might only show latest 3-5 builds; this page shows all
+- Build filtering and sorting options
+- Pagination for large build collections
+
+## 4. Create User Reviews Page [pending]
+### Dependencies: None
+### Description: Build /users/[username]/reviews route to show all reviews written by the user
+### Details:
+- Route: /users/[username]/reviews
+- Show all reviews written by that user
+- Review history and statistics
+- Review filtering and sorting
+- Link back to reviewed kits
+
