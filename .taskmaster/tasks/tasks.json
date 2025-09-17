@@ -493,7 +493,7 @@
             "title": "Refactor Build Info Form to Always-Visible Layout",
             "description": "Move the build editing form from modal/card to always-visible form at the top of the Build Info tab",
             "details": "- Remove \"Edit Build Info\" button from sidebar\n- Create always-visible form in Build Info tab with fields:\n  - Title (text input)\n  - Description (markdown editor for rich build logs)\n  - Status (dropdown: Planning/In Progress/Completed)\n  - Started date (date picker)\n  - Completed date (date picker, only enabled if status = Completed)\n- Implement auto-save or explicit \"Save Changes\" button\n- Add form validation and error handling\n- Ensure proper form state management",
-            "status": "pending",
+            "status": "done",
             "dependencies": [
               "27.1"
             ],
@@ -504,7 +504,7 @@
             "title": "Update Milestone System for Media Library Integration",
             "description": "Refactor milestone components to reference images from the centralized media library instead of individual uploads",
             "details": "- Remove individual upload sections from milestone cards\n- Create image selection interface for milestones that references media library\n- Implement ability to attach multiple images to milestones\n- Add image ordering within milestones\n- Allow images to belong to multiple milestones\n- Update milestone card display to show only selected images\n- Refactor milestone image management logic and state\n- Update database queries and actions for new image relationship model",
-            "status": "pending",
+            "status": "done",
             "dependencies": [
               "27.2"
             ],
@@ -551,7 +551,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-17T14:48:19.527Z"
+      "updated": "2025-09-17T15:52:40.520Z"
     }
   }
 }

@@ -377,3 +377,127 @@ export async function updateMilestoneImage(
     throw new Error("Failed to update milestone image");
   }
 }
+
+// New actions for media library integration
+export async function setMilestoneImages(
+  milestoneId: string,
+  uploadIds: string[]
+) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    // Verify user owns the build
+    const milestone = await prisma.buildMilestone.findFirst({
+      where: {
+        id: milestoneId,
+        build: {
+          userId,
+        },
+      },
+      include: {
+        build: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!milestone) {
+      throw new Error("Milestone not found or unauthorized");
+    }
+
+    // Verify all uploads exist and belong to the build
+    const buildUploads = await prisma.buildUpload.findMany({
+      where: {
+        buildId: milestone.build.id,
+        uploadId: {
+          in: uploadIds,
+        },
+      },
+    });
+
+    if (buildUploads.length !== uploadIds.length) {
+      throw new Error("Some images are not available in the build gallery");
+    }
+
+    // Remove existing milestone images
+    await prisma.buildMilestoneUpload.deleteMany({
+      where: {
+        buildMilestoneId: milestoneId,
+      },
+    });
+
+    // Add new milestone images
+    if (uploadIds.length > 0) {
+      const milestoneImages = uploadIds.map((uploadId, index) => ({
+        buildMilestoneId: milestoneId,
+        uploadId,
+        order: index,
+      }));
+
+      await prisma.buildMilestoneUpload.createMany({
+        data: milestoneImages,
+      });
+    }
+
+    revalidatePath(`/builds/${milestone.build.id}`);
+  } catch (error) {
+    console.error("Error setting milestone images:", error);
+    throw new Error("Failed to set milestone images");
+  }
+}
+
+export async function reorderMilestoneImages(
+  milestoneId: string,
+  uploadIds: string[]
+) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    // Verify user owns the build
+    const milestone = await prisma.buildMilestone.findFirst({
+      where: {
+        id: milestoneId,
+        build: {
+          userId,
+        },
+      },
+      include: {
+        build: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!milestone) {
+      throw new Error("Milestone not found or unauthorized");
+    }
+
+    // Update order for each milestone image
+    const updates = uploadIds.map((uploadId, index) =>
+      prisma.buildMilestoneUpload.updateMany({
+        where: {
+          buildMilestoneId: milestoneId,
+          uploadId,
+        },
+        data: { order: index },
+      })
+    );
+
+    await Promise.all(updates);
+
+    revalidatePath(`/builds/${milestone.build.id}`);
+  } catch (error) {
+    console.error("Error reordering milestone images:", error);
+    throw new Error("Failed to reorder milestone images");
+  }
+}

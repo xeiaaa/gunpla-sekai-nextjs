@@ -1,46 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Star, Check } from "lucide-react";
+import { getBuildMediaItems } from "@/lib/actions/uploads";
+
+interface MediaItem {
+  id: string;
+  uploadId: string;
+  url: string;
+  eagerUrl?: string | null;
+  caption: string;
+  order: number;
+  createdAt: Date;
+  originalFilename: string;
+  size: number;
+  format: string;
+  buildUploadId?: string;
+}
 
 interface FeaturedImageSelectorProps {
-  milestones: Array<{
-    id: string;
-    title: string;
-    uploads: Array<{
-      id: string;
-      caption: string | null;
-      upload: {
-        id: string;
-        url: string;
-        eagerUrl: string | null;
-      };
-    }>;
-  }>;
+  buildId: string;
   currentFeaturedImageId?: string | null;
   onSelect: (uploadId: string | null) => void;
   children: React.ReactNode;
 }
 
 export function FeaturedImageSelector({
-  milestones,
+  buildId,
   currentFeaturedImageId,
   onSelect,
   children,
 }: FeaturedImageSelectorProps) {
   const [open, setOpen] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(currentFeaturedImageId || null);
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Collect all images from all milestones
-  const allImages = milestones.flatMap(milestone =>
-    milestone.uploads.map(upload => ({
-      ...upload,
-      milestoneTitle: milestone.title,
-    }))
-  );
+  // Load media items from build
+  useEffect(() => {
+    const loadMediaItems = async () => {
+      if (!open) return; // Only load when dialog is open
+
+      setLoading(true);
+      try {
+        const uploads = await getBuildMediaItems(buildId);
+        const mediaItems: MediaItem[] = uploads.map((upload) => ({
+          id: upload.id,
+          uploadId: upload.id,
+          url: upload.url,
+          eagerUrl: upload.eagerUrl,
+          caption: upload.caption || "",
+          order: upload.order || 0,
+          createdAt: upload.uploadedAt,
+          originalFilename: upload.originalFilename,
+          size: upload.size,
+          format: upload.format,
+          buildUploadId: upload.buildUploadId,
+        }));
+        setMediaItems(mediaItems);
+      } catch (error) {
+        console.error("Error loading media items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMediaItems();
+  }, [buildId, open]);
 
   const handleConfirm = () => {
     onSelect(selectedImageId);
@@ -63,33 +92,37 @@ export function FeaturedImageSelector({
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto">
-          {allImages.length === 0 ? (
+          {loading ? (
             <div className="text-center py-8 text-gray-500">
-              No images available. Add images to your milestones first.
+              Loading images...
+            </div>
+          ) : mediaItems.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              No images available. Upload images to your build gallery first.
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-              {allImages.map((image) => (
+              {mediaItems.map((image) => (
                 <div
-                  key={image.upload.id}
+                  key={image.id}
                   className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
-                    selectedImageId === image.upload.id
+                    selectedImageId === image.id
                       ? "border-blue-500 ring-2 ring-blue-200"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
-                  onClick={() => setSelectedImageId(image.upload.id)}
+                  onClick={() => setSelectedImageId(image.id)}
                 >
                   <div className="aspect-square relative">
                     <Image
-                      src={image.upload.eagerUrl || image.upload.url}
-                      alt={image.caption || "Build milestone image"}
+                      src={image.eagerUrl || image.url}
+                      alt={image.caption || image.originalFilename}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
 
                     {/* Selection indicator */}
-                    {selectedImageId === image.upload.id && (
+                    {selectedImageId === image.id && (
                       <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1">
                         <Check className="h-3 w-3" />
                       </div>
@@ -97,7 +130,7 @@ export function FeaturedImageSelector({
 
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
-                      {selectedImageId === image.upload.id && (
+                      {selectedImageId === image.id && (
                         <div className="bg-blue-500 text-white rounded-full p-2">
                           <Star className="h-4 w-4 fill-current" />
                         </div>
@@ -108,7 +141,7 @@ export function FeaturedImageSelector({
                   {/* Image info */}
                   <div className="p-2 bg-white">
                     <p className="text-xs text-gray-600 truncate">
-                      {image.milestoneTitle}
+                      {image.originalFilename}
                     </p>
                     {image.caption && (
                       <p className="text-xs text-gray-500 truncate mt-1">

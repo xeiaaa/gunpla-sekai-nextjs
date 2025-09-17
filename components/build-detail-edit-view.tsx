@@ -30,14 +30,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, User, Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List } from "lucide-react";
+import { Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List } from "lucide-react";
 import { format } from "date-fns";
 import { deleteBuild, updateBuild } from "@/lib/actions/builds";
-import { createMilestone, updateMilestone, deleteMilestone, reorderMilestones } from "@/lib/actions/milestones";
+import { createMilestone, updateMilestone, deleteMilestone, reorderMilestones, setMilestoneImages } from "@/lib/actions/milestones";
 import { MilestoneType } from "@/generated/prisma";
-import BuildMilestoneUpload from "./build-milestone-upload";
 import { FeaturedImageSelector } from "./featured-image-selector";
 import BuildMediaLibrary from "./build-media-library";
+import MilestoneImageSelector from "./milestone-image-selector";
 import { cn } from "@/lib/utils";
 
 // Sortable Milestone Item Component
@@ -48,10 +48,9 @@ function SortableMilestoneItem({
   handleUpdateMilestone,
   handleDeleteMilestone,
   handleEditMilestone,
-  onImageAdded,
-  onImageRemoved,
-  onCaptionChange,
-  reorderMode
+  reorderMode,
+  onImagesChange,
+  onLoadingChange
 }: {
   milestone: {
     id: string;
@@ -60,6 +59,7 @@ function SortableMilestoneItem({
     description: string | null;
     completedAt: Date | null;
     order: number;
+    buildId?: string;
     uploads: Array<{
       id: string;
       caption: string | null;
@@ -76,10 +76,17 @@ function SortableMilestoneItem({
   handleUpdateMilestone: (id: string, updates: { title?: string; description?: string; type?: MilestoneType }) => void;
   handleDeleteMilestone: (id: string) => void;
   handleEditMilestone: (id: string) => void;
-  onImageAdded: (milestoneId: string, newImage: { id: string; caption: string; order: number; uploadId?: string; url: string }) => void;
-  onImageRemoved: (milestoneId: string, imageId: string) => void;
-  onCaptionChange: (milestoneId: string, imageId: string, caption: string) => void;
   reorderMode: boolean;
+  onImagesChange: (images: Array<{
+    id: string;
+    uploadId: string;
+    url: string;
+    eagerUrl?: string | null;
+    caption: string;
+    order: number;
+    milestoneImageId?: string;
+  }>) => Promise<void>;
+  onLoadingChange: (loading: boolean) => void;
 }) {
   const {
     attributes,
@@ -265,28 +272,22 @@ function SortableMilestoneItem({
         <p className="text-gray-700 mb-4">{milestone.description}</p>
       )}
 
-      {/* Image Upload Component */}
+      {/* Milestone Image Selector */}
       <div className="mb-4">
-        <BuildMilestoneUpload
+        <MilestoneImageSelector
+          buildId={milestone.buildId || ""}
           milestoneId={milestone.id}
-          existingImages={milestone.uploads.map((upload) => ({
+          selectedImages={milestone.uploads.map((upload) => ({
             id: upload.id,
+            uploadId: upload.upload.id,
             url: upload.upload.eagerUrl || upload.upload.url,
+            eagerUrl: upload.upload.eagerUrl,
             caption: upload.caption || "",
             order: upload.order || 0,
-            uploadId: upload.upload.id,
-            buildMilestoneUploadId: upload.id,
+            milestoneImageId: upload.id,
           }))}
-          isTemporary={false}
-          onImageAdded={(newImage) => {
-            onImageAdded(milestone.id, newImage);
-          }}
-          onImageRemoved={(imageId) => {
-            onImageRemoved(milestone.id, imageId);
-          }}
-          onCaptionChange={(imageId, caption) => {
-            onCaptionChange(milestone.id, imageId, caption);
-          }}
+          onImagesChange={onImagesChange}
+          onLoadingChange={onLoadingChange}
         />
       </div>
     </Card>
@@ -338,6 +339,7 @@ interface BuildDetailEditViewProps {
       description: string | null;
       completedAt: Date | null;
       order: number;
+      buildId?: string;
       uploads: Array<{
         id: string;
         caption: string | null;
@@ -355,11 +357,10 @@ interface BuildDetailEditViewProps {
 export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   const router = useRouter();
   const { userId } = useAuth();
-  const [milestones, setMilestones] = useState(build.milestones);
+  const [milestones, setMilestones] = useState(build.milestones.map(m => ({ ...m, buildId: build.id })));
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingMilestone, setEditingMilestone] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [editingBuild, setEditingBuild] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'milestones'>('info');
@@ -387,6 +388,12 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
     startedAt: build.startedAt ? format(build.startedAt, "yyyy-MM-dd") : "",
     completedAt: build.completedAt ? format(build.completedAt, "yyyy-MM-dd") : "",
   });
+
+  const [formErrors, setFormErrors] = useState<{
+    title?: string;
+    startedAt?: string;
+    completedAt?: string;
+  }>({});
 
   // Drag and drop sensors
   const sensors = useSensors(
@@ -452,19 +459,42 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
     }
   };
 
+  const validateForm = () => {
+    const errors: typeof formErrors = {};
+
+    if (!buildData.title.trim()) {
+      errors.title = "Title is required";
+    }
+
+    if (buildData.startedAt && buildData.completedAt) {
+      const startedDate = new Date(buildData.startedAt);
+      const completedDate = new Date(buildData.completedAt);
+      if (completedDate < startedDate) {
+        errors.completedAt = "Completed date cannot be before started date";
+      }
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleUpdateBuild = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       setLoading(true);
       const updateData = {
-        title: buildData.title,
-        description: buildData.description || undefined,
+        title: buildData.title.trim(),
+        description: buildData.description.trim() || undefined,
         status: buildData.status as "PLANNING" | "IN_PROGRESS" | "COMPLETED" | "ON_HOLD",
         startedAt: buildData.startedAt ? new Date(buildData.startedAt) : null,
         completedAt: buildData.completedAt ? new Date(buildData.completedAt) : null,
       };
 
       await updateBuild(build.id, updateData);
-      setEditingBuild(false);
+      setFormErrors({}); // Clear errors on success
       // Refresh the page to show updated data
       router.refresh();
     } catch (error) {
@@ -505,7 +535,7 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
         order: milestones.length + 1,
       });
 
-      setMilestones([...milestones, createdMilestone]);
+      setMilestones([...milestones, { ...createdMilestone, buildId: build.id }]);
       setNewMilestone({ type: MilestoneType.BUILD, title: "", description: "" });
       setShowAddForm(false);
     } catch (error) {
@@ -544,6 +574,46 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   const handleEditMilestone = (milestoneId: string) => {
     setEditingMilestone(milestoneId);
     setReorderMode(false); // Exit reorder mode when editing
+  };
+
+
+  const handleMilestoneImagesChange = async (milestoneId: string, images: Array<{
+    id: string;
+    uploadId: string;
+    url: string;
+    eagerUrl?: string | null;
+    caption: string;
+    order: number;
+    milestoneImageId?: string;
+  }>) => {
+    try {
+      const uploadIds = images.map(img => img.uploadId);
+      await setMilestoneImages(milestoneId, uploadIds);
+
+      // Update local state to reflect the changes
+      setMilestones(prevMilestones =>
+        prevMilestones.map(m =>
+          m.id === milestoneId
+            ? {
+                ...m,
+                        uploads: images.map((img, index) => ({
+                          id: img.milestoneImageId || img.id,
+                          caption: img.caption,
+                          order: index,
+                          upload: {
+                            id: img.uploadId,
+                            url: img.url,
+                            eagerUrl: img.eagerUrl || null,
+                          }
+                        }))
+              }
+            : m
+        )
+      );
+    } catch (error) {
+      console.error("Error updating milestone images:", error);
+      alert("Failed to update milestone images. Please try again.");
+    }
   };
 
   const handleDragEnd = async (event: DragEndEvent) => {
@@ -618,9 +688,17 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                   <Input
                     id="build-title"
                     value={buildData.title}
-                    onChange={(e) => setBuildData({ ...buildData, title: e.target.value })}
-                    className="text-lg font-semibold"
+                    onChange={(e) => {
+                      setBuildData({ ...buildData, title: e.target.value });
+                      if (formErrors.title) {
+                        setFormErrors({ ...formErrors, title: undefined });
+                      }
+                    }}
+                    className={`text-lg font-semibold ${formErrors.title ? 'border-red-500' : ''}`}
                   />
+                  {formErrors.title && (
+                    <p className="text-sm text-red-600 mt-1">{formErrors.title}</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="build-description">Description</Label>
@@ -637,7 +715,18 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                     <Label htmlFor="build-status">Status</Label>
                     <Select
                       value={buildData.status}
-                      onValueChange={(value) => setBuildData({ ...buildData, status: value })}
+                      onValueChange={(value) => {
+                        const newBuildData = { ...buildData, status: value };
+                        // Clear completed date if status is not COMPLETED
+                        if (value !== "COMPLETED") {
+                          newBuildData.completedAt = "";
+                        }
+                        setBuildData(newBuildData);
+                        // Clear any completed date errors when status changes
+                        if (formErrors.completedAt) {
+                          setFormErrors({ ...formErrors, completedAt: undefined });
+                        }
+                      }}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -665,9 +754,18 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                       id="build-completed"
                       type="date"
                       value={buildData.completedAt}
-                      onChange={(e) => setBuildData({ ...buildData, completedAt: e.target.value })}
+                      onChange={(e) => {
+                        setBuildData({ ...buildData, completedAt: e.target.value });
+                        if (formErrors.completedAt) {
+                          setFormErrors({ ...formErrors, completedAt: undefined });
+                        }
+                      }}
                       disabled={buildData.status !== "COMPLETED"}
+                      className={formErrors.completedAt ? 'border-red-500' : ''}
                     />
+                    {formErrors.completedAt && (
+                      <p className="text-sm text-red-600 mt-1">{formErrors.completedAt}</p>
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-2">
@@ -846,55 +944,8 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                         handleDeleteMilestone={handleDeleteMilestone}
                         handleEditMilestone={handleEditMilestone}
                         reorderMode={reorderMode}
-                        onImageAdded={(milestoneId, newImage) => {
-                          setMilestones(prevMilestones =>
-                            prevMilestones.map(m =>
-                              m.id === milestoneId
-                                ? {
-                                    ...m,
-                                    uploads: [...m.uploads, {
-                                      id: newImage.id,
-                                      caption: newImage.caption,
-                                      order: newImage.order,
-                                      upload: {
-                                        id: newImage.uploadId || "",
-                                        url: newImage.url,
-                                        eagerUrl: newImage.url,
-                                      }
-                                    }]
-                                  }
-                                : m
-                            )
-                          );
-                        }}
-                        onImageRemoved={(milestoneId, imageId) => {
-                          setMilestones(prevMilestones =>
-                            prevMilestones.map(m =>
-                              m.id === milestoneId
-                                ? {
-                                    ...m,
-                                    uploads: m.uploads.filter(upload => upload.id !== imageId)
-                                  }
-                                : m
-                            )
-                          );
-                        }}
-                        onCaptionChange={(milestoneId, imageId, caption) => {
-                          setMilestones(prevMilestones =>
-                            prevMilestones.map(m =>
-                              m.id === milestoneId
-                                ? {
-                                    ...m,
-                                    uploads: m.uploads.map(upload =>
-                                      upload.id === imageId
-                                        ? { ...upload, caption }
-                                        : upload
-                                    )
-                                  }
-                                : m
-                            )
-                          );
-                        }}
+                        onImagesChange={(images) => handleMilestoneImagesChange(milestone.id, images)}
+                        onLoadingChange={() => {}} // No-op since we're not using card-level loading
                       />
                     ))}
                   </div>
@@ -913,17 +964,8 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          {/* <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="mb-4"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </Button> */}
-
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div className="flex-1">
+            {/* <div className="flex-1">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">{buildData.title}</h1>
                 <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
@@ -943,23 +985,8 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                   <p className="mt-4 text-gray-700">{buildData.description}</p>
                 )}
               </div>
-            </div>
+            </div> */}
 
-            <div className="flex items-center gap-3">
-              <Badge className={`${getStatusColor(buildData.status)} flex items-center gap-1`}>
-                {getStatusIcon(buildData.status)}
-                {buildData.status.replace("_", " ")}
-              </Badge>
-
-              <Button
-                onClick={() => router.push(`/builds/${build.id}`)}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <Eye className="h-4 w-4" />
-                View Public
-              </Button>
-            </div>
           </div>
         </div>
 
@@ -1002,12 +1029,20 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                 <h3 className="text-lg font-semibold mb-3">Build Stats</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Status</span>
+                    <Badge className={`${getStatusColor(buildData.status)} flex items-center gap-1`}>
+                      {getStatusIcon(buildData.status)}
+                      {buildData.status.replace("_", " ")}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Total Milestones</span>
                     <span className="font-semibold text-gray-900">{milestones.length}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Images</span>
                     <span className="font-semibold text-gray-900">
+                      {/* This will be updated to show media library count */}
                       {milestones.reduce((total, milestone) => total + milestone.uploads.length, 0)}
                     </span>
                   </div>
@@ -1034,8 +1069,17 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
               <Card className="p-5">
                 <h3 className="text-lg font-semibold mb-3">Build Actions</h3>
                 <div className="space-y-2">
+                  <Button
+                    onClick={() => router.push(`/builds/${build.id}`)}
+                    variant="outline"
+                    className="w-full flex items-center justify-center gap-2 h-9"
+                  >
+                    <Eye className="h-4 w-4" />
+                    View Public
+                  </Button>
+
                   <FeaturedImageSelector
-                    milestones={milestones}
+                    buildId={build.id}
                     currentFeaturedImageId={build.featuredImageId}
                     onSelect={handleUpdateFeaturedImage}
                   >
