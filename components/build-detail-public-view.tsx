@@ -13,6 +13,7 @@ import Link from "next/link";
 import { MarkdownRenderer } from "./ui/markdown-renderer";
 import { LikeButton } from "./like-button";
 import { CommentsSection } from "./comments-section";
+import { ShareButton } from "./share-button";
 
 interface BuildDetailPublicViewProps {
   build: {
@@ -164,6 +165,11 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                       buildId={build.id}
                       initialLikes={build.likes}
                       initialLiked={build.liked}
+                    />
+
+                    <ShareButton
+                      buildId={build.id}
+                      buildTitle={build.title}
                     />
 
                     <Badge className={`${getStatusColor(build.status)} flex items-center gap-1`}>
