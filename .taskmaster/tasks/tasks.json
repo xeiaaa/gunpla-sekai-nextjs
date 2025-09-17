@@ -534,13 +534,92 @@
             "parentTaskId": 27
           }
         ]
+      },
+      {
+        "id": 28,
+        "title": "Implement UI/UX for Likes, Comments, and Sharing on Builds",
+        "description": "Add social engagement features including likes, comments, and sharing functionality to build pages with comprehensive UI/UX design",
+        "details": "🔹 1. Likes (Lightweight Social Feedback)\n\nPurpose: Quick, low-effort way for users to show appreciation.\n\nUI/UX\n\t•\tIcon: Heart ❤️ (outline → filled when liked).\n\t•\tPlacement: Top-right of build card or near build title.\n\t•\tCount: Display total likes next to the heart (132).\n\t•\tInteraction:\n\t•\tTap once → toggles \"like\".\n\t•\tAnimations: small \"pop\" when liking for feedback.\n\t•\tAnonymous view: Show count but require login to like.\n\t•\tHover/tooltip: \"Like this build\".\n\nExample:\n❤️ 24 likes\n\n⸻\n\n🔹 2. Comments (Community Engagement)\n\nPurpose: Encourage discussion, feedback, and connection.\n\nUI/UX\n\t•\tPlacement: Below build milestones or in a tab (\"Comments\").\n\t•\tStructure:\n\t•\tInput box:\n\t•\tPlaceholder: \"Add a comment…\"\n\t•\tSupport markdown or just plain text.\n\t•\tComment list:\n\t•\tAvatar + username\n\t•\tTimestamp (e.g. 2h ago)\n\t•\tText content\n\t•\t(Optional) \"Reply\" → threaded comments, but you could keep it flat for MVP.\n\t•\tModeration tools: User can delete their own comments. Admins can remove any.\n\t•\tSorting:\n\t•\tDefault: newest first.\n\t•\t(Optional later): most liked → top.\n\t•\tEmpty state: \"No comments yet. Be the first to comment!\"\n\n⸻\n\n🔹 3. Sharing (No DB needed)\n\nPurpose: Let users promote builds externally.\n\nUI/UX\n\t•\tButton: \"Share\" (icon: 🔗 or arrow).\n\t•\tPlacement: Top-right corner near \"Like\".\n\t•\tClick → Options:\n\t•\tCopy link → auto-copies /builds/[id] to clipboard with toast \"Link copied!\"\n\t•\tSocial buttons (small icons, optional):\n\t•\tTwitter/X\n\t•\tFacebook\n\t•\tReddit\n\t•\tDiscord (just copy-paste)\n\t•\tNo DB needed since sharing is just link-based.\n\nExample interaction:\nUser clicks Share → Copy Link → small toast in bottom corner:\n✅ \"Build link copied to clipboard!\"\n\n⸻\n\n🔹 Suggested Layout (per Build Page)\n\n```\n[ Title + Author + Dates ]\n\n[ Like ❤️ 24 ]   [ Comment 💬 5 ]   [ Share 🔗 ]\n------------------------------------------------\n| Build Milestones / Gallery / Info Tabs       |\n------------------------------------------------\nComments Section (if tab active):\n- Input box\n- Comment list\n```\n\n✨ This way:\n\t•\tLikes = quick & social.\n\t•\tComments = deeper engagement.\n\t•\tSharing = viral growth, no backend complexity.",
+        "priority": "medium",
+        "status": "pending",
+        "dependencies": [
+          26,
+          27
+        ],
+        "testStrategy": "UI interaction tests for likes/comments/sharing, social engagement functionality tests, comment moderation tests, sharing link validation tests",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Update Database Schema for Likes and Comments",
+            "description": "Add database models and relationships for build likes and comments functionality",
+            "details": "Create new Prisma models for BuildLike and BuildComment:\n\n**BuildLike Model:**\n- id: String @id @default(cuid())\n- buildId: String\n- userId: String\n- createdAt: DateTime @default(now())\n- build: Build @relation(fields: [buildId], references: [id], onDelete: Cascade)\n- user: User @relation(fields: [userId], references: [id], onDelete: Cascade)\n- @@unique([buildId, userId]) // Prevent duplicate likes\n\n**BuildComment Model:**\n- id: String @id @default(cuid())\n- buildId: String\n- userId: String\n- content: String\n- createdAt: DateTime @default(now())\n- updatedAt: DateTime @updatedAt\n- build: Build @relation(fields: [buildId], references: [id], onDelete: Cascade)\n- user: User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n**Update Build Model:**\n- Add likes: BuildLike[] relation\n- Add comments: BuildComment[] relation\n\n**Update User Model:**\n- Add buildLikes: BuildLike[] relation\n- Add buildComments: BuildComment[] relation\n\nRun migration and update Prisma client.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 2,
+            "title": "Implement Like System UI/UX",
+            "description": "Create heart icon component with toggle functionality, count display, and animations",
+            "details": "**LikeButton Component:**\n- Heart icon (outline → filled when liked)\n- Like count display\n- Toggle functionality (like/unlike)\n- Small \"pop\" animation on like\n- Hover tooltip: \"Like this build\"\n- Login requirement for anonymous users\n- Optimistic updates for better UX\n\n**Placement:**\n- Top-right of build card or near build title\n- Consistent positioning across all build views\n\n**API Actions:**\n- toggleBuildLike(buildId: string)\n- getBuildLikes(buildId: string)\n- getUserLikedBuilds(userId: string)\n\n**State Management:**\n- Track like status per build\n- Handle loading states\n- Error handling for failed requests",
+            "status": "done",
+            "dependencies": [
+              "28.1"
+            ],
+            "parentTaskId": 28
+          },
+          {
+            "id": 3,
+            "title": "Implement Comments System UI/UX",
+            "description": "Create comment input, display list, and moderation features",
+            "details": "**CommentInput Component:**\n- Textarea with placeholder: \"Add a comment…\"\n- Markdown support or plain text\n- Submit button with loading state\n- Character limit validation\n- Auto-resize textarea\n\n**CommentList Component:**\n- Display comments with avatar + username\n- Timestamp (e.g. \"2h ago\")\n- Comment content with markdown rendering\n- Delete button for own comments\n- Admin moderation tools\n- Empty state: \"No comments yet. Be the first to comment!\"\n\n**CommentItem Component:**\n- User avatar and username\n- Comment timestamp\n- Comment content\n- Delete/edit actions (if owner)\n- Reply functionality (optional for MVP)\n\n**Placement:**\n- Below build milestones or in \"Comments\" tab\n- Sort by newest first (default)\n\n**API Actions:**\n- createBuildComment(buildId: string, content: string)\n- getBuildComments(buildId: string)\n- deleteBuildComment(commentId: string)\n- updateBuildComment(commentId: string, content: string)",
+            "status": "done",
+            "dependencies": [
+              "28.1"
+            ],
+            "parentTaskId": 28
+          },
+          {
+            "id": 4,
+            "title": "Implement Sharing System",
+            "description": "Create share button with copy link and social media options",
+            "details": "**ShareButton Component:**\n- Share icon (🔗 or arrow)\n- Click opens share options modal/dropdown\n- Copy link functionality\n- Social media buttons (Twitter/X, Facebook, Reddit, Discord)\n- Toast notification: \"Link copied to clipboard!\"\n\n**ShareOptions Component:**\n- Copy link button (primary action)\n- Social media share buttons (small icons)\n- Build URL: /builds/[id]\n- Open Graph meta tags for social sharing\n\n**Placement:**\n- Top-right corner near Like button\n- Consistent across all build views\n\n**Features:**\n- No database needed (link-based sharing)\n- Clipboard API integration\n- Social media URL generation\n- Responsive design for mobile\n\n**API Actions:**\n- generateShareUrl(buildId: string)\n- getBuildShareData(buildId: string) // For Open Graph",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 5,
+            "title": "Integrate Social Features into Build Pages",
+            "description": "Add social engagement components to build detail and edit pages",
+            "details": "**Build Detail Page Integration:**\n- Add Like, Comment, Share buttons to build header\n- Implement suggested layout:\n  ```\n  [ Title + Author + Dates ]\n  [ Like ❤️ 24 ] [ Comment 💬 5 ] [ Share 🔗 ]\n  ```\n- Add Comments tab to existing tab navigation\n- Integrate with existing build milestone system\n\n**Build Edit Page Integration:**\n- Add social engagement preview\n- Show like/comment counts in edit mode\n- Maintain existing tab structure\n\n**Build Card Integration:**\n- Add like count to build cards in listings\n- Consistent social engagement display\n- Hover states and interactions\n\n**Responsive Design:**\n- Mobile-friendly button layout\n- Touch-friendly interaction areas\n- Proper spacing and alignment\n\n**State Management:**\n- Real-time updates for likes/comments\n- Optimistic UI updates\n- Error handling and retry logic",
+            "status": "pending",
+            "dependencies": [
+              "28.2",
+              "28.3",
+              "28.4"
+            ],
+            "parentTaskId": 28
+          },
+          {
+            "id": 6,
+            "title": "Add Polish, Animations, and Testing",
+            "description": "Implement smooth animations, loading states, and comprehensive testing",
+            "details": "**Animations and Polish:**\n- Heart \"pop\" animation on like\n- Smooth transitions for comment loading\n- Loading skeletons for social engagement\n- Hover effects and micro-interactions\n- Toast notifications with smooth animations\n- Error state handling with retry options\n\n**Performance Optimizations:**\n- Lazy loading for comment lists\n- Debounced like/unlike actions\n- Optimistic updates for better perceived performance\n- Caching for like/comment counts\n\n**Testing:**\n- Unit tests for LikeButton, CommentInput, CommentList components\n- Integration tests for social engagement flow\n- E2E tests for complete user journey\n- Accessibility tests (keyboard navigation, screen readers)\n- Performance tests for large comment lists\n- Mobile responsiveness tests\n\n**Error Handling:**\n- Network error recovery\n- Rate limiting handling\n- User permission validation\n- Graceful degradation for failed features\n\n**Documentation:**\n- Component usage examples\n- API documentation updates\n- User interaction guidelines",
+            "status": "pending",
+            "dependencies": [
+              "28.5"
+            ],
+            "parentTaskId": 28
+          }
+        ]
       }
     ],
     "metadata": {
       "version": "1.0.0",
       "createdAt": "2025-01-12T00:00:00.000Z",
       "updatedAt": "2025-01-12T00:00:00.000Z",
-      "totalTasks": 25,
+      "totalTasks": 28,
       "tags": {
         "master": {
           "name": "master",
@@ -551,7 +630,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-17T16:10:58.962Z"
+      "updated": "2025-09-17T23:41:20.658Z"
     }
   }
 }

@@ -1,6 +1,6 @@
 # Task ID: 27
 # Title: Redesign Build Edit Page with Tabbed Interface and Media Library
-# Status: pending
+# Status: done
 # Dependencies: 26
 # Priority: high
 # Description: Major UI/UX overhaul of /builds/[id]/edit page implementing centralized media library, tabbed navigation, and improved build info form
@@ -26,7 +26,7 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 
 
 # Subtasks:
-## 1. Create Tab Navigation System and Layout Structure [pending]
+## 1. Create Tab Navigation System and Layout Structure [done]
 ### Dependencies: None
 ### Description: Implement the basic tabbed interface structure for the build edit page with three tabs: Build Info, Build Gallery, and Build Milestones
 ### Details:
@@ -36,8 +36,8 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 - Ensure responsive design for mobile and desktop
 - Add proper styling and active tab indicators
 
-## 2. Build Centralized Media Library Component [pending]
-### Dependencies: None
+## 2. Build Centralized Media Library Component [done]
+### Dependencies: 27.1
 ### Description: Create a comprehensive media library component with drag-and-drop uploads, image management, captions, and sorting capabilities
 ### Details:
 - Implement drag-and-drop file upload functionality
@@ -48,8 +48,8 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 - Create image selection interface for milestone assignment
 - Ensure proper image optimization and loading states
 
-## 3. Refactor Build Info Form to Always-Visible Layout [pending]
-### Dependencies: None
+## 3. Refactor Build Info Form to Always-Visible Layout [done]
+### Dependencies: 27.1
 ### Description: Move the build editing form from modal/card to always-visible form at the top of the Build Info tab
 ### Details:
 - Remove "Edit Build Info" button from sidebar
@@ -63,8 +63,8 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 - Add form validation and error handling
 - Ensure proper form state management
 
-## 4. Update Milestone System for Media Library Integration [pending]
-### Dependencies: None
+## 4. Update Milestone System for Media Library Integration [done]
+### Dependencies: 27.2
 ### Description: Refactor milestone components to reference images from the centralized media library instead of individual uploads
 ### Details:
 - Remove individual upload sections from milestone cards
@@ -76,8 +76,8 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 - Refactor milestone image management logic and state
 - Update database queries and actions for new image relationship model
 
-## 5. Implement Featured Image Selection from Media Library [pending]
-### Dependencies: None
+## 5. Implement Featured Image Selection from Media Library [done]
+### Dependencies: 27.2
 ### Description: Update featured image selection to work with the centralized media library instead of milestone images
 ### Details:
 - Update FeaturedImageSelector component to work with media library
@@ -87,8 +87,8 @@ This requires significant refactoring of the existing BuildDetailEditView compon
 - Add visual indicators for which image is currently featured
 - Update database actions for featured image management
 
-## 6. Update Sidebar and Finalize Integration [pending]
-### Dependencies: None
+## 6. Update Sidebar and Finalize Integration [done]
+### Dependencies: 27.4, 27.5
 ### Description: Update the build actions sidebar, maintain stats card, and ensure all components work together seamlessly
 ### Details:
 - Remove "Edit Build Info" button from Build Actions card

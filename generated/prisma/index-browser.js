@@ -358,6 +358,13 @@ exports.Prisma.BuildMilestoneScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BuildLikeScalarFieldEnum = {
+  id: 'id',
+  buildId: 'buildId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BuildCommentScalarFieldEnum = {
   id: 'id',
   buildId: 'buildId',
@@ -470,6 +477,7 @@ exports.Prisma.ModelName = {
   ReviewFeedback: 'ReviewFeedback',
   Build: 'Build',
   BuildMilestone: 'BuildMilestone',
+  BuildLike: 'BuildLike',
   BuildComment: 'BuildComment',
   UserStore: 'UserStore',
   MarketplaceListing: 'MarketplaceListing'

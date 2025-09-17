@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Image as ImageIcon, ArrowRight, Hammer } from "lucide-react";
+import { Calendar, User, Image as ImageIcon, ArrowRight, Hammer, Heart, MessageSquare } from "lucide-react";
 import Link from "next/link";
 // Removed server action import - using API route instead
 import { format } from "date-fns";
@@ -54,6 +54,8 @@ interface Build {
   }>;
   _count: {
     milestones: number;
+    likes: number;
+    comments: number;
   };
 }
 
@@ -222,8 +224,20 @@ export default function RecentBuilds({ limit = 6 }: RecentBuildsProps) {
                         <span>{format(new Date(build.createdAt), "MMM d")}</span>
                       </div>
                     </div>
-                    <div className="mt-2 text-xs text-gray-500">
-                      {build._count.milestones} milestone{build._count.milestones !== 1 ? 's' : ''}
+                    <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
+                      <span>
+                        {build._count.milestones} milestone{build._count.milestones !== 1 ? 's' : ''}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center">
+                          <Heart className="w-3 h-3 mr-1" />
+                          <span>{build._count.likes}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <MessageSquare className="w-3 h-3 mr-1" />
+                          <span>{build._count.comments}</span>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

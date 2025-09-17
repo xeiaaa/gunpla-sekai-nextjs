@@ -316,6 +316,7 @@ model User {
   reviews        Review[]
   store          UserStore?
   uploads        Upload[]            @relation("UploadedBy")
+  buildLikes     BuildLike[]
   buildComments  BuildComment[]
   reviewFeedback ReviewFeedback[]
 
@@ -447,6 +448,7 @@ model Build {
   featuredImage Upload?          @relation("BuildFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
   uploads       BuildUpload[]
   milestones    BuildMilestone[]
+  likes         BuildLike[]
   comments      BuildComment[]
 
   @@index([userId])
@@ -489,6 +491,23 @@ model BuildMilestone {
   @@map("build_milestones")
 }
 
+// Build likes for social engagement
+model BuildLike {
+  id        String   @id @default(cuid())
+  buildId   String
+  userId    String
+  createdAt DateTime @default(now())
+
+  // Relations
+  build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([buildId, userId]) // Prevent duplicate likes
+  @@index([buildId])
+  @@index([userId])
+  @@map("build_likes")
+}
+
 // Build comments for community engagement
 model BuildComment {
   id        String   @id @default(cuid())
@@ -502,6 +521,9 @@ model BuildComment {
   build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([buildId])
+  @@index([userId])
+  @@index([createdAt])
   @@map("build_comments")
 }
 

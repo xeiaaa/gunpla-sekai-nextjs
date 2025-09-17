@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getBuild } from "@/lib/actions/builds";
 import { BuildDetailPublicView } from "@/components/build-detail-public-view";
+import { auth } from "@clerk/nextjs/server";
 
 interface BuildPageProps {
   params: {
@@ -9,7 +10,8 @@ interface BuildPageProps {
 }
 
 export default async function BuildPage({ params }: BuildPageProps) {
-  const build = await getBuild(params.id);
+  const { userId } = await auth();
+  const build = await getBuild(params.id, userId);
 
   if (!build) {
     notFound();

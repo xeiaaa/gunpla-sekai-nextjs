@@ -114,6 +114,11 @@ export type Build = $Result.DefaultSelection<Prisma.$BuildPayload>
  */
 export type BuildMilestone = $Result.DefaultSelection<Prisma.$BuildMilestonePayload>
 /**
+ * Model BuildLike
+ * 
+ */
+export type BuildLike = $Result.DefaultSelection<Prisma.$BuildLikePayload>
+/**
  * Model BuildComment
  * 
  */
@@ -530,6 +535,16 @@ export class PrismaClient<
     * ```
     */
   get buildMilestone(): Prisma.BuildMilestoneDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.buildLike`: Exposes CRUD operations for the **BuildLike** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BuildLikes
+    * const buildLikes = await prisma.buildLike.findMany()
+    * ```
+    */
+  get buildLike(): Prisma.BuildLikeDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.buildComment`: Exposes CRUD operations for the **BuildComment** model.
@@ -1020,6 +1035,7 @@ export namespace Prisma {
     ReviewFeedback: 'ReviewFeedback',
     Build: 'Build',
     BuildMilestone: 'BuildMilestone',
+    BuildLike: 'BuildLike',
     BuildComment: 'BuildComment',
     UserStore: 'UserStore',
     MarketplaceListing: 'MarketplaceListing'
@@ -1041,7 +1057,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildComment" | "userStore" | "marketplaceListing"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2525,6 +2541,80 @@ export namespace Prisma {
           }
         }
       }
+      BuildLike: {
+        payload: Prisma.$BuildLikePayload<ExtArgs>
+        fields: Prisma.BuildLikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BuildLikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BuildLikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          findFirst: {
+            args: Prisma.BuildLikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BuildLikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          findMany: {
+            args: Prisma.BuildLikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>[]
+          }
+          create: {
+            args: Prisma.BuildLikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          createMany: {
+            args: Prisma.BuildLikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BuildLikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>[]
+          }
+          delete: {
+            args: Prisma.BuildLikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          update: {
+            args: Prisma.BuildLikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          deleteMany: {
+            args: Prisma.BuildLikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BuildLikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BuildLikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>[]
+          }
+          upsert: {
+            args: Prisma.BuildLikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildLikePayload>
+          }
+          aggregate: {
+            args: Prisma.BuildLikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBuildLike>
+          }
+          groupBy: {
+            args: Prisma.BuildLikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BuildLikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BuildLikeCountArgs<ExtArgs>
+            result: $Utils.Optional<BuildLikeCountAggregateOutputType> | number
+          }
+        }
+      }
       BuildComment: {
         payload: Prisma.$BuildCommentPayload<ExtArgs>
         fields: Prisma.BuildCommentFieldRefs
@@ -2863,6 +2953,7 @@ export namespace Prisma {
     reviewFeedback?: ReviewFeedbackOmit
     build?: BuildOmit
     buildMilestone?: BuildMilestoneOmit
+    buildLike?: BuildLikeOmit
     buildComment?: BuildCommentOmit
     userStore?: UserStoreOmit
     marketplaceListing?: MarketplaceListingOmit
@@ -3315,6 +3406,7 @@ export namespace Prisma {
     builds: number
     reviews: number
     uploads: number
+    buildLikes: number
     buildComments: number
     reviewFeedback: number
   }
@@ -3324,6 +3416,7 @@ export namespace Prisma {
     builds?: boolean | UserCountOutputTypeCountBuildsArgs
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
     uploads?: boolean | UserCountOutputTypeCountUploadsArgs
+    buildLikes?: boolean | UserCountOutputTypeCountBuildLikesArgs
     buildComments?: boolean | UserCountOutputTypeCountBuildCommentsArgs
     reviewFeedback?: boolean | UserCountOutputTypeCountReviewFeedbackArgs
   }
@@ -3365,6 +3458,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UploadWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBuildLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildLikeWhereInput
   }
 
   /**
@@ -3429,12 +3529,14 @@ export namespace Prisma {
   export type BuildCountOutputType = {
     uploads: number
     milestones: number
+    likes: number
     comments: number
   }
 
   export type BuildCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uploads?: boolean | BuildCountOutputTypeCountUploadsArgs
     milestones?: boolean | BuildCountOutputTypeCountMilestonesArgs
+    likes?: boolean | BuildCountOutputTypeCountLikesArgs
     comments?: boolean | BuildCountOutputTypeCountCommentsArgs
   }
 
@@ -3461,6 +3563,13 @@ export namespace Prisma {
    */
   export type BuildCountOutputTypeCountMilestonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BuildMilestoneWhereInput
+  }
+
+  /**
+   * BuildCountOutputType without action
+   */
+  export type BuildCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildLikeWhereInput
   }
 
   /**
@@ -19123,6 +19232,7 @@ export namespace Prisma {
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     store?: boolean | User$storeArgs<ExtArgs>
     uploads?: boolean | User$uploadsArgs<ExtArgs>
+    buildLikes?: boolean | User$buildLikesArgs<ExtArgs>
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -19213,6 +19323,7 @@ export namespace Prisma {
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     store?: boolean | User$storeArgs<ExtArgs>
     uploads?: boolean | User$uploadsArgs<ExtArgs>
+    buildLikes?: boolean | User$buildLikesArgs<ExtArgs>
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -19228,6 +19339,7 @@ export namespace Prisma {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       store: Prisma.$UserStorePayload<ExtArgs> | null
       uploads: Prisma.$UploadPayload<ExtArgs>[]
+      buildLikes: Prisma.$BuildLikePayload<ExtArgs>[]
       buildComments: Prisma.$BuildCommentPayload<ExtArgs>[]
       reviewFeedback: Prisma.$ReviewFeedbackPayload<ExtArgs>[]
     }
@@ -19654,6 +19766,7 @@ export namespace Prisma {
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     store<T extends User$storeArgs<ExtArgs> = {}>(args?: Subset<T, User$storeArgs<ExtArgs>>): Prisma__UserStoreClient<$Result.GetResult<Prisma.$UserStorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     uploads<T extends User$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    buildLikes<T extends User$buildLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$buildLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildComments<T extends User$buildCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$buildCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewFeedback<T extends User$reviewFeedbackArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewFeedbackArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -20208,6 +20321,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UploadScalarFieldEnum | UploadScalarFieldEnum[]
+  }
+
+  /**
+   * User.buildLikes
+   */
+  export type User$buildLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    where?: BuildLikeWhereInput
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    cursor?: BuildLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuildLikeScalarFieldEnum | BuildLikeScalarFieldEnum[]
   }
 
   /**
@@ -24941,6 +25078,7 @@ export namespace Prisma {
     featuredImage?: boolean | Build$featuredImageArgs<ExtArgs>
     uploads?: boolean | Build$uploadsArgs<ExtArgs>
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
+    likes?: boolean | Build$likesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["build"]>
@@ -25000,6 +25138,7 @@ export namespace Prisma {
     featuredImage?: boolean | Build$featuredImageArgs<ExtArgs>
     uploads?: boolean | Build$uploadsArgs<ExtArgs>
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
+    likes?: boolean | Build$likesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -25022,6 +25161,7 @@ export namespace Prisma {
       featuredImage: Prisma.$UploadPayload<ExtArgs> | null
       uploads: Prisma.$BuildUploadPayload<ExtArgs>[]
       milestones: Prisma.$BuildMilestonePayload<ExtArgs>[]
+      likes: Prisma.$BuildLikePayload<ExtArgs>[]
       comments: Prisma.$BuildCommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -25435,6 +25575,7 @@ export namespace Prisma {
     featuredImage<T extends Build$featuredImageArgs<ExtArgs> = {}>(args?: Subset<T, Build$featuredImageArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     uploads<T extends Build$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, Build$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     milestones<T extends Build$milestonesArgs<ExtArgs> = {}>(args?: Subset<T, Build$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    likes<T extends Build$likesArgs<ExtArgs> = {}>(args?: Subset<T, Build$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Build$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Build$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -25936,6 +26077,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BuildMilestoneScalarFieldEnum | BuildMilestoneScalarFieldEnum[]
+  }
+
+  /**
+   * Build.likes
+   */
+  export type Build$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    where?: BuildLikeWhereInput
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    cursor?: BuildLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuildLikeScalarFieldEnum | BuildLikeScalarFieldEnum[]
   }
 
   /**
@@ -27161,6 +27326,1059 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BuildMilestoneInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BuildLike
+   */
+
+  export type AggregateBuildLike = {
+    _count: BuildLikeCountAggregateOutputType | null
+    _min: BuildLikeMinAggregateOutputType | null
+    _max: BuildLikeMaxAggregateOutputType | null
+  }
+
+  export type BuildLikeMinAggregateOutputType = {
+    id: string | null
+    buildId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type BuildLikeMaxAggregateOutputType = {
+    id: string | null
+    buildId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type BuildLikeCountAggregateOutputType = {
+    id: number
+    buildId: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type BuildLikeMinAggregateInputType = {
+    id?: true
+    buildId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type BuildLikeMaxAggregateInputType = {
+    id?: true
+    buildId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type BuildLikeCountAggregateInputType = {
+    id?: true
+    buildId?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type BuildLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuildLike to aggregate.
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildLikes to fetch.
+     */
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BuildLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BuildLikes
+    **/
+    _count?: true | BuildLikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BuildLikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BuildLikeMaxAggregateInputType
+  }
+
+  export type GetBuildLikeAggregateType<T extends BuildLikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateBuildLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBuildLike[P]>
+      : GetScalarType<T[P], AggregateBuildLike[P]>
+  }
+
+
+
+
+  export type BuildLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildLikeWhereInput
+    orderBy?: BuildLikeOrderByWithAggregationInput | BuildLikeOrderByWithAggregationInput[]
+    by: BuildLikeScalarFieldEnum[] | BuildLikeScalarFieldEnum
+    having?: BuildLikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BuildLikeCountAggregateInputType | true
+    _min?: BuildLikeMinAggregateInputType
+    _max?: BuildLikeMaxAggregateInputType
+  }
+
+  export type BuildLikeGroupByOutputType = {
+    id: string
+    buildId: string
+    userId: string
+    createdAt: Date
+    _count: BuildLikeCountAggregateOutputType | null
+    _min: BuildLikeMinAggregateOutputType | null
+    _max: BuildLikeMaxAggregateOutputType | null
+  }
+
+  type GetBuildLikeGroupByPayload<T extends BuildLikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BuildLikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BuildLikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BuildLikeGroupByOutputType[P]>
+            : GetScalarType<T[P], BuildLikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BuildLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildLike"]>
+
+  export type BuildLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildLike"]>
+
+  export type BuildLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildLike"]>
+
+  export type BuildLikeSelectScalar = {
+    id?: boolean
+    buildId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type BuildLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "buildId" | "userId" | "createdAt", ExtArgs["result"]["buildLike"]>
+  export type BuildLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BuildLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BuildLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BuildLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BuildLike"
+    objects: {
+      build: Prisma.$BuildPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      buildId: string
+      userId: string
+      createdAt: Date
+    }, ExtArgs["result"]["buildLike"]>
+    composites: {}
+  }
+
+  type BuildLikeGetPayload<S extends boolean | null | undefined | BuildLikeDefaultArgs> = $Result.GetResult<Prisma.$BuildLikePayload, S>
+
+  type BuildLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BuildLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BuildLikeCountAggregateInputType | true
+    }
+
+  export interface BuildLikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BuildLike'], meta: { name: 'BuildLike' } }
+    /**
+     * Find zero or one BuildLike that matches the filter.
+     * @param {BuildLikeFindUniqueArgs} args - Arguments to find a BuildLike
+     * @example
+     * // Get one BuildLike
+     * const buildLike = await prisma.buildLike.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BuildLikeFindUniqueArgs>(args: SelectSubset<T, BuildLikeFindUniqueArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BuildLike that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BuildLikeFindUniqueOrThrowArgs} args - Arguments to find a BuildLike
+     * @example
+     * // Get one BuildLike
+     * const buildLike = await prisma.buildLike.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BuildLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, BuildLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuildLike that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeFindFirstArgs} args - Arguments to find a BuildLike
+     * @example
+     * // Get one BuildLike
+     * const buildLike = await prisma.buildLike.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BuildLikeFindFirstArgs>(args?: SelectSubset<T, BuildLikeFindFirstArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuildLike that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeFindFirstOrThrowArgs} args - Arguments to find a BuildLike
+     * @example
+     * // Get one BuildLike
+     * const buildLike = await prisma.buildLike.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BuildLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, BuildLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BuildLikes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BuildLikes
+     * const buildLikes = await prisma.buildLike.findMany()
+     * 
+     * // Get first 10 BuildLikes
+     * const buildLikes = await prisma.buildLike.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const buildLikeWithIdOnly = await prisma.buildLike.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BuildLikeFindManyArgs>(args?: SelectSubset<T, BuildLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BuildLike.
+     * @param {BuildLikeCreateArgs} args - Arguments to create a BuildLike.
+     * @example
+     * // Create one BuildLike
+     * const BuildLike = await prisma.buildLike.create({
+     *   data: {
+     *     // ... data to create a BuildLike
+     *   }
+     * })
+     * 
+     */
+    create<T extends BuildLikeCreateArgs>(args: SelectSubset<T, BuildLikeCreateArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BuildLikes.
+     * @param {BuildLikeCreateManyArgs} args - Arguments to create many BuildLikes.
+     * @example
+     * // Create many BuildLikes
+     * const buildLike = await prisma.buildLike.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BuildLikeCreateManyArgs>(args?: SelectSubset<T, BuildLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BuildLikes and returns the data saved in the database.
+     * @param {BuildLikeCreateManyAndReturnArgs} args - Arguments to create many BuildLikes.
+     * @example
+     * // Create many BuildLikes
+     * const buildLike = await prisma.buildLike.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BuildLikes and only return the `id`
+     * const buildLikeWithIdOnly = await prisma.buildLike.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BuildLikeCreateManyAndReturnArgs>(args?: SelectSubset<T, BuildLikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BuildLike.
+     * @param {BuildLikeDeleteArgs} args - Arguments to delete one BuildLike.
+     * @example
+     * // Delete one BuildLike
+     * const BuildLike = await prisma.buildLike.delete({
+     *   where: {
+     *     // ... filter to delete one BuildLike
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BuildLikeDeleteArgs>(args: SelectSubset<T, BuildLikeDeleteArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BuildLike.
+     * @param {BuildLikeUpdateArgs} args - Arguments to update one BuildLike.
+     * @example
+     * // Update one BuildLike
+     * const buildLike = await prisma.buildLike.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BuildLikeUpdateArgs>(args: SelectSubset<T, BuildLikeUpdateArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BuildLikes.
+     * @param {BuildLikeDeleteManyArgs} args - Arguments to filter BuildLikes to delete.
+     * @example
+     * // Delete a few BuildLikes
+     * const { count } = await prisma.buildLike.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BuildLikeDeleteManyArgs>(args?: SelectSubset<T, BuildLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuildLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BuildLikes
+     * const buildLike = await prisma.buildLike.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BuildLikeUpdateManyArgs>(args: SelectSubset<T, BuildLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuildLikes and returns the data updated in the database.
+     * @param {BuildLikeUpdateManyAndReturnArgs} args - Arguments to update many BuildLikes.
+     * @example
+     * // Update many BuildLikes
+     * const buildLike = await prisma.buildLike.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BuildLikes and only return the `id`
+     * const buildLikeWithIdOnly = await prisma.buildLike.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BuildLikeUpdateManyAndReturnArgs>(args: SelectSubset<T, BuildLikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BuildLike.
+     * @param {BuildLikeUpsertArgs} args - Arguments to update or create a BuildLike.
+     * @example
+     * // Update or create a BuildLike
+     * const buildLike = await prisma.buildLike.upsert({
+     *   create: {
+     *     // ... data to create a BuildLike
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BuildLike we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BuildLikeUpsertArgs>(args: SelectSubset<T, BuildLikeUpsertArgs<ExtArgs>>): Prisma__BuildLikeClient<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BuildLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeCountArgs} args - Arguments to filter BuildLikes to count.
+     * @example
+     * // Count the number of BuildLikes
+     * const count = await prisma.buildLike.count({
+     *   where: {
+     *     // ... the filter for the BuildLikes we want to count
+     *   }
+     * })
+    **/
+    count<T extends BuildLikeCountArgs>(
+      args?: Subset<T, BuildLikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BuildLikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BuildLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BuildLikeAggregateArgs>(args: Subset<T, BuildLikeAggregateArgs>): Prisma.PrismaPromise<GetBuildLikeAggregateType<T>>
+
+    /**
+     * Group by BuildLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildLikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BuildLikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BuildLikeGroupByArgs['orderBy'] }
+        : { orderBy?: BuildLikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BuildLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBuildLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BuildLike model
+   */
+  readonly fields: BuildLikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BuildLike.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BuildLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    build<T extends BuildDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BuildDefaultArgs<ExtArgs>>): Prisma__BuildClient<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BuildLike model
+   */
+  interface BuildLikeFieldRefs {
+    readonly id: FieldRef<"BuildLike", 'String'>
+    readonly buildId: FieldRef<"BuildLike", 'String'>
+    readonly userId: FieldRef<"BuildLike", 'String'>
+    readonly createdAt: FieldRef<"BuildLike", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BuildLike findUnique
+   */
+  export type BuildLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildLike to fetch.
+     */
+    where: BuildLikeWhereUniqueInput
+  }
+
+  /**
+   * BuildLike findUniqueOrThrow
+   */
+  export type BuildLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildLike to fetch.
+     */
+    where: BuildLikeWhereUniqueInput
+  }
+
+  /**
+   * BuildLike findFirst
+   */
+  export type BuildLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildLike to fetch.
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildLikes to fetch.
+     */
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuildLikes.
+     */
+    cursor?: BuildLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuildLikes.
+     */
+    distinct?: BuildLikeScalarFieldEnum | BuildLikeScalarFieldEnum[]
+  }
+
+  /**
+   * BuildLike findFirstOrThrow
+   */
+  export type BuildLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildLike to fetch.
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildLikes to fetch.
+     */
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuildLikes.
+     */
+    cursor?: BuildLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuildLikes.
+     */
+    distinct?: BuildLikeScalarFieldEnum | BuildLikeScalarFieldEnum[]
+  }
+
+  /**
+   * BuildLike findMany
+   */
+  export type BuildLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildLikes to fetch.
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildLikes to fetch.
+     */
+    orderBy?: BuildLikeOrderByWithRelationInput | BuildLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BuildLikes.
+     */
+    cursor?: BuildLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildLikes.
+     */
+    skip?: number
+    distinct?: BuildLikeScalarFieldEnum | BuildLikeScalarFieldEnum[]
+  }
+
+  /**
+   * BuildLike create
+   */
+  export type BuildLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BuildLike.
+     */
+    data: XOR<BuildLikeCreateInput, BuildLikeUncheckedCreateInput>
+  }
+
+  /**
+   * BuildLike createMany
+   */
+  export type BuildLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BuildLikes.
+     */
+    data: BuildLikeCreateManyInput | BuildLikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BuildLike createManyAndReturn
+   */
+  export type BuildLikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many BuildLikes.
+     */
+    data: BuildLikeCreateManyInput | BuildLikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuildLike update
+   */
+  export type BuildLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BuildLike.
+     */
+    data: XOR<BuildLikeUpdateInput, BuildLikeUncheckedUpdateInput>
+    /**
+     * Choose, which BuildLike to update.
+     */
+    where: BuildLikeWhereUniqueInput
+  }
+
+  /**
+   * BuildLike updateMany
+   */
+  export type BuildLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BuildLikes.
+     */
+    data: XOR<BuildLikeUpdateManyMutationInput, BuildLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which BuildLikes to update
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * Limit how many BuildLikes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuildLike updateManyAndReturn
+   */
+  export type BuildLikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * The data used to update BuildLikes.
+     */
+    data: XOR<BuildLikeUpdateManyMutationInput, BuildLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which BuildLikes to update
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * Limit how many BuildLikes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuildLike upsert
+   */
+  export type BuildLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BuildLike to update in case it exists.
+     */
+    where: BuildLikeWhereUniqueInput
+    /**
+     * In case the BuildLike found by the `where` argument doesn't exist, create a new BuildLike with this data.
+     */
+    create: XOR<BuildLikeCreateInput, BuildLikeUncheckedCreateInput>
+    /**
+     * In case the BuildLike was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BuildLikeUpdateInput, BuildLikeUncheckedUpdateInput>
+  }
+
+  /**
+   * BuildLike delete
+   */
+  export type BuildLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
+    /**
+     * Filter which BuildLike to delete.
+     */
+    where: BuildLikeWhereUniqueInput
+  }
+
+  /**
+   * BuildLike deleteMany
+   */
+  export type BuildLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuildLikes to delete
+     */
+    where?: BuildLikeWhereInput
+    /**
+     * Limit how many BuildLikes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuildLike without action
+   */
+  export type BuildLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildLike
+     */
+    select?: BuildLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildLike
+     */
+    omit?: BuildLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildLikeInclude<ExtArgs> | null
   }
 
 
@@ -30843,6 +32061,16 @@ export namespace Prisma {
   export type BuildMilestoneScalarFieldEnum = (typeof BuildMilestoneScalarFieldEnum)[keyof typeof BuildMilestoneScalarFieldEnum]
 
 
+  export const BuildLikeScalarFieldEnum: {
+    id: 'id',
+    buildId: 'buildId',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type BuildLikeScalarFieldEnum = (typeof BuildLikeScalarFieldEnum)[keyof typeof BuildLikeScalarFieldEnum]
+
+
   export const BuildCommentScalarFieldEnum: {
     id: 'id',
     buildId: 'buildId',
@@ -32115,6 +33343,7 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     store?: XOR<UserStoreNullableScalarRelationFilter, UserStoreWhereInput> | null
     uploads?: UploadListRelationFilter
+    buildLikes?: BuildLikeListRelationFilter
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
   }
@@ -32148,6 +33377,7 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
     store?: UserStoreOrderByWithRelationInput
     uploads?: UploadOrderByRelationAggregateInput
+    buildLikes?: BuildLikeOrderByRelationAggregateInput
     buildComments?: BuildCommentOrderByRelationAggregateInput
     reviewFeedback?: ReviewFeedbackOrderByRelationAggregateInput
   }
@@ -32184,6 +33414,7 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     store?: XOR<UserStoreNullableScalarRelationFilter, UserStoreWhereInput> | null
     uploads?: UploadListRelationFilter
+    buildLikes?: BuildLikeListRelationFilter
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
   }, "id" | "email" | "username">
@@ -32534,6 +33765,7 @@ export namespace Prisma {
     featuredImage?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
     uploads?: BuildUploadListRelationFilter
     milestones?: BuildMilestoneListRelationFilter
+    likes?: BuildLikeListRelationFilter
     comments?: BuildCommentListRelationFilter
   }
 
@@ -32554,6 +33786,7 @@ export namespace Prisma {
     featuredImage?: UploadOrderByWithRelationInput
     uploads?: BuildUploadOrderByRelationAggregateInput
     milestones?: BuildMilestoneOrderByRelationAggregateInput
+    likes?: BuildLikeOrderByRelationAggregateInput
     comments?: BuildCommentOrderByRelationAggregateInput
   }
 
@@ -32577,6 +33810,7 @@ export namespace Prisma {
     featuredImage?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
     uploads?: BuildUploadListRelationFilter
     milestones?: BuildMilestoneListRelationFilter
+    likes?: BuildLikeListRelationFilter
     comments?: BuildCommentListRelationFilter
   }, "id">
 
@@ -32697,6 +33931,60 @@ export namespace Prisma {
     order?: IntWithAggregatesFilter<"BuildMilestone"> | number
     createdAt?: DateTimeWithAggregatesFilter<"BuildMilestone"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BuildMilestone"> | Date | string
+  }
+
+  export type BuildLikeWhereInput = {
+    AND?: BuildLikeWhereInput | BuildLikeWhereInput[]
+    OR?: BuildLikeWhereInput[]
+    NOT?: BuildLikeWhereInput | BuildLikeWhereInput[]
+    id?: StringFilter<"BuildLike"> | string
+    buildId?: StringFilter<"BuildLike"> | string
+    userId?: StringFilter<"BuildLike"> | string
+    createdAt?: DateTimeFilter<"BuildLike"> | Date | string
+    build?: XOR<BuildScalarRelationFilter, BuildWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BuildLikeOrderByWithRelationInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    build?: BuildOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type BuildLikeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    buildId_userId?: BuildLikeBuildIdUserIdCompoundUniqueInput
+    AND?: BuildLikeWhereInput | BuildLikeWhereInput[]
+    OR?: BuildLikeWhereInput[]
+    NOT?: BuildLikeWhereInput | BuildLikeWhereInput[]
+    buildId?: StringFilter<"BuildLike"> | string
+    userId?: StringFilter<"BuildLike"> | string
+    createdAt?: DateTimeFilter<"BuildLike"> | Date | string
+    build?: XOR<BuildScalarRelationFilter, BuildWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "buildId_userId">
+
+  export type BuildLikeOrderByWithAggregationInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: BuildLikeCountOrderByAggregateInput
+    _max?: BuildLikeMaxOrderByAggregateInput
+    _min?: BuildLikeMinOrderByAggregateInput
+  }
+
+  export type BuildLikeScalarWhereWithAggregatesInput = {
+    AND?: BuildLikeScalarWhereWithAggregatesInput | BuildLikeScalarWhereWithAggregatesInput[]
+    OR?: BuildLikeScalarWhereWithAggregatesInput[]
+    NOT?: BuildLikeScalarWhereWithAggregatesInput | BuildLikeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BuildLike"> | string
+    buildId?: StringWithAggregatesFilter<"BuildLike"> | string
+    userId?: StringWithAggregatesFilter<"BuildLike"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"BuildLike"> | Date | string
   }
 
   export type BuildCommentWhereInput = {
@@ -34050,6 +35338,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -34083,6 +35372,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -34116,6 +35406,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -34149,6 +35440,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -34505,6 +35797,7 @@ export namespace Prisma {
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -34522,6 +35815,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -34539,6 +35833,7 @@ export namespace Prisma {
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -34556,6 +35851,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -34690,6 +35986,53 @@ export namespace Prisma {
     order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    build: BuildCreateNestedOneWithoutLikesInput
+    user: UserCreateNestedOneWithoutBuildLikesInput
+  }
+
+  export type BuildLikeUncheckedCreateInput = {
+    id?: string
+    buildId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type BuildLikeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    build?: BuildUpdateOneRequiredWithoutLikesNestedInput
+    user?: UserUpdateOneRequiredWithoutBuildLikesNestedInput
+  }
+
+  export type BuildLikeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeCreateManyInput = {
+    id?: string
+    buildId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type BuildLikeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BuildCommentCreateInput = {
@@ -35844,6 +37187,12 @@ export namespace Prisma {
     none?: UploadWhereInput
   }
 
+  export type BuildLikeListRelationFilter = {
+    every?: BuildLikeWhereInput
+    some?: BuildLikeWhereInput
+    none?: BuildLikeWhereInput
+  }
+
   export type BuildCommentListRelationFilter = {
     every?: BuildCommentWhereInput
     some?: BuildCommentWhereInput
@@ -35857,6 +37206,10 @@ export namespace Prisma {
   }
 
   export type UploadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BuildLikeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -36306,6 +37659,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMilestoneTypeFilter<$PrismaModel>
     _max?: NestedEnumMilestoneTypeFilter<$PrismaModel>
+  }
+
+  export type BuildLikeBuildIdUserIdCompoundUniqueInput = {
+    buildId: string
+    userId: string
+  }
+
+  export type BuildLikeCountOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BuildLikeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BuildLikeMinOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type BuildCommentCountOrderByAggregateInput = {
@@ -37686,6 +39065,13 @@ export namespace Prisma {
     connect?: UploadWhereUniqueInput | UploadWhereUniqueInput[]
   }
 
+  export type BuildLikeCreateNestedManyWithoutUserInput = {
+    create?: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput> | BuildLikeCreateWithoutUserInput[] | BuildLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutUserInput | BuildLikeCreateOrConnectWithoutUserInput[]
+    createMany?: BuildLikeCreateManyUserInputEnvelope
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+  }
+
   export type BuildCommentCreateNestedManyWithoutUserInput = {
     create?: XOR<BuildCommentCreateWithoutUserInput, BuildCommentUncheckedCreateWithoutUserInput> | BuildCommentCreateWithoutUserInput[] | BuildCommentUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BuildCommentCreateOrConnectWithoutUserInput | BuildCommentCreateOrConnectWithoutUserInput[]
@@ -37732,6 +39118,13 @@ export namespace Prisma {
     connectOrCreate?: UploadCreateOrConnectWithoutUploadedByInput | UploadCreateOrConnectWithoutUploadedByInput[]
     createMany?: UploadCreateManyUploadedByInputEnvelope
     connect?: UploadWhereUniqueInput | UploadWhereUniqueInput[]
+  }
+
+  export type BuildLikeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput> | BuildLikeCreateWithoutUserInput[] | BuildLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutUserInput | BuildLikeCreateOrConnectWithoutUserInput[]
+    createMany?: BuildLikeCreateManyUserInputEnvelope
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
   }
 
   export type BuildCommentUncheckedCreateNestedManyWithoutUserInput = {
@@ -37816,6 +39209,20 @@ export namespace Prisma {
     update?: UploadUpdateWithWhereUniqueWithoutUploadedByInput | UploadUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: UploadUpdateManyWithWhereWithoutUploadedByInput | UploadUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: UploadScalarWhereInput | UploadScalarWhereInput[]
+  }
+
+  export type BuildLikeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput> | BuildLikeCreateWithoutUserInput[] | BuildLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutUserInput | BuildLikeCreateOrConnectWithoutUserInput[]
+    upsert?: BuildLikeUpsertWithWhereUniqueWithoutUserInput | BuildLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BuildLikeCreateManyUserInputEnvelope
+    set?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    disconnect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    delete?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    update?: BuildLikeUpdateWithWhereUniqueWithoutUserInput | BuildLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BuildLikeUpdateManyWithWhereWithoutUserInput | BuildLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
   }
 
   export type BuildCommentUpdateManyWithoutUserNestedInput = {
@@ -37910,6 +39317,20 @@ export namespace Prisma {
     update?: UploadUpdateWithWhereUniqueWithoutUploadedByInput | UploadUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: UploadUpdateManyWithWhereWithoutUploadedByInput | UploadUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: UploadScalarWhereInput | UploadScalarWhereInput[]
+  }
+
+  export type BuildLikeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput> | BuildLikeCreateWithoutUserInput[] | BuildLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutUserInput | BuildLikeCreateOrConnectWithoutUserInput[]
+    upsert?: BuildLikeUpsertWithWhereUniqueWithoutUserInput | BuildLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BuildLikeCreateManyUserInputEnvelope
+    set?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    disconnect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    delete?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    update?: BuildLikeUpdateWithWhereUniqueWithoutUserInput | BuildLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BuildLikeUpdateManyWithWhereWithoutUserInput | BuildLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
   }
 
   export type BuildCommentUncheckedUpdateManyWithoutUserNestedInput = {
@@ -38170,6 +39591,13 @@ export namespace Prisma {
     connect?: BuildMilestoneWhereUniqueInput | BuildMilestoneWhereUniqueInput[]
   }
 
+  export type BuildLikeCreateNestedManyWithoutBuildInput = {
+    create?: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput> | BuildLikeCreateWithoutBuildInput[] | BuildLikeUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutBuildInput | BuildLikeCreateOrConnectWithoutBuildInput[]
+    createMany?: BuildLikeCreateManyBuildInputEnvelope
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+  }
+
   export type BuildCommentCreateNestedManyWithoutBuildInput = {
     create?: XOR<BuildCommentCreateWithoutBuildInput, BuildCommentUncheckedCreateWithoutBuildInput> | BuildCommentCreateWithoutBuildInput[] | BuildCommentUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildCommentCreateOrConnectWithoutBuildInput | BuildCommentCreateOrConnectWithoutBuildInput[]
@@ -38189,6 +39617,13 @@ export namespace Prisma {
     connectOrCreate?: BuildMilestoneCreateOrConnectWithoutBuildInput | BuildMilestoneCreateOrConnectWithoutBuildInput[]
     createMany?: BuildMilestoneCreateManyBuildInputEnvelope
     connect?: BuildMilestoneWhereUniqueInput | BuildMilestoneWhereUniqueInput[]
+  }
+
+  export type BuildLikeUncheckedCreateNestedManyWithoutBuildInput = {
+    create?: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput> | BuildLikeCreateWithoutBuildInput[] | BuildLikeUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutBuildInput | BuildLikeCreateOrConnectWithoutBuildInput[]
+    createMany?: BuildLikeCreateManyBuildInputEnvelope
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
   }
 
   export type BuildCommentUncheckedCreateNestedManyWithoutBuildInput = {
@@ -38256,6 +39691,20 @@ export namespace Prisma {
     deleteMany?: BuildMilestoneScalarWhereInput | BuildMilestoneScalarWhereInput[]
   }
 
+  export type BuildLikeUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput> | BuildLikeCreateWithoutBuildInput[] | BuildLikeUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutBuildInput | BuildLikeCreateOrConnectWithoutBuildInput[]
+    upsert?: BuildLikeUpsertWithWhereUniqueWithoutBuildInput | BuildLikeUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: BuildLikeCreateManyBuildInputEnvelope
+    set?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    disconnect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    delete?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    update?: BuildLikeUpdateWithWhereUniqueWithoutBuildInput | BuildLikeUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: BuildLikeUpdateManyWithWhereWithoutBuildInput | BuildLikeUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
+  }
+
   export type BuildCommentUpdateManyWithoutBuildNestedInput = {
     create?: XOR<BuildCommentCreateWithoutBuildInput, BuildCommentUncheckedCreateWithoutBuildInput> | BuildCommentCreateWithoutBuildInput[] | BuildCommentUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildCommentCreateOrConnectWithoutBuildInput | BuildCommentCreateOrConnectWithoutBuildInput[]
@@ -38296,6 +39745,20 @@ export namespace Prisma {
     update?: BuildMilestoneUpdateWithWhereUniqueWithoutBuildInput | BuildMilestoneUpdateWithWhereUniqueWithoutBuildInput[]
     updateMany?: BuildMilestoneUpdateManyWithWhereWithoutBuildInput | BuildMilestoneUpdateManyWithWhereWithoutBuildInput[]
     deleteMany?: BuildMilestoneScalarWhereInput | BuildMilestoneScalarWhereInput[]
+  }
+
+  export type BuildLikeUncheckedUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput> | BuildLikeCreateWithoutBuildInput[] | BuildLikeUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildLikeCreateOrConnectWithoutBuildInput | BuildLikeCreateOrConnectWithoutBuildInput[]
+    upsert?: BuildLikeUpsertWithWhereUniqueWithoutBuildInput | BuildLikeUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: BuildLikeCreateManyBuildInputEnvelope
+    set?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    disconnect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    delete?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    connect?: BuildLikeWhereUniqueInput | BuildLikeWhereUniqueInput[]
+    update?: BuildLikeUpdateWithWhereUniqueWithoutBuildInput | BuildLikeUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: BuildLikeUpdateManyWithWhereWithoutBuildInput | BuildLikeUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
   }
 
   export type BuildCommentUncheckedUpdateManyWithoutBuildNestedInput = {
@@ -38379,6 +39842,34 @@ export namespace Prisma {
     update?: BuildMilestoneUploadUpdateWithWhereUniqueWithoutBuildMilestoneInput | BuildMilestoneUploadUpdateWithWhereUniqueWithoutBuildMilestoneInput[]
     updateMany?: BuildMilestoneUploadUpdateManyWithWhereWithoutBuildMilestoneInput | BuildMilestoneUploadUpdateManyWithWhereWithoutBuildMilestoneInput[]
     deleteMany?: BuildMilestoneUploadScalarWhereInput | BuildMilestoneUploadScalarWhereInput[]
+  }
+
+  export type BuildCreateNestedOneWithoutLikesInput = {
+    create?: XOR<BuildCreateWithoutLikesInput, BuildUncheckedCreateWithoutLikesInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutLikesInput
+    connect?: BuildWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutBuildLikesInput = {
+    create?: XOR<UserCreateWithoutBuildLikesInput, UserUncheckedCreateWithoutBuildLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBuildLikesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BuildUpdateOneRequiredWithoutLikesNestedInput = {
+    create?: XOR<BuildCreateWithoutLikesInput, BuildUncheckedCreateWithoutLikesInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutLikesInput
+    upsert?: BuildUpsertWithoutLikesInput
+    connect?: BuildWhereUniqueInput
+    update?: XOR<XOR<BuildUpdateToOneWithWhereWithoutLikesInput, BuildUpdateWithoutLikesInput>, BuildUncheckedUpdateWithoutLikesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutBuildLikesNestedInput = {
+    create?: XOR<UserCreateWithoutBuildLikesInput, UserUncheckedCreateWithoutBuildLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBuildLikesInput
+    upsert?: UserUpsertWithoutBuildLikesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBuildLikesInput, UserUpdateWithoutBuildLikesInput>, UserUncheckedUpdateWithoutBuildLikesInput>
   }
 
   export type BuildCreateNestedOneWithoutCommentsInput = {
@@ -39983,6 +41474,7 @@ export namespace Prisma {
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -39999,6 +41491,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -40619,6 +42112,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -40651,6 +42145,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -40821,6 +42316,7 @@ export namespace Prisma {
     kit: KitCreateNestedOneWithoutBuildsInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -40837,6 +42333,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -40889,6 +42386,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -40921,6 +42419,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -41460,6 +42959,7 @@ export namespace Prisma {
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -41476,6 +42976,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -41557,6 +43058,7 @@ export namespace Prisma {
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -41573,6 +43075,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -41844,6 +43347,7 @@ export namespace Prisma {
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -41860,6 +43364,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -41983,6 +43488,28 @@ export namespace Prisma {
 
   export type UploadCreateManyUploadedByInputEnvelope = {
     data: UploadCreateManyUploadedByInput | UploadCreateManyUploadedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BuildLikeCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    build: BuildCreateNestedOneWithoutLikesInput
+  }
+
+  export type BuildLikeUncheckedCreateWithoutUserInput = {
+    id?: string
+    buildId: string
+    createdAt?: Date | string
+  }
+
+  export type BuildLikeCreateOrConnectWithoutUserInput = {
+    where: BuildLikeWhereUniqueInput
+    create: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type BuildLikeCreateManyUserInputEnvelope = {
+    data: BuildLikeCreateManyUserInput | BuildLikeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -42151,6 +43678,32 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Upload"> | Date | string
   }
 
+  export type BuildLikeUpsertWithWhereUniqueWithoutUserInput = {
+    where: BuildLikeWhereUniqueInput
+    update: XOR<BuildLikeUpdateWithoutUserInput, BuildLikeUncheckedUpdateWithoutUserInput>
+    create: XOR<BuildLikeCreateWithoutUserInput, BuildLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type BuildLikeUpdateWithWhereUniqueWithoutUserInput = {
+    where: BuildLikeWhereUniqueInput
+    data: XOR<BuildLikeUpdateWithoutUserInput, BuildLikeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BuildLikeUpdateManyWithWhereWithoutUserInput = {
+    where: BuildLikeScalarWhereInput
+    data: XOR<BuildLikeUpdateManyMutationInput, BuildLikeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BuildLikeScalarWhereInput = {
+    AND?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
+    OR?: BuildLikeScalarWhereInput[]
+    NOT?: BuildLikeScalarWhereInput | BuildLikeScalarWhereInput[]
+    id?: StringFilter<"BuildLike"> | string
+    buildId?: StringFilter<"BuildLike"> | string
+    userId?: StringFilter<"BuildLike"> | string
+    createdAt?: DateTimeFilter<"BuildLike"> | Date | string
+  }
+
   export type BuildCommentUpsertWithWhereUniqueWithoutUserInput = {
     where: BuildCommentWhereUniqueInput
     update: XOR<BuildCommentUpdateWithoutUserInput, BuildCommentUncheckedUpdateWithoutUserInput>
@@ -42234,6 +43787,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -42266,6 +43820,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -42375,6 +43930,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -42407,6 +43963,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -42506,6 +44063,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -42538,6 +44096,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -42695,6 +44254,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -42727,6 +44287,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -42963,6 +44524,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
   }
 
@@ -42995,6 +44557,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -43078,6 +44641,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
   }
 
@@ -43110,6 +44674,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -43141,6 +44706,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -43173,6 +44739,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -43356,6 +44923,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BuildLikeCreateWithoutBuildInput = {
+    id?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutBuildLikesInput
+  }
+
+  export type BuildLikeUncheckedCreateWithoutBuildInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type BuildLikeCreateOrConnectWithoutBuildInput = {
+    where: BuildLikeWhereUniqueInput
+    create: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput>
+  }
+
+  export type BuildLikeCreateManyBuildInputEnvelope = {
+    data: BuildLikeCreateManyBuildInput | BuildLikeCreateManyBuildInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BuildCommentCreateWithoutBuildInput = {
     id?: string
     content: string
@@ -43421,6 +45010,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -43453,6 +45043,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -43627,6 +45218,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"BuildMilestone"> | Date | string
   }
 
+  export type BuildLikeUpsertWithWhereUniqueWithoutBuildInput = {
+    where: BuildLikeWhereUniqueInput
+    update: XOR<BuildLikeUpdateWithoutBuildInput, BuildLikeUncheckedUpdateWithoutBuildInput>
+    create: XOR<BuildLikeCreateWithoutBuildInput, BuildLikeUncheckedCreateWithoutBuildInput>
+  }
+
+  export type BuildLikeUpdateWithWhereUniqueWithoutBuildInput = {
+    where: BuildLikeWhereUniqueInput
+    data: XOR<BuildLikeUpdateWithoutBuildInput, BuildLikeUncheckedUpdateWithoutBuildInput>
+  }
+
+  export type BuildLikeUpdateManyWithWhereWithoutBuildInput = {
+    where: BuildLikeScalarWhereInput
+    data: XOR<BuildLikeUpdateManyMutationInput, BuildLikeUncheckedUpdateManyWithoutBuildInput>
+  }
+
   export type BuildCommentUpsertWithWhereUniqueWithoutBuildInput = {
     where: BuildCommentWhereUniqueInput
     update: XOR<BuildCommentUpdateWithoutBuildInput, BuildCommentUncheckedUpdateWithoutBuildInput>
@@ -43656,6 +45263,7 @@ export namespace Prisma {
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -43672,6 +45280,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -43732,6 +45341,7 @@ export namespace Prisma {
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -43748,6 +45358,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -43767,6 +45378,238 @@ export namespace Prisma {
     data: XOR<BuildMilestoneUploadUpdateManyMutationInput, BuildMilestoneUploadUncheckedUpdateManyWithoutBuildMilestoneInput>
   }
 
+  export type BuildCreateWithoutLikesInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBuildsInput
+    kit: KitCreateNestedOneWithoutBuildsInput
+    featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
+    milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildUncheckedCreateWithoutLikesInput = {
+    id?: string
+    userId: string
+    kitId: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    featuredImageId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
+    milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildCreateOrConnectWithoutLikesInput = {
+    where: BuildWhereUniqueInput
+    create: XOR<BuildCreateWithoutLikesInput, BuildUncheckedCreateWithoutLikesInput>
+  }
+
+  export type UserCreateWithoutBuildLikesInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBuildLikesInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBuildLikesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBuildLikesInput, UserUncheckedCreateWithoutBuildLikesInput>
+  }
+
+  export type BuildUpsertWithoutLikesInput = {
+    update: XOR<BuildUpdateWithoutLikesInput, BuildUncheckedUpdateWithoutLikesInput>
+    create: XOR<BuildCreateWithoutLikesInput, BuildUncheckedCreateWithoutLikesInput>
+    where?: BuildWhereInput
+  }
+
+  export type BuildUpdateToOneWithWhereWithoutLikesInput = {
+    where?: BuildWhereInput
+    data: XOR<BuildUpdateWithoutLikesInput, BuildUncheckedUpdateWithoutLikesInput>
+  }
+
+  export type BuildUpdateWithoutLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBuildsNestedInput
+    kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
+    featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
+    milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+  }
+
+  export type BuildUncheckedUpdateWithoutLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
+    milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+  }
+
+  export type UserUpsertWithoutBuildLikesInput = {
+    update: XOR<UserUpdateWithoutBuildLikesInput, UserUncheckedUpdateWithoutBuildLikesInput>
+    create: XOR<UserCreateWithoutBuildLikesInput, UserUncheckedCreateWithoutBuildLikesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBuildLikesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBuildLikesInput, UserUncheckedUpdateWithoutBuildLikesInput>
+  }
+
+  export type UserUpdateWithoutBuildLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBuildLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type BuildCreateWithoutCommentsInput = {
     id?: string
     title: string
@@ -43781,6 +45624,7 @@ export namespace Prisma {
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutCommentsInput = {
@@ -43797,6 +45641,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutCommentsInput = {
@@ -43833,6 +45678,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     store?: UserStoreCreateNestedOneWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
 
@@ -43865,6 +45711,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -43898,6 +45745,7 @@ export namespace Prisma {
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutCommentsInput = {
@@ -43914,6 +45762,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
   }
 
   export type UserUpsertWithoutBuildCommentsInput = {
@@ -43956,6 +45805,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     store?: UserStoreUpdateOneWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
 
@@ -43988,6 +45838,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -44019,6 +45870,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
   }
@@ -44051,6 +45903,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
   }
@@ -44135,6 +45988,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
   }
@@ -44167,6 +46021,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -45148,6 +47003,7 @@ export namespace Prisma {
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -45164,6 +47020,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -45439,6 +47296,7 @@ export namespace Prisma {
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -45455,6 +47313,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -45519,6 +47378,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type BuildLikeCreateManyUserInput = {
+    id?: string
+    buildId: string
+    createdAt?: Date | string
+  }
+
   export type BuildCommentCreateManyUserInput = {
     id?: string
     buildId: string
@@ -45574,6 +47439,7 @@ export namespace Prisma {
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -45590,6 +47456,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -45698,6 +47565,24 @@ export namespace Prisma {
     uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    build?: BuildUpdateOneRequiredWithoutLikesNestedInput
+  }
+
+  export type BuildLikeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BuildCommentUpdateWithoutUserInput = {
@@ -45822,6 +47707,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type BuildLikeCreateManyBuildInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
   export type BuildCommentCreateManyBuildInput = {
     id?: string
     userId: string
@@ -45893,6 +47784,24 @@ export namespace Prisma {
     order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBuildLikesNestedInput
+  }
+
+  export type BuildLikeUncheckedUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildLikeUncheckedUpdateManyWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BuildCommentUpdateWithoutBuildInput = {

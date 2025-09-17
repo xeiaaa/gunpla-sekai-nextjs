@@ -11,6 +11,8 @@ import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { MarkdownRenderer } from "./ui/markdown-renderer";
+import { LikeButton } from "./like-button";
+import { CommentsSection } from "./comments-section";
 
 interface BuildDetailPublicViewProps {
   build: {
@@ -22,6 +24,9 @@ interface BuildDetailPublicViewProps {
     completedAt: Date | null;
     createdAt: Date;
     featuredImageId: string | null;
+    likes: number;
+    liked: boolean;
+    comments: number;
     featuredImage: {
       id: string;
       url: string;
@@ -106,6 +111,7 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
   const { userId } = useAuth();
   const isOwner = userId === build.user.id;
   const milestones = build.milestones.sort((a, b) => a.order - b.order);
+  const [activeTab, setActiveTab] = useState<"milestones" | "comments">("milestones");
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -154,6 +160,12 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                   </div>
 
                   <div className="flex items-center gap-3">
+                    <LikeButton
+                      buildId={build.id}
+                      initialLikes={build.likes}
+                      initialLiked={build.liked}
+                    />
+
                     <Badge className={`${getStatusColor(build.status)} flex items-center gap-1`}>
                       {getStatusIcon(build.status)}
                       {build.status.replace("_", " ")}
@@ -195,18 +207,48 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                 )}
               </div>
 
-              {/* Blog Content - Milestones as Sections */}
+              {/* Tab Navigation */}
+              <div className="border-b border-gray-200">
+                <nav className="flex space-x-8 px-8">
+                  <button
+                    onClick={() => setActiveTab("milestones")}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === "milestones"
+                        ? "border-blue-500 text-blue-600"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    }`}
+                  >
+                    Milestones
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("comments")}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === "comments"
+                        ? "border-blue-500 text-blue-600"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    }`}
+                  >
+                    Comments {build.comments > 0 && `(${build.comments})`}
+                  </button>
+                </nav>
+              </div>
+
+              {/* Tab Content */}
               <div className="p-8">
-                {milestones.length === 0 ? (
-                  <div className="text-center py-12">
-                    <p className="text-gray-500 text-lg">No milestones yet. Check back later!</p>
-                  </div>
+                {activeTab === "milestones" ? (
+                  milestones.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-gray-500 text-lg">No milestones yet. Check back later!</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-12">
+                      {milestones.map((milestone) => (
+                        <MilestoneSection key={milestone.id} milestone={milestone} />
+                      ))}
+                    </div>
+                  )
                 ) : (
-                  <div className="space-y-12">
-                    {milestones.map((milestone) => (
-                      <MilestoneSection key={milestone.id} milestone={milestone} />
-                    ))}
-                  </div>
+                  <CommentsSection buildId={build.id} />
                 )}
               </div>
             </Card>

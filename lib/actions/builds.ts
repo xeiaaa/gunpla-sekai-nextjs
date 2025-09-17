@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
-import { BuildStatus } from "@prisma/client";
+import { BuildStatus } from "../../generated/prisma";
 
 export interface CreateBuildData {
   kitId: string;
@@ -152,7 +152,7 @@ export async function deleteBuild(buildId: string) {
   }
 }
 
-export async function getBuild(buildId: string) {
+export async function getBuild(buildId: string, userId?: string) {
   try {
     const build = await prisma.build.findUnique({
       where: { id: buildId },
@@ -188,10 +188,39 @@ export async function getBuild(buildId: string) {
             },
           },
         },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
       },
     });
 
-    return build;
+    if (!build) {
+      return null;
+    }
+
+    // Get user's like status if userId is provided
+    let userLiked = false;
+    if (userId) {
+      const userLike = await prisma.buildLike.findUnique({
+        where: {
+          buildId_userId: {
+            buildId,
+            userId,
+          },
+        },
+      });
+      userLiked = !!userLike;
+    }
+
+    return {
+      ...build,
+      likes: build._count.likes,
+      liked: userLiked,
+      comments: build._count.comments,
+    };
   } catch (error) {
     console.error("Error fetching build:", error);
     throw new Error("Failed to fetch build");
@@ -231,6 +260,8 @@ export async function getBuildsByKit(kitId: string, limit: number = 10) {
         _count: {
           select: {
             milestones: true,
+            likes: true,
+            comments: true,
           },
         },
       },
@@ -293,6 +324,8 @@ export async function getRecentBuilds(limit: number = 10) {
         _count: {
           select: {
             milestones: true,
+            likes: true,
+            comments: true,
           },
         },
       },
@@ -373,5 +406,231 @@ export async function getUserBuilds(
   } catch (error) {
     console.error("Error fetching user builds:", error);
     throw new Error("Failed to fetch user builds");
+  }
+}
+
+export async function getBuildLikes(buildId: string, userId?: string) {
+  try {
+    const [likeCount, userLike] = await Promise.all([
+      prisma.buildLike.count({
+        where: { buildId },
+      }),
+      userId ? prisma.buildLike.findUnique({
+        where: {
+          buildId_userId: {
+            buildId,
+            userId,
+          },
+        },
+      }) : null,
+    ]);
+
+    return {
+      likes: likeCount,
+      liked: !!userLike,
+    };
+  } catch (error) {
+    console.error("Error fetching build likes:", error);
+    throw new Error("Failed to fetch build likes");
+  }
+}
+
+export async function toggleBuildLike(buildId: string, liked: boolean) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    if (liked) {
+      // Add like (upsert to handle race conditions)
+      await prisma.buildLike.upsert({
+        where: {
+          buildId_userId: {
+            buildId,
+            userId,
+          },
+        },
+        update: {},
+        create: {
+          buildId,
+          userId,
+        },
+      });
+    } else {
+      // Remove like
+      await prisma.buildLike.deleteMany({
+        where: {
+          buildId,
+          userId,
+        },
+      });
+    }
+
+    // Get updated like count
+    const likeCount = await prisma.buildLike.count({
+      where: { buildId },
+    });
+
+    return {
+      likes: likeCount,
+      liked,
+    };
+  } catch (error) {
+    console.error("Error toggling build like:", error);
+    throw new Error("Failed to toggle build like");
+  }
+}
+
+// Comment-related actions
+export async function createBuildComment(buildId: string, content: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!content.trim()) {
+    throw new Error("Comment content cannot be empty");
+  }
+
+  try {
+    const comment = await prisma.buildComment.create({
+      data: {
+        buildId,
+        userId,
+        content: content.trim(),
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+      },
+    });
+
+    revalidatePath(`/builds/${buildId}`);
+    return comment;
+  } catch (error) {
+    console.error("Error creating build comment:", error);
+    throw new Error("Failed to create comment");
+  }
+}
+
+export async function getBuildComments(buildId: string) {
+  try {
+    const comments = await prisma.buildComment.findMany({
+      where: { buildId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+      },
+    });
+
+    return comments;
+  } catch (error) {
+    console.error("Error fetching build comments:", error);
+    throw new Error("Failed to fetch comments");
+  }
+}
+
+export async function deleteBuildComment(commentId: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    // First check if the comment exists and belongs to the user
+    const comment = await prisma.buildComment.findUnique({
+      where: { id: commentId },
+      select: { userId: true, buildId: true },
+    });
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    if (comment.userId !== userId) {
+      throw new Error("Unauthorized to delete this comment");
+    }
+
+    await prisma.buildComment.delete({
+      where: { id: commentId },
+    });
+
+    revalidatePath(`/builds/${comment.buildId}`);
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting build comment:", error);
+    throw new Error("Failed to delete comment");
+  }
+}
+
+export async function updateBuildComment(commentId: string, content: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!content.trim()) {
+    throw new Error("Comment content cannot be empty");
+  }
+
+  try {
+    // First check if the comment exists and belongs to the user
+    const existingComment = await prisma.buildComment.findUnique({
+      where: { id: commentId },
+      select: { userId: true, buildId: true },
+    });
+
+    if (!existingComment) {
+      throw new Error("Comment not found");
+    }
+
+    if (existingComment.userId !== userId) {
+      throw new Error("Unauthorized to update this comment");
+    }
+
+    const comment = await prisma.buildComment.update({
+      where: { id: commentId },
+      data: {
+        content: content.trim(),
+        updatedAt: new Date(),
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+      },
+    });
+
+    revalidatePath(`/builds/${existingComment.buildId}`);
+    return comment;
+  } catch (error) {
+    console.error("Error updating build comment:", error);
+    throw new Error("Failed to update comment");
   }
 }
