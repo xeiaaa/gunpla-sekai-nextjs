@@ -56,6 +56,10 @@ export interface UserProfileData {
       slug: string | null;
       boxArt: string | null;
     };
+    feedback?: {
+      helpful: number;
+      notHelpful: number;
+    };
   }>;
 }
 
@@ -167,14 +171,34 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
         featuredImage: build.featuredImage,
         kit: build.kit,
       })),
-      recentReviews: user.reviews.map((review) => ({
-        id: review.id,
-        title: review.title,
-        content: review.content,
-        overallScore: review.overallScore,
-        createdAt: review.createdAt,
-        kit: review.kit,
-      })),
+      recentReviews: await Promise.all(
+        user.reviews.map(async (review) => {
+          // Get feedback counts for this review
+          const feedbackCounts = await prisma.reviewFeedback.groupBy({
+            by: ["isHelpful"],
+            where: { reviewId: review.id },
+            _count: {
+              isHelpful: true,
+            },
+          });
+
+          const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
+          const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+
+          return {
+            id: review.id,
+            title: review.title,
+            content: review.content,
+            overallScore: review.overallScore,
+            createdAt: review.createdAt,
+            kit: review.kit,
+            feedback: {
+              helpful: helpfulCount,
+              notHelpful: notHelpfulCount,
+            },
+          };
+        })
+      ),
     };
   } catch (error) {
     console.error("Error fetching user by username:", error);

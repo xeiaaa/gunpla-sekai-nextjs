@@ -15,7 +15,8 @@ import {
   SortDesc,
   Image as ImageIcon,
   ExternalLink,
-  MessageSquare
+  MessageSquare,
+  Heart
 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -23,11 +24,36 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { UserProfileData } from "@/lib/actions/users";
-import { ReviewWithDetails } from "@/lib/types/reviews";
+
+interface ReviewWithKit {
+  id: string;
+  title: string | null;
+  content: string | null;
+  overallScore: number;
+  createdAt: Date;
+  updatedAt: Date;
+  kit: {
+    id: string;
+    name: string;
+    slug: string | null;
+    boxArt: string | null;
+  };
+  categoryScores: Array<{
+    id: string;
+    category: string;
+    score: number;
+    notes: string | null;
+    reviewId: string;
+  }>;
+  feedback?: {
+    helpful: number;
+    notHelpful: number;
+  };
+}
 
 interface UserReviewsPageProps {
   user: UserProfileData;
-  reviews: ReviewWithDetails[];
+  reviews: ReviewWithKit[];
   isOwnProfile: boolean;
   currentSort: string;
   currentPage: number;
@@ -237,6 +263,12 @@ export function UserReviewsPage({
                             )}
                           </span>
                         </div>
+                        {review.feedback && (
+                          <div className="flex items-center gap-1">
+                            <Heart className="w-3 h-3" />
+                            <span>{review.feedback.helpful} helpful</span>
+                          </div>
+                        )}
                       </div>
                       <Button variant="outline" size="sm" asChild>
                         <Link href={`/kits/${review.kit?.slug || review.kit?.id}`}>

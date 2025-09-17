@@ -246,12 +246,20 @@ export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageP
                       </p>
                     )}
                     <div className="flex items-center justify-between">
-                      <Button variant="ghost" size="sm" asChild>
-                        <Link href={`/kits/${review.kit.slug}`}>
-                          View Kit
-                          <ArrowRight className="w-3 h-3 ml-1" />
-                        </Link>
-                      </Button>
+                      <div className="flex items-center gap-3">
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={`/kits/${review.kit.slug}`}>
+                            View Kit
+                            <ArrowRight className="w-3 h-3 ml-1" />
+                          </Link>
+                        </Button>
+                        {review.feedback && (
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <Heart className="w-3 h-3" />
+                            <span>{review.feedback.helpful} helpful</span>
+                          </div>
+                        )}
+                      </div>
                       <span className="text-xs text-gray-500">
                         {format(new Date(review.createdAt), "MMM d, yyyy")}
                       </span>

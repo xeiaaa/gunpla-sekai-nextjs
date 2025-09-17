@@ -526,5 +526,39 @@ export async function getUserReviews(userId: string, limit: number = 10, offset:
     skip: offset,
   });
 
-  return reviews;
+  // Get feedback data for all reviews
+  const reviewIds = reviews.map(r => r.id);
+  const feedbackCounts = await prisma.reviewFeedback.groupBy({
+    by: ["reviewId", "isHelpful"],
+    where: {
+      reviewId: { in: reviewIds }
+    },
+    _count: {
+      isHelpful: true,
+    },
+  });
+
+  // Group feedback counts by reviewId
+  const countsByReview = feedbackCounts.reduce((acc, item) => {
+    if (!acc[item.reviewId]) {
+      acc[item.reviewId] = { helpful: 0, notHelpful: 0 };
+    }
+    if (item.isHelpful) {
+      acc[item.reviewId].helpful = item._count.isHelpful;
+    } else {
+      acc[item.reviewId].notHelpful = item._count.isHelpful;
+    }
+    return acc;
+  }, {} as Record<string, { helpful: number; notHelpful: number }>);
+
+  // Add feedback data to reviews
+  const reviewsWithFeedback = reviews.map(review => ({
+    ...review,
+    feedback: {
+      helpful: countsByReview[review.id]?.helpful || 0,
+      notHelpful: countsByReview[review.id]?.notHelpful || 0,
+    },
+  }));
+
+  return reviewsWithFeedback;
 }
