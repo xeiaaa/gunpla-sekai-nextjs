@@ -179,7 +179,7 @@
         "description": "Create public user profiles displaying collections, activity, and statistics",
         "details": "Design and implement user profile pages showing collection statistics, recent activity, and public build galleries.",
         "priority": "medium",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           "6"
         ],
@@ -219,7 +219,7 @@
             "title": "Create User Reviews Page",
             "description": "Build /users/[username]/reviews route to show all reviews written by the user",
             "details": "- Route: /users/[username]/reviews\n- Show all reviews written by that user\n- Review history and statistics\n- Review filtering and sorting\n- Link back to reviewed kits",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 7
           }
@@ -472,7 +472,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-17T08:20:02.080Z"
+      "updated": "2025-09-17T08:31:32.933Z"
     }
   }
 }

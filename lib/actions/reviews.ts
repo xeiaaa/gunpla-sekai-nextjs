@@ -404,7 +404,23 @@ export async function getKitReviewStats(kitId: string) {
 }
 
 // Get all reviews by a user
-export async function getUserReviews(userId: string, limit: number = 10, offset: number = 0) {
+export async function getUserReviews(userId: string, limit: number = 10, offset: number = 0, sort: string = "newest") {
+  let orderBy: any = { createdAt: "desc" };
+
+  switch (sort) {
+    case "oldest":
+      orderBy = { createdAt: "asc" };
+      break;
+    case "highest":
+      orderBy = { overallScore: "desc" };
+      break;
+    case "lowest":
+      orderBy = { overallScore: "asc" };
+      break;
+    default:
+      orderBy = { createdAt: "desc" };
+  }
+
   const reviews = await prisma.review.findMany({
     where: { userId },
     include: {
@@ -418,7 +434,7 @@ export async function getUserReviews(userId: string, limit: number = 10, offset:
       },
       categoryScores: true,
     },
-    orderBy: { createdAt: "desc" },
+    orderBy,
     take: limit,
     skip: offset,
   });
