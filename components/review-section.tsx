@@ -17,6 +17,8 @@ import {
   ReviewStats
 } from "@/lib/types/reviews";
 
+type ReviewSortOption = "newest" | "oldest" | "highest-score" | "lowest-score" | "most-helpful";
+
 interface ReviewSectionProps {
   kitId: string;
   kitName: string;
@@ -31,6 +33,35 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
+  const [sortOption, setSortOption] = useState<ReviewSortOption>("newest");
+
+  // Sort reviews based on selected option
+  const sortReviews = (reviews: ReviewWithDetails[], sortBy: ReviewSortOption): ReviewWithDetails[] => {
+    const sorted = [...reviews];
+
+    switch (sortBy) {
+      case "newest":
+        return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      case "oldest":
+        return sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      case "highest-score":
+        return sorted.sort((a, b) => b.overallScore - a.overallScore);
+      case "lowest-score":
+        return sorted.sort((a, b) => a.overallScore - b.overallScore);
+      case "most-helpful":
+        return sorted.sort((a, b) => {
+          const aHelpful = a.feedback?.helpful || 0;
+          const bHelpful = b.feedback?.helpful || 0;
+          if (aHelpful !== bHelpful) {
+            return bHelpful - aHelpful;
+          }
+          // Secondary sort by overall score if helpful counts are equal
+          return b.overallScore - a.overallScore;
+        });
+      default:
+        return sorted;
+    }
+  };
 
   // Load reviews and stats
   const loadData = async () => {
@@ -38,12 +69,13 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
       setIsLoading(true);
 
       const [reviewsData, statsData, userReviewData] = await Promise.all([
-        getKitReviews(kitId, 10, 0),
+        getKitReviews(kitId, 50, 0), // Get more reviews to allow for client-side sorting
         getKitReviewStats(kitId),
         userId ? getUserKitReview(kitId) : Promise.resolve(null),
       ]);
 
-      setReviews(reviewsData);
+      const sortedReviews = sortReviews(reviewsData, sortOption);
+      setReviews(sortedReviews);
       setStats(statsData);
       setUserReview(userReviewData);
     } catch (error) {
@@ -56,6 +88,14 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
   useEffect(() => {
     loadData();
   }, [kitId, userId]);
+
+  // Handle sort option changes
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const sortedReviews = sortReviews(reviews, sortOption);
+      setReviews(sortedReviews);
+    }
+  }, [sortOption]);
 
   // Handle review form success
   const handleReviewSuccess = () => {
@@ -165,10 +205,31 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
       {/* Community Reviews */}
       <Card>
         <CardHeader>
-          <CardTitle>Community Reviews</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            {reviews.length} review{reviews.length !== 1 ? "s" : ""} from the community
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Community Reviews</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                {reviews.length} review{reviews.length !== 1 ? "s" : ""} from the community
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="sort-select" className="text-sm font-medium">
+                Sort by:
+              </label>
+              <select
+                id="sort-select"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value as ReviewSortOption)}
+                className="px-3 py-1 border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="highest-score">Highest Score</option>
+                <option value="lowest-score">Lowest Score</option>
+                <option value="most-helpful">Most Helpful</option>
+              </select>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <ReviewList

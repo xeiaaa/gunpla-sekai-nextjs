@@ -1,0 +1,29 @@
+# Task 27: Implement Review Helpful/Not Helpful Voting System
+
+## Description
+Add helpful/not helpful voting buttons to reviews with feedback tracking and sorting options
+
+## Details
+- Add ReviewFeedback model to Prisma schema with unique constraint on reviewId + userId
+- Create helpful/not helpful buttons (👍/👎) on each review card
+- Display feedback count under reviews (e.g., "12 found this helpful")
+- Implement toggle voting - users can change their vote
+- Prevent double voting with unique constraint
+- Add API endpoints for submitting/updating feedback
+- Update review sorting to optionally sort by helpful count
+- Default sorting remains by overallScore, with helpful count as secondary sort option
+
+## Priority
+Medium
+
+## Status
+Pending
+
+## Dependencies
+- Task 11 (Build Review Aggregation and Display)
+
+## Test Strategy
+- Database constraint tests for unique voting
+- UI component tests for voting buttons
+- API endpoint tests for feedback submission
+- Sorting functionality tests

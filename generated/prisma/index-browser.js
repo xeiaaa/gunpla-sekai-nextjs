@@ -313,6 +313,14 @@ exports.Prisma.ReviewScoreScalarFieldEnum = {
   notes: 'notes'
 };
 
+exports.Prisma.ReviewFeedbackScalarFieldEnum = {
+  id: 'id',
+  reviewId: 'reviewId',
+  userId: 'userId',
+  isHelpful: 'isHelpful',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BuildScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -448,6 +456,7 @@ exports.Prisma.ModelName = {
   UserKitCollection: 'UserKitCollection',
   Review: 'Review',
   ReviewScore: 'ReviewScore',
+  ReviewFeedback: 'ReviewFeedback',
   Build: 'Build',
   BuildMilestone: 'BuildMilestone',
   BuildComment: 'BuildComment',

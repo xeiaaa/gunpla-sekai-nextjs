@@ -12,6 +12,7 @@ import {
 } from "@/lib/types/reviews";
 import { ReviewCategory } from "@/generated/prisma";
 import Link from "next/link";
+import { ReviewVotingButtons } from "./review-voting-buttons";
 
 interface ReviewDisplayProps {
   review: ReviewWithDetails;
@@ -187,6 +188,20 @@ export function ReviewDisplay({
                 {isExpanded ? "Show less" : "Read more"}
               </Button>
             )}
+          </div>
+        )}
+
+        {/* Voting Buttons */}
+        {review.feedback && (
+          <div className="pt-4 border-t">
+            <ReviewVotingButtons
+              reviewId={review.id}
+              initialCounts={{
+                helpful: review.feedback.helpful,
+                notHelpful: review.feedback.notHelpful,
+              }}
+              initialUserFeedback={review.feedback.userFeedback}
+            />
           </div>
         )}
       </CardContent>

@@ -29,6 +29,13 @@ export interface ReviewWithDetails {
     username?: string;
   };
   categoryScores: CategoryScore[];
+  feedback?: {
+    helpful: number;
+    notHelpful: number;
+    userFeedback?: {
+      isHelpful: boolean;
+    } | null;
+  };
 }
 
 export interface CategoryScore {

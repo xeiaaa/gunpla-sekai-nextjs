@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/test-utils/prisma";
+import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 

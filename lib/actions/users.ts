@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/test-utils/prisma";
+import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 
 export interface UserProfileData {

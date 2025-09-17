@@ -293,12 +293,13 @@ model User {
   emailNotifications Boolean @default(true) // Email notification preferences
 
   // Relations
-  collections   UserKitCollection[]
-  builds        Build[]
-  reviews       Review[]
-  store         UserStore?
-  uploads       Upload[]            @relation("UploadedBy")
-  buildComments BuildComment[]
+  collections    UserKitCollection[]
+  builds         Build[]
+  reviews        Review[]
+  store          UserStore?
+  uploads        Upload[]            @relation("UploadedBy")
+  buildComments  BuildComment[]
+  reviewFeedback ReviewFeedback[]
 
   @@map("users")
 }
@@ -356,9 +357,10 @@ model Review {
   updatedAt    DateTime @updatedAt
 
   // Relations
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  kit            Kit           @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit            Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
   categoryScores ReviewScore[]
+  feedback       ReviewFeedback[]
 
   @@unique([userId, kitId]) // One review per user per kit
   @@index([kitId])
@@ -381,6 +383,22 @@ model ReviewScore {
 
   @@unique([reviewId, category])
   @@map("review_scores")
+}
+
+// Review feedback for helpful/not helpful voting
+model ReviewFeedback {
+  id        String   @id @default(cuid())
+  reviewId  String
+  userId    String
+  isHelpful Boolean
+  createdAt DateTime @default(now())
+
+  // Relations
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewId, userId]) // One feedback per user per review
+  @@map("review_feedback")
 }
 
 // Build status enum

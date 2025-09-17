@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/test-utils/prisma";
+import { prisma } from "@/lib/prisma";
 import { ReviewCategory } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 
@@ -320,6 +320,8 @@ export async function deleteReview(reviewId: string) {
 
 // Get reviews for a specific kit
 export async function getKitReviews(kitId: string, limit: number = 10, offset: number = 0) {
+  const { userId } = await auth();
+
   const reviews = await prisma.review.findMany({
     where: { kitId },
     include: {
@@ -339,7 +341,59 @@ export async function getKitReviews(kitId: string, limit: number = 10, offset: n
     skip: offset,
   });
 
-  return reviews;
+  // Get feedback data for all reviews
+  const reviewIds = reviews.map(r => r.id);
+  const feedbackCounts = await prisma.reviewFeedback.groupBy({
+    by: ["reviewId", "isHelpful"],
+    where: {
+      reviewId: { in: reviewIds }
+    },
+    _count: {
+      isHelpful: true,
+    },
+  });
+
+  // Get user's feedback for all reviews if authenticated
+  let userFeedback: any[] = [];
+  if (userId) {
+    userFeedback = await prisma.reviewFeedback.findMany({
+      where: {
+        reviewId: { in: reviewIds },
+        userId,
+      },
+    });
+  }
+
+  // Group feedback counts by reviewId
+  const countsByReview = feedbackCounts.reduce((acc, item) => {
+    if (!acc[item.reviewId]) {
+      acc[item.reviewId] = { helpful: 0, notHelpful: 0 };
+    }
+    if (item.isHelpful) {
+      acc[item.reviewId].helpful = item._count.isHelpful;
+    } else {
+      acc[item.reviewId].notHelpful = item._count.isHelpful;
+    }
+    return acc;
+  }, {} as Record<string, { helpful: number; notHelpful: number }>);
+
+  // Group user feedback by reviewId
+  const userFeedbackByReview = userFeedback.reduce((acc, item) => {
+    acc[item.reviewId] = { isHelpful: item.isHelpful };
+    return acc;
+  }, {} as Record<string, { isHelpful: boolean }>);
+
+  // Add feedback data to reviews
+  const reviewsWithFeedback = reviews.map(review => ({
+    ...review,
+    feedback: {
+      helpful: countsByReview[review.id]?.helpful || 0,
+      notHelpful: countsByReview[review.id]?.notHelpful || 0,
+      userFeedback: userFeedbackByReview[review.id] || null,
+    },
+  }));
+
+  return reviewsWithFeedback;
 }
 
 // Get user's review for a specific kit
@@ -371,7 +425,40 @@ export async function getUserKitReview(kitId: string) {
     },
   });
 
-  return review;
+  if (!review) {
+    return null;
+  }
+
+  // Get feedback data for this review
+  const feedbackCounts = await prisma.reviewFeedback.groupBy({
+    by: ["isHelpful"],
+    where: { reviewId: review.id },
+    _count: {
+      isHelpful: true,
+    },
+  });
+
+  const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
+  const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+
+  // Get user's feedback for this review
+  const userFeedback = await prisma.reviewFeedback.findUnique({
+    where: {
+      reviewId_userId: {
+        reviewId: review.id,
+        userId,
+      },
+    },
+  });
+
+  return {
+    ...review,
+    feedback: {
+      helpful: helpfulCount,
+      notHelpful: notHelpfulCount,
+      userFeedback: userFeedback ? { isHelpful: userFeedback.isHelpful } : null,
+    },
+  };
 }
 
 // Get review statistics for a kit
