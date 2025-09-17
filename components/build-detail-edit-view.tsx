@@ -29,7 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List } from "lucide-react";
+import { Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List, Heart, MessageSquare } from "lucide-react";
 import { format } from "date-fns";
 import { deleteBuild, updateBuild } from "@/lib/actions/builds";
 import { createMilestone, updateMilestone, deleteMilestone, reorderMilestones, setMilestoneImages } from "@/lib/actions/milestones";
@@ -40,6 +40,9 @@ import MilestoneImageSelector from "./milestone-image-selector";
 import { MarkdownEditor } from "./ui/markdown-editor";
 import { MarkdownRenderer } from "./ui/markdown-renderer";
 import { cn } from "@/lib/utils";
+import { LikeButton } from "./like-button";
+import { ShareButton } from "./share-button";
+import { CommentsSection } from "./comments-section";
 
 // Sortable Milestone Item Component
 function SortableMilestoneItem({
@@ -319,6 +322,9 @@ interface BuildDetailEditViewProps {
     completedAt: Date | null;
     createdAt: Date;
     featuredImageId: string | null;
+    likes: number;
+    liked: boolean;
+    comments: number;
     featuredImage: {
       id: string;
       url: string;
@@ -384,18 +390,18 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   const [loading, setLoading] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'milestones'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'milestones' | 'social'>('info');
 
   // Initialize tab from URL parameters
   useEffect(() => {
     const tabParam = searchParams.get('tab');
-    if (tabParam && ['info', 'gallery', 'milestones'].includes(tabParam)) {
-      setActiveTab(tabParam as 'info' | 'gallery' | 'milestones');
+    if (tabParam && ['info', 'gallery', 'milestones', 'social'].includes(tabParam)) {
+      setActiveTab(tabParam as 'info' | 'gallery' | 'milestones' | 'social');
     }
   }, [searchParams]);
 
   // Handle tab change and update URL
-  const handleTabChange = (tabId: 'info' | 'gallery' | 'milestones') => {
+  const handleTabChange = (tabId: 'info' | 'gallery' | 'milestones' | 'social') => {
     setActiveTab(tabId);
     const url = new URL(window.location.href);
     url.searchParams.set('tab', tabId);
@@ -709,6 +715,7 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
     { id: 'info' as const, label: 'Build Info', icon: Info },
     { id: 'gallery' as const, label: 'Build Gallery', icon: Image },
     { id: 'milestones' as const, label: 'Build Milestones', icon: List },
+    { id: 'social' as const, label: 'Social Engagement', icon: Heart },
   ];
 
   // Render tab content
@@ -994,6 +1001,67 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
             )}
           </div>
         );
+      case 'social':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Social Engagement</h2>
+              <p className="text-gray-600 mb-6">
+                Preview how your build appears to the community and manage social interactions.
+              </p>
+            </div>
+
+            {/* Social Engagement Preview */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4">Community Preview</h3>
+              <div className="space-y-4">
+                {/* Build Header with Social Actions */}
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">{build.title}</h4>
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                      <span>by {build.user.username || `${build.user.firstName} ${build.user.lastName}`}</span>
+                      <span>•</span>
+                      <span>{format(build.createdAt, "MMM d, yyyy")}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <LikeButton 
+                      buildId={build.id} 
+                      initialLikes={build.likes} 
+                      initialLiked={build.liked}
+                    />
+                    <ShareButton buildId={build.id} buildTitle={build.title} />
+                  </div>
+                </div>
+
+                {/* Social Stats */}
+                <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-2 text-2xl font-bold text-gray-900">
+                      <Heart className="h-6 w-6 text-red-500" />
+                      {build.likes}
+                    </div>
+                    <p className="text-sm text-gray-600">Likes</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-2 text-2xl font-bold text-gray-900">
+                      <MessageSquare className="h-6 w-6 text-blue-500" />
+                      {build.comments}
+                    </div>
+                    <p className="text-sm text-gray-600">Comments</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Comments Section */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4">Comments</h3>
+              <CommentsSection buildId={build.id} />
+            </Card>
+          </div>
+        );
       default:
         return null;
     }
@@ -1056,6 +1124,20 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                     <span className="text-sm text-gray-600">Images</span>
                     <span className="font-semibold text-gray-900">
                       {mediaLibraryCount}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Likes</span>
+                    <span className="font-semibold text-gray-900 flex items-center gap-1">
+                      <Heart className="h-4 w-4 text-red-500" />
+                      {build.likes}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Comments</span>
+                    <span className="font-semibold text-gray-900 flex items-center gap-1">
+                      <MessageSquare className="h-4 w-4 text-blue-500" />
+                      {build.comments}
                     </span>
                   </div>
                   {build.startedAt && (

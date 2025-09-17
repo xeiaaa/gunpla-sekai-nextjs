@@ -593,7 +593,7 @@
             "title": "Integrate Social Features into Build Pages",
             "description": "Add social engagement components to build detail and edit pages",
             "details": "**Build Detail Page Integration:**\n- Add Like, Comment, Share buttons to build header\n- Implement suggested layout:\n  ```\n  [ Title + Author + Dates ]\n  [ Like ❤️ 24 ] [ Comment 💬 5 ] [ Share 🔗 ]\n  ```\n- Add Comments tab to existing tab navigation\n- Integrate with existing build milestone system\n\n**Build Edit Page Integration:**\n- Add social engagement preview\n- Show like/comment counts in edit mode\n- Maintain existing tab structure\n\n**Build Card Integration:**\n- Add like count to build cards in listings\n- Consistent social engagement display\n- Hover states and interactions\n\n**Responsive Design:**\n- Mobile-friendly button layout\n- Touch-friendly interaction areas\n- Proper spacing and alignment\n\n**State Management:**\n- Real-time updates for likes/comments\n- Optimistic UI updates\n- Error handling and retry logic",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [
               "28.2",
               "28.3",
@@ -630,7 +630,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-17T23:51:00.644Z"
+      "updated": "2025-09-17T23:52:31.340Z"
     }
   }
 }

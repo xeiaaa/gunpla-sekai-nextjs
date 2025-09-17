@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getBuild } from "@/lib/actions/builds";
 import { BuildDetailEditView } from "@/components/build-detail-edit-view";
+import { auth } from "@clerk/nextjs/server";
 
 interface BuildEditPageProps {
   params: {
@@ -9,7 +10,8 @@ interface BuildEditPageProps {
 }
 
 export default async function BuildEditPage({ params }: BuildEditPageProps) {
-  const build = await getBuild(params.id);
+  const { userId } = await auth();
+  const build = await getBuild(params.id, userId || undefined);
 
   if (!build) {
     notFound();
