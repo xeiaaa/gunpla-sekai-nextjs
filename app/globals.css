@@ -338,3 +338,6 @@ body {
     letter-spacing: var(--tracking-normal);
   }
 }
+
+/* Markdown Editor Styles */
+@import "@uiw/react-md-editor/markdown-editor.css";

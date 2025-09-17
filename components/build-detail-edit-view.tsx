@@ -28,7 +28,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List } from "lucide-react";
 import { format } from "date-fns";
@@ -38,16 +37,20 @@ import { MilestoneType } from "@/generated/prisma";
 import { FeaturedImageSelector } from "./featured-image-selector";
 import BuildMediaLibrary from "./build-media-library";
 import MilestoneImageSelector from "./milestone-image-selector";
+import { MarkdownEditor } from "./ui/markdown-editor";
+import { MarkdownRenderer } from "./ui/markdown-renderer";
 import { cn } from "@/lib/utils";
 
 // Sortable Milestone Item Component
 function SortableMilestoneItem({
   milestone,
   editingMilestone,
-  setEditingMilestone,
-  handleUpdateMilestone,
   handleDeleteMilestone,
   handleEditMilestone,
+  handleSaveMilestone,
+  handleCancelEditMilestone,
+  editingMilestoneData,
+  setEditingMilestoneData,
   reorderMode,
   onImagesChange,
   onLoadingChange
@@ -72,10 +75,20 @@ function SortableMilestoneItem({
     }>;
   };
   editingMilestone: string | null;
-  setEditingMilestone: (id: string | null) => void;
-  handleUpdateMilestone: (id: string, updates: { title?: string; description?: string; type?: MilestoneType }) => void;
   handleDeleteMilestone: (id: string) => void;
   handleEditMilestone: (id: string) => void;
+  handleSaveMilestone: (id: string) => void;
+  handleCancelEditMilestone: () => void;
+  editingMilestoneData: {
+    title: string;
+    description: string;
+    type: MilestoneType;
+  } | null;
+  setEditingMilestoneData: (data: {
+    title: string;
+    description: string;
+    type: MilestoneType;
+  } | null) => void;
   reorderMode: boolean;
   onImagesChange: (images: Array<{
     id: string;
@@ -164,9 +177,9 @@ function SortableMilestoneItem({
                   <div>
                     <Label htmlFor={`edit-type-${milestone.id}`}>Type</Label>
                     <Select
-                      value={milestone.type}
+                      value={editingMilestoneData?.type || milestone.type}
                       onValueChange={(value: MilestoneType) =>
-                        handleUpdateMilestone(milestone.id, { type: value })
+                        setEditingMilestoneData(editingMilestoneData ? { ...editingMilestoneData, type: value } : null)
                       }
                     >
                       <SelectTrigger>
@@ -189,28 +202,28 @@ function SortableMilestoneItem({
                     <Label htmlFor={`edit-title-${milestone.id}`}>Title</Label>
                     <Input
                       id={`edit-title-${milestone.id}`}
-                      value={milestone.title}
+                      value={editingMilestoneData?.title || milestone.title}
                       onChange={(e) =>
-                        handleUpdateMilestone(milestone.id, { title: e.target.value })
+                        setEditingMilestoneData(editingMilestoneData ? { ...editingMilestoneData, title: e.target.value } : null)
                       }
                     />
                   </div>
                 </div>
                 <div>
                   <Label htmlFor={`edit-description-${milestone.id}`}>Description</Label>
-                  <Textarea
-                    id={`edit-description-${milestone.id}`}
-                    value={milestone.description || ""}
-                    onChange={(e) =>
-                      handleUpdateMilestone(milestone.id, { description: e.target.value })
+                  <MarkdownEditor
+                    value={editingMilestoneData?.description || milestone.description || ""}
+                    onChange={(value) =>
+                      setEditingMilestoneData(editingMilestoneData ? { ...editingMilestoneData, description: value } : null)
                     }
-                    rows={3}
+                    placeholder="Enter milestone description (optional)... (Markdown supported)"
+                    height={150}
                   />
                 </div>
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    onClick={() => setEditingMilestone(null)}
+                    onClick={() => handleSaveMilestone(milestone.id)}
                     className="flex items-center gap-2"
                   >
                     <Save className="h-4 w-4" />
@@ -219,7 +232,7 @@ function SortableMilestoneItem({
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setEditingMilestone(null)}
+                    onClick={handleCancelEditMilestone}
                   >
                     Cancel
                   </Button>
@@ -269,7 +282,9 @@ function SortableMilestoneItem({
       </div>
 
       {milestone.description && (
-        <p className="text-gray-700 mb-4">{milestone.description}</p>
+        <div className="mb-4">
+          <MarkdownRenderer content={milestone.description} />
+        </div>
       )}
 
       {/* Milestone Image Selector */}
@@ -360,6 +375,12 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   const [milestones, setMilestones] = useState(build.milestones.map(m => ({ ...m, buildId: build.id })));
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingMilestone, setEditingMilestone] = useState<string | null>(null);
+  const [editingMilestoneData, setEditingMilestoneData] = useState<{
+    title: string;
+    description: string;
+    type: MilestoneType;
+  } | null>(null);
+  const [mediaLibraryCount, setMediaLibraryCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const searchParams = useSearchParams();
@@ -560,20 +581,37 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
     }
   };
 
-  const handleUpdateMilestone = async (milestoneId: string, updates: { title?: string; description?: string; type?: MilestoneType }) => {
+
+  const handleEditMilestone = (milestoneId: string) => {
+    const milestone = milestones.find(m => m.id === milestoneId);
+    if (milestone) {
+      setEditingMilestone(milestoneId);
+      setEditingMilestoneData({
+        title: milestone.title,
+        description: milestone.description || "",
+        type: milestone.type as MilestoneType,
+      });
+      setReorderMode(false); // Exit reorder mode when editing
+    }
+  };
+
+  const handleSaveMilestone = async (milestoneId: string) => {
+    if (!editingMilestoneData) return;
+
     try {
-      const updatedMilestone = await updateMilestone(milestoneId, updates);
+      const updatedMilestone = await updateMilestone(milestoneId, editingMilestoneData);
       setMilestones(milestones.map(m => m.id === milestoneId ? updatedMilestone : m));
       setEditingMilestone(null);
+      setEditingMilestoneData(null);
     } catch (error) {
       console.error("Error updating milestone:", error);
       alert("Failed to update milestone. Please try again.");
     }
   };
 
-  const handleEditMilestone = (milestoneId: string) => {
-    setEditingMilestone(milestoneId);
-    setReorderMode(false); // Exit reorder mode when editing
+  const handleCancelEditMilestone = () => {
+    setEditingMilestone(null);
+    setEditingMilestoneData(null);
   };
 
 
@@ -702,12 +740,11 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                 </div>
                 <div>
                   <Label htmlFor="build-description">Description</Label>
-                  <Textarea
-                    id="build-description"
+                  <MarkdownEditor
                     value={buildData.description}
-                    onChange={(e) => setBuildData({ ...buildData, description: e.target.value })}
-                    rows={4}
-                    placeholder="Describe your build process, techniques used, or any notes..."
+                    onChange={(value) => setBuildData({ ...buildData, description: value })}
+                    placeholder="Describe your build process, techniques used, or any notes... (Markdown supported)"
+                    height={200}
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -803,6 +840,8 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
             <BuildMediaLibrary
               buildId={build.id}
               showSelection={false}
+              featuredImageId={build.featuredImageId}
+              onMediaCountChange={setMediaLibraryCount}
             />
           </div>
         );
@@ -877,12 +916,11 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
 
                   <div>
                     <Label htmlFor="milestone-description">Description</Label>
-                    <Textarea
-                      id="milestone-description"
+                    <MarkdownEditor
                       value={newMilestone.description}
-                      onChange={(e) => setNewMilestone({ ...newMilestone, description: e.target.value })}
-                      placeholder="Enter milestone description (optional)"
-                      rows={3}
+                      onChange={(value) => setNewMilestone({ ...newMilestone, description: value })}
+                      placeholder="Enter milestone description (optional)... (Markdown supported)"
+                      height={150}
                     />
                   </div>
 
@@ -939,10 +977,12 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                         key={milestone.id}
                         milestone={milestone}
                         editingMilestone={editingMilestone}
-                        setEditingMilestone={setEditingMilestone}
-                        handleUpdateMilestone={handleUpdateMilestone}
                         handleDeleteMilestone={handleDeleteMilestone}
                         handleEditMilestone={handleEditMilestone}
+                        handleSaveMilestone={handleSaveMilestone}
+                        handleCancelEditMilestone={handleCancelEditMilestone}
+                        editingMilestoneData={editingMilestoneData}
+                        setEditingMilestoneData={setEditingMilestoneData}
                         reorderMode={reorderMode}
                         onImagesChange={(images) => handleMilestoneImagesChange(milestone.id, images)}
                         onLoadingChange={() => {}} // No-op since we're not using card-level loading
@@ -962,33 +1002,6 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            {/* <div className="flex-1">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">{buildData.title}</h1>
-                <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <User className="h-4 w-4" />
-                    <span>{build.user.firstName} {build.user.lastName}</span>
-                    {build.user.username && (
-                      <span className="text-gray-400">(@{build.user.username})</span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>Started {format(build.createdAt, "MMM d, yyyy")}</span>
-                  </div>
-                </div>
-                {buildData.description && (
-                  <p className="mt-4 text-gray-700">{buildData.description}</p>
-                )}
-              </div>
-            </div> */}
-
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
@@ -1042,8 +1055,7 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Images</span>
                     <span className="font-semibold text-gray-900">
-                      {/* This will be updated to show media library count */}
-                      {milestones.reduce((total, milestone) => total + milestone.uploads.length, 0)}
+                      {mediaLibraryCount}
                     </span>
                   </div>
                   {build.startedAt && (

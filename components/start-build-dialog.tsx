@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Loader2, Plus } from "lucide-react";
@@ -103,12 +104,11 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
 
               <div>
                 <Label htmlFor="build-description">Description</Label>
-                <Textarea
-                  id="build-description"
+                <MarkdownEditor
                   value={buildDescription}
-                  onChange={(e) => setBuildDescription(e.target.value)}
-                  placeholder="Tell us about your build plans..."
-                  rows={3}
+                  onChange={setBuildDescription}
+                  placeholder="Tell us about your build plans... (Markdown supported)"
+                  height={150}
                 />
               </div>
 

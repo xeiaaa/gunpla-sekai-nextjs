@@ -17,7 +17,8 @@ import {
   Minimize2,
   X,
   Save,
-  Edit3
+  Edit3,
+  Star
 } from "lucide-react";
 import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import {
@@ -70,6 +71,8 @@ interface BuildMediaLibraryProps {
   onImageClick?: (image: MediaItem) => void;
   selectedImages?: string[]; // Array of image IDs that are selected
   showSelection?: boolean;
+  featuredImageId?: string | null; // ID of the currently featured image
+  onMediaCountChange?: (count: number) => void; // Callback when media count changes
 }
 
 // Sortable Media Item Component
@@ -81,6 +84,7 @@ function SortableMediaItem({
   showSelection = false,
   onImageClick,
   imageFit = "cover",
+  isFeatured = false,
 }: {
   mediaItem: MediaItem;
   isSelected: boolean;
@@ -89,6 +93,7 @@ function SortableMediaItem({
   showSelection?: boolean;
   onImageClick?: (item: MediaItem) => void;
   imageFit?: "cover" | "contain";
+  isFeatured?: boolean;
 }) {
   const {
     attributes,
@@ -157,6 +162,13 @@ function SortableMediaItem({
           )}
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
         />
+        {/* Featured image indicator */}
+        {isFeatured && (
+          <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-1 shadow-lg">
+            <Star className="h-3 w-3 fill-current" />
+          </div>
+        )}
+
         {/* Click overlay */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 transition-opacity">
@@ -190,6 +202,8 @@ export default function BuildMediaLibrary({
   onImageClick,
   selectedImages = [],
   showSelection = false,
+  featuredImageId = null,
+  onMediaCountChange,
 }: BuildMediaLibraryProps) {
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -210,6 +224,11 @@ export default function BuildMediaLibrary({
 
   // Sort items by order (from database)
   const sortedItems = [...mediaItems].sort((a, b) => a.order - b.order);
+
+  // Notify parent component when media count changes
+  useEffect(() => {
+    onMediaCountChange?.(mediaItems.length);
+  }, [mediaItems.length, onMediaCountChange]);
 
   // Load existing media items
   useEffect(() => {
@@ -492,6 +511,7 @@ export default function BuildMediaLibrary({
                   showSelection={showSelection}
                   onImageClick={handleImageClick}
                   imageFit={imageFit}
+                  isFeatured={featuredImageId === item.id}
                 />
                 ))}
               </div>

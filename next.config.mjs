@@ -32,6 +32,11 @@ const nextConfig = {
         hostname: "clerk.dev",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.clerk.dev",
+        pathname: "/**",
+      },
     ],
   },
 };

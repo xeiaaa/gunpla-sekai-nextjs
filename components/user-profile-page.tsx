@@ -39,15 +39,17 @@ export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageP
         <div className="flex items-center gap-6">
           <div className="relative">
             {user.imageUrl || user.avatarUrl ? (
-              <Image
-                src={user.imageUrl || user.avatarUrl || ""}
-                alt={displayName}
-                width={120}
-                height={120}
-                className="rounded-full border-4 border-white shadow-lg"
-              />
+              <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden relative">
+                <Image
+                  src={user.imageUrl || user.avatarUrl || ""}
+                  alt={displayName}
+                  fill
+                  className="object-cover rounded-full"
+                  style={{ borderRadius: '50%' }}
+                />
+              </div>
             ) : (
-              <div className="w-30 h-30 rounded-full bg-gray-200 flex items-center justify-center">
+              <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
                 <User className="w-16 h-16 text-gray-400" />
               </div>
             )}
