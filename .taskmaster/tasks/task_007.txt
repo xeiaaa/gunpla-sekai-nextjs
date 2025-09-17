@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Build User Profile Pages
-# Status: pending
+# Status: done
 # Dependencies: 6
 # Priority: medium
 # Description: Create public user profiles displaying collections, activity, and statistics
@@ -11,7 +11,7 @@ Design and implement user profile pages showing collection statistics, recent ac
 Profile display tests, privacy setting tests, performance tests for large collections
 
 # Subtasks:
-## 2. Create Profile Edit Page [pending]
+## 2. Create Profile Edit Page [done]
 ### Dependencies: 7.1
 ### Description: Build /settings/profile route for users to edit their profile details and privacy settings
 ### Details:
@@ -21,7 +21,7 @@ Profile display tests, privacy setting tests, performance tests for large collec
 - Privacy settings (make profile public/private)
 - Form validation and error handling
 
-## 1. Create Public Profile Page [pending]
+## 1. Create Public Profile Page [done]
 ### Dependencies: None
 ### Description: Build /users/[username] route with user info, collection stats, public builds gallery, and reviews
 ### Details:
@@ -32,7 +32,7 @@ Profile display tests, privacy setting tests, performance tests for large collec
 - Reviews given by this user
 - Read-only presentation of collection data
 
-## 3. Create User Builds Page [pending]
+## 3. Create User Builds Page [done]
 ### Dependencies: None
 ### Description: Build /users/[username]/builds route for dedicated build gallery browsing
 ### Details:
@@ -42,7 +42,7 @@ Profile display tests, privacy setting tests, performance tests for large collec
 - Build filtering and sorting options
 - Pagination for large build collections
 
-## 4. Create User Reviews Page [pending]
+## 4. Create User Reviews Page [done]
 ### Dependencies: None
 ### Description: Build /users/[username]/reviews route to show all reviews written by the user
 ### Details:

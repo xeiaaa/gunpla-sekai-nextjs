@@ -69,6 +69,11 @@ export type KitUpload = $Result.DefaultSelection<Prisma.$KitUploadPayload>
  */
 export type MobileSuitUpload = $Result.DefaultSelection<Prisma.$MobileSuitUploadPayload>
 /**
+ * Model BuildUpload
+ * 
+ */
+export type BuildUpload = $Result.DefaultSelection<Prisma.$BuildUploadPayload>
+/**
  * Model BuildMilestoneUpload
  * 
  */
@@ -435,6 +440,16 @@ export class PrismaClient<
     * ```
     */
   get mobileSuitUpload(): Prisma.MobileSuitUploadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.buildUpload`: Exposes CRUD operations for the **BuildUpload** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BuildUploads
+    * const buildUploads = await prisma.buildUpload.findMany()
+    * ```
+    */
+  get buildUpload(): Prisma.BuildUploadDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.buildMilestoneUpload`: Exposes CRUD operations for the **BuildMilestoneUpload** model.
@@ -996,6 +1011,7 @@ export namespace Prisma {
     Upload: 'Upload',
     KitUpload: 'KitUpload',
     MobileSuitUpload: 'MobileSuitUpload',
+    BuildUpload: 'BuildUpload',
     BuildMilestoneUpload: 'BuildMilestoneUpload',
     User: 'User',
     UserKitCollection: 'UserKitCollection',
@@ -1025,7 +1041,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildComment" | "userStore" | "marketplaceListing"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildComment" | "userStore" | "marketplaceListing"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1840,6 +1856,80 @@ export namespace Prisma {
           count: {
             args: Prisma.MobileSuitUploadCountArgs<ExtArgs>
             result: $Utils.Optional<MobileSuitUploadCountAggregateOutputType> | number
+          }
+        }
+      }
+      BuildUpload: {
+        payload: Prisma.$BuildUploadPayload<ExtArgs>
+        fields: Prisma.BuildUploadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BuildUploadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BuildUploadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          findFirst: {
+            args: Prisma.BuildUploadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BuildUploadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          findMany: {
+            args: Prisma.BuildUploadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>[]
+          }
+          create: {
+            args: Prisma.BuildUploadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          createMany: {
+            args: Prisma.BuildUploadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BuildUploadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>[]
+          }
+          delete: {
+            args: Prisma.BuildUploadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          update: {
+            args: Prisma.BuildUploadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          deleteMany: {
+            args: Prisma.BuildUploadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BuildUploadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BuildUploadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>[]
+          }
+          upsert: {
+            args: Prisma.BuildUploadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildUploadPayload>
+          }
+          aggregate: {
+            args: Prisma.BuildUploadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBuildUpload>
+          }
+          groupBy: {
+            args: Prisma.BuildUploadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BuildUploadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BuildUploadCountArgs<ExtArgs>
+            result: $Utils.Optional<BuildUploadCountAggregateOutputType> | number
           }
         }
       }
@@ -2764,6 +2854,7 @@ export namespace Prisma {
     upload?: UploadOmit
     kitUpload?: KitUploadOmit
     mobileSuitUpload?: MobileSuitUploadOmit
+    buildUpload?: BuildUploadOmit
     buildMilestoneUpload?: BuildMilestoneUploadOmit
     user?: UserOmit
     userKitCollection?: UserKitCollectionOmit
@@ -3147,6 +3238,7 @@ export namespace Prisma {
     kitUploads: number
     mobileSuitUploads: number
     productLineLogos: number
+    buildUploads: number
     buildMilestoneUploads: number
     buildFeaturedImages: number
   }
@@ -3155,6 +3247,7 @@ export namespace Prisma {
     kitUploads?: boolean | UploadCountOutputTypeCountKitUploadsArgs
     mobileSuitUploads?: boolean | UploadCountOutputTypeCountMobileSuitUploadsArgs
     productLineLogos?: boolean | UploadCountOutputTypeCountProductLineLogosArgs
+    buildUploads?: boolean | UploadCountOutputTypeCountBuildUploadsArgs
     buildMilestoneUploads?: boolean | UploadCountOutputTypeCountBuildMilestoneUploadsArgs
     buildFeaturedImages?: boolean | UploadCountOutputTypeCountBuildFeaturedImagesArgs
   }
@@ -3189,6 +3282,13 @@ export namespace Prisma {
    */
   export type UploadCountOutputTypeCountProductLineLogosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductLineWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountBuildUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildUploadWhereInput
   }
 
   /**
@@ -3327,11 +3427,13 @@ export namespace Prisma {
    */
 
   export type BuildCountOutputType = {
+    uploads: number
     milestones: number
     comments: number
   }
 
   export type BuildCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    uploads?: boolean | BuildCountOutputTypeCountUploadsArgs
     milestones?: boolean | BuildCountOutputTypeCountMilestonesArgs
     comments?: boolean | BuildCountOutputTypeCountCommentsArgs
   }
@@ -3345,6 +3447,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the BuildCountOutputType
      */
     select?: BuildCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BuildCountOutputType without action
+   */
+  export type BuildCountOutputTypeCountUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildUploadWhereInput
   }
 
   /**
@@ -13079,6 +13188,7 @@ export namespace Prisma {
     kitUploads?: boolean | Upload$kitUploadsArgs<ExtArgs>
     mobileSuitUploads?: boolean | Upload$mobileSuitUploadsArgs<ExtArgs>
     productLineLogos?: boolean | Upload$productLineLogosArgs<ExtArgs>
+    buildUploads?: boolean | Upload$buildUploadsArgs<ExtArgs>
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
@@ -13143,6 +13253,7 @@ export namespace Prisma {
     kitUploads?: boolean | Upload$kitUploadsArgs<ExtArgs>
     mobileSuitUploads?: boolean | Upload$mobileSuitUploadsArgs<ExtArgs>
     productLineLogos?: boolean | Upload$productLineLogosArgs<ExtArgs>
+    buildUploads?: boolean | Upload$buildUploadsArgs<ExtArgs>
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
@@ -13161,6 +13272,7 @@ export namespace Prisma {
       kitUploads: Prisma.$KitUploadPayload<ExtArgs>[]
       mobileSuitUploads: Prisma.$MobileSuitUploadPayload<ExtArgs>[]
       productLineLogos: Prisma.$ProductLinePayload<ExtArgs>[]
+      buildUploads: Prisma.$BuildUploadPayload<ExtArgs>[]
       buildMilestoneUploads: Prisma.$BuildMilestoneUploadPayload<ExtArgs>[]
       buildFeaturedImages: Prisma.$BuildPayload<ExtArgs>[]
     }
@@ -13577,6 +13689,7 @@ export namespace Prisma {
     kitUploads<T extends Upload$kitUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$kitUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mobileSuitUploads<T extends Upload$mobileSuitUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$mobileSuitUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileSuitUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productLineLogos<T extends Upload$productLineLogosArgs<ExtArgs> = {}>(args?: Subset<T, Upload$productLineLogosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    buildUploads<T extends Upload$buildUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildMilestoneUploads<T extends Upload$buildMilestoneUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildMilestoneUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestoneUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildFeaturedImages<T extends Upload$buildFeaturedImagesArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildFeaturedImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -14087,6 +14200,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.buildUploads
+   */
+  export type Upload$buildUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    where?: BuildUploadWhereInput
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    cursor?: BuildUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuildUploadScalarFieldEnum | BuildUploadScalarFieldEnum[]
   }
 
   /**
@@ -16418,6 +16555,1132 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MobileSuitUploadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BuildUpload
+   */
+
+  export type AggregateBuildUpload = {
+    _count: BuildUploadCountAggregateOutputType | null
+    _avg: BuildUploadAvgAggregateOutputType | null
+    _sum: BuildUploadSumAggregateOutputType | null
+    _min: BuildUploadMinAggregateOutputType | null
+    _max: BuildUploadMaxAggregateOutputType | null
+  }
+
+  export type BuildUploadAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type BuildUploadSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type BuildUploadMinAggregateOutputType = {
+    id: string | null
+    buildId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BuildUploadMaxAggregateOutputType = {
+    id: string | null
+    buildId: string | null
+    uploadId: string | null
+    caption: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BuildUploadCountAggregateOutputType = {
+    id: number
+    buildId: number
+    uploadId: number
+    caption: number
+    order: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BuildUploadAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type BuildUploadSumAggregateInputType = {
+    order?: true
+  }
+
+  export type BuildUploadMinAggregateInputType = {
+    id?: true
+    buildId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BuildUploadMaxAggregateInputType = {
+    id?: true
+    buildId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BuildUploadCountAggregateInputType = {
+    id?: true
+    buildId?: true
+    uploadId?: true
+    caption?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BuildUploadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuildUpload to aggregate.
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildUploads to fetch.
+     */
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BuildUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BuildUploads
+    **/
+    _count?: true | BuildUploadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BuildUploadAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BuildUploadSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BuildUploadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BuildUploadMaxAggregateInputType
+  }
+
+  export type GetBuildUploadAggregateType<T extends BuildUploadAggregateArgs> = {
+        [P in keyof T & keyof AggregateBuildUpload]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBuildUpload[P]>
+      : GetScalarType<T[P], AggregateBuildUpload[P]>
+  }
+
+
+
+
+  export type BuildUploadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildUploadWhereInput
+    orderBy?: BuildUploadOrderByWithAggregationInput | BuildUploadOrderByWithAggregationInput[]
+    by: BuildUploadScalarFieldEnum[] | BuildUploadScalarFieldEnum
+    having?: BuildUploadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BuildUploadCountAggregateInputType | true
+    _avg?: BuildUploadAvgAggregateInputType
+    _sum?: BuildUploadSumAggregateInputType
+    _min?: BuildUploadMinAggregateInputType
+    _max?: BuildUploadMaxAggregateInputType
+  }
+
+  export type BuildUploadGroupByOutputType = {
+    id: string
+    buildId: string
+    uploadId: string
+    caption: string | null
+    order: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BuildUploadCountAggregateOutputType | null
+    _avg: BuildUploadAvgAggregateOutputType | null
+    _sum: BuildUploadSumAggregateOutputType | null
+    _min: BuildUploadMinAggregateOutputType | null
+    _max: BuildUploadMaxAggregateOutputType | null
+  }
+
+  type GetBuildUploadGroupByPayload<T extends BuildUploadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BuildUploadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BuildUploadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BuildUploadGroupByOutputType[P]>
+            : GetScalarType<T[P], BuildUploadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BuildUploadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildUpload"]>
+
+  export type BuildUploadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildUpload"]>
+
+  export type BuildUploadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    buildId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildUpload"]>
+
+  export type BuildUploadSelectScalar = {
+    id?: boolean
+    buildId?: boolean
+    uploadId?: boolean
+    caption?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BuildUploadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "buildId" | "uploadId" | "caption" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["buildUpload"]>
+  export type BuildUploadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type BuildUploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+  export type BuildUploadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    build?: boolean | BuildDefaultArgs<ExtArgs>
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+  }
+
+  export type $BuildUploadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BuildUpload"
+    objects: {
+      build: Prisma.$BuildPayload<ExtArgs>
+      upload: Prisma.$UploadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      buildId: string
+      uploadId: string
+      caption: string | null
+      order: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["buildUpload"]>
+    composites: {}
+  }
+
+  type BuildUploadGetPayload<S extends boolean | null | undefined | BuildUploadDefaultArgs> = $Result.GetResult<Prisma.$BuildUploadPayload, S>
+
+  type BuildUploadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BuildUploadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BuildUploadCountAggregateInputType | true
+    }
+
+  export interface BuildUploadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BuildUpload'], meta: { name: 'BuildUpload' } }
+    /**
+     * Find zero or one BuildUpload that matches the filter.
+     * @param {BuildUploadFindUniqueArgs} args - Arguments to find a BuildUpload
+     * @example
+     * // Get one BuildUpload
+     * const buildUpload = await prisma.buildUpload.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BuildUploadFindUniqueArgs>(args: SelectSubset<T, BuildUploadFindUniqueArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BuildUpload that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BuildUploadFindUniqueOrThrowArgs} args - Arguments to find a BuildUpload
+     * @example
+     * // Get one BuildUpload
+     * const buildUpload = await prisma.buildUpload.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BuildUploadFindUniqueOrThrowArgs>(args: SelectSubset<T, BuildUploadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuildUpload that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadFindFirstArgs} args - Arguments to find a BuildUpload
+     * @example
+     * // Get one BuildUpload
+     * const buildUpload = await prisma.buildUpload.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BuildUploadFindFirstArgs>(args?: SelectSubset<T, BuildUploadFindFirstArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuildUpload that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadFindFirstOrThrowArgs} args - Arguments to find a BuildUpload
+     * @example
+     * // Get one BuildUpload
+     * const buildUpload = await prisma.buildUpload.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BuildUploadFindFirstOrThrowArgs>(args?: SelectSubset<T, BuildUploadFindFirstOrThrowArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BuildUploads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BuildUploads
+     * const buildUploads = await prisma.buildUpload.findMany()
+     * 
+     * // Get first 10 BuildUploads
+     * const buildUploads = await prisma.buildUpload.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const buildUploadWithIdOnly = await prisma.buildUpload.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BuildUploadFindManyArgs>(args?: SelectSubset<T, BuildUploadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BuildUpload.
+     * @param {BuildUploadCreateArgs} args - Arguments to create a BuildUpload.
+     * @example
+     * // Create one BuildUpload
+     * const BuildUpload = await prisma.buildUpload.create({
+     *   data: {
+     *     // ... data to create a BuildUpload
+     *   }
+     * })
+     * 
+     */
+    create<T extends BuildUploadCreateArgs>(args: SelectSubset<T, BuildUploadCreateArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BuildUploads.
+     * @param {BuildUploadCreateManyArgs} args - Arguments to create many BuildUploads.
+     * @example
+     * // Create many BuildUploads
+     * const buildUpload = await prisma.buildUpload.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BuildUploadCreateManyArgs>(args?: SelectSubset<T, BuildUploadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BuildUploads and returns the data saved in the database.
+     * @param {BuildUploadCreateManyAndReturnArgs} args - Arguments to create many BuildUploads.
+     * @example
+     * // Create many BuildUploads
+     * const buildUpload = await prisma.buildUpload.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BuildUploads and only return the `id`
+     * const buildUploadWithIdOnly = await prisma.buildUpload.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BuildUploadCreateManyAndReturnArgs>(args?: SelectSubset<T, BuildUploadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BuildUpload.
+     * @param {BuildUploadDeleteArgs} args - Arguments to delete one BuildUpload.
+     * @example
+     * // Delete one BuildUpload
+     * const BuildUpload = await prisma.buildUpload.delete({
+     *   where: {
+     *     // ... filter to delete one BuildUpload
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BuildUploadDeleteArgs>(args: SelectSubset<T, BuildUploadDeleteArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BuildUpload.
+     * @param {BuildUploadUpdateArgs} args - Arguments to update one BuildUpload.
+     * @example
+     * // Update one BuildUpload
+     * const buildUpload = await prisma.buildUpload.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BuildUploadUpdateArgs>(args: SelectSubset<T, BuildUploadUpdateArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BuildUploads.
+     * @param {BuildUploadDeleteManyArgs} args - Arguments to filter BuildUploads to delete.
+     * @example
+     * // Delete a few BuildUploads
+     * const { count } = await prisma.buildUpload.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BuildUploadDeleteManyArgs>(args?: SelectSubset<T, BuildUploadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuildUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BuildUploads
+     * const buildUpload = await prisma.buildUpload.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BuildUploadUpdateManyArgs>(args: SelectSubset<T, BuildUploadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuildUploads and returns the data updated in the database.
+     * @param {BuildUploadUpdateManyAndReturnArgs} args - Arguments to update many BuildUploads.
+     * @example
+     * // Update many BuildUploads
+     * const buildUpload = await prisma.buildUpload.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BuildUploads and only return the `id`
+     * const buildUploadWithIdOnly = await prisma.buildUpload.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BuildUploadUpdateManyAndReturnArgs>(args: SelectSubset<T, BuildUploadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BuildUpload.
+     * @param {BuildUploadUpsertArgs} args - Arguments to update or create a BuildUpload.
+     * @example
+     * // Update or create a BuildUpload
+     * const buildUpload = await prisma.buildUpload.upsert({
+     *   create: {
+     *     // ... data to create a BuildUpload
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BuildUpload we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BuildUploadUpsertArgs>(args: SelectSubset<T, BuildUploadUpsertArgs<ExtArgs>>): Prisma__BuildUploadClient<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BuildUploads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadCountArgs} args - Arguments to filter BuildUploads to count.
+     * @example
+     * // Count the number of BuildUploads
+     * const count = await prisma.buildUpload.count({
+     *   where: {
+     *     // ... the filter for the BuildUploads we want to count
+     *   }
+     * })
+    **/
+    count<T extends BuildUploadCountArgs>(
+      args?: Subset<T, BuildUploadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BuildUploadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BuildUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BuildUploadAggregateArgs>(args: Subset<T, BuildUploadAggregateArgs>): Prisma.PrismaPromise<GetBuildUploadAggregateType<T>>
+
+    /**
+     * Group by BuildUpload.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildUploadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BuildUploadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BuildUploadGroupByArgs['orderBy'] }
+        : { orderBy?: BuildUploadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BuildUploadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBuildUploadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BuildUpload model
+   */
+  readonly fields: BuildUploadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BuildUpload.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BuildUploadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    build<T extends BuildDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BuildDefaultArgs<ExtArgs>>): Prisma__BuildClient<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    upload<T extends UploadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UploadDefaultArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BuildUpload model
+   */
+  interface BuildUploadFieldRefs {
+    readonly id: FieldRef<"BuildUpload", 'String'>
+    readonly buildId: FieldRef<"BuildUpload", 'String'>
+    readonly uploadId: FieldRef<"BuildUpload", 'String'>
+    readonly caption: FieldRef<"BuildUpload", 'String'>
+    readonly order: FieldRef<"BuildUpload", 'Int'>
+    readonly createdAt: FieldRef<"BuildUpload", 'DateTime'>
+    readonly updatedAt: FieldRef<"BuildUpload", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BuildUpload findUnique
+   */
+  export type BuildUploadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildUpload to fetch.
+     */
+    where: BuildUploadWhereUniqueInput
+  }
+
+  /**
+   * BuildUpload findUniqueOrThrow
+   */
+  export type BuildUploadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildUpload to fetch.
+     */
+    where: BuildUploadWhereUniqueInput
+  }
+
+  /**
+   * BuildUpload findFirst
+   */
+  export type BuildUploadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildUpload to fetch.
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildUploads to fetch.
+     */
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuildUploads.
+     */
+    cursor?: BuildUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuildUploads.
+     */
+    distinct?: BuildUploadScalarFieldEnum | BuildUploadScalarFieldEnum[]
+  }
+
+  /**
+   * BuildUpload findFirstOrThrow
+   */
+  export type BuildUploadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildUpload to fetch.
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildUploads to fetch.
+     */
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuildUploads.
+     */
+    cursor?: BuildUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildUploads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuildUploads.
+     */
+    distinct?: BuildUploadScalarFieldEnum | BuildUploadScalarFieldEnum[]
+  }
+
+  /**
+   * BuildUpload findMany
+   */
+  export type BuildUploadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter, which BuildUploads to fetch.
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuildUploads to fetch.
+     */
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BuildUploads.
+     */
+    cursor?: BuildUploadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuildUploads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuildUploads.
+     */
+    skip?: number
+    distinct?: BuildUploadScalarFieldEnum | BuildUploadScalarFieldEnum[]
+  }
+
+  /**
+   * BuildUpload create
+   */
+  export type BuildUploadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BuildUpload.
+     */
+    data: XOR<BuildUploadCreateInput, BuildUploadUncheckedCreateInput>
+  }
+
+  /**
+   * BuildUpload createMany
+   */
+  export type BuildUploadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BuildUploads.
+     */
+    data: BuildUploadCreateManyInput | BuildUploadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BuildUpload createManyAndReturn
+   */
+  export type BuildUploadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * The data used to create many BuildUploads.
+     */
+    data: BuildUploadCreateManyInput | BuildUploadCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuildUpload update
+   */
+  export type BuildUploadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BuildUpload.
+     */
+    data: XOR<BuildUploadUpdateInput, BuildUploadUncheckedUpdateInput>
+    /**
+     * Choose, which BuildUpload to update.
+     */
+    where: BuildUploadWhereUniqueInput
+  }
+
+  /**
+   * BuildUpload updateMany
+   */
+  export type BuildUploadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BuildUploads.
+     */
+    data: XOR<BuildUploadUpdateManyMutationInput, BuildUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which BuildUploads to update
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * Limit how many BuildUploads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuildUpload updateManyAndReturn
+   */
+  export type BuildUploadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * The data used to update BuildUploads.
+     */
+    data: XOR<BuildUploadUpdateManyMutationInput, BuildUploadUncheckedUpdateManyInput>
+    /**
+     * Filter which BuildUploads to update
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * Limit how many BuildUploads to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuildUpload upsert
+   */
+  export type BuildUploadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BuildUpload to update in case it exists.
+     */
+    where: BuildUploadWhereUniqueInput
+    /**
+     * In case the BuildUpload found by the `where` argument doesn't exist, create a new BuildUpload with this data.
+     */
+    create: XOR<BuildUploadCreateInput, BuildUploadUncheckedCreateInput>
+    /**
+     * In case the BuildUpload was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BuildUploadUpdateInput, BuildUploadUncheckedUpdateInput>
+  }
+
+  /**
+   * BuildUpload delete
+   */
+  export type BuildUploadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    /**
+     * Filter which BuildUpload to delete.
+     */
+    where: BuildUploadWhereUniqueInput
+  }
+
+  /**
+   * BuildUpload deleteMany
+   */
+  export type BuildUploadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuildUploads to delete
+     */
+    where?: BuildUploadWhereInput
+    /**
+     * Limit how many BuildUploads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuildUpload without action
+   */
+  export type BuildUploadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
   }
 
 
@@ -23676,6 +24939,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
     featuredImage?: boolean | Build$featuredImageArgs<ExtArgs>
+    uploads?: boolean | Build$uploadsArgs<ExtArgs>
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
@@ -23734,6 +24998,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
     featuredImage?: boolean | Build$featuredImageArgs<ExtArgs>
+    uploads?: boolean | Build$uploadsArgs<ExtArgs>
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
@@ -23755,6 +25020,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       kit: Prisma.$KitPayload<ExtArgs>
       featuredImage: Prisma.$UploadPayload<ExtArgs> | null
+      uploads: Prisma.$BuildUploadPayload<ExtArgs>[]
       milestones: Prisma.$BuildMilestonePayload<ExtArgs>[]
       comments: Prisma.$BuildCommentPayload<ExtArgs>[]
     }
@@ -24167,6 +25433,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     featuredImage<T extends Build$featuredImageArgs<ExtArgs> = {}>(args?: Subset<T, Build$featuredImageArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    uploads<T extends Build$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, Build$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     milestones<T extends Build$milestonesArgs<ExtArgs> = {}>(args?: Subset<T, Build$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Build$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Build$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -24621,6 +25888,30 @@ export namespace Prisma {
      */
     include?: UploadInclude<ExtArgs> | null
     where?: UploadWhereInput
+  }
+
+  /**
+   * Build.uploads
+   */
+  export type Build$uploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildUpload
+     */
+    select?: BuildUploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuildUpload
+     */
+    omit?: BuildUploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildUploadInclude<ExtArgs> | null
+    where?: BuildUploadWhereInput
+    orderBy?: BuildUploadOrderByWithRelationInput | BuildUploadOrderByWithRelationInput[]
+    cursor?: BuildUploadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuildUploadScalarFieldEnum | BuildUploadScalarFieldEnum[]
   }
 
   /**
@@ -29415,6 +30706,19 @@ export namespace Prisma {
   export type MobileSuitUploadScalarFieldEnum = (typeof MobileSuitUploadScalarFieldEnum)[keyof typeof MobileSuitUploadScalarFieldEnum]
 
 
+  export const BuildUploadScalarFieldEnum: {
+    id: 'id',
+    buildId: 'buildId',
+    uploadId: 'uploadId',
+    caption: 'caption',
+    order: 'order',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BuildUploadScalarFieldEnum = (typeof BuildUploadScalarFieldEnum)[keyof typeof BuildUploadScalarFieldEnum]
+
+
   export const BuildMilestoneUploadScalarFieldEnum: {
     id: 'id',
     buildMilestoneId: 'buildMilestoneId',
@@ -30392,6 +31696,7 @@ export namespace Prisma {
     kitUploads?: KitUploadListRelationFilter
     mobileSuitUploads?: MobileSuitUploadListRelationFilter
     productLineLogos?: ProductLineListRelationFilter
+    buildUploads?: BuildUploadListRelationFilter
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
   }
@@ -30415,6 +31720,7 @@ export namespace Prisma {
     kitUploads?: KitUploadOrderByRelationAggregateInput
     mobileSuitUploads?: MobileSuitUploadOrderByRelationAggregateInput
     productLineLogos?: ProductLineOrderByRelationAggregateInput
+    buildUploads?: BuildUploadOrderByRelationAggregateInput
     buildMilestoneUploads?: BuildMilestoneUploadOrderByRelationAggregateInput
     buildFeaturedImages?: BuildOrderByRelationAggregateInput
   }
@@ -30441,6 +31747,7 @@ export namespace Prisma {
     kitUploads?: KitUploadListRelationFilter
     mobileSuitUploads?: MobileSuitUploadListRelationFilter
     productLineLogos?: ProductLineListRelationFilter
+    buildUploads?: BuildUploadListRelationFilter
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
   }, "id" | "cloudinaryAssetId">
@@ -30632,6 +31939,77 @@ export namespace Prisma {
     order?: IntNullableWithAggregatesFilter<"MobileSuitUpload"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"MobileSuitUpload"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MobileSuitUpload"> | Date | string
+  }
+
+  export type BuildUploadWhereInput = {
+    AND?: BuildUploadWhereInput | BuildUploadWhereInput[]
+    OR?: BuildUploadWhereInput[]
+    NOT?: BuildUploadWhereInput | BuildUploadWhereInput[]
+    id?: StringFilter<"BuildUpload"> | string
+    buildId?: StringFilter<"BuildUpload"> | string
+    uploadId?: StringFilter<"BuildUpload"> | string
+    caption?: StringNullableFilter<"BuildUpload"> | string | null
+    order?: IntNullableFilter<"BuildUpload"> | number | null
+    createdAt?: DateTimeFilter<"BuildUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"BuildUpload"> | Date | string
+    build?: XOR<BuildScalarRelationFilter, BuildWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }
+
+  export type BuildUploadOrderByWithRelationInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    build?: BuildOrderByWithRelationInput
+    upload?: UploadOrderByWithRelationInput
+  }
+
+  export type BuildUploadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    buildId_uploadId?: BuildUploadBuildIdUploadIdCompoundUniqueInput
+    AND?: BuildUploadWhereInput | BuildUploadWhereInput[]
+    OR?: BuildUploadWhereInput[]
+    NOT?: BuildUploadWhereInput | BuildUploadWhereInput[]
+    buildId?: StringFilter<"BuildUpload"> | string
+    uploadId?: StringFilter<"BuildUpload"> | string
+    caption?: StringNullableFilter<"BuildUpload"> | string | null
+    order?: IntNullableFilter<"BuildUpload"> | number | null
+    createdAt?: DateTimeFilter<"BuildUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"BuildUpload"> | Date | string
+    build?: XOR<BuildScalarRelationFilter, BuildWhereInput>
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+  }, "id" | "buildId_uploadId">
+
+  export type BuildUploadOrderByWithAggregationInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    order?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BuildUploadCountOrderByAggregateInput
+    _avg?: BuildUploadAvgOrderByAggregateInput
+    _max?: BuildUploadMaxOrderByAggregateInput
+    _min?: BuildUploadMinOrderByAggregateInput
+    _sum?: BuildUploadSumOrderByAggregateInput
+  }
+
+  export type BuildUploadScalarWhereWithAggregatesInput = {
+    AND?: BuildUploadScalarWhereWithAggregatesInput | BuildUploadScalarWhereWithAggregatesInput[]
+    OR?: BuildUploadScalarWhereWithAggregatesInput[]
+    NOT?: BuildUploadScalarWhereWithAggregatesInput | BuildUploadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BuildUpload"> | string
+    buildId?: StringWithAggregatesFilter<"BuildUpload"> | string
+    uploadId?: StringWithAggregatesFilter<"BuildUpload"> | string
+    caption?: StringNullableWithAggregatesFilter<"BuildUpload"> | string | null
+    order?: IntNullableWithAggregatesFilter<"BuildUpload"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"BuildUpload"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BuildUpload"> | Date | string
   }
 
   export type BuildMilestoneUploadWhereInput = {
@@ -31154,6 +32532,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     kit?: XOR<KitScalarRelationFilter, KitWhereInput>
     featuredImage?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    uploads?: BuildUploadListRelationFilter
     milestones?: BuildMilestoneListRelationFilter
     comments?: BuildCommentListRelationFilter
   }
@@ -31173,6 +32552,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     kit?: KitOrderByWithRelationInput
     featuredImage?: UploadOrderByWithRelationInput
+    uploads?: BuildUploadOrderByRelationAggregateInput
     milestones?: BuildMilestoneOrderByRelationAggregateInput
     comments?: BuildCommentOrderByRelationAggregateInput
   }
@@ -31195,6 +32575,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     kit?: XOR<KitScalarRelationFilter, KitWhereInput>
     featuredImage?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    uploads?: BuildUploadListRelationFilter
     milestones?: BuildMilestoneListRelationFilter
     comments?: BuildCommentListRelationFilter
   }, "id">
@@ -32237,6 +33618,7 @@ export namespace Prisma {
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
@@ -32259,6 +33641,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
@@ -32281,6 +33664,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -32303,6 +33687,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -32493,6 +33878,74 @@ export namespace Prisma {
   export type MobileSuitUploadUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     mobileSuitId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildUploadCreateInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    build: BuildCreateNestedOneWithoutUploadsInput
+    upload: UploadCreateNestedOneWithoutBuildUploadsInput
+  }
+
+  export type BuildUploadUncheckedCreateInput = {
+    id?: string
+    buildId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BuildUploadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    build?: BuildUpdateOneRequiredWithoutUploadsNestedInput
+    upload?: UploadUpdateOneRequiredWithoutBuildUploadsNestedInput
+  }
+
+  export type BuildUploadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildUploadCreateManyInput = {
+    id?: string
+    buildId: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BuildUploadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildUploadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
     uploadId?: StringFieldUpdateOperationsInput | string
     caption?: NullableStringFieldUpdateOperationsInput | string | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -33050,6 +34503,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutBuildsInput
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
@@ -33066,6 +34520,7 @@ export namespace Prisma {
     featuredImageId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
@@ -33082,6 +34537,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutBuildsNestedInput
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
@@ -33098,6 +34554,7 @@ export namespace Prisma {
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
@@ -34067,10 +35524,20 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type BuildUploadListRelationFilter = {
+    every?: BuildUploadWhereInput
+    some?: BuildUploadWhereInput
+    none?: BuildUploadWhereInput
+  }
+
   export type BuildMilestoneUploadListRelationFilter = {
     every?: BuildMilestoneUploadWhereInput
     some?: BuildMilestoneUploadWhereInput
     none?: BuildMilestoneUploadWhereInput
+  }
+
+  export type BuildUploadOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type BuildMilestoneUploadOrderByRelationAggregateInput = {
@@ -34262,6 +35729,54 @@ export namespace Prisma {
   }
 
   export type MobileSuitUploadSumOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type BuildScalarRelationFilter = {
+    is?: BuildWhereInput
+    isNot?: BuildWhereInput
+  }
+
+  export type BuildUploadBuildIdUploadIdCompoundUniqueInput = {
+    buildId: string
+    uploadId: string
+  }
+
+  export type BuildUploadCountOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BuildUploadAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type BuildUploadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BuildUploadMinOrderByAggregateInput = {
+    id?: SortOrder
+    buildId?: SortOrder
+    uploadId?: SortOrder
+    caption?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BuildUploadSumOrderByAggregateInput = {
     order?: SortOrder
   }
 
@@ -34736,11 +36251,6 @@ export namespace Prisma {
     in?: $Enums.MilestoneType[] | ListEnumMilestoneTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.MilestoneType[] | ListEnumMilestoneTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumMilestoneTypeFilter<$PrismaModel> | $Enums.MilestoneType
-  }
-
-  export type BuildScalarRelationFilter = {
-    is?: BuildWhereInput
-    isNot?: BuildWhereInput
   }
 
   export type BuildMilestoneCountOrderByAggregateInput = {
@@ -35779,6 +37289,13 @@ export namespace Prisma {
     connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
   }
 
+  export type BuildUploadCreateNestedManyWithoutUploadInput = {
+    create?: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput> | BuildUploadCreateWithoutUploadInput[] | BuildUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutUploadInput | BuildUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: BuildUploadCreateManyUploadInputEnvelope
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+  }
+
   export type BuildMilestoneUploadCreateNestedManyWithoutUploadInput = {
     create?: XOR<BuildMilestoneUploadCreateWithoutUploadInput, BuildMilestoneUploadUncheckedCreateWithoutUploadInput> | BuildMilestoneUploadCreateWithoutUploadInput[] | BuildMilestoneUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: BuildMilestoneUploadCreateOrConnectWithoutUploadInput | BuildMilestoneUploadCreateOrConnectWithoutUploadInput[]
@@ -35812,6 +37329,13 @@ export namespace Prisma {
     connectOrCreate?: ProductLineCreateOrConnectWithoutLogoInput | ProductLineCreateOrConnectWithoutLogoInput[]
     createMany?: ProductLineCreateManyLogoInputEnvelope
     connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type BuildUploadUncheckedCreateNestedManyWithoutUploadInput = {
+    create?: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput> | BuildUploadCreateWithoutUploadInput[] | BuildUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutUploadInput | BuildUploadCreateOrConnectWithoutUploadInput[]
+    createMany?: BuildUploadCreateManyUploadInputEnvelope
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
   }
 
   export type BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput = {
@@ -35886,6 +37410,20 @@ export namespace Prisma {
     deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
   }
 
+  export type BuildUploadUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput> | BuildUploadCreateWithoutUploadInput[] | BuildUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutUploadInput | BuildUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: BuildUploadUpsertWithWhereUniqueWithoutUploadInput | BuildUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: BuildUploadCreateManyUploadInputEnvelope
+    set?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    disconnect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    delete?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    update?: BuildUploadUpdateWithWhereUniqueWithoutUploadInput | BuildUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: BuildUploadUpdateManyWithWhereWithoutUploadInput | BuildUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
+  }
+
   export type BuildMilestoneUploadUpdateManyWithoutUploadNestedInput = {
     create?: XOR<BuildMilestoneUploadCreateWithoutUploadInput, BuildMilestoneUploadUncheckedCreateWithoutUploadInput> | BuildMilestoneUploadCreateWithoutUploadInput[] | BuildMilestoneUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: BuildMilestoneUploadCreateOrConnectWithoutUploadInput | BuildMilestoneUploadCreateOrConnectWithoutUploadInput[]
@@ -35954,6 +37492,20 @@ export namespace Prisma {
     update?: ProductLineUpdateWithWhereUniqueWithoutLogoInput | ProductLineUpdateWithWhereUniqueWithoutLogoInput[]
     updateMany?: ProductLineUpdateManyWithWhereWithoutLogoInput | ProductLineUpdateManyWithWhereWithoutLogoInput[]
     deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type BuildUploadUncheckedUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput> | BuildUploadCreateWithoutUploadInput[] | BuildUploadUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutUploadInput | BuildUploadCreateOrConnectWithoutUploadInput[]
+    upsert?: BuildUploadUpsertWithWhereUniqueWithoutUploadInput | BuildUploadUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: BuildUploadCreateManyUploadInputEnvelope
+    set?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    disconnect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    delete?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    update?: BuildUploadUpdateWithWhereUniqueWithoutUploadInput | BuildUploadUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: BuildUploadUpdateManyWithWhereWithoutUploadInput | BuildUploadUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
   }
 
   export type BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput = {
@@ -36042,6 +37594,34 @@ export namespace Prisma {
     upsert?: UploadUpsertWithoutMobileSuitUploadsInput
     connect?: UploadWhereUniqueInput
     update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutMobileSuitUploadsInput, UploadUpdateWithoutMobileSuitUploadsInput>, UploadUncheckedUpdateWithoutMobileSuitUploadsInput>
+  }
+
+  export type BuildCreateNestedOneWithoutUploadsInput = {
+    create?: XOR<BuildCreateWithoutUploadsInput, BuildUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutUploadsInput
+    connect?: BuildWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutBuildUploadsInput = {
+    create?: XOR<UploadCreateWithoutBuildUploadsInput, UploadUncheckedCreateWithoutBuildUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBuildUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type BuildUpdateOneRequiredWithoutUploadsNestedInput = {
+    create?: XOR<BuildCreateWithoutUploadsInput, BuildUncheckedCreateWithoutUploadsInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutUploadsInput
+    upsert?: BuildUpsertWithoutUploadsInput
+    connect?: BuildWhereUniqueInput
+    update?: XOR<XOR<BuildUpdateToOneWithWhereWithoutUploadsInput, BuildUpdateWithoutUploadsInput>, BuildUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type UploadUpdateOneRequiredWithoutBuildUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutBuildUploadsInput, UploadUncheckedCreateWithoutBuildUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBuildUploadsInput
+    upsert?: UploadUpsertWithoutBuildUploadsInput
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutBuildUploadsInput, UploadUpdateWithoutBuildUploadsInput>, UploadUncheckedUpdateWithoutBuildUploadsInput>
   }
 
   export type BuildMilestoneCreateNestedOneWithoutUploadsInput = {
@@ -36576,6 +38156,13 @@ export namespace Prisma {
     connect?: UploadWhereUniqueInput
   }
 
+  export type BuildUploadCreateNestedManyWithoutBuildInput = {
+    create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
+    createMany?: BuildUploadCreateManyBuildInputEnvelope
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+  }
+
   export type BuildMilestoneCreateNestedManyWithoutBuildInput = {
     create?: XOR<BuildMilestoneCreateWithoutBuildInput, BuildMilestoneUncheckedCreateWithoutBuildInput> | BuildMilestoneCreateWithoutBuildInput[] | BuildMilestoneUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildMilestoneCreateOrConnectWithoutBuildInput | BuildMilestoneCreateOrConnectWithoutBuildInput[]
@@ -36588,6 +38175,13 @@ export namespace Prisma {
     connectOrCreate?: BuildCommentCreateOrConnectWithoutBuildInput | BuildCommentCreateOrConnectWithoutBuildInput[]
     createMany?: BuildCommentCreateManyBuildInputEnvelope
     connect?: BuildCommentWhereUniqueInput | BuildCommentWhereUniqueInput[]
+  }
+
+  export type BuildUploadUncheckedCreateNestedManyWithoutBuildInput = {
+    create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
+    createMany?: BuildUploadCreateManyBuildInputEnvelope
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
   }
 
   export type BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput = {
@@ -36634,6 +38228,20 @@ export namespace Prisma {
     update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutBuildFeaturedImagesInput, UploadUpdateWithoutBuildFeaturedImagesInput>, UploadUncheckedUpdateWithoutBuildFeaturedImagesInput>
   }
 
+  export type BuildUploadUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
+    upsert?: BuildUploadUpsertWithWhereUniqueWithoutBuildInput | BuildUploadUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: BuildUploadCreateManyBuildInputEnvelope
+    set?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    disconnect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    delete?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    update?: BuildUploadUpdateWithWhereUniqueWithoutBuildInput | BuildUploadUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: BuildUploadUpdateManyWithWhereWithoutBuildInput | BuildUploadUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
+  }
+
   export type BuildMilestoneUpdateManyWithoutBuildNestedInput = {
     create?: XOR<BuildMilestoneCreateWithoutBuildInput, BuildMilestoneUncheckedCreateWithoutBuildInput> | BuildMilestoneCreateWithoutBuildInput[] | BuildMilestoneUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildMilestoneCreateOrConnectWithoutBuildInput | BuildMilestoneCreateOrConnectWithoutBuildInput[]
@@ -36660,6 +38268,20 @@ export namespace Prisma {
     update?: BuildCommentUpdateWithWhereUniqueWithoutBuildInput | BuildCommentUpdateWithWhereUniqueWithoutBuildInput[]
     updateMany?: BuildCommentUpdateManyWithWhereWithoutBuildInput | BuildCommentUpdateManyWithWhereWithoutBuildInput[]
     deleteMany?: BuildCommentScalarWhereInput | BuildCommentScalarWhereInput[]
+  }
+
+  export type BuildUploadUncheckedUpdateManyWithoutBuildNestedInput = {
+    create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
+    connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
+    upsert?: BuildUploadUpsertWithWhereUniqueWithoutBuildInput | BuildUploadUpsertWithWhereUniqueWithoutBuildInput[]
+    createMany?: BuildUploadCreateManyBuildInputEnvelope
+    set?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    disconnect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    delete?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    connect?: BuildUploadWhereUniqueInput | BuildUploadWhereUniqueInput[]
+    update?: BuildUploadUpdateWithWhereUniqueWithoutBuildInput | BuildUploadUpdateWithWhereUniqueWithoutBuildInput[]
+    updateMany?: BuildUploadUpdateManyWithWhereWithoutBuildInput | BuildUploadUpdateManyWithWhereWithoutBuildInput[]
+    deleteMany?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
   }
 
   export type BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput = {
@@ -37746,6 +39368,7 @@ export namespace Prisma {
     uploadedBy: UserCreateNestedOneWithoutUploadsInput
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
@@ -37767,6 +39390,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
@@ -37899,6 +39523,7 @@ export namespace Prisma {
     uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -37920,6 +39545,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -38355,6 +39981,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
@@ -38370,6 +39997,7 @@ export namespace Prisma {
     featuredImageId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
@@ -39124,6 +40752,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BuildUploadCreateWithoutUploadInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    build: BuildCreateNestedOneWithoutUploadsInput
+  }
+
+  export type BuildUploadUncheckedCreateWithoutUploadInput = {
+    id?: string
+    buildId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BuildUploadCreateOrConnectWithoutUploadInput = {
+    where: BuildUploadWhereUniqueInput
+    create: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type BuildUploadCreateManyUploadInputEnvelope = {
+    data: BuildUploadCreateManyUploadInput | BuildUploadCreateManyUploadInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BuildMilestoneUploadCreateWithoutUploadInput = {
     id?: string
     caption?: string | null
@@ -39163,6 +40819,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutBuildsInput
     kit: KitCreateNestedOneWithoutBuildsInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
@@ -39178,6 +40835,7 @@ export namespace Prisma {
     completedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
@@ -39315,6 +40973,35 @@ export namespace Prisma {
     data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyWithoutLogoInput>
   }
 
+  export type BuildUploadUpsertWithWhereUniqueWithoutUploadInput = {
+    where: BuildUploadWhereUniqueInput
+    update: XOR<BuildUploadUpdateWithoutUploadInput, BuildUploadUncheckedUpdateWithoutUploadInput>
+    create: XOR<BuildUploadCreateWithoutUploadInput, BuildUploadUncheckedCreateWithoutUploadInput>
+  }
+
+  export type BuildUploadUpdateWithWhereUniqueWithoutUploadInput = {
+    where: BuildUploadWhereUniqueInput
+    data: XOR<BuildUploadUpdateWithoutUploadInput, BuildUploadUncheckedUpdateWithoutUploadInput>
+  }
+
+  export type BuildUploadUpdateManyWithWhereWithoutUploadInput = {
+    where: BuildUploadScalarWhereInput
+    data: XOR<BuildUploadUpdateManyMutationInput, BuildUploadUncheckedUpdateManyWithoutUploadInput>
+  }
+
+  export type BuildUploadScalarWhereInput = {
+    AND?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
+    OR?: BuildUploadScalarWhereInput[]
+    NOT?: BuildUploadScalarWhereInput | BuildUploadScalarWhereInput[]
+    id?: StringFilter<"BuildUpload"> | string
+    buildId?: StringFilter<"BuildUpload"> | string
+    uploadId?: StringFilter<"BuildUpload"> | string
+    caption?: StringNullableFilter<"BuildUpload"> | string | null
+    order?: IntNullableFilter<"BuildUpload"> | number | null
+    createdAt?: DateTimeFilter<"BuildUpload"> | Date | string
+    updatedAt?: DateTimeFilter<"BuildUpload"> | Date | string
+  }
+
   export type BuildMilestoneUploadUpsertWithWhereUniqueWithoutUploadInput = {
     where: BuildMilestoneUploadWhereUniqueInput
     update: XOR<BuildMilestoneUploadUpdateWithoutUploadInput, BuildMilestoneUploadUncheckedUpdateWithoutUploadInput>
@@ -39438,6 +41125,7 @@ export namespace Prisma {
     uploadedBy: UserCreateNestedOneWithoutUploadsInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
@@ -39459,6 +41147,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
@@ -39563,6 +41252,7 @@ export namespace Prisma {
     uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -39584,6 +41274,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -39634,6 +41325,7 @@ export namespace Prisma {
     uploadedBy: UserCreateNestedOneWithoutUploadsInput
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
@@ -39655,6 +41347,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
@@ -39727,6 +41420,7 @@ export namespace Prisma {
     uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -39747,6 +41441,191 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+  }
+
+  export type BuildCreateWithoutUploadsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBuildsInput
+    kit: KitCreateNestedOneWithoutBuildsInput
+    featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildUncheckedCreateWithoutUploadsInput = {
+    id?: string
+    userId: string
+    kitId: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    featuredImageId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildCreateOrConnectWithoutUploadsInput = {
+    where: BuildWhereUniqueInput
+    create: XOR<BuildCreateWithoutUploadsInput, BuildUncheckedCreateWithoutUploadsInput>
+  }
+
+  export type UploadCreateWithoutBuildUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+  }
+
+  export type UploadUncheckedCreateWithoutBuildUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+  }
+
+  export type UploadCreateOrConnectWithoutBuildUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutBuildUploadsInput, UploadUncheckedCreateWithoutBuildUploadsInput>
+  }
+
+  export type BuildUpsertWithoutUploadsInput = {
+    update: XOR<BuildUpdateWithoutUploadsInput, BuildUncheckedUpdateWithoutUploadsInput>
+    create: XOR<BuildCreateWithoutUploadsInput, BuildUncheckedCreateWithoutUploadsInput>
+    where?: BuildWhereInput
+  }
+
+  export type BuildUpdateToOneWithWhereWithoutUploadsInput = {
+    where?: BuildWhereInput
+    data: XOR<BuildUpdateWithoutUploadsInput, BuildUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type BuildUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBuildsNestedInput
+    kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
+    featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+  }
+
+  export type BuildUncheckedUpdateWithoutUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+  }
+
+  export type UploadUpsertWithoutBuildUploadsInput = {
+    update: XOR<UploadUpdateWithoutBuildUploadsInput, UploadUncheckedUpdateWithoutBuildUploadsInput>
+    create: XOR<UploadCreateWithoutBuildUploadsInput, UploadUncheckedCreateWithoutBuildUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutBuildUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutBuildUploadsInput, UploadUncheckedUpdateWithoutBuildUploadsInput>
+  }
+
+  export type UploadUpdateWithoutBuildUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutBuildUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
@@ -39801,6 +41680,7 @@ export namespace Prisma {
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
 
@@ -39822,6 +41702,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
 
@@ -39896,6 +41777,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
 
@@ -39917,6 +41799,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
   }
 
@@ -39959,6 +41842,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
@@ -39974,6 +41858,7 @@ export namespace Prisma {
     featuredImageId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
@@ -40064,6 +41949,7 @@ export namespace Prisma {
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
   }
@@ -40085,6 +41971,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
   }
@@ -41374,6 +43261,7 @@ export namespace Prisma {
     kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
   }
 
@@ -41395,12 +43283,41 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
     mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildFeaturedImagesInput = {
     where: UploadWhereUniqueInput
     create: XOR<UploadCreateWithoutBuildFeaturedImagesInput, UploadUncheckedCreateWithoutBuildFeaturedImagesInput>
+  }
+
+  export type BuildUploadCreateWithoutBuildInput = {
+    id?: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutBuildUploadsInput
+  }
+
+  export type BuildUploadUncheckedCreateWithoutBuildInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BuildUploadCreateOrConnectWithoutBuildInput = {
+    where: BuildUploadWhereUniqueInput
+    create: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput>
+  }
+
+  export type BuildUploadCreateManyBuildInputEnvelope = {
+    data: BuildUploadCreateManyBuildInput | BuildUploadCreateManyBuildInput[]
+    skipDuplicates?: boolean
   }
 
   export type BuildMilestoneCreateWithoutBuildInput = {
@@ -41636,6 +43553,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
   }
 
@@ -41657,7 +43575,24 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+  }
+
+  export type BuildUploadUpsertWithWhereUniqueWithoutBuildInput = {
+    where: BuildUploadWhereUniqueInput
+    update: XOR<BuildUploadUpdateWithoutBuildInput, BuildUploadUncheckedUpdateWithoutBuildInput>
+    create: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput>
+  }
+
+  export type BuildUploadUpdateWithWhereUniqueWithoutBuildInput = {
+    where: BuildUploadWhereUniqueInput
+    data: XOR<BuildUploadUpdateWithoutBuildInput, BuildUploadUncheckedUpdateWithoutBuildInput>
+  }
+
+  export type BuildUploadUpdateManyWithWhereWithoutBuildInput = {
+    where: BuildUploadScalarWhereInput
+    data: XOR<BuildUploadUpdateManyMutationInput, BuildUploadUncheckedUpdateManyWithoutBuildInput>
   }
 
   export type BuildMilestoneUpsertWithWhereUniqueWithoutBuildInput = {
@@ -41720,6 +43655,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutBuildsInput
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
   }
 
@@ -41735,6 +43671,7 @@ export namespace Prisma {
     featuredImageId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -41794,6 +43731,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutBuildsNestedInput
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
 
@@ -41809,6 +43747,7 @@ export namespace Prisma {
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -41840,6 +43779,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutBuildsInput
     kit: KitCreateNestedOneWithoutBuildsInput
     featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
   }
 
@@ -41855,6 +43795,7 @@ export namespace Prisma {
     featuredImageId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
   }
 
@@ -41955,6 +43896,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutBuildsNestedInput
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
   }
 
@@ -41970,6 +43912,7 @@ export namespace Prisma {
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
   }
 
@@ -43203,6 +45146,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
@@ -43218,6 +45162,7 @@ export namespace Prisma {
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
@@ -43300,6 +45245,15 @@ export namespace Prisma {
     description?: string | null
     gradeId: string
     scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BuildUploadCreateManyUploadInput = {
+    id?: string
+    buildId: string
+    caption?: string | null
+    order?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -43418,6 +45372,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BuildUploadUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    build?: BuildUpdateOneRequiredWithoutUploadsNestedInput
+  }
+
+  export type BuildUploadUncheckedUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildUploadUncheckedUpdateManyWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    buildId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BuildMilestoneUploadUpdateWithoutUploadInput = {
     id?: StringFieldUpdateOperationsInput | string
     caption?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43456,6 +45437,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutBuildsNestedInput
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
@@ -43471,6 +45453,7 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
@@ -43589,6 +45572,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
     featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
   }
@@ -43604,6 +45588,7 @@ export namespace Prisma {
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
   }
@@ -43672,6 +45657,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -43693,6 +45679,7 @@ export namespace Prisma {
     kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
     mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
   }
@@ -43814,6 +45801,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BuildUploadCreateManyBuildInput = {
+    id?: string
+    uploadId: string
+    caption?: string | null
+    order?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type BuildMilestoneCreateManyBuildInput = {
     id?: string
     type: $Enums.MilestoneType
@@ -43832,6 +45828,33 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type BuildUploadUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutBuildUploadsNestedInput
+  }
+
+  export type BuildUploadUncheckedUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuildUploadUncheckedUpdateManyWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BuildMilestoneUpdateWithoutBuildInput = {

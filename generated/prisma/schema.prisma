@@ -194,6 +194,7 @@ model Upload {
   kitUploads            KitUpload[]
   mobileSuitUploads     MobileSuitUpload[]
   productLineLogos      ProductLine[]
+  buildUploads          BuildUpload[]
   buildMilestoneUploads BuildMilestoneUpload[]
   buildFeaturedImages   Build[]                @relation("BuildFeaturedImage")
 
@@ -247,6 +248,23 @@ model MobileSuitUpload {
 }
 
 // Junction table for many-to-many relationship between BuildMilestone and Upload
+model BuildUpload {
+  id        String   @id @default(cuid())
+  buildId   String
+  uploadId  String
+  caption   String?
+  order     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  build  Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  upload Upload @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+
+  @@unique([buildId, uploadId])
+  @@map("build_uploads")
+}
+
 model BuildMilestoneUpload {
   id               String   @id @default(cuid())
   buildMilestoneId String
@@ -427,6 +445,7 @@ model Build {
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   kit           Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
   featuredImage Upload?          @relation("BuildFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
+  uploads       BuildUpload[]
   milestones    BuildMilestone[]
   comments      BuildComment[]
 

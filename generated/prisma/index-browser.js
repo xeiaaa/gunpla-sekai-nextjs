@@ -248,6 +248,16 @@ exports.Prisma.MobileSuitUploadScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BuildUploadScalarFieldEnum = {
+  id: 'id',
+  buildId: 'buildId',
+  uploadId: 'uploadId',
+  caption: 'caption',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BuildMilestoneUploadScalarFieldEnum = {
   id: 'id',
   buildMilestoneId: 'buildMilestoneId',
@@ -451,6 +461,7 @@ exports.Prisma.ModelName = {
   Upload: 'Upload',
   KitUpload: 'KitUpload',
   MobileSuitUpload: 'MobileSuitUpload',
+  BuildUpload: 'BuildUpload',
   BuildMilestoneUpload: 'BuildMilestoneUpload',
   User: 'User',
   UserKitCollection: 'UserKitCollection',

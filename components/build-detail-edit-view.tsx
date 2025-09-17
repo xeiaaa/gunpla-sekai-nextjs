@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
-import Image from "next/image";
+import NextImage from "next/image";
 import {
   DndContext,
   closestCenter,
@@ -30,13 +30,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, User, Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star } from "lucide-react";
+import { Calendar, User, Edit, Trash2, Clock, CheckCircle, Plus, Save, Eye, GripVertical, ArrowUpDown, Star, Info, Image, List } from "lucide-react";
 import { format } from "date-fns";
 import { deleteBuild, updateBuild } from "@/lib/actions/builds";
 import { createMilestone, updateMilestone, deleteMilestone, reorderMilestones } from "@/lib/actions/milestones";
 import { MilestoneType } from "@/generated/prisma";
 import BuildMilestoneUpload from "./build-milestone-upload";
 import { FeaturedImageSelector } from "./featured-image-selector";
+import BuildMediaLibrary from "./build-media-library";
+import { cn } from "@/lib/utils";
 
 // Sortable Milestone Item Component
 function SortableMilestoneItem({
@@ -359,6 +361,25 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
   const [loading, setLoading] = useState(false);
   const [editingBuild, setEditingBuild] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'milestones'>('info');
+
+  // Initialize tab from URL parameters
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam && ['info', 'gallery', 'milestones'].includes(tabParam)) {
+      setActiveTab(tabParam as 'info' | 'gallery' | 'milestones');
+    }
+  }, [searchParams]);
+
+  // Handle tab change and update URL
+  const handleTabChange = (tabId: 'info' | 'gallery' | 'milestones') => {
+    setActiveTab(tabId);
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tabId);
+    window.history.replaceState({}, '', url.toString());
+  };
+
   const [buildData, setBuildData] = useState({
     title: build.title,
     description: build.description || "",
@@ -575,6 +596,318 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
     }
   };
 
+  // Tab configuration
+  const tabs = [
+    { id: 'info' as const, label: 'Build Info', icon: Info },
+    { id: 'gallery' as const, label: 'Build Gallery', icon: Image },
+    { id: 'milestones' as const, label: 'Build Milestones', icon: List },
+  ];
+
+  // Render tab content
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'info':
+        return (
+          <div className="space-y-6">
+            {/* Build Info Form - Always Visible */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4">Build Information</h3>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="build-title">Title</Label>
+                  <Input
+                    id="build-title"
+                    value={buildData.title}
+                    onChange={(e) => setBuildData({ ...buildData, title: e.target.value })}
+                    className="text-lg font-semibold"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="build-description">Description</Label>
+                  <Textarea
+                    id="build-description"
+                    value={buildData.description}
+                    onChange={(e) => setBuildData({ ...buildData, description: e.target.value })}
+                    rows={4}
+                    placeholder="Describe your build process, techniques used, or any notes..."
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="build-status">Status</Label>
+                    <Select
+                      value={buildData.status}
+                      onValueChange={(value) => setBuildData({ ...buildData, status: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="PLANNING">Planning</SelectItem>
+                        <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
+                        <SelectItem value="COMPLETED">Completed</SelectItem>
+                        <SelectItem value="ON_HOLD">On Hold</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="build-started">Started Date</Label>
+                    <Input
+                      id="build-started"
+                      type="date"
+                      value={buildData.startedAt}
+                      onChange={(e) => setBuildData({ ...buildData, startedAt: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="build-completed">Completed Date</Label>
+                    <Input
+                      id="build-completed"
+                      type="date"
+                      value={buildData.completedAt}
+                      onChange={(e) => setBuildData({ ...buildData, completedAt: e.target.value })}
+                      disabled={buildData.status !== "COMPLETED"}
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleUpdateBuild}
+                    disabled={loading}
+                    className="flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4" />
+                        Save Changes
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
+        );
+      case 'gallery':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Build Gallery</h2>
+              <p className="text-gray-600 mb-6">
+                Manage all your build images in one place. Upload, organize, and add captions to your photos.
+              </p>
+            </div>
+            <BuildMediaLibrary
+              buildId={build.id}
+              showSelection={false}
+            />
+          </div>
+        );
+      case 'milestones':
+        return (
+          <div className="space-y-6">
+            {/* Milestones Section */}
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Build Milestones</h2>
+              <div className="flex gap-2">
+                {milestones.length > 1 && (
+                  <Button
+                    onClick={() => setReorderMode(!reorderMode)}
+                    variant={reorderMode ? "destructive" : "outline"}
+                    className="flex items-center gap-2"
+                  >
+                    <ArrowUpDown className="h-4 w-4" />
+                    {reorderMode ? "Exit Reordering" : "Reorder"}
+                  </Button>
+                )}
+                {!reorderMode && (
+                  <Button
+                    onClick={() => setShowAddForm(true)}
+                    className="flex items-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Milestone
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Add Milestone Form */}
+            {showAddForm && !reorderMode && (
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Add New Milestone</h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="milestone-type">Type</Label>
+                      <Select
+                        value={newMilestone.type}
+                        onValueChange={(value: MilestoneType) => setNewMilestone({ ...newMilestone, type: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={MilestoneType.ACQUISITION}>Acquisition</SelectItem>
+                          <SelectItem value={MilestoneType.PLANNING}>Planning</SelectItem>
+                          <SelectItem value={MilestoneType.BUILD}>Build</SelectItem>
+                          <SelectItem value={MilestoneType.PAINTING}>Painting</SelectItem>
+                          <SelectItem value={MilestoneType.PANEL_LINING}>Panel Lining</SelectItem>
+                          <SelectItem value={MilestoneType.DECALS}>Decals</SelectItem>
+                          <SelectItem value={MilestoneType.TOPCOAT}>Topcoat</SelectItem>
+                          <SelectItem value={MilestoneType.PHOTOGRAPHY}>Photography</SelectItem>
+                          <SelectItem value={MilestoneType.COMPLETION}>Completion</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="milestone-title">Title</Label>
+                      <Input
+                        id="milestone-title"
+                        value={newMilestone.title}
+                        onChange={(e) => setNewMilestone({ ...newMilestone, title: e.target.value })}
+                        placeholder="Enter milestone title"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="milestone-description">Description</Label>
+                    <Textarea
+                      id="milestone-description"
+                      value={newMilestone.description}
+                      onChange={(e) => setNewMilestone({ ...newMilestone, description: e.target.value })}
+                      placeholder="Enter milestone description (optional)"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleAddMilestone}
+                      disabled={loading}
+                      className="flex items-center gap-2"
+                    >
+                      {loading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          Adding...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="h-4 w-4" />
+                          Add Milestone
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setShowAddForm(false);
+                        setNewMilestone({ type: MilestoneType.BUILD, title: "", description: "" });
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            )}
+
+            {/* Milestones List */}
+            {milestones.length === 0 ? (
+              <Card className="p-8 text-center">
+                <p className="text-gray-500">No milestones yet. Add your first milestone to get started!</p>
+              </Card>
+            ) : (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={milestones.map(m => m.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  <div className="space-y-6">
+                    {milestones.map((milestone) => (
+                      <SortableMilestoneItem
+                        key={milestone.id}
+                        milestone={milestone}
+                        editingMilestone={editingMilestone}
+                        setEditingMilestone={setEditingMilestone}
+                        handleUpdateMilestone={handleUpdateMilestone}
+                        handleDeleteMilestone={handleDeleteMilestone}
+                        handleEditMilestone={handleEditMilestone}
+                        reorderMode={reorderMode}
+                        onImageAdded={(milestoneId, newImage) => {
+                          setMilestones(prevMilestones =>
+                            prevMilestones.map(m =>
+                              m.id === milestoneId
+                                ? {
+                                    ...m,
+                                    uploads: [...m.uploads, {
+                                      id: newImage.id,
+                                      caption: newImage.caption,
+                                      order: newImage.order,
+                                      upload: {
+                                        id: newImage.uploadId || "",
+                                        url: newImage.url,
+                                        eagerUrl: newImage.url,
+                                      }
+                                    }]
+                                  }
+                                : m
+                            )
+                          );
+                        }}
+                        onImageRemoved={(milestoneId, imageId) => {
+                          setMilestones(prevMilestones =>
+                            prevMilestones.map(m =>
+                              m.id === milestoneId
+                                ? {
+                                    ...m,
+                                    uploads: m.uploads.filter(upload => upload.id !== imageId)
+                                  }
+                                : m
+                            )
+                          );
+                        }}
+                        onCaptionChange={(milestoneId, imageId, caption) => {
+                          setMilestones(prevMilestones =>
+                            prevMilestones.map(m =>
+                              m.id === milestoneId
+                                ? {
+                                    ...m,
+                                    uploads: m.uploads.map(upload =>
+                                      upload.id === imageId
+                                        ? { ...upload, caption }
+                                        : upload
+                                    )
+                                  }
+                                : m
+                            )
+                          );
+                        }}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -591,119 +924,25 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
 
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex-1">
-              {editingBuild ? (
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="build-title">Title</Label>
-                    <Input
-                      id="build-title"
-                      value={buildData.title}
-                      onChange={(e) => setBuildData({ ...buildData, title: e.target.value })}
-                      className="text-2xl font-bold"
-                    />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">{buildData.title}</h1>
+                <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <User className="h-4 w-4" />
+                    <span>{build.user.firstName} {build.user.lastName}</span>
+                    {build.user.username && (
+                      <span className="text-gray-400">(@{build.user.username})</span>
+                    )}
                   </div>
-                  <div>
-                    <Label htmlFor="build-description">Description</Label>
-                    <Textarea
-                      id="build-description"
-                      value={buildData.description}
-                      onChange={(e) => setBuildData({ ...buildData, description: e.target.value })}
-                      rows={3}
-                    />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <Label htmlFor="build-status">Status</Label>
-                      <Select
-                        value={buildData.status}
-                        onValueChange={(value) => setBuildData({ ...buildData, status: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="PLANNING">Planning</SelectItem>
-                          <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                          <SelectItem value="COMPLETED">Completed</SelectItem>
-                          <SelectItem value="ON_HOLD">On Hold</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="build-started">Started Date</Label>
-                      <Input
-                        id="build-started"
-                        type="date"
-                        value={buildData.startedAt}
-                        onChange={(e) => setBuildData({ ...buildData, startedAt: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="build-completed">Completed Date</Label>
-                      <Input
-                        id="build-completed"
-                        type="date"
-                        value={buildData.completedAt}
-                        onChange={(e) => setBuildData({ ...buildData, completedAt: e.target.value })}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={handleUpdateBuild}
-                      disabled={loading}
-                      className="flex items-center gap-2"
-                    >
-                      {loading ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          Saving...
-                        </>
-                      ) : (
-                        <>
-                          <Save className="h-4 w-4" />
-                          Save Changes
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setEditingBuild(false);
-                        setBuildData({
-                          title: build.title,
-                          description: build.description || "",
-                          status: build.status,
-                          startedAt: build.startedAt ? format(build.startedAt, "yyyy-MM-dd") : "",
-                          completedAt: build.completedAt ? format(build.completedAt, "yyyy-MM-dd") : "",
-                        });
-                      }}
-                    >
-                      Cancel
-                    </Button>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    <span>Started {format(build.createdAt, "MMM d, yyyy")}</span>
                   </div>
                 </div>
-              ) : (
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{buildData.title}</h1>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
-                    <div className="flex items-center gap-1">
-                      <User className="h-4 w-4" />
-                      <span>{build.user.firstName} {build.user.lastName}</span>
-                      {build.user.username && (
-                        <span className="text-gray-400">(@{build.user.username})</span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      <span>Started {format(build.createdAt, "MMM d, yyyy")}</span>
-                    </div>
-                  </div>
-                  {buildData.description && (
-                    <p className="mt-4 text-gray-700">{buildData.description}</p>
-                  )}
-                </div>
-              )}
+                {buildData.description && (
+                  <p className="mt-4 text-gray-700">{buildData.description}</p>
+                )}
+              </div>
             </div>
 
             <div className="flex items-center gap-3">
@@ -727,201 +966,32 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-8">
-            {/* Kit Information */}
-
-
-            {/* Milestones */}
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">Build Milestones</h2>
-                <div className="flex gap-2">
-                  {milestones.length > 1 && (
-                    <Button
-                      onClick={() => setReorderMode(!reorderMode)}
-                      variant={reorderMode ? "destructive" : "outline"}
-                      className="flex items-center gap-2"
+            {/* Tabs */}
+            <div className="border-b border-border mb-6">
+              <nav className="flex space-x-8">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleTabChange(tab.id)}
+                      className={cn(
+                        "flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors",
+                        activeTab === tab.id
+                          ? "border-primary text-primary"
+                          : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                      )}
                     >
-                      <ArrowUpDown className="h-4 w-4" />
-                      {reorderMode ? "Exit Reordering" : "Reorder"}
-                    </Button>
-                  )}
-                  {!reorderMode && (
-                    <Button
-                      onClick={() => setShowAddForm(true)}
-                      className="flex items-center gap-2"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Add Milestone
-                    </Button>
-                  )}
-                </div>
-              </div>
-
-              {/* Add Milestone Form */}
-              {showAddForm && !reorderMode && (
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Add New Milestone</h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="milestone-type">Type</Label>
-                        <Select
-                          value={newMilestone.type}
-                          onValueChange={(value: MilestoneType) => setNewMilestone({ ...newMilestone, type: value })}
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value={MilestoneType.ACQUISITION}>Acquisition</SelectItem>
-                            <SelectItem value={MilestoneType.PLANNING}>Planning</SelectItem>
-                            <SelectItem value={MilestoneType.BUILD}>Build</SelectItem>
-                            <SelectItem value={MilestoneType.PAINTING}>Painting</SelectItem>
-                            <SelectItem value={MilestoneType.PANEL_LINING}>Panel Lining</SelectItem>
-                            <SelectItem value={MilestoneType.DECALS}>Decals</SelectItem>
-                            <SelectItem value={MilestoneType.TOPCOAT}>Topcoat</SelectItem>
-                            <SelectItem value={MilestoneType.PHOTOGRAPHY}>Photography</SelectItem>
-                            <SelectItem value={MilestoneType.COMPLETION}>Completion</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="milestone-title">Title</Label>
-                        <Input
-                          id="milestone-title"
-                          value={newMilestone.title}
-                          onChange={(e) => setNewMilestone({ ...newMilestone, title: e.target.value })}
-                          placeholder="Enter milestone title"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="milestone-description">Description</Label>
-                      <Textarea
-                        id="milestone-description"
-                        value={newMilestone.description}
-                        onChange={(e) => setNewMilestone({ ...newMilestone, description: e.target.value })}
-                        placeholder="Enter milestone description (optional)"
-                        rows={3}
-                      />
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={handleAddMilestone}
-                        disabled={loading}
-                        className="flex items-center gap-2"
-                      >
-                        {loading ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                            Adding...
-                          </>
-                        ) : (
-                          <>
-                            <Plus className="h-4 w-4" />
-                            Add Milestone
-                          </>
-                        )}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          setShowAddForm(false);
-                          setNewMilestone({ type: MilestoneType.BUILD, title: "", description: "" });
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              {/* Milestones List */}
-              {milestones.length === 0 ? (
-                <Card className="p-8 text-center">
-                  <p className="text-gray-500">No milestones yet. Add your first milestone to get started!</p>
-                </Card>
-              ) : (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext
-                    items={milestones.map(m => m.id)}
-                    strategy={verticalListSortingStrategy}
-                  >
-                    <div className="space-y-6">
-                      {milestones.map((milestone) => (
-                        <SortableMilestoneItem
-                          key={milestone.id}
-                          milestone={milestone}
-                          editingMilestone={editingMilestone}
-                          setEditingMilestone={setEditingMilestone}
-                          handleUpdateMilestone={handleUpdateMilestone}
-                          handleDeleteMilestone={handleDeleteMilestone}
-                          handleEditMilestone={handleEditMilestone}
-                          reorderMode={reorderMode}
-                          onImageAdded={(milestoneId, newImage) => {
-                            setMilestones(prevMilestones =>
-                              prevMilestones.map(m =>
-                                m.id === milestoneId
-                                  ? {
-                                      ...m,
-                                      uploads: [...m.uploads, {
-                                        id: newImage.id,
-                                        caption: newImage.caption,
-                                        order: newImage.order,
-                                        upload: {
-                                          id: newImage.uploadId || "",
-                                          url: newImage.url,
-                                          eagerUrl: newImage.url,
-                                        }
-                                      }]
-                                    }
-                                  : m
-                              )
-                            );
-                          }}
-                          onImageRemoved={(milestoneId, imageId) => {
-                            setMilestones(prevMilestones =>
-                              prevMilestones.map(m =>
-                                m.id === milestoneId
-                                  ? {
-                                      ...m,
-                                      uploads: m.uploads.filter(upload => upload.id !== imageId)
-                                    }
-                                  : m
-                              )
-                            );
-                          }}
-                          onCaptionChange={(milestoneId, imageId, caption) => {
-                            setMilestones(prevMilestones =>
-                              prevMilestones.map(m =>
-                                m.id === milestoneId
-                                  ? {
-                                      ...m,
-                                      uploads: m.uploads.map(upload =>
-                                        upload.id === imageId
-                                          ? { ...upload, caption }
-                                          : upload
-                                      )
-                                    }
-                                  : m
-                              )
-                            );
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-              )}
+                      <Icon className="h-4 w-4" />
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </nav>
             </div>
+
+            {/* Tab Content */}
+            {renderTabContent()}
           </div>
 
           {/* Sidebar */}
@@ -964,32 +1034,19 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
               <Card className="p-5">
                 <h3 className="text-lg font-semibold mb-3">Build Actions</h3>
                 <div className="space-y-2">
-                  {!editingBuild && (
-                    <>
-                      <FeaturedImageSelector
-                        milestones={milestones}
-                        currentFeaturedImageId={build.featuredImageId}
-                        onSelect={handleUpdateFeaturedImage}
-                      >
-                        <Button
-                          variant="outline"
-                          className="w-full flex items-center justify-center gap-2 h-9"
-                        >
-                          <Star className="h-4 w-4" />
-                          Select Featured Image
-                        </Button>
-                      </FeaturedImageSelector>
-
-                      <Button
-                        onClick={() => setEditingBuild(true)}
-                        variant="outline"
-                        className="w-full flex items-center justify-center gap-2 h-9"
-                      >
-                        <Edit className="h-4 w-4" />
-                        Edit Build Info
-                      </Button>
-                    </>
-                  )}
+                  <FeaturedImageSelector
+                    milestones={milestones}
+                    currentFeaturedImageId={build.featuredImageId}
+                    onSelect={handleUpdateFeaturedImage}
+                  >
+                    <Button
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2 h-9"
+                    >
+                      <Star className="h-4 w-4" />
+                      Select Featured Image
+                    </Button>
+                  </FeaturedImageSelector>
 
                   <Button
                     onClick={handleDelete}
@@ -1008,7 +1065,7 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                 <div className="space-y-3">
                   {build.kit.boxArt && (
                     <div className="relative aspect-square w-full">
-                      <Image
+                      <NextImage
                         src={build.kit.boxArt}
                         alt={`${build.kit.name} box art`}
                         fill

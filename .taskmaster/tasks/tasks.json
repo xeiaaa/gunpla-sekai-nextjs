@@ -455,6 +455,85 @@
         ],
         "priority": "high",
         "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Redesign Build Edit Page with Tabbed Interface and Media Library",
+        "description": "Major UI/UX overhaul of /builds/[id]/edit page implementing centralized media library, tabbed navigation, and improved build info form",
+        "details": "This task involves a complete redesign of the build edit page with the following key features:\n\n1. **Build Media Library**: Centralized media management per build with drag-and-drop uploads, captions, sorting, and deletion capabilities. Images become the single source of truth (no duplicate uploads at milestone level).\n\n2. **Milestone Image Assignment**: Milestones no longer have individual upload sections. Instead, they reference images from the centralized media library with the ability to attach multiple images and order them within milestones.\n\n3. **Build Info Form**: Move build editing form to the top of the page (not hidden in modal/card) with fields for title, description (markdown editor), status, started date, and completed date. Remove \"Edit Build Info\" button from sidebar.\n\n4. **Tab Navigation**: Implement tabbed interface similar to kit pages with three tabs:\n   - Build Info: Title, description (markdown), status, dates\n   - Build Gallery: Full media library with all uploaded images, captions, sorting\n   - Build Milestones: List of milestones with attached images from media library\n\n5. **Optional Enhancements**: Featured image selection from media library and maintain right-hand \"Build Stats\" sidebar.\n\nThis requires significant refactoring of the existing BuildDetailEditView component, new media library components, tab navigation system, and updates to the milestone management system.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          26
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Tab Navigation System and Layout Structure",
+            "description": "Implement the basic tabbed interface structure for the build edit page with three tabs: Build Info, Build Gallery, and Build Milestones",
+            "details": "- Create tab navigation component similar to kit pages\n- Set up basic layout structure with tab content areas\n- Implement tab state management and switching logic\n- Ensure responsive design for mobile and desktop\n- Add proper styling and active tab indicators",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 27
+          },
+          {
+            "id": 2,
+            "title": "Build Centralized Media Library Component",
+            "description": "Create a comprehensive media library component with drag-and-drop uploads, image management, captions, and sorting capabilities",
+            "details": "- Implement drag-and-drop file upload functionality\n- Create image grid layout with thumbnail previews\n- Add caption editing for each image\n- Implement image sorting (by upload date or manual drag-and-drop)\n- Add delete and replace functionality for images\n- Create image selection interface for milestone assignment\n- Ensure proper image optimization and loading states",
+            "status": "done",
+            "dependencies": [
+              "27.1"
+            ],
+            "parentTaskId": 27
+          },
+          {
+            "id": 3,
+            "title": "Refactor Build Info Form to Always-Visible Layout",
+            "description": "Move the build editing form from modal/card to always-visible form at the top of the Build Info tab",
+            "details": "- Remove \"Edit Build Info\" button from sidebar\n- Create always-visible form in Build Info tab with fields:\n  - Title (text input)\n  - Description (markdown editor for rich build logs)\n  - Status (dropdown: Planning/In Progress/Completed)\n  - Started date (date picker)\n  - Completed date (date picker, only enabled if status = Completed)\n- Implement auto-save or explicit \"Save Changes\" button\n- Add form validation and error handling\n- Ensure proper form state management",
+            "status": "pending",
+            "dependencies": [
+              "27.1"
+            ],
+            "parentTaskId": 27
+          },
+          {
+            "id": 4,
+            "title": "Update Milestone System for Media Library Integration",
+            "description": "Refactor milestone components to reference images from the centralized media library instead of individual uploads",
+            "details": "- Remove individual upload sections from milestone cards\n- Create image selection interface for milestones that references media library\n- Implement ability to attach multiple images to milestones\n- Add image ordering within milestones\n- Allow images to belong to multiple milestones\n- Update milestone card display to show only selected images\n- Refactor milestone image management logic and state\n- Update database queries and actions for new image relationship model",
+            "status": "pending",
+            "dependencies": [
+              "27.2"
+            ],
+            "parentTaskId": 27
+          },
+          {
+            "id": 5,
+            "title": "Implement Featured Image Selection from Media Library",
+            "description": "Update featured image selection to work with the centralized media library instead of milestone images",
+            "details": "- Update FeaturedImageSelector component to work with media library\n- Create interface to select featured image from all uploaded images\n- Update featured image display and management logic\n- Ensure featured image updates are reflected across all views\n- Add visual indicators for which image is currently featured\n- Update database actions for featured image management",
+            "status": "pending",
+            "dependencies": [
+              "27.2"
+            ],
+            "parentTaskId": 27
+          },
+          {
+            "id": 6,
+            "title": "Update Sidebar and Finalize Integration",
+            "description": "Update the build actions sidebar, maintain stats card, and ensure all components work together seamlessly",
+            "details": "- Remove \"Edit Build Info\" button from Build Actions card\n- Update Build Stats card to reflect new media library image counts\n- Ensure sidebar maintains proper sticky positioning\n- Test and fix any integration issues between components\n- Add proper loading states and error handling\n- Ensure responsive design works across all screen sizes\n- Add comprehensive testing for the new tabbed interface\n- Update any remaining references to old milestone upload system",
+            "status": "pending",
+            "dependencies": [
+              "27.4",
+              "27.5"
+            ],
+            "parentTaskId": 27
+          }
+        ]
       }
     ],
     "metadata": {
@@ -472,7 +551,7 @@
       "activeTag": "master",
       "created": "2025-09-12T02:12:27.022Z",
       "description": "Tasks for master context",
-      "updated": "2025-09-17T08:31:32.933Z"
+      "updated": "2025-09-17T14:48:19.527Z"
     }
   }
 }
