@@ -15,7 +15,10 @@ import {
   ExternalLink,
   ArrowLeft,
   Package,
-  Users
+  Users,
+  Info,
+  MessageSquare,
+  Hammer
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -96,6 +99,7 @@ interface KitDetailPageProps {
 
 export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState<'overview' | 'reviews' | 'builds'>('overview');
 
   const formatPrice = (priceYen: number | null | undefined) => {
     if (!priceYen) return null;
@@ -111,11 +115,313 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
     });
   };
 
-
   const allImages = [
     kit.boxArt,
     ...kit.scrapedImages
   ].filter(Boolean);
+
+  const tabs = [
+    { id: 'overview' as const, label: 'Overview', icon: Info },
+    { id: 'reviews' as const, label: 'Reviews', icon: MessageSquare },
+    { id: 'builds' as const, label: 'Builds', icon: Hammer },
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return (
+          <div className="space-y-6">
+            {/* Kit Info */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Kit Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Release Date:</span>
+                    <span className="font-medium">{formatReleaseDate(kit.releaseDate)}</span>
+                  </div>
+
+                  {kit.priceYen && (
+                    <div className="flex items-center gap-2">
+                      <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Price:</span>
+                      <span className="font-medium">{formatPrice(kit.priceYen)}</span>
+                    </div>
+                  )}
+
+                  {kit.region && (
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Region:</span>
+                      <span className="font-medium">{kit.region}</span>
+                    </div>
+                  )}
+
+                  {kit.series && (
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Series:</span>
+                      {kit.seriesSlug ? (
+                        <Link href={`/series/${kit.seriesSlug}`} className="font-medium text-primary hover:underline">
+                          {kit.series}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">{kit.series}</span>
+                      )}
+                    </div>
+                  )}
+
+                  {kit.releaseType && (
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Release Type:</span>
+                      {kit.releaseTypeSlug ? (
+                        <Link href={`/release-types/${kit.releaseTypeSlug}`} className="font-medium text-primary hover:underline">
+                          {kit.releaseType}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">{kit.releaseType}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {kit.notes && (
+                  <div>
+                    <h4 className="font-medium mb-2">Notes</h4>
+                    <p className="text-sm text-muted-foreground">{kit.notes}</p>
+                  </div>
+                )}
+
+                {kit.manualLinks.length > 0 && (
+                  <div>
+                    <h4 className="font-medium mb-2">Manual Links</h4>
+                    <div className="space-y-1">
+                      {kit.manualLinks.map((link, index) => (
+                        <a
+                          key={index}
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-primary hover:underline"
+                        >
+                          <ExternalLink className="h-3 w-3" />
+                          Manual {index + 1}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Mobile Suits */}
+            {kit.mobileSuits.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>{kit.mobileSuits.length === 1 ? "Mobile Suit" : "Mobile Suits"}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.mobileSuits.map((mobileSuit) => (
+                      <Link key={mobileSuit.id} href={`/mobile-suits/${mobileSuit.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={mobileSuit.scrapedImages[0] || ''}
+                              alt={mobileSuit.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">{mobileSuit.name}</h4>
+                            {mobileSuit.series && (
+                              <p className="text-sm text-muted-foreground">{mobileSuit.series}</p>
+                            )}
+                            {mobileSuit.description && (
+                              <p className="text-sm text-muted-foreground line-clamp-2">
+                                {mobileSuit.description}
+                              </p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Base Kit */}
+            {kit.baseKit && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Base Kit</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Link href={`/kits/${kit.baseKit.slug}`}>
+                    <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                      <div className="w-20 h-20 flex-shrink-0">
+                        <KitImage
+                          src={kit.baseKit.boxArt || ''}
+                          alt={kit.baseKit.name}
+                          className="w-full h-full rounded-md"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium">{kit.baseKit.name}</h4>
+                        <p className="text-sm text-muted-foreground">#{kit.baseKit.number}</p>
+                        <p className="text-sm text-muted-foreground">{kit.baseKit.grade}</p>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                    </div>
+                  </Link>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Variants */}
+            {kit.variants.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Variants</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.variants.map((variant) => (
+                      <Link key={variant.id} href={`/kits/${variant.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={variant.boxArt || ''}
+                              alt={variant.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">{variant.name}</h4>
+                            {variant.variant && (
+                              <p className="text-sm text-muted-foreground">{variant.variant}</p>
+                            )}
+                            <p className="text-sm text-muted-foreground">#{variant.number}</p>
+                            <p className="text-sm text-muted-foreground">{variant.grade}</p>
+                            {variant.releaseDate && (
+                              <p className="text-sm text-muted-foreground">
+                                {formatReleaseDate(variant.releaseDate)}
+                              </p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Other Variants */}
+            {kit.otherVariants.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Other Variants</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.otherVariants.map((otherVariant) => (
+                      <Link key={otherVariant.id} href={`/kits/${otherVariant.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={otherVariant.boxArt || ''}
+                              alt={otherVariant.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">{otherVariant.name}</h4>
+                            {otherVariant.variant && (
+                              <p className="text-sm text-muted-foreground">{otherVariant.variant}</p>
+                            )}
+                            <p className="text-sm text-muted-foreground">#{otherVariant.number}</p>
+                            <p className="text-sm text-muted-foreground">{otherVariant.grade}</p>
+                            {otherVariant.releaseDate && (
+                              <p className="text-sm text-muted-foreground">
+                                {formatReleaseDate(otherVariant.releaseDate)}
+                              </p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Uploads */}
+            {kit.uploads.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Community Uploads</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {kit.uploads.map((upload) => (
+                      <div key={upload.id} className="space-y-2">
+                        <div className="aspect-square relative rounded-lg overflow-hidden">
+                          <KitImage
+                            src={upload.url}
+                            alt={upload.title || `Upload ${upload.type}`}
+                            className="w-full h-full"
+                          />
+                        </div>
+                        <div>
+                          {upload.title && (
+                            <h4 className="font-medium text-sm truncate">{upload.title}</h4>
+                          )}
+                          <p className="text-xs text-muted-foreground capitalize">{upload.type}</p>
+                          {upload.description && (
+                            <p className="text-xs text-muted-foreground line-clamp-2">
+                              {upload.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        );
+
+      case 'reviews':
+        return (
+          <ReviewSection
+            kitId={kit.id}
+            kitName={kit.name}
+            kitSlug={kit.slug || kit.id}
+          />
+        );
+
+      case 'builds':
+        return (
+          <CommunityBuilds
+            kitId={kit.id}
+            kitSlug={kit.slug}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -130,7 +436,7 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Images */}
+        {/* Left Column - Images & Actions */}
         <div className="lg:col-span-1 space-y-4">
           {/* Main Image */}
           <Card>
@@ -181,10 +487,10 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
           />
         </div>
 
-        {/* Right Column - Details */}
-        <div className="lg:col-span-2 space-y-6">
+        {/* Right Column - Content */}
+        <div className="lg:col-span-2">
           {/* Kit Header */}
-          <div>
+          <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-sm font-medium">
                 {kit.grade}
@@ -205,286 +511,32 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
             </div>
           </div>
 
-          {/* Kit Info */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Kit Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Release Date:</span>
-                  <span className="font-medium">{formatReleaseDate(kit.releaseDate)}</span>
-                </div>
-
-                {kit.priceYen && (
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Price:</span>
-                    <span className="font-medium">{formatPrice(kit.priceYen)}</span>
-                  </div>
-                )}
-
-                {kit.region && (
-                  <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Region:</span>
-                    <span className="font-medium">{kit.region}</span>
-                  </div>
-                )}
-
-                {kit.series && (
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Series:</span>
-                    {kit.seriesSlug ? (
-                      <Link href={`/series/${kit.seriesSlug}`} className="font-medium text-primary hover:underline">
-                        {kit.series}
-                      </Link>
-                    ) : (
-                      <span className="font-medium">{kit.series}</span>
+          {/* Tabs */}
+          <div className="border-b border-border mb-6">
+            <nav className="flex space-x-8">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      "flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors",
+                      activeTab === tab.id
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                     )}
-                  </div>
-                )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
 
-                {kit.releaseType && (
-                  <div className="flex items-center gap-2">
-                    <Tag className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Release Type:</span>
-                    {kit.releaseTypeSlug ? (
-                      <Link href={`/release-types/${kit.releaseTypeSlug}`} className="font-medium text-primary hover:underline">
-                        {kit.releaseType}
-                      </Link>
-                    ) : (
-                      <span className="font-medium">{kit.releaseType}</span>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {kit.notes && (
-                <div>
-                  <h4 className="font-medium mb-2">Notes</h4>
-                  <p className="text-sm text-muted-foreground">{kit.notes}</p>
-                </div>
-              )}
-
-              {kit.manualLinks.length > 0 && (
-                <div>
-                  <h4 className="font-medium mb-2">Manual Links</h4>
-                  <div className="space-y-1">
-                    {kit.manualLinks.map((link, index) => (
-                      <a
-                        key={index}
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-primary hover:underline"
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        Manual {index + 1}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Mobile Suits */}
-          {kit.mobileSuits.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>{kit.mobileSuits.length === 1 ? "Mobile Suit" : "Mobile Suits"}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {kit.mobileSuits.map((mobileSuit) => (
-                    <Link key={mobileSuit.id} href={`/mobile-suits/${mobileSuit.slug}`}>
-                      <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                        <div className="w-16 h-16 flex-shrink-0">
-                          <KitImage
-                            src={mobileSuit.scrapedImages[0] || ''}
-                            alt={mobileSuit.name}
-                            className="w-full h-full rounded-md"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium truncate">{mobileSuit.name}</h4>
-                          {mobileSuit.series && (
-                            <p className="text-sm text-muted-foreground">{mobileSuit.series}</p>
-                          )}
-                          {mobileSuit.description && (
-                            <p className="text-sm text-muted-foreground line-clamp-2">
-                              {mobileSuit.description}
-                            </p>
-                          )}
-                        </div>
-                        <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Base Kit */}
-          {kit.baseKit && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Base Kit</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Link href={`/kits/${kit.baseKit.slug}`}>
-                  <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                    <div className="w-20 h-20 flex-shrink-0">
-                      <KitImage
-                        src={kit.baseKit.boxArt || ''}
-                        alt={kit.baseKit.name}
-                        className="w-full h-full rounded-md"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium">{kit.baseKit.name}</h4>
-                      <p className="text-sm text-muted-foreground">#{kit.baseKit.number}</p>
-                      <p className="text-sm text-muted-foreground">{kit.baseKit.grade}</p>
-                    </div>
-                    <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
-                  </div>
-                </Link>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Variants */}
-          {kit.variants.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Variants</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {kit.variants.map((variant) => (
-                    <Link key={variant.id} href={`/kits/${variant.slug}`}>
-                      <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                        <div className="w-16 h-16 flex-shrink-0">
-                          <KitImage
-                            src={variant.boxArt || ''}
-                            alt={variant.name}
-                            className="w-full h-full rounded-md"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium truncate">{variant.name}</h4>
-                          {variant.variant && (
-                            <p className="text-sm text-muted-foreground">{variant.variant}</p>
-                          )}
-                          <p className="text-sm text-muted-foreground">#{variant.number}</p>
-                          <p className="text-sm text-muted-foreground">{variant.grade}</p>
-                          {variant.releaseDate && (
-                            <p className="text-sm text-muted-foreground">
-                              {formatReleaseDate(variant.releaseDate)}
-                            </p>
-                          )}
-                        </div>
-                        <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Other Variants */}
-          {kit.otherVariants.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Other Variants</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {kit.otherVariants.map((otherVariant) => (
-                    <Link key={otherVariant.id} href={`/kits/${otherVariant.slug}`}>
-                      <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                        <div className="w-16 h-16 flex-shrink-0">
-                          <KitImage
-                            src={otherVariant.boxArt || ''}
-                            alt={otherVariant.name}
-                            className="w-full h-full rounded-md"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium truncate">{otherVariant.name}</h4>
-                          {otherVariant.variant && (
-                            <p className="text-sm text-muted-foreground">{otherVariant.variant}</p>
-                          )}
-                          <p className="text-sm text-muted-foreground">#{otherVariant.number}</p>
-                          <p className="text-sm text-muted-foreground">{otherVariant.grade}</p>
-                          {otherVariant.releaseDate && (
-                            <p className="text-sm text-muted-foreground">
-                              {formatReleaseDate(otherVariant.releaseDate)}
-                            </p>
-                          )}
-                        </div>
-                        <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Reviews */}
-          <ReviewSection
-            kitId={kit.id}
-            kitName={kit.name}
-            kitSlug={kit.slug || kit.id}
-          />
-
-          {/* Community Builds */}
-          <CommunityBuilds
-            kitId={kit.id}
-            kitSlug={kit.slug}
-          />
-
-          {/* Uploads */}
-          {kit.uploads.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Community Uploads</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {kit.uploads.map((upload) => (
-                    <div key={upload.id} className="space-y-2">
-                      <div className="aspect-square relative rounded-lg overflow-hidden">
-                        <KitImage
-                          src={upload.url}
-                          alt={upload.title || `Upload ${upload.type}`}
-                          className="w-full h-full"
-                        />
-                      </div>
-                      <div>
-                        {upload.title && (
-                          <h4 className="font-medium text-sm truncate">{upload.title}</h4>
-                        )}
-                        <p className="text-xs text-muted-foreground capitalize">{upload.type}</p>
-                        {upload.description && (
-                          <p className="text-xs text-muted-foreground line-clamp-2">
-                            {upload.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+          {/* Tab Content */}
+          {renderTabContent()}
         </div>
       </div>
     </div>
