@@ -21,12 +21,12 @@ interface ReviewFormProps {
   kitName: string;
   existingReview?: {
     id: string;
-    title?: string;
-    content?: string;
+    title?: string | null;
+    content?: string | null;
     categoryScores: Array<{
       category: ReviewCategory;
       score: number;
-      notes?: string;
+      notes?: string | null;
     }>;
   };
   onSuccess?: () => void;

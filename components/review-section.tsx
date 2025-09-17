@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,12 +28,14 @@ interface ReviewSectionProps {
 export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
   const { userId } = useAuth();
   const [reviews, setReviews] = useState<ReviewWithDetails[]>([]);
+  const [allReviews, setAllReviews] = useState<ReviewWithDetails[]>([]); // Store all reviews for re-sorting
   const [stats, setStats] = useState<ReviewStats | null>(null);
   const [userReview, setUserReview] = useState<ReviewWithDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
-  const [sortOption, setSortOption] = useState<ReviewSortOption>("newest");
+  const [sortOption, setSortOption] = useState<ReviewSortOption>("most-helpful");
+  const reviewFormRef = useRef<HTMLDivElement>(null);
 
   // Sort reviews based on selected option
   const sortReviews = (reviews: ReviewWithDetails[], sortBy: ReviewSortOption): ReviewWithDetails[] => {
@@ -74,10 +76,18 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
         userId ? getUserKitReview(kitId) : Promise.resolve(null),
       ]);
 
-      const sortedReviews = sortReviews(reviewsData, sortOption);
-      setReviews(sortedReviews);
+      // Store all reviews for re-sorting
+      setAllReviews(reviewsData);
       setStats(statsData);
       setUserReview(userReviewData);
+
+      // Filter out user's review from community reviews and sort
+      const communityReviews = userReviewData
+        ? reviewsData.filter(review => review.id !== userReviewData.id)
+        : reviewsData;
+
+      const sortedReviews = sortReviews(communityReviews, sortOption);
+      setReviews(sortedReviews);
     } catch (error) {
       console.error("Error loading review data:", error);
     } finally {
@@ -91,11 +101,16 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
 
   // Handle sort option changes
   useEffect(() => {
-    if (reviews.length > 0) {
-      const sortedReviews = sortReviews(reviews, sortOption);
+    if (allReviews.length > 0) {
+      // Filter out user's review from community reviews and sort
+      const communityReviews = userReview
+        ? allReviews.filter(review => review.id !== userReview.id)
+        : allReviews;
+
+      const sortedReviews = sortReviews(communityReviews, sortOption);
       setReviews(sortedReviews);
     }
-  }, [sortOption]);
+  }, [sortOption, allReviews, userReview]);
 
   // Handle review form success
   const handleReviewSuccess = () => {
@@ -108,6 +123,14 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
   const handleEditReview = (reviewId: string) => {
     setEditingReviewId(reviewId);
     setShowReviewForm(true);
+
+    // Scroll to the review form after a brief delay to ensure it's rendered
+    setTimeout(() => {
+      reviewFormRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
   };
 
   // Handle delete review
@@ -178,12 +201,17 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
               </div>
             ) : (
               <div className="text-center space-y-4">
-                <h3 className="text-lg font-semibold">Write a Review</h3>
+                <h3 className="text-lg font-semibold">
+                  {reviews.length === 0 ? "Be the First to Review" : "Write a Review"}
+                </h3>
                 <p className="text-muted-foreground">
-                  Share your experience building this kit with the community
+                  {reviews.length === 0
+                    ? "Share your experience building this kit and help others decide"
+                    : "Share your experience building this kit with the community"
+                  }
                 </p>
                 <Button onClick={() => setShowReviewForm(true)}>
-                  Write Review
+                  {reviews.length === 0 ? "Write First Review" : "Write Review"}
                 </Button>
               </div>
             )}
@@ -193,13 +221,15 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
 
       {/* Review Form */}
       {showReviewForm && (
-        <ReviewForm
-          kitId={kitId}
-          kitName={kitName}
-          existingReview={editingReviewId ? userReview : undefined}
-          onSuccess={handleReviewSuccess}
-          onCancel={handleCancelReview}
-        />
+        <div ref={reviewFormRef}>
+          <ReviewForm
+            kitId={kitId}
+            kitName={kitName}
+            existingReview={editingReviewId ? userReview || undefined : undefined}
+            onSuccess={handleReviewSuccess}
+            onCancel={handleCancelReview}
+          />
+        </div>
       )}
 
       {/* Community Reviews */}
@@ -237,7 +267,7 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
             showUserActions={!!userId}
             onEdit={handleEditReview}
             onDelete={handleDeleteReview}
-            currentUserId={userId}
+            currentUserId={userId || undefined}
           />
         </CardContent>
       </Card>

@@ -16,17 +16,17 @@ export interface CategoryScoreFormData {
 // Review display types
 export interface ReviewWithDetails {
   id: string;
-  title?: string;
-  content?: string;
+  title?: string | null;
+  content?: string | null;
   overallScore: number;
   createdAt: Date;
   updatedAt: Date;
   user: {
     id: string;
-    firstName?: string;
-    lastName?: string;
-    imageUrl?: string;
-    username?: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    imageUrl?: string | null;
+    username?: string | null;
   };
   categoryScores: CategoryScore[];
   feedback?: {
@@ -42,7 +42,8 @@ export interface CategoryScore {
   id: string;
   category: ReviewCategory;
   score: number;
-  notes?: string;
+  notes?: string | null;
+  reviewId: string;
 }
 
 // Review statistics types

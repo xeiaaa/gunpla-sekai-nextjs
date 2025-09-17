@@ -229,13 +229,7 @@ export function ReviewStatsDisplay({ stats }: ReviewStatsDisplayProps) {
   };
 
   if (stats.totalReviews === 0) {
-    return (
-      <Card>
-        <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">No reviews yet</p>
-        </CardContent>
-      </Card>
-    );
+    return null; // Don't show stats when there are no reviews
   }
 
   return (
@@ -307,14 +301,12 @@ export function ReviewList({
 }: ReviewListProps) {
   if (reviews.length === 0) {
     return (
-      <Card>
-        <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">No reviews yet</p>
-          <p className="text-sm text-muted-foreground mt-1">
-            Be the first to review this kit!
-          </p>
-        </CardContent>
-      </Card>
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">No community reviews yet</p>
+        <p className="text-sm text-muted-foreground mt-1">
+          Be the first to share your experience with this kit!
+        </p>
+      </div>
     );
   }
 
