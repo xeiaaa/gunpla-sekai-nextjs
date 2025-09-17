@@ -33,7 +33,7 @@ export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageP
   const joinDate = format(new Date(user.createdAt), "MMMM yyyy");
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8">
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex items-center gap-6">

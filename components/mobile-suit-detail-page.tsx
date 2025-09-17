@@ -67,7 +67,7 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
   const allImages = mobileSuit.scrapedImages.filter(Boolean);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8">
       {/* Back Button */}
       <div className="mb-6">
         <Link href={mobileSuit.series ? `/series/${mobileSuit.series.slug}` : "/timelines"}>
