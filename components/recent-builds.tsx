@@ -173,22 +173,22 @@ export default function RecentBuilds({ limit = 6 }: RecentBuildsProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {builds.map((build) => {
             const previewImage = getPreviewImage(build);
 
             return (
               <Link key={build.id} href={`/builds/${build.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                <Card className="hover:shadow-md transition-shadow cursor-pointer p-0">
                   <div className="relative">
                     {previewImage ? (
                       <img
                         src={previewImage}
                         alt={build.title}
-                        className="w-full h-32 object-cover rounded-t-lg"
+                        className="w-full h-64 object-cover rounded-t-lg"
                       />
                     ) : (
-                      <div className="w-full h-32 bg-gray-100 rounded-t-lg flex items-center justify-center">
+                      <div className="w-full h-64 bg-gray-100 rounded-t-lg flex items-center justify-center">
                         <ImageIcon className="h-8 w-8 text-gray-400" />
                       </div>
                     )}

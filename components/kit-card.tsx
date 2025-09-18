@@ -53,7 +53,7 @@ export function KitCard({
   const cardContent = (
     <Card
       className={cn(
-        "group relative overflow-hidden transition-all duration-300 cursor-pointer",
+        "group relative overflow-hidden transition-all duration-300 cursor-pointer py-0 h-full flex flex-col",
         "hover:shadow-xl hover:scale-[1.02] hover:border-primary/20",
         "bg-card border-border",
         className
@@ -89,7 +89,7 @@ export function KitCard({
         )}
       </div>
 
-      <CardContent className="p-4 space-y-3">
+      <CardContent className="p-4 space-y-3 flex-1 flex flex-col">
         {/* Kit Name */}
         <div>
           <h3 className="font-semibold text-base leading-tight line-clamp-2 group-hover:text-primary transition-colors">
@@ -141,7 +141,7 @@ export function KitCard({
 
         {/* Mobile Suits (if any) */}
         {kit.mobileSuits.length > 0 && (
-          <div className="pt-1">
+          <div className="pt-1 mt-auto">
             <div className="text-xs text-muted-foreground line-clamp-1">
               {kit.mobileSuits.slice(0, 2).join(", ")}
               {kit.mobileSuits.length > 2 && ` +${kit.mobileSuits.length - 2} more`}

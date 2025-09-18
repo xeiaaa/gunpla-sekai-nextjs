@@ -87,7 +87,18 @@ export async function getFilteredKits(filters: KitFilters = {}) {
         orderBy = { name: "asc" };
         break;
       default: // relevance
-        orderBy = { name: "asc" };
+        // Complex sorting: base kits first, main grades prioritized, accessory kits last
+        orderBy = [
+          { baseKitId: "desc" }, // null values (base kits) come first with desc
+          {
+            productLine: {
+              grade: {
+                slug: "asc"
+              }
+            }
+          },
+          { name: "asc" }
+        ];
     }
 
     const kits = await prisma.kit.findMany({
@@ -100,6 +111,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
             grade: {
               select: {
                 name: true,
+                slug: true,
               },
             },
           },
@@ -129,7 +141,41 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       take: 50, // Limit results for performance
     });
 
-    return kits.map(kit => ({
+    // Custom sorting logic for main grades and accessory kits
+    const mainGradeSlugs = ['pg', 'rg', 'mg', 'hg', 'eg', 're-100', 'fm', 'mega-size'];
+
+    const sortedKits = kits.sort((a, b) => {
+      // First: baseKitId (null first)
+      if (a.baseKitId === null && b.baseKitId !== null) return -1;
+      if (a.baseKitId !== null && b.baseKitId === null) return 1;
+
+      // Second: accessory kits last (check notes for "accessory")
+      const aIsAccessory = a.notes?.toLowerCase().includes('accessory') || false;
+      const bIsAccessory = b.notes?.toLowerCase().includes('accessory') || false;
+      if (aIsAccessory && !bIsAccessory) return 1;
+      if (!aIsAccessory && bIsAccessory) return -1;
+
+      // Third: main grades prioritized
+      const aGradeSlug = a.productLine?.grade?.slug;
+      const bGradeSlug = b.productLine?.grade?.slug;
+      const aIsMainGrade = aGradeSlug ? mainGradeSlugs.includes(aGradeSlug) : false;
+      const bIsMainGrade = bGradeSlug ? mainGradeSlugs.includes(bGradeSlug) : false;
+
+      if (aIsMainGrade && !bIsMainGrade) return -1;
+      if (!aIsMainGrade && bIsMainGrade) return 1;
+
+      // If both are main grades, sort by the order in mainGradeSlugs array
+      if (aIsMainGrade && bIsMainGrade) {
+        const aIndex = mainGradeSlugs.indexOf(aGradeSlug!);
+        const bIndex = mainGradeSlugs.indexOf(bGradeSlug!);
+        return aIndex - bIndex;
+      }
+
+      // Finally: sort by name
+      return a.name.localeCompare(b.name);
+    });
+
+    return sortedKits.map(kit => ({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
