@@ -178,13 +178,12 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     </Badge>
 
                     {isOwner && (
-                      <Button
-                        onClick={() => router.push(`/builds/${build.id}/edit`)}
-                        className="flex items-center gap-2"
-                      >
-                        <Edit className="h-4 w-4" />
-                        Edit Build
-                      </Button>
+                      <Link href={`/builds/${build.id}/edit`}>
+                        <Button className="flex items-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Edit Build
+                        </Button>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -317,7 +316,18 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     </div>
                   )}
                   <div>
-                    <h4 className="font-medium text-gray-900">{build.kit.name}</h4>
+                    <h4 className="font-medium text-gray-900">
+                      {build.kit.slug ? (
+                        <Link
+                          href={`/kits/${build.kit.slug}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {build.kit.name}
+                        </Link>
+                      ) : (
+                        build.kit.name
+                      )}
+                    </h4>
                     <p className="text-sm text-gray-600">#{build.kit.number}</p>
                     {build.kit.productLine && (
                       <p className="text-sm text-gray-600">

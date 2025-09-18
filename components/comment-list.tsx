@@ -10,8 +10,8 @@ import { useToast } from "@/components/ui/use-toast";
 interface Comment {
   id: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
   user: {
     id: string;
     username: string | null;
@@ -42,20 +42,23 @@ export function CommentList({ buildId, onRefresh }: CommentListProps) {
       }
       setError(null);
 
+      console.log("Fetching comments for buildId:", buildId);
       const response = await fetch(`/api/builds/${buildId}/comments`);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.error("Failed to fetch comments:", response.status, errorData);
         throw new Error(errorData.error || "Failed to fetch comments");
       }
 
       const data = await response.json();
+      console.log("Comments fetched:", data);
       setComments(data);
     } catch (err) {
       console.error("Error fetching comments:", err);
       const errorMessage = err instanceof Error ? err.message : "Failed to load comments";
       setError(errorMessage);
-      
+
       showToast(errorMessage, "error");
     } finally {
       setIsLoading(false);

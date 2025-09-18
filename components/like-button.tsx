@@ -68,11 +68,11 @@ export function LikeButton({
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          
+
           // Revert optimistic update on error
           setLiked(originalLiked);
           setLikes(originalLikes);
-          
+
           if (response.status === 429) {
             showToast("Please wait a moment before liking again", "warning");
           } else {

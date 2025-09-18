@@ -10,7 +10,9 @@ interface RouteParams {
 // GET /api/builds/[id]/comments - Get all comments for a build
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    console.log("API: Fetching comments for buildId:", params.id);
     const comments = await getBuildComments(params.id);
+    console.log("API: Comments found:", comments.length);
     return NextResponse.json(comments);
   } catch (error) {
     console.error("Error fetching comments:", error);

@@ -14,8 +14,8 @@ interface CommentItemProps {
   comment: {
     id: string;
     content: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string | Date;
+    updatedAt: string | Date;
     user: {
       id: string;
       username: string | null;
@@ -154,7 +154,7 @@ export function CommentItem({ comment, buildId, onCommentDeleted, onCommentUpdat
             <span className="text-sm text-gray-500">
               {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
             </span>
-            {comment.updatedAt > comment.createdAt && (
+            {new Date(comment.updatedAt) > new Date(comment.createdAt) && (
               <span className="text-xs text-gray-400">(edited)</span>
             )}
           </div>

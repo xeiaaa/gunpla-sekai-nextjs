@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import NextImage from "next/image";
+import Link from "next/link";
 import {
   DndContext,
   closestCenter,
@@ -1163,14 +1164,15 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
               <Card className="p-5">
                 <h3 className="text-lg font-semibold mb-3">Build Actions</h3>
                 <div className="space-y-2">
-                  <Button
-                    onClick={() => router.push(`/builds/${build.id}`)}
-                    variant="outline"
-                    className="w-full flex items-center justify-center gap-2 h-9"
-                  >
-                    <Eye className="h-4 w-4" />
-                    View Public
-                  </Button>
+                  <Link href={`/builds/${build.id}`} className="block">
+                    <Button
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2 h-9"
+                    >
+                      <Eye className="h-4 w-4" />
+                      View Public
+                    </Button>
+                  </Link>
 
                   <FeaturedImageSelector
                     buildId={build.id}

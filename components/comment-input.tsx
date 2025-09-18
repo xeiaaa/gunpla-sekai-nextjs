@@ -57,7 +57,7 @@ export function CommentInput({ buildId, onCommentAdded, placeholder = "Add a com
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        
+
         if (response.status === 429) {
           showToast("Please wait a moment before commenting again", "warning");
         } else {
@@ -68,7 +68,7 @@ export function CommentInput({ buildId, onCommentAdded, placeholder = "Add a com
 
       setContent("");
       onCommentAdded();
-      
+
       showToast("Your comment has been added successfully", "success");
     } catch (err) {
       console.error("Error creating comment:", err);
@@ -132,8 +132,8 @@ export function CommentInput({ buildId, onCommentAdded, placeholder = "Add a com
           </p>
           <div className={cn(
             "text-xs transition-colors duration-200",
-            isAtLimit ? "text-red-500 font-medium" : 
-            isNearLimit ? "text-yellow-600" : 
+            isAtLimit ? "text-red-500 font-medium" :
+            isNearLimit ? "text-yellow-600" :
             "text-gray-500"
           )}>
             {content.length}/{MAX_COMMENT_LENGTH}
