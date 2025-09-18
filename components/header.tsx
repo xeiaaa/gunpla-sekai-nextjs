@@ -47,6 +47,12 @@ export function Header() {
             ))}
             <SignedIn>
               <Link
+                href="/me"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                My Profile
+              </Link>
+              <Link
                 href="/collections"
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
@@ -106,6 +112,13 @@ export function Header() {
                 </Link>
               ))}
               <SignedIn>
+                <Link
+                  href="/me"
+                  className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  My Profile
+                </Link>
                 <Link
                   href="/collections"
                   className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"

@@ -1,44 +1,38 @@
 "use client";
 
+import HeroSection from "@/components/hero-section";
+import FeaturedBuilder from "@/components/featured-builder";
+import FeaturedBuild from "@/components/featured-build";
 import RecentBuilds from "@/components/recent-builds";
+import BestKit from "@/components/best-kit";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome to Gunpla Sekai</h1>
-          <p className="text-gray-600">
-            Discover, collect, and share your Gunpla builds with the community
-          </p>
-        </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <HeroSection />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            <RecentBuilds limit={6} />
-          </div>
+      {/* Featured Builder */}
+      <FeaturedBuilder />
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="space-y-6">
-              {/* Quick Stats or Featured Content */}
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white">
-                <h2 className="text-xl font-semibold mb-2">Start Your Journey</h2>
-                <p className="text-blue-100 mb-4">
-                  Join the community and start documenting your Gunpla builds
-                </p>
-                <a
-                  href="/kits"
-                  className="inline-block bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
-                >
-                  Browse Kits
-                </a>
-              </div>
-            </div>
+      {/* Featured Build */}
+      <FeaturedBuild />
+
+      {/* Recent Builds */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Recent Builds</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Stay up to date with the latest builds from our community
+            </p>
           </div>
+          <RecentBuilds limit={6} />
         </div>
-      </div>
+      </section>
+
+      {/* Best Kit */}
+      <BestKit />
     </div>
   );
 }
