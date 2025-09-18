@@ -1,5 +1,4 @@
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { headers } from "next/headers";
 import { Webhook } from "svix";
 import { NextRequest } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
@@ -26,13 +25,23 @@ interface ClerkDeletedUserData {
 
 async function validateRequest(request: NextRequest) {
   const payloadString = await request.text();
-  const headerPayload = await headers();
 
   const svixHeaders = {
-    "svix-id": headerPayload.get("svix-id")!,
-    "svix-timestamp": headerPayload.get("svix-timestamp")!,
-    "svix-signature": headerPayload.get("svix-signature")!,
+    "svix-id": request.headers.get("svix-id")!,
+    "svix-timestamp": request.headers.get("svix-timestamp")!,
+    "svix-signature": request.headers.get("svix-signature")!,
   };
+
+  // Log headers for debugging (remove in production)
+  console.log("Webhook headers:", {
+    "svix-id": svixHeaders["svix-id"],
+    "svix-timestamp": svixHeaders["svix-timestamp"],
+    "svix-signature": svixHeaders["svix-signature"] ? "present" : "missing",
+  });
+
+  if (!webhookSecret) {
+    throw new Error("CLERK_WEBHOOK_SECRET is not set");
+  }
 
   const wh = new Webhook(webhookSecret);
   return wh.verify(payloadString, svixHeaders) as WebhookEvent;
@@ -40,6 +49,8 @@ async function validateRequest(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("Webhook request received");
+
     const payload = await validateRequest(request);
     console.log("Webhook received:", payload.type);
 
@@ -70,6 +81,11 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error("Webhook error:", error);
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+
     return Response.json(
       { error: "Webhook processing failed" },
       {
