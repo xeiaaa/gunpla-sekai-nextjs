@@ -70,23 +70,25 @@ export function KitCard({
           className="aspect-[4/3] w-full"
         />
 
-        {/* Grade Badge */}
-        {kit.grade && (
-          <div className="absolute bottom-2 left-2">
-            <div className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm">
-              {kit.grade}
+        <div className="absolute bottom-2 px-2 flex gap-2 justify-between w-full flex-wrap">
+          {/* Grade Badge */}
+          {kit.grade && (
+            <div className="">
+              <div className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm">
+                {kit.grade}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Product Line Badge */}
-        {kit.productLine && (
-          <div className="absolute bottom-2 right-2">
-            <div className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm border">
-              {kit.productLine}
+          {/* Product Line Badge */}
+          {kit.productLine && (
+            <div className="">
+              <div className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs font-medium shadow-sm border">
+                {kit.productLine}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <CardContent className="p-4 space-y-3 flex-1 flex flex-col">
