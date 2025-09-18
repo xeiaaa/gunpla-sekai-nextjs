@@ -53,7 +53,7 @@ export default function FeaturedBuild() {
           </p>
         </div>
 
-        <Card className="max-w-6xl mx-auto overflow-hidden shadow-xl">
+        <Card className="max-w-6xl mx-auto overflow-hidden shadow-xl p-0">
           <div className="grid lg:grid-cols-2 gap-0">
             {/* Image Gallery */}
             <div className="relative">

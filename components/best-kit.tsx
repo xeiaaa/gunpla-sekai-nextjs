@@ -76,7 +76,7 @@ export default function BestKit() {
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto overflow-hidden shadow-xl">
+        <Card className="max-w-4xl mx-auto overflow-hidden shadow-xl p-0">
           <div className="grid lg:grid-cols-2 gap-0">
             {/* Kit Image */}
             <div className="relative">
@@ -171,7 +171,7 @@ export default function BestKit() {
                 </div>
 
                 {/* Features */}
-                <div>
+                {/* <div>
                   <h4 className="text-sm font-semibold text-gray-900 mb-3">Key Features</h4>
                   <ul className="space-y-2">
                     {bestKit.features.map((feature, index) => (
@@ -181,7 +181,7 @@ export default function BestKit() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
 
                 {/* Tags */}
                 <div>
@@ -196,7 +196,7 @@ export default function BestKit() {
                 </div>
 
                 {/* Completion Rate */}
-                <div>
+                {/* <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-gray-900">Community Completion Rate</span>
                     <span className="text-sm font-bold text-green-600">{bestKit.stats.completionRate}%</span>
@@ -205,7 +205,7 @@ export default function BestKit() {
                   <p className="text-xs text-gray-500 mt-1">
                     {bestKit.stats.totalBuilds} out of {Math.round(bestKit.stats.totalBuilds / (bestKit.stats.completionRate / 100))} builders completed this kit
                   </p>
-                </div>
+                </div> */}
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">

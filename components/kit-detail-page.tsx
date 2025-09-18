@@ -439,7 +439,7 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
         {/* Left Column - Images & Actions */}
         <div className="lg:col-span-1 space-y-4">
           {/* Main Image */}
-          <Card>
+          <Card className="p-0">
             <CardContent className="p-0">
               <div className="aspect-[4/3] relative">
                 <KitImage

@@ -38,11 +38,11 @@ export default function FeaturedBuilder() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Builder</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Meet our community's most talented builders and get inspired by their incredible work
+            Meet our community&apos;s most talented builders and get inspired by their incredible work
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto overflow-hidden">
+        <Card className="max-w-4xl mx-auto overflow-hidden p-0">
           <CardContent className="p-0">
             <div className="grid lg:grid-cols-2 gap-0">
               {/* Builder Info */}
