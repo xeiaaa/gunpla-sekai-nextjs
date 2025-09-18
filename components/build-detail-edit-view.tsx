@@ -1026,9 +1026,9 @@ export function BuildDetailEditView({ build }: BuildDetailEditViewProps) {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <LikeButton 
-                      buildId={build.id} 
-                      initialLikes={build.likes} 
+                    <LikeButton
+                      buildId={build.id}
+                      initialLikes={build.likes}
                       initialLiked={build.liked}
                     />
                     <ShareButton buildId={build.id} buildTitle={build.title} />
