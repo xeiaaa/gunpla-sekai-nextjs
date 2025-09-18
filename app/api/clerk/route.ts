@@ -69,16 +69,7 @@ export async function POST(request: NextRequest) {
         console.log("Unhandled webhook event:", payload.type);
     }
 
-    return Response.json(
-      { message: "Webhook processed successfully" },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, svix-id, svix-timestamp, svix-signature",
-        },
-      }
-    );
+    return Response.json({ message: "Webhook processed successfully" });
   } catch (error) {
     console.error("Webhook error:", error);
     console.error("Error details:", {
@@ -88,31 +79,13 @@ export async function POST(request: NextRequest) {
 
     return Response.json(
       { error: "Webhook processing failed" },
-      {
-        status: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, svix-id, svix-timestamp, svix-signature",
-        },
-      }
+      { status: 500 }
     );
   }
 }
 
 export async function GET() {
   return Response.json({ message: "Clerk webhook endpoint is running" });
-}
-
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, svix-id, svix-timestamp, svix-signature",
-    },
-  });
 }
 
 async function handleUserCreated(userData: ClerkUserData) {
