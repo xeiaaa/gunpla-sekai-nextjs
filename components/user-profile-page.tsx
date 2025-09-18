@@ -23,14 +23,19 @@ import { UserProfileData } from "@/lib/actions/users";
 interface UserProfilePageProps {
   user: UserProfileData;
   isOwnProfile?: boolean;
+  routeContext?: 'me' | 'user';
 }
 
-export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageProps) {
+export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'user' }: UserProfilePageProps) {
   const displayName = user.firstName && user.lastName
     ? `${user.firstName} ${user.lastName}`
     : user.username || "User";
 
   const joinDate = format(new Date(user.createdAt), "MMMM yyyy");
+
+  // Generate URLs based on route context
+  const buildsUrl = routeContext === 'me' ? '/me/builds' : `/users/${user.username}/builds`;
+  const reviewsUrl = routeContext === 'me' ? '/me/reviews' : `/users/${user.username}/reviews`;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -140,7 +145,7 @@ export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageP
                 Recent Builds
               </div>
               <Button variant="outline" size="sm" asChild>
-                <Link href={`/users/${user.username}/builds`}>
+                <Link href={buildsUrl}>
                   View All
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
@@ -218,7 +223,7 @@ export function UserProfilePage({ user, isOwnProfile = false }: UserProfilePageP
                 Recent Reviews
               </div>
               <Button variant="outline" size="sm" asChild>
-                <Link href={`/users/${user.username}/reviews`}>
+                <Link href={reviewsUrl}>
                   View All
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>

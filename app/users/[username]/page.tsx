@@ -39,5 +39,5 @@ export default async function UserProfile({ params }: UserProfilePageProps) {
   // Check if the current user is viewing their own profile
   const isOwnProfile = userId === user.id;
 
-  return <UserProfilePage user={user} isOwnProfile={isOwnProfile} />;
+  return <UserProfilePage user={user} isOwnProfile={isOwnProfile} routeContext="user" />;
 }

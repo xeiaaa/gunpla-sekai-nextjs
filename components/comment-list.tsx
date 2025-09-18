@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, forwardRef, useImperativeHandle } from "react";
 import { CommentItem } from "./comment-item";
 import { MessageSquare, RefreshCw, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,8 @@ import { useToast } from "@/components/ui/use-toast";
 interface Comment {
   id: string;
   content: string;
-  createdAt: string | Date;
-  updatedAt: string | Date;
+  createdAt: Date;
+  updatedAt: Date;
   user: {
     id: string;
     username: string | null;
@@ -26,12 +26,22 @@ interface CommentListProps {
   onRefresh?: () => void;
 }
 
-export function CommentList({ buildId, onRefresh }: CommentListProps) {
+export interface CommentListRef {
+  refresh: () => void;
+}
+
+export const CommentList = forwardRef<CommentListRef, CommentListProps>(({ buildId, onRefresh }, ref) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { showToast } = useToast();
+  const showToastRef = useRef(showToast);
+  const onRefreshRef = useRef(onRefresh);
+
+  // Keep the refs updated
+  showToastRef.current = showToast;
+  onRefreshRef.current = onRefresh;
 
   const fetchComments = useCallback(async (showRefreshIndicator = false) => {
     try {
@@ -42,29 +52,27 @@ export function CommentList({ buildId, onRefresh }: CommentListProps) {
       }
       setError(null);
 
-      console.log("Fetching comments for buildId:", buildId);
       const response = await fetch(`/api/builds/${buildId}/comments`);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error("Failed to fetch comments:", response.status, errorData);
         throw new Error(errorData.error || "Failed to fetch comments");
       }
 
       const data = await response.json();
-      console.log("Comments fetched:", data);
       setComments(data);
     } catch (err) {
       console.error("Error fetching comments:", err);
       const errorMessage = err instanceof Error ? err.message : "Failed to load comments";
       setError(errorMessage);
 
-      showToast(errorMessage, "error");
+      // Use ref to avoid dependency issues
+      showToastRef.current(errorMessage, "error");
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
     }
-  }, [buildId, showToast]);
+  }, [buildId]);
 
   useEffect(() => {
     fetchComments();
@@ -72,22 +80,27 @@ export function CommentList({ buildId, onRefresh }: CommentListProps) {
 
   const handleCommentAdded = useCallback(() => {
     fetchComments(true);
-    onRefresh?.();
-  }, [fetchComments, onRefresh]);
+    onRefreshRef.current?.();
+  }, [fetchComments]);
 
   const handleCommentDeleted = useCallback(() => {
     fetchComments(true);
-    onRefresh?.();
-  }, [fetchComments, onRefresh]);
+    onRefreshRef.current?.();
+  }, [fetchComments]);
 
   const handleCommentUpdated = useCallback(() => {
     fetchComments(true);
-    onRefresh?.();
-  }, [fetchComments, onRefresh]);
+    onRefreshRef.current?.();
+  }, [fetchComments]);
 
   const handleRetry = useCallback(() => {
     fetchComments();
   }, [fetchComments]);
+
+  // Expose refresh method to parent component
+  useImperativeHandle(ref, () => ({
+    refresh: () => fetchComments(true)
+  }), [fetchComments]);
 
   if (isLoading) {
     return (
@@ -170,17 +183,7 @@ export function CommentList({ buildId, onRefresh }: CommentListProps) {
       ) : (
         <div className="space-y-4">
           {comments.map((comment, index) => (
-            <div
-              key={comment.id}
-              className={cn(
-                "animate-in slide-in-from-bottom-2 duration-300",
-                "opacity-0"
-              )}
-              style={{
-                animationDelay: `${index * 100}ms`,
-                animationFillMode: "forwards"
-              }}
-            >
+            <div key={comment.id}>
               <CommentItem
                 comment={comment}
                 buildId={buildId}
@@ -193,4 +196,6 @@ export function CommentList({ buildId, onRefresh }: CommentListProps) {
       )}
     </div>
   );
-}
+});
+
+CommentList.displayName = "CommentList";

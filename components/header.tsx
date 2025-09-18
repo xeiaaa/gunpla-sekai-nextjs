@@ -70,7 +70,7 @@ export function Header() {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton afterSignOutUrl="/" showName={true}/>
             </SignedIn>
           </div>
 

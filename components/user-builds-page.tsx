@@ -158,28 +158,22 @@ export function UserBuildsPage({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href={`/users/${user.username}`}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Profile
-            </Link>
-          </Button>
-        </div>
 
         <div className="flex items-center gap-6">
           <div className="relative">
             {user.imageUrl || user.avatarUrl ? (
+              <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden relative">
               <Image
                 src={user.imageUrl || user.avatarUrl || ""}
                 alt={displayName}
-                width={80}
-                height={80}
-                className="rounded-full border-2 border-white shadow-md"
+                fill
+                  className="object-cover rounded-full"
+                  style={{ borderRadius: '50%' }}
               />
+              </div>
             ) : (
               <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
                 <User className="w-10 h-10 text-gray-400" />
@@ -187,7 +181,7 @@ export function UserBuildsPage({
             )}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">{displayName}'s Builds</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">{displayName}&apos;s Builds</h1>
             {user.username && (
               <p className="text-lg text-gray-600">@{user.username}</p>
             )}

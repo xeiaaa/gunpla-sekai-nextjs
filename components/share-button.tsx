@@ -4,6 +4,7 @@ import React, { useState, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Share2, Copy, Check, Twitter, Facebook, MessageSquare, ExternalLink } from "lucide-react";
 import { useToast } from "./ui/use-toast";
+import { ToastSimple } from "./ui/toast-simple";
 import { cn } from "@/lib/utils";
 
 interface ShareButtonProps {
@@ -17,7 +18,7 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [shareData, setShareData] = useState<any>(null);
-  const { showToast } = useToast();
+  const { toasts, showToast, removeToast } = useToast();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
@@ -222,6 +223,16 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
         </>
       )}
 
+      {/* Render toasts */}
+      {toasts.map(toast => (
+        <ToastSimple
+          key={toast.id}
+          id={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
     </div>
   );
 }
