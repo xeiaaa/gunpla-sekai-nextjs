@@ -22,7 +22,19 @@ export async function uploadToCloudinary(
   file: File,
   signature: UploadSignature,
   folder: string = "uploads"
-): Promise<any> {
+): Promise<{
+  asset_id: string;
+  public_id: string;
+  secure_url: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  bytes: number;
+  original_filename: string;
+  created_at: string;
+  eager?: Array<{ secure_url: string }>;
+}> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("signature", signature.signature);

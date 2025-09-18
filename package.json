@@ -9,7 +9,20 @@
     "lint": "eslint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "sync:meilisearch": "tsx scripts/sync-meilisearch.ts",
+    "clear:meilisearch": "tsx scripts/clear-meilisearch.ts",
+    "test:env": "tsx scripts/test-env.ts",
+    "debug:meilisearch": "tsx scripts/debug-meilisearch.ts",
+    "test:meilisearch-search": "tsx scripts/test-meilisearch-search.ts",
+    "debug:meilisearch-filters": "tsx scripts/debug-meilisearch-filters.ts",
+    "test:meilisearch-images": "tsx scripts/test-meilisearch-images.ts",
+    "test:base-kit-prioritization": "tsx scripts/test-base-kit-prioritization.ts",
+    "debug:base-kit-data": "tsx scripts/debug-base-kit-data.ts",
+    "check:database-base-kits": "tsx scripts/check-database-base-kits.ts",
+    "test:specific-base-kits": "tsx scripts/test-specific-base-kits.ts",
+    "debug:meilisearch-base-kit": "tsx scripts/debug-meilisearch-base-kit.ts",
+    "test:kits-page-meilisearch": "tsx scripts/test-kits-page-meilisearch.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.32.0",
@@ -26,7 +39,9 @@
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.2",
     "lucide-react": "^0.543.0",
+    "meilisearch": "^0.53.0",
     "next": "15.5.3",
     "radix-ui": "^1.4.3",
     "react": "19.1.0",
@@ -54,6 +69,7 @@
     "shadcn": "^3.3.1",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.2",
+    "tsx": "^4.20.5",
     "tw-animate-css": "^1.3.8",
     "typescript": "^5"
   }

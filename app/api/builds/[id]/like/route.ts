@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -13,7 +13,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const buildId = params.id;
+    const { id: buildId } = await params;
     const { liked } = await request.json();
 
     // Verify the build exists
@@ -71,11 +71,11 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
-    const buildId = params.id;
+    const { id: buildId } = await params;
 
     // Get like count and user's like status
     const [likeCount, userLike] = await Promise.all([

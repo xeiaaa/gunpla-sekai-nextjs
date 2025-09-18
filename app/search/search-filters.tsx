@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { getFilterOptions } from "@/lib/actions/meilisearch";
 
 interface SearchFiltersProps {
   filters: {
@@ -14,7 +16,8 @@ interface SearchFiltersProps {
   onFilterChange: (filters: Partial<SearchFiltersProps['filters']>) => void;
 }
 
-const TIMELINES = [
+// Default filter options (fallback)
+const DEFAULT_TIMELINES = [
   { value: "all", label: "All Timelines" },
   { value: "universal-century", label: "Universal Century" },
   { value: "after-colony", label: "After Colony" },
@@ -26,7 +29,7 @@ const TIMELINES = [
   { value: "ad-stella", label: "Ad Stella" }
 ];
 
-const GRADES = [
+const DEFAULT_GRADES = [
   { value: "all", label: "All Grades" },
   { value: "hg", label: "HG (High Grade)" },
   { value: "rg", label: "RG (Real Grade)" },
@@ -48,6 +51,22 @@ const SORT_OPTIONS = [
 ];
 
 export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
+  const [timelines, setTimelines] = useState(DEFAULT_TIMELINES);
+  const [grades, setGrades] = useState(DEFAULT_GRADES);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Load filter options from Meilisearch
+    getFilterOptions().then((options) => {
+      setTimelines(options.timelines);
+      setGrades(options.grades);
+      setLoading(false);
+    }).catch(() => {
+      // Keep default options if Meilisearch fails
+      setLoading(false);
+    });
+  }, []);
+
   const hasActiveFilters = filters.timeline !== "all" || filters.grade !== "all" || filters.sortBy !== "relevance";
 
   const clearFilters = () => {
@@ -79,7 +98,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
             <div className="flex flex-wrap gap-2">
               {filters.timeline !== "all" && (
                 <Badge variant="secondary" className="text-xs">
-                  {TIMELINES.find(t => t.value === filters.timeline)?.label}
+                  {timelines.find(t => t.value === filters.timeline)?.label}
                   <button
                     onClick={() => onFilterChange({ timeline: "all" })}
                     className="ml-1 hover:text-destructive"
@@ -90,7 +109,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               )}
               {filters.grade !== "all" && (
                 <Badge variant="secondary" className="text-xs">
-                  {GRADES.find(g => g.value === filters.grade)?.label}
+                  {grades.find(g => g.value === filters.grade)?.label}
                   <button
                     onClick={() => onFilterChange({ grade: "all" })}
                     className="ml-1 hover:text-destructive"
@@ -129,8 +148,8 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               <SelectValue placeholder="Select timeline" />
             </SelectTrigger>
             <SelectContent>
-              {TIMELINES.map((timeline) => (
-                <SelectItem key={timeline.value} value={timeline.value}>
+              {timelines.map((timeline, index) => (
+                <SelectItem key={`${timeline.value}-${index}`} value={timeline.value}>
                   {timeline.label}
                 </SelectItem>
               ))}
@@ -153,8 +172,8 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               <SelectValue placeholder="Select grade" />
             </SelectTrigger>
             <SelectContent>
-              {GRADES.map((grade) => (
-                <SelectItem key={grade.value} value={grade.value}>
+              {grades.map((grade, index) => (
+                <SelectItem key={`${grade.value}-${index}`} value={grade.value}>
                   {grade.label}
                 </SelectItem>
               ))}

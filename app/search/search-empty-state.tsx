@@ -1,6 +1,7 @@
 "use client";
 
 import { Search, Package, Zap } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface SearchEmptyStateProps {
@@ -15,26 +16,26 @@ export function SearchEmptyState({ query }: SearchEmptyStateProps) {
       </div>
 
       <h2 className="text-2xl font-bold mb-4">
-        No results found for "{query}"
+        No results found for &ldquo;{query}&rdquo;
       </h2>
 
       <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-        We couldn't find any kits or mobile suits matching your search.
+        We couldn&apos;t find any kits or mobile suits matching your search.
         Try different keywords or check the suggestions below.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button variant="outline" asChild>
-          <a href="/kits">
+          <Link href="/kits">
             <Package className="h-4 w-4 mr-2" />
             Browse All Kits
-          </a>
+          </Link>
         </Button>
         <Button variant="outline" asChild>
-          <a href="/mobile-suits">
+          <Link href="/mobile-suits">
             <Zap className="h-4 w-4 mr-2" />
             Browse All Mobile Suits
-          </a>
+          </Link>
         </Button>
       </div>
     </div>

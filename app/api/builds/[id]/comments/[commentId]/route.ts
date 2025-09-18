@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteBuildComment, updateBuildComment } from "@/lib/actions/builds";
 
-interface RouteParams {
-  params: {
-    id: string;
-    commentId: string;
-  };
-}
-
 // PUT /api/builds/[id]/comments/[commentId] - Update a comment
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string; commentId: string }> }) {
   try {
+    const { commentId } = await params;
     const body = await request.json();
     const { content } = body;
 
@@ -21,7 +15,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    const comment = await updateBuildComment(params.commentId, content);
+    const comment = await updateBuildComment(commentId, content);
     return NextResponse.json(comment);
   } catch (error) {
     console.error("Error updating comment:", error);
@@ -55,9 +49,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 // DELETE /api/builds/[id]/comments/[commentId] - Delete a comment
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string; commentId: string }> }) {
   try {
-    await deleteBuildComment(params.commentId);
+    const { commentId } = await params;
+    await deleteBuildComment(commentId);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting comment:", error);

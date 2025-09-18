@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "../../generated/prisma";
 
 interface SearchFilters {
   timeline: string;
@@ -8,9 +9,36 @@ interface SearchFilters {
   sortBy: string;
 }
 
+interface KitResult {
+  id: string;
+  name: string;
+  slug: string | null;
+  number: string;
+  variant: string | null;
+  releaseDate: Date | null;
+  priceYen: number | null;
+  boxArt: string | null;
+  grade: string | null;
+  productLine: string | undefined;
+  series: string | undefined;
+  timeline: string | undefined;
+  mobileSuits: string[];
+}
+
+interface MobileSuitResult {
+  id: string;
+  name: string;
+  slug: string | null;
+  description: string | null;
+  series: string | undefined;
+  timeline: string | undefined;
+  kitsCount: number;
+  scrapedImages: string[];
+}
+
 interface SearchResult {
-  kits: any[];
-  mobileSuits: any[];
+  kits: KitResult[];
+  mobileSuits: MobileSuitResult[];
   totalKits: number;
   totalMobileSuits: number;
   hasMore: boolean;
@@ -22,7 +50,7 @@ export async function searchKitsAndMobileSuits(
 ): Promise<SearchResult> {
   try {
     // Build where clause for kits
-    const kitWhere: any = {};
+    const kitWhere: Prisma.KitWhereInput = {};
 
     if (query) {
       kitWhere.OR = [
@@ -65,7 +93,7 @@ export async function searchKitsAndMobileSuits(
     }
 
     // Build orderBy clause for kits
-    let kitOrderBy: any = { name: "asc" };
+    let kitOrderBy: Prisma.KitOrderByWithRelationInput | Prisma.KitOrderByWithRelationInput[] = { name: "asc" };
 
     switch (filters.sortBy) {
       case "name-asc":
@@ -181,7 +209,7 @@ export async function searchKitsAndMobileSuits(
     }
 
     // Build where clause for mobile suits
-    const mobileSuitWhere: any = {};
+    const mobileSuitWhere: Prisma.MobileSuitWhereInput = {};
 
     if (query) {
       mobileSuitWhere.OR = [

@@ -127,7 +127,7 @@ export default async function CollectionsPage() {
               Backlog ({backlog.length})
             </h2>
             <p className="text-sm text-gray-500">
-              Kits you have but haven't built yet
+              Kits you have but haven&apos;t built yet
             </p>
           </div>
 

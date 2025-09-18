@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { reviewId: string } }
+  { params }: { params: Promise<{ reviewId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -13,7 +13,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { reviewId } = params;
+    const { reviewId } = await params;
     const { isHelpful } = await request.json();
 
     if (typeof isHelpful !== "boolean") {
@@ -77,7 +77,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { reviewId: string } }
+  { params }: { params: Promise<{ reviewId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -86,7 +86,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { reviewId } = params;
+    const { reviewId } = await params;
 
     // Delete user's feedback for this review
     await prisma.reviewFeedback.deleteMany({
@@ -125,11 +125,11 @@ export async function DELETE(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { reviewId: string } }
+  { params }: { params: Promise<{ reviewId: string }> }
 ) {
   try {
     const { userId } = await auth();
-    const { reviewId } = params;
+    const { reviewId } = await params;
 
     // Get feedback counts
     const feedbackCounts = await prisma.reviewFeedback.groupBy({

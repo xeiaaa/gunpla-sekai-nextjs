@@ -505,11 +505,11 @@ export async function getKitBySlug(slug: string) {
       releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit ? {
         ...kit.baseKit,
-        grade: kit.baseKit.productLine?.grade.name,
+        grade: kit.baseKit.productLine?.grade.name || null,
       } : null,
       variants: kit.variants.map(variant => ({
         ...variant,
-        grade: variant.productLine?.grade.name,
+        grade: variant.productLine?.grade.name || null,
       })),
       mobileSuits: kit.mobileSuits.map(ms => ({
         id: ms.mobileSuit.id,
@@ -529,7 +529,7 @@ export async function getKitBySlug(slug: string) {
       })),
       otherVariants: otherVariants.map(variant => ({
         ...variant,
-        grade: variant.productLine?.grade.name,
+        grade: variant.productLine?.grade.name || null,
       })),
     };
   } catch (error) {

@@ -9,6 +9,7 @@ import { Upload, Image as ImageIcon, Loader2 } from "lucide-react";
 import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import { createUpload } from "@/lib/actions/uploads";
 import { addImageToMilestone, removeImageFromMilestone } from "@/lib/actions/milestones";
+import { useAuth } from "@clerk/nextjs";
 import MilestoneImageItem from "./milestone-image-item";
 
 interface UploadedImage {
@@ -39,6 +40,7 @@ export default function BuildMilestoneUpload({
   maxImages = 10,
   isTemporary = false,
 }: BuildMilestoneUploadProps) {
+  const { userId } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [images, setImages] = useState<UploadedImage[]>(existingImages);
@@ -66,6 +68,11 @@ export default function BuildMilestoneUpload({
     setUploading(true);
 
     try {
+      // Check if user is authenticated
+      if (!userId) {
+        throw new Error("User must be authenticated to upload images");
+      }
+
       // Get upload signature for builds folder
       const signature = await getUploadSignature("builds");
 
@@ -90,6 +97,7 @@ export default function BuildMilestoneUpload({
             size: cloudinaryResult.bytes,
             originalFilename: cloudinaryResult.original_filename,
             uploadedAt: new Date(cloudinaryResult.created_at),
+            uploadedById: userId,
           });
 
           setUploadProgress(prev => ({ ...prev, [file.name]: 75 }));

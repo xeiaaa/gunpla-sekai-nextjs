@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getBuild } from "@/lib/actions/builds";
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/builds/[id]/share - Get share data for a build
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const build = await getBuild(params.id);
+    const { id } = await params;
+    const build = await getBuild(id);
 
     if (!build) {
       return NextResponse.json(

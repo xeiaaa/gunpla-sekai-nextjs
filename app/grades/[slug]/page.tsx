@@ -73,7 +73,7 @@ export default async function GradeDetail({ params }: GradeDetailPageProps) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {grade.productLines.map((productLine) => (
-                <ProductLineCard key={productLine.id} productLine={productLine} />
+                <ProductLineCard key={productLine.id} productLine={{...productLine, gradeName: grade.name}} />
               ))}
             </div>
           </div>

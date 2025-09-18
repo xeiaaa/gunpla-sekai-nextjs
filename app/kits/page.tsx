@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Filter, X, RotateCcw, Search } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 import { KitCard } from "@/components/kit-card";
-import { getFilterData } from "@/lib/actions/filters";
-import { getFilteredKits } from "@/lib/actions/kits";
+import { getFilterDataWithMeilisearch, getFilteredKitsWithMeilisearch } from "@/lib/actions/meilisearch-kits";
 
 interface Kit {
   id: string;
@@ -18,6 +17,7 @@ interface Kit {
   releaseDate?: Date | null;
   priceYen?: number | null;
   boxArt?: string | null;
+  baseKitId?: string | null;
   grade?: string | null;
   productLine?: string | null;
   series?: string | null;
@@ -33,7 +33,7 @@ interface FilterData {
   releaseTypes: Array<{ id: string; name: string; slug: string | null }>;
 }
 
-export default function KitsPage() {
+function KitsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -73,7 +73,7 @@ export default function KitsPage() {
   const loadKits = useCallback(async () => {
     setLoading(true);
     try {
-      const filteredKits = await getFilteredKits({
+      const result = await getFilteredKitsWithMeilisearch({
         gradeIds: appliedGrades,
         productLineIds: appliedProductLines,
         mobileSuitIds: appliedMobileSuits,
@@ -82,8 +82,10 @@ export default function KitsPage() {
         searchTerm: appliedSearchTerm,
         sortBy: appliedSortBy,
         order: appliedOrder,
+        limit: 50,
+        offset: 0,
       });
-      setKits(filteredKits);
+      setKits(result.kits);
     } catch (error) {
       console.error('Error loading kits:', error);
       setKits([]);
@@ -154,7 +156,7 @@ export default function KitsPage() {
 
   useEffect(() => {
     const loadFilterData = async () => {
-      const data = await getFilterData();
+      const data = await getFilterDataWithMeilisearch();
       setFilterData(data);
     };
     loadFilterData();
@@ -469,5 +471,29 @@ export default function KitsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function KitsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background">
+        <div className="bg-primary text-primary-foreground py-4">
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl font-bold">Browse All Kits</h1>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <KitsPageContent />
+    </Suspense>
   );
 }

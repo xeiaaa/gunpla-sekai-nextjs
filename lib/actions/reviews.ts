@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { ReviewCategory } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
+import type { Prisma } from "../../generated/prisma";
 
 // Types for review operations
 export interface ReviewScoreInput {
@@ -63,7 +64,7 @@ function validateScores(scores: ReviewScoreInput[]): { isValid: boolean; errors:
   }, {} as Record<ReviewCategory, number>);
 
   const duplicates = Object.entries(categoryCounts)
-    .filter(([_, count]) => count > 1)
+    .filter(([, count]) => count > 1)
     .map(([category]) => category);
 
   if (duplicates.length > 0) {
@@ -84,6 +85,7 @@ function validateScores(scores: ReviewScoreInput[]): { isValid: boolean; errors:
 }
 
 // Check if user has access to review (removed collection requirement)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function checkReviewAccess(userId: string, kitId: string): Promise<boolean> {
   // Allow all authenticated users to review any kit
   return true;
@@ -354,7 +356,7 @@ export async function getKitReviews(kitId: string, limit: number = 10, offset: n
   });
 
   // Get user's feedback for all reviews if authenticated
-  let userFeedback: any[] = [];
+  let userFeedback: Array<{ reviewId: string; userId: string; isHelpful: boolean }> = [];
   if (userId) {
     userFeedback = await prisma.reviewFeedback.findMany({
       where: {
@@ -492,7 +494,7 @@ export async function getKitReviewStats(kitId: string) {
 
 // Get all reviews by a user
 export async function getUserReviews(userId: string, limit: number = 10, offset: number = 0, sort: string = "newest") {
-  let orderBy: any = { createdAt: "desc" };
+  let orderBy: Prisma.ReviewOrderByWithRelationInput = { createdAt: "desc" };
 
   switch (sort) {
     case "oldest":

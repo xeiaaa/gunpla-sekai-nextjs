@@ -119,7 +119,7 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
         return;
       }
 
-      showToast(`Opening ${platform}...`, "default");
+      showToast(`Opening ${platform}...`, "info");
     } catch (error) {
       console.error(`Failed to share on ${platform}:`, error);
       showToast(`Failed to share on ${platform}. Please try again.`, "error");

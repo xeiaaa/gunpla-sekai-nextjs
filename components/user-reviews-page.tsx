@@ -137,7 +137,7 @@ export function UserReviewsPage({
             )}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">{displayName}'s Reviews</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">{displayName}&apos;s Reviews</h1>
             {user.username && (
               <p className="text-lg text-gray-600">@{user.username}</p>
             )}
@@ -282,7 +282,7 @@ export function UserReviewsPage({
             <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-300" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No reviews found</h3>
             <p className="text-gray-500 mb-4">
-              This user hasn't written any reviews yet.
+              This user hasn&apos;t written any reviews yet.
             </p>
           </CardContent>
         </Card>

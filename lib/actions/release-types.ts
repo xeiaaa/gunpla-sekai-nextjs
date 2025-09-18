@@ -124,21 +124,6 @@ export async function getReleaseTypeKits(releaseTypeId: string, limit: number = 
 
 export async function getReleaseTypeAnalytics(releaseTypeId: string) {
   try {
-    const analytics = await prisma.kit.groupBy({
-      by: ['gradeId'],
-      where: { releaseTypeId },
-      _count: {
-        id: true,
-      },
-      include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
-
     // This query doesn't work as expected with Prisma's groupBy and include
     // Let's use a different approach
     const gradeCounts = await prisma.kit.findMany({

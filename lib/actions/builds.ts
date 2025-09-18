@@ -2,9 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { BuildStatus } from "../../generated/prisma";
+import type { Prisma } from "../../generated/prisma";
 
 export interface CreateBuildData {
   kitId: string;
@@ -346,13 +346,13 @@ export async function getUserBuilds(
 ) {
   try {
     // Build where clause
-    const where: any = { userId };
+    const where: Prisma.BuildWhereInput = { userId };
     if (status) {
-      where.status = status;
+      where.status = status as BuildStatus;
     }
 
     // Build orderBy clause
-    let orderBy: any = { createdAt: "desc" };
+    let orderBy: Prisma.BuildOrderByWithRelationInput = { createdAt: "desc" };
     switch (sort) {
       case "oldest":
         orderBy = { createdAt: "asc" };

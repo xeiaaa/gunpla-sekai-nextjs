@@ -6,7 +6,7 @@ import { SearchFilters } from "./search-filters";
 import { SearchResults } from "./search-results";
 import { SearchEmptyState } from "./search-empty-state";
 import { SearchSuggestions } from "./search-suggestions";
-import { searchKitsAndMobileSuits } from "@/lib/actions/search";
+import { searchKitsAndMobileSuitsWithMeilisearch } from "@/lib/actions/meilisearch";
 
 interface SearchFilters {
   timeline: string;
@@ -41,7 +41,7 @@ function SearchContent() {
     setError(null);
 
     try {
-      const searchResults = await searchKitsAndMobileSuits(searchQuery, searchFilters);
+      const searchResults = await searchKitsAndMobileSuitsWithMeilisearch(searchQuery, searchFilters);
 
       // Transform the results to match the KitCard and MobileSuitCard interfaces
       const transformedKits = searchResults.kits.map(kit => ({
@@ -113,7 +113,7 @@ function SearchContent() {
       {/* Search Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          Search Results for "{query}"
+          Search Results for &ldquo;{query}&rdquo;
         </h1>
         {hasResults && (
           <p className="text-muted-foreground">

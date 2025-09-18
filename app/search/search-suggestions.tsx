@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { getSearchSuggestions } from "@/lib/actions/search";
+import { getSearchSuggestionsWithMeilisearch } from "@/lib/actions/meilisearch";
 
 interface SearchSuggestionsProps {
   query: string;
@@ -33,8 +33,8 @@ export function SearchSuggestions({ query }: SearchSuggestionsProps) {
 
   useEffect(() => {
     if (query.length > 1) {
-      // Get real suggestions from database
-      getSearchSuggestions(query).then(setSuggestions);
+      // Get real suggestions from Meilisearch
+      getSearchSuggestionsWithMeilisearch(query).then(setSuggestions);
     } else {
       setSuggestions([]);
     }

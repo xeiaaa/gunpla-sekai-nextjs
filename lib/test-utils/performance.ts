@@ -8,7 +8,7 @@ export interface PerformanceMetrics {
 }
 
 export interface QueryPlan {
-  plan: any[];
+  plan: Record<string, unknown>[];
   executionTime?: number;
   planningTime?: number;
 }
@@ -30,7 +30,7 @@ export const measureQueryPerformance = async <T>(
   let queryPlan: QueryPlan | undefined;
   if (options.includeQueryPlan && options.query) {
     try {
-      const plan = await prisma.$queryRawUnsafe(`EXPLAIN ANALYZE ${options.query}`) as any[];
+      const plan = await prisma.$queryRawUnsafe(`EXPLAIN ANALYZE ${options.query}`) as Record<string, unknown>[];
       queryPlan = { plan };
     } catch (error) {
       console.warn('Failed to get query plan:', error);
@@ -103,6 +103,7 @@ export const generatePerformanceTestData = {
     collections: number;
     reviews: number;
     builds: number;
+    productLines?: number;
   }) {
     console.log('Generating performance test data...');
 
@@ -155,7 +156,7 @@ export const generatePerformanceTestData = {
     const productLines = [];
     const productLineNames = ['HGUC', 'MG', 'RG', 'PG', 'SD', 'RE/100', 'FM', 'HG'];
 
-    for (let i = 0; i < config.productLines || 8; i++) {
+    for (let i = 0; i < (config.productLines ?? 8); i++) {
       productLines.push({
         name: `${productLineNames[i % productLineNames.length]} ${i}`,
         slug: `${productLineNames[i % productLineNames.length].toLowerCase()}-${i}`,

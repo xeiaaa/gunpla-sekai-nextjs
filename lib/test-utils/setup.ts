@@ -1,4 +1,13 @@
 import { testDb } from "./prisma";
+import type { Prisma } from "../../generated/prisma";
+
+// Type definitions for test data overrides
+type UserOverrides = Partial<Prisma.UserUncheckedCreateInput>;
+type GradeOverrides = Partial<Prisma.GradeUncheckedCreateInput>;
+type ProductLineOverrides = Partial<Prisma.ProductLineUncheckedCreateInput>;
+type KitOverrides = Partial<Prisma.KitUncheckedCreateInput>;
+type TimelineOverrides = Partial<Prisma.TimelineUncheckedCreateInput>;
+type SeriesOverrides = Partial<Prisma.SeriesUncheckedCreateInput>;
 
 // Global test setup and teardown
 export const setupTestDb = () => {
@@ -18,7 +27,7 @@ export const setupTestDb = () => {
 // Helper function to create test data
 export const createTestData = {
   // Create a test user
-  async user(overrides: any = {}) {
+  async user(overrides: UserOverrides = {}) {
     const { prisma } = await import("./prisma");
     return prisma.user.create({
       data: {
@@ -30,7 +39,7 @@ export const createTestData = {
   },
 
   // Create a test grade
-  async grade(overrides: any = {}) {
+  async grade(overrides: GradeOverrides = {}) {
     const { prisma } = await import("./prisma");
     return prisma.grade.create({
       data: {
@@ -42,7 +51,7 @@ export const createTestData = {
   },
 
   // Create a test product line
-  async productLine(gradeId: string, overrides: any = {}) {
+  async productLine(gradeId: string, overrides: ProductLineOverrides = {}) {
     const { prisma } = await import("./prisma");
     return prisma.productLine.create({
       data: {
@@ -55,7 +64,7 @@ export const createTestData = {
   },
 
   // Create a test kit with product line
-  async kit(overrides: any = {}) {
+  async kit(overrides: KitOverrides = {}) {
     const { prisma } = await import("./prisma");
 
     // If productLineId is not provided, create a product line
@@ -75,7 +84,7 @@ export const createTestData = {
   },
 
   // Create a test timeline
-  async timeline(overrides: any = {}) {
+  async timeline(overrides: TimelineOverrides = {}) {
     const { prisma } = await import("./prisma");
     return prisma.timeline.create({
       data: {
@@ -87,7 +96,7 @@ export const createTestData = {
   },
 
   // Create a test series
-  async series(overrides: any = {}) {
+  async series(overrides: SeriesOverrides = {}) {
     const { prisma } = await import("./prisma");
     return prisma.series.create({
       data: {

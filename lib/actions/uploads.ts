@@ -13,6 +13,7 @@ export interface CreateUploadData {
   size: number;
   originalFilename: string;
   uploadedAt: Date;
+  uploadedById: string;
 }
 
 export async function createUpload(data: CreateUploadData) {

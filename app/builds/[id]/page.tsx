@@ -11,7 +11,7 @@ interface BuildPageProps {
 
 export default async function BuildPage({ params }: BuildPageProps) {
   const { userId } = await auth();
-  const build = await getBuild(params.id, userId);
+  const build = await getBuild(params.id, userId || undefined);
 
   if (!build) {
     notFound();

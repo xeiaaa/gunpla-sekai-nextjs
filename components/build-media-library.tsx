@@ -30,6 +30,7 @@ import {
   updateBuildUploadCaption,
   reorderBuildUploads
 } from "@/lib/actions/uploads";
+import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import {
   DndContext,
@@ -205,6 +206,7 @@ export default function BuildMediaLibrary({
   featuredImageId = null,
   onMediaCountChange,
 }: BuildMediaLibraryProps) {
+  const { userId } = useAuth();
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [uploading, setUploading] = useState(false);
   const [imageFit, setImageFit] = useState<'cover' | 'contain'>('cover');
@@ -263,6 +265,11 @@ export default function BuildMediaLibrary({
     setUploading(true);
     const uploadPromises = Array.from(files).map(async (file) => {
       try {
+        // Check if user is authenticated
+        if (!userId) {
+          throw new Error("User must be authenticated to upload images");
+        }
+
         // Get upload signature
         const signature = await getUploadSignature(`builds/${buildId}`);
 
@@ -284,6 +291,7 @@ export default function BuildMediaLibrary({
           size: cloudinaryResult.bytes,
           originalFilename: cloudinaryResult.original_filename,
           uploadedAt: new Date(),
+          uploadedById: userId,
         });
 
         // Add upload to build via junction table
@@ -321,7 +329,7 @@ export default function BuildMediaLibrary({
 
     setMediaItems(prev => [...prev, ...successfulUploads]);
     setUploading(false);
-  }, [buildId, mediaItems.length]);
+  }, [buildId, mediaItems.length, userId]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

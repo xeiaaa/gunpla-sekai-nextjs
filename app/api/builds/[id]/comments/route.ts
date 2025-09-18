@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createBuildComment, getBuildComments } from "@/lib/actions/builds";
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/builds/[id]/comments - Get all comments for a build
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const comments = await getBuildComments(params.id);
+    const { id } = await params;
+    const comments = await getBuildComments(id);
     return NextResponse.json(comments);
   } catch (error) {
     console.error("Error fetching comments:", error);
@@ -22,8 +17,9 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 }
 
 // POST /api/builds/[id]/comments - Create a new comment
-export async function POST(request: NextRequest, { params }: RouteParams) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { content } = body;
 
@@ -34,7 +30,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    const comment = await createBuildComment(params.id, content);
+    const comment = await createBuildComment(id, content);
     return NextResponse.json(comment, { status: 201 });
   } catch (error) {
     console.error("Error creating comment:", error);
