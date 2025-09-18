@@ -4,7 +4,6 @@ import React, { useState, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Share2, Copy, Check, Twitter, Facebook, MessageSquare, ExternalLink } from "lucide-react";
 import { useToast } from "./ui/use-toast";
-import { ToastSimple } from "./ui/toast-simple";
 import { cn } from "@/lib/utils";
 
 interface ShareButtonProps {
@@ -82,7 +81,7 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
         document.execCommand("copy");
         document.body.removeChild(textArea);
       }
-      
+
       setCopied(true);
       showToast("Link copied to clipboard!", "success");
       setTimeout(() => setCopied(false), 2000);
@@ -113,7 +112,7 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
       }
 
       const popup = window.open(url, "_blank", "width=600,height=400,scrollbars=yes,resizable=yes");
-      
+
       if (!popup) {
         showToast("Popup blocked. Please allow popups for this site.", "error");
         return;
@@ -223,16 +222,6 @@ export function ShareButton({ buildId, buildTitle, buildUrl }: ShareButtonProps)
         </>
       )}
 
-      {/* Render toasts */}
-      {toasts.map(toast => (
-        <ToastSimple
-          key={toast.id}
-          id={toast.id}
-          message={toast.message}
-          type={toast.type}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
     </div>
   );
 }
