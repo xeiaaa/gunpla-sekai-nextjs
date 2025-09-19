@@ -11,6 +11,11 @@ export interface UserProfileData {
   lastName: string | null;
   imageUrl: string | null;
   avatarUrl: string | null;
+  bio: string | null;
+  instagramUrl: string | null;
+  youtubeUrl: string | null;
+  portfolioUrl: string | null;
+  bannerImageUrl: string | null;
   createdAt: Date;
   // Collection stats
   collectionStats: {
@@ -43,6 +48,23 @@ export interface UserProfileData {
         };
       } | null;
     };
+    likes?: {
+      count: number;
+    };
+    comments?: {
+      count: number;
+    };
+    milestones?: Array<{
+      id: string;
+      type: string;
+      title: string;
+      imageUrls: string[];
+      uploads: Array<{
+        upload: {
+          url: string;
+        };
+      }>;
+    }>;
   }>;
   // Recent reviews (limit 5)
   recentReviews: Array<{
@@ -61,6 +83,11 @@ export interface UserProfileData {
       helpful: number;
       notHelpful: number;
     };
+    categoryScores?: Array<{
+      category: string;
+      score: number;
+      notes: string | null;
+    }>;
   }>;
 }
 
@@ -101,6 +128,32 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
                 url: true,
               },
             },
+            likes: {
+              select: {
+                id: true,
+              },
+            },
+            comments: {
+              select: {
+                id: true,
+              },
+            },
+            milestones: {
+              take: 2,
+              orderBy: { order: "asc" },
+              include: {
+                uploads: {
+                  take: 1,
+                  include: {
+                    upload: {
+                      select: {
+                        url: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
         reviews: {
@@ -113,6 +166,18 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
                 name: true,
                 slug: true,
                 boxArt: true,
+              },
+            },
+            feedback: {
+              select: {
+                isHelpful: true,
+              },
+            },
+            categoryScores: {
+              select: {
+                category: true,
+                score: true,
+                notes: true,
               },
             },
           },
@@ -161,6 +226,11 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
       lastName: user.lastName,
       imageUrl: user.imageUrl,
       avatarUrl: user.avatarUrl,
+      bio: user.bio,
+      instagramUrl: user.instagramUrl,
+      youtubeUrl: user.youtubeUrl,
+      portfolioUrl: user.portfolioUrl,
+      bannerImageUrl: user.bannerImageUrl,
       createdAt: user.createdAt,
       collectionStats,
       recentBuilds: user.builds.map((build) => ({
@@ -171,6 +241,21 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
         completedAt: build.completedAt,
         featuredImage: build.featuredImage,
         kit: build.kit,
+        likes: {
+          count: build.likes.length,
+        },
+        comments: {
+          count: build.comments.length,
+        },
+        milestones: build.milestones.map((milestone) => ({
+          id: milestone.id,
+          type: milestone.type,
+          title: milestone.title,
+          imageUrls: milestone.imageUrls,
+          uploads: milestone.uploads.map((upload) => ({
+            upload: upload.upload,
+          })),
+        })),
       })),
       recentReviews: await Promise.all(
         user.reviews.map(async (review) => {
@@ -197,6 +282,11 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
               helpful: helpfulCount,
               notHelpful: notHelpfulCount,
             },
+            categoryScores: review.categoryScores.map((score) => ({
+              category: score.category,
+              score: score.score,
+              notes: score.notes,
+            })),
           };
         })
       ),

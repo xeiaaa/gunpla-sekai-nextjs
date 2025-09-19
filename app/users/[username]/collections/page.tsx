@@ -52,9 +52,9 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{displayName}'s Collection</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{displayName}&apos;s Collection</h1>
         <p className="text-gray-600">
-          View {displayName}'s Gunpla collection across wishlist, preorder, backlog, in progress, and built kits.
+          View {displayName}&apos;s Gunpla collection across wishlist, preorder, backlog, in progress, and built kits.
         </p>
       </div>
 
