@@ -386,3 +386,127 @@ export async function getKitUploads(kitId: string) {
     throw new Error("Failed to fetch kit uploads");
   }
 }
+
+export async function updateKitUploadCaption(kitId: string, kitUploadId: string, caption: string) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user is admin
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    throw new Error("Admin access required");
+  }
+
+  try {
+    const kitUpload = await prisma.kitUpload.update({
+      where: { id: kitUploadId },
+      data: { caption },
+      include: {
+        kit: {
+          select: {
+            slug: true,
+          },
+        },
+      },
+    });
+
+    // Revalidate kit page
+    if (kitUpload.kit.slug) {
+      revalidatePath(`/kits/${kitUpload.kit.slug}`);
+    }
+
+    return kitUpload;
+  } catch (error) {
+    console.error("Error updating kit upload caption:", error);
+    throw new Error("Failed to update kit upload caption");
+  }
+}
+
+export async function updateKitUploadType(kitId: string, kitUploadId: string, type: KitImageType) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user is admin
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    throw new Error("Admin access required");
+  }
+
+  try {
+    const kitUpload = await prisma.kitUpload.update({
+      where: { id: kitUploadId },
+      data: { type },
+      include: {
+        kit: {
+          select: {
+            slug: true,
+          },
+        },
+      },
+    });
+
+    // Revalidate kit page
+    if (kitUpload.kit.slug) {
+      revalidatePath(`/kits/${kitUpload.kit.slug}`);
+    }
+
+    return kitUpload;
+  } catch (error) {
+    console.error("Error updating kit upload type:", error);
+    throw new Error("Failed to update kit upload type");
+  }
+}
+
+export async function reorderKitUploads(kitId: string, kitUploadIds: string[]) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user is admin
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    throw new Error("Admin access required");
+  }
+
+  try {
+    // Update order for each kit upload
+    const updatePromises = kitUploadIds.map((kitUploadId, index) =>
+      prisma.kitUpload.update({
+        where: { id: kitUploadId },
+        data: { order: index },
+      })
+    );
+
+    await Promise.all(updatePromises);
+
+    // Revalidate kit page
+    const kit = await prisma.kit.findUnique({
+      where: { id: kitId },
+      select: { slug: true },
+    });
+
+    if (kit?.slug) {
+      revalidatePath(`/kits/${kit.slug}`);
+    }
+  } catch (error) {
+    console.error("Error reordering kit uploads:", error);
+    throw new Error("Failed to reorder kit uploads");
+  }
+}
