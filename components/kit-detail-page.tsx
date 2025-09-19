@@ -93,6 +93,38 @@ interface KitDetailPageProps {
       priceYen?: number | null;
       grade: string | null;
     }>;
+    expansions: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      releaseDate: Date | null;
+      priceYen: number | null;
+      boxArt: string | null;
+      baseKitId: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+      releaseType: string | null;
+      mobileSuits: string[];
+    }>;
+    expandedBy: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      releaseDate: Date | null;
+      priceYen: number | null;
+      boxArt: string | null;
+      baseKitId: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+      releaseType: string | null;
+      mobileSuits: string[];
+    }>;
   };
   collectionStatus?: CollectionStatus | null;
   isAdmin?: boolean;
@@ -290,6 +322,104 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                       <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                     </div>
                   </Link>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Expansions */}
+            {kit.expansions.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Expansions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.expansions.map((expansion) => (
+                      <Link key={expansion.id} href={`/kits/${expansion.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={expansion.boxArt || ''}
+                              alt={expansion.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">{expansion.name}</h4>
+                            {expansion.variant && (
+                              <p className="text-sm text-muted-foreground">{expansion.variant}</p>
+                            )}
+                            <p className="text-sm text-muted-foreground">#{expansion.number}</p>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              {expansion.grade && (
+                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
+                                  {expansion.grade}
+                                </span>
+                              )}
+                              {expansion.productLine && (
+                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
+                                  {expansion.productLine}
+                                </span>
+                              )}
+                            </div>
+                            {expansion.series && (
+                              <p className="text-xs text-muted-foreground">{expansion.series}</p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Expanded By */}
+            {kit.expandedBy.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Expanded By</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.expandedBy.map((expandedByKit) => (
+                      <Link key={expandedByKit.id} href={`/kits/${expandedByKit.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={expandedByKit.boxArt || ''}
+                              alt={expandedByKit.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">{expandedByKit.name}</h4>
+                            {expandedByKit.variant && (
+                              <p className="text-sm text-muted-foreground">{expandedByKit.variant}</p>
+                            )}
+                            <p className="text-sm text-muted-foreground">#{expandedByKit.number}</p>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              {expandedByKit.grade && (
+                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
+                                  {expandedByKit.grade}
+                                </span>
+                              )}
+                              {expandedByKit.productLine && (
+                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
+                                  {expandedByKit.productLine}
+                                </span>
+                              )}
+                            </div>
+                            {expandedByKit.series && (
+                              <p className="text-xs text-muted-foreground">{expandedByKit.series}</p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             )}

@@ -394,6 +394,128 @@ export async function updateKitMobileSuits(kitId: string, mobileSuitIds: string[
   }
 }
 
+export async function updateKitExpansions(kitId: string, expansionIds: string[]) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, error: "User must be authenticated" };
+    }
+
+    // Check if user is admin
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isAdmin: true },
+    });
+
+    if (!user?.isAdmin) {
+      return { success: false, error: "Admin access required" };
+    }
+
+    // Check if kit exists
+    const existingKit = await prisma.kit.findUnique({
+      where: { id: kitId },
+    });
+
+    if (!existingKit) {
+      return { success: false, error: "Kit not found" };
+    }
+
+    // Prevent self-expansion
+    if (expansionIds.includes(kitId)) {
+      return { success: false, error: "Kit cannot expand itself" };
+    }
+
+    // Remove all existing expansion relationships for this kit
+    await prisma.kitRelation.deleteMany({
+      where: { kitId }
+    });
+
+    // Add new expansion relationships
+    if (expansionIds.length > 0) {
+      const kitExpansionPairs = expansionIds.map(expansionId => ({
+        kitId,
+        expansionId
+      }));
+
+      await prisma.kitRelation.createMany({
+        data: kitExpansionPairs,
+        skipDuplicates: true
+      });
+    }
+
+    // Revalidate relevant paths
+    revalidatePath("/kits");
+    revalidatePath(`/kits/${existingKit.slug}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating kit expansions:', error);
+    return { success: false, error: "Failed to update kit expansions" };
+  }
+}
+
+export async function updateKitExpandedBy(kitId: string, expandedByIds: string[]) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, error: "User must be authenticated" };
+    }
+
+    // Check if user is admin
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isAdmin: true },
+    });
+
+    if (!user?.isAdmin) {
+      return { success: false, error: "Admin access required" };
+    }
+
+    // Check if kit exists
+    const existingKit = await prisma.kit.findUnique({
+      where: { id: kitId },
+    });
+
+    if (!existingKit) {
+      return { success: false, error: "Kit not found" };
+    }
+
+    // Prevent self-expansion
+    if (expandedByIds.includes(kitId)) {
+      return { success: false, error: "Kit cannot be expanded by itself" };
+    }
+
+    // Remove all existing "expanded by" relationships for this kit
+    await prisma.kitRelation.deleteMany({
+      where: { expansionId: kitId }
+    });
+
+    // Add new "expanded by" relationships
+    if (expandedByIds.length > 0) {
+      const kitExpandedByPairs = expandedByIds.map(expandedById => ({
+        kitId: expandedById,
+        expansionId: kitId
+      }));
+
+      await prisma.kitRelation.createMany({
+        data: kitExpandedByPairs,
+        skipDuplicates: true
+      });
+    }
+
+    // Revalidate relevant paths
+    revalidatePath("/kits");
+    revalidatePath(`/kits/${existingKit.slug}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating kit expanded by:', error);
+    return { success: false, error: "Failed to update kit expanded by" };
+  }
+}
+
 export async function getAllProductLines() {
   try {
     const productLines = await prisma.productLine.findMany({
@@ -547,6 +669,16 @@ export async function getKitBySlug(slug: string) {
                 series: {
                   select: {
                     name: true,
+                    timeline: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+                _count: {
+                  select: {
+                    kits: true,
                   },
                 },
               },
@@ -566,6 +698,98 @@ export async function getKitBySlug(slug: string) {
           },
           orderBy: {
             createdAt: 'desc',
+          },
+        },
+        expansions: {
+          include: {
+            expansion: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                number: true,
+                variant: true,
+                releaseDate: true,
+                priceYen: true,
+                boxArt: true,
+                baseKitId: true,
+                productLine: {
+                  select: {
+                    name: true,
+                    grade: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+                series: {
+                  select: {
+                    name: true,
+                  },
+                },
+                releaseType: {
+                  select: {
+                    name: true,
+                  },
+                },
+                mobileSuits: {
+                  select: {
+                    mobileSuit: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        expandedBy: {
+          include: {
+            kit: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                number: true,
+                variant: true,
+                releaseDate: true,
+                priceYen: true,
+                boxArt: true,
+                baseKitId: true,
+                productLine: {
+                  select: {
+                    name: true,
+                    grade: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+                series: {
+                  select: {
+                    name: true,
+                  },
+                },
+                releaseType: {
+                  select: {
+                    name: true,
+                  },
+                },
+                mobileSuits: {
+                  select: {
+                    mobileSuit: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -661,6 +885,8 @@ export async function getKitBySlug(slug: string) {
         description: ms.mobileSuit.description,
         scrapedImages: ms.mobileSuit.scrapedImages,
         series: ms.mobileSuit.series?.name,
+        timeline: ms.mobileSuit.series?.timeline?.name || null,
+        kitsCount: ms.mobileSuit._count.kits,
       })),
       uploads: kit.uploads.map(u => ({
         id: u.upload.id,
@@ -670,6 +896,38 @@ export async function getKitBySlug(slug: string) {
         title: u.caption || u.upload.originalFilename,
         description: u.caption,
         createdAt: u.upload.createdAt,
+      })),
+      expansions: kit.expansions.map(exp => ({
+        id: exp.expansion.id,
+        name: exp.expansion.name,
+        slug: exp.expansion.slug,
+        number: exp.expansion.number,
+        variant: exp.expansion.variant,
+        releaseDate: exp.expansion.releaseDate,
+        priceYen: exp.expansion.priceYen,
+        boxArt: exp.expansion.boxArt,
+        baseKitId: exp.expansion.baseKitId,
+        grade: exp.expansion.productLine?.grade.name || null,
+        productLine: exp.expansion.productLine?.name || null,
+        series: exp.expansion.series?.name || null,
+        releaseType: exp.expansion.releaseType?.name || null,
+        mobileSuits: exp.expansion.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
+      })),
+      expandedBy: kit.expandedBy.map(exp => ({
+        id: exp.kit.id,
+        name: exp.kit.name,
+        slug: exp.kit.slug,
+        number: exp.kit.number,
+        variant: exp.kit.variant,
+        releaseDate: exp.kit.releaseDate,
+        priceYen: exp.kit.priceYen,
+        boxArt: exp.kit.boxArt,
+        baseKitId: exp.kit.baseKitId,
+        grade: exp.kit.productLine?.grade.name || null,
+        productLine: exp.kit.productLine?.name || null,
+        series: exp.kit.series?.name || null,
+        releaseType: exp.kit.releaseType?.name || null,
+        mobileSuits: exp.kit.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
       })),
       otherVariants: otherVariants.map(variant => ({
         ...variant,

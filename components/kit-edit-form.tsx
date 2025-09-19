@@ -12,7 +12,9 @@ import { KitImageUpload } from "@/components/kit-image-upload";
 import { SeriesSelectionDialog } from "@/components/series-selection-dialog";
 import { MobileSuitSelectionDialog } from "@/components/mobile-suit-selection-dialog";
 import { BaseKitSelectionDialog } from "@/components/base-kit-selection-dialog";
-import { updateKit, getAllProductLines, updateKitMobileSuits } from "@/lib/actions/kits";
+import { ExpansionsSelectionDialog } from "@/components/expansions-selection-dialog";
+import { ExpandedBySelectionDialog } from "@/components/expanded-by-selection-dialog";
+import { updateKit, getAllProductLines, updateKitMobileSuits, updateKitExpansions, updateKitExpandedBy } from "@/lib/actions/kits";
 import { deleteKitUpload } from "@/lib/actions/uploads";
 import { KitImageType } from "@/generated/prisma";
 
@@ -59,6 +61,38 @@ interface KitEditFormProps {
       kitsCount: number;
       scrapedImages: string[];
     }>;
+    expansions: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      releaseDate: Date | null;
+      priceYen: number | null;
+      boxArt: string | null;
+      baseKitId: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+      releaseType: string | null;
+      mobileSuits: string[];
+    }>;
+    expandedBy: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      releaseDate: Date | null;
+      priceYen: number | null;
+      boxArt: string | null;
+      baseKitId: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+      releaseType: string | null;
+      mobileSuits: string[];
+    }>;
     uploads: Array<{
       id: string;
       url: string;
@@ -78,6 +112,8 @@ export function KitEditForm({ kit }: KitEditFormProps) {
   const [productLines, setProductLines] = useState<Array<{ id: string; name: string; slug: string; grade: { name: string } }>>([]);
   const [mobileSuits, setMobileSuits] = useState(kit.mobileSuits);
   const [baseKit, setBaseKit] = useState(kit.baseKit);
+  const [expansions, setExpansions] = useState(kit.expansions);
+  const [expandedBy, setExpandedBy] = useState(kit.expandedBy);
   const [formData, setFormData] = useState({
     name: kit.name,
     slug: kit.slug || "",
@@ -141,6 +177,14 @@ export function KitEditForm({ kit }: KitEditFormProps) {
     }));
   };
 
+  const handleExpansionsSelect = (selectedExpansions: typeof kit.expansions) => {
+    setExpansions(selectedExpansions);
+  };
+
+  const handleExpandedBySelect = (selectedExpandedBy: typeof kit.expandedBy) => {
+    setExpandedBy(selectedExpandedBy);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -192,6 +236,38 @@ export function KitEditForm({ kit }: KitEditFormProps) {
           const mobileSuitsResult = await updateKitMobileSuits(kit.id, newMobileSuitIds);
           if (!mobileSuitsResult.success) {
             setMessage({ type: 'error', text: mobileSuitsResult.error || "Failed to update mobile suits" });
+            return;
+          }
+        }
+
+        // Update expansions if they have changed
+        const currentExpansionIds = kit.expansions.map(exp => exp.id);
+        const newExpansionIds = expansions.map(exp => exp.id);
+
+        const expansionsChanged =
+          currentExpansionIds.length !== newExpansionIds.length ||
+          !currentExpansionIds.every(id => newExpansionIds.includes(id));
+
+        if (expansionsChanged) {
+          const expansionsResult = await updateKitExpansions(kit.id, newExpansionIds);
+          if (!expansionsResult.success) {
+            setMessage({ type: 'error', text: expansionsResult.error || "Failed to update expansions" });
+            return;
+          }
+        }
+
+        // Update expandedBy if they have changed
+        const currentExpandedByIds = kit.expandedBy.map(exp => exp.id);
+        const newExpandedByIds = expandedBy.map(exp => exp.id);
+
+        const expandedByChanged =
+          currentExpandedByIds.length !== newExpandedByIds.length ||
+          !currentExpandedByIds.every(id => newExpandedByIds.includes(id));
+
+        if (expandedByChanged) {
+          const expandedByResult = await updateKitExpandedBy(kit.id, newExpandedByIds);
+          if (!expandedByResult.success) {
+            setMessage({ type: 'error', text: expandedByResult.error || "Failed to update expanded by" });
             return;
           }
         }
@@ -353,6 +429,24 @@ export function KitEditForm({ kit }: KitEditFormProps) {
           <BaseKitSelectionDialog
             currentBaseKit={baseKit}
             onBaseKitSelect={handleBaseKitSelect}
+            excludeKitId={kit.id}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="expansions">Expansions</Label>
+          <ExpansionsSelectionDialog
+            currentExpansions={expansions}
+            onExpansionsSelect={handleExpansionsSelect}
+            excludeKitId={kit.id}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="expandedBy">Expanded By</Label>
+          <ExpandedBySelectionDialog
+            currentExpandedBy={expandedBy}
+            onExpandedBySelect={handleExpandedBySelect}
             excludeKitId={kit.id}
           />
         </div>
