@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { KitImageType } from "@/generated/prisma";
+import { revalidatePath } from "next/cache";
 
 export interface CreateUploadData {
   cloudinaryAssetId: string;
@@ -262,5 +264,125 @@ export async function reorderBuildUploads(buildId: string, uploadIds: string[]) 
   } catch (error) {
     console.error("Error reordering build uploads:", error);
     throw new Error("Failed to reorder uploads");
+  }
+}
+
+// Kit Upload Functions
+export interface CreateKitUploadData {
+  kitId: string;
+  uploadId: string;
+  type: KitImageType;
+  caption?: string;
+  order?: number;
+}
+
+export async function createKitUpload(data: CreateKitUploadData) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user is admin
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    throw new Error("Admin access required");
+  }
+
+  try {
+    const kitUpload = await prisma.kitUpload.create({
+      data: {
+        kitId: data.kitId,
+        uploadId: data.uploadId,
+        type: data.type,
+        caption: data.caption,
+        order: data.order,
+      },
+      include: {
+        upload: true,
+        kit: {
+          select: {
+            slug: true,
+          },
+        },
+      },
+    });
+
+    // Revalidate kit page
+    if (kitUpload.kit.slug) {
+      revalidatePath(`/kits/${kitUpload.kit.slug}`);
+    }
+
+    return kitUpload;
+  } catch (error) {
+    console.error("Error creating kit upload:", error);
+    throw new Error("Failed to create kit upload");
+  }
+}
+
+export async function deleteKitUpload(kitUploadId: string) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user is admin
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    throw new Error("Admin access required");
+  }
+
+  try {
+    const kitUpload = await prisma.kitUpload.findUnique({
+      where: { id: kitUploadId },
+      include: {
+        kit: {
+          select: {
+            slug: true,
+          },
+        },
+      },
+    });
+
+    if (!kitUpload) {
+      throw new Error("Kit upload not found");
+    }
+
+    await prisma.kitUpload.delete({
+      where: { id: kitUploadId },
+    });
+
+    // Revalidate kit page
+    if (kitUpload.kit.slug) {
+      revalidatePath(`/kits/${kitUpload.kit.slug}`);
+    }
+  } catch (error) {
+    console.error("Error deleting kit upload:", error);
+    console.error("Kit upload ID that failed:", kitUploadId);
+    throw new Error(`Failed to delete kit upload: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+export async function getKitUploads(kitId: string) {
+  try {
+    const kitUploads = await prisma.kitUpload.findMany({
+      where: { kitId },
+      include: {
+        upload: true,
+      },
+      orderBy: { order: 'asc' },
+    });
+
+    return kitUploads;
+  } catch (error) {
+    console.error("Error fetching kit uploads:", error);
+    throw new Error("Failed to fetch kit uploads");
   }
 }

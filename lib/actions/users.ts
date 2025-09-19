@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 
@@ -302,5 +303,42 @@ export async function updateUser(userId: string, data: UpdateUserData) {
     }
 
     return { success: false, error: "Failed to update profile" };
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return null;
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        isAdmin: true,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    return null;
+  }
+}
+
+export async function isCurrentUserAdmin() {
+  try {
+    const user = await getCurrentUser();
+    return user?.isAdmin || false;
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+    return false;
   }
 }

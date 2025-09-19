@@ -213,7 +213,9 @@ async function createIndexes() {
 
   for (const [, indexName] of Object.entries(INDEXES)) {
     try {
-      await meilisearch.createIndex(indexName);
+      // Specify primary key for each index
+      const primaryKey = indexName === 'kits' ? 'id' : 'id';
+      await meilisearch.createIndex(indexName, { primaryKey });
       console.log(`✅ Created index: ${indexName}`);
     } catch (error: unknown) {
       if (error && typeof error === 'object' && 'code' in error && error.code === 'index_already_exists') {
@@ -234,14 +236,14 @@ async function configureIndexes() {
       'name',
       'number',
       'variant',
-      'notes',
       'searchableText',
       'productLine.name',
       'productLine.grade.name',
       'series.name',
       'series.timeline.name',
       'releaseType.name',
-      'mobileSuits.name'
+      'mobileSuits.name',
+      'notes' // Moved to end to give it lower priority
     ],
     filterableAttributes: [
       'productLine.id',

@@ -174,33 +174,63 @@ export async function searchKitsAndMobileSuits(
     // Custom sorting logic for main grades and accessory kits (only for relevance sort)
     let sortedKits = kits;
     if (filters.sortBy === "relevance" || !filters.sortBy) {
-      const mainGradeSlugs = ['pg', 'rg', 'mg', 'hg', 'eg', 're-100', 'fm', 'mega-size'];
+      // Define grade priority order (same as Meilisearch logic)
+      const gradePriority = ['pg', 'mg', 'rg', 'hg', 'eg', 'fm'];
 
       sortedKits = kits.sort((a, b) => {
-        // First: baseKitId (null first)
-        if (a.baseKitId === null && b.baseKitId !== null) return -1;
-        if (a.baseKitId !== null && b.baseKitId === null) return 1;
+        // First: prioritize kits released 2010 and above
+        const aReleaseYear = a.releaseDate ? a.releaseDate.getFullYear() : null;
+        const bReleaseYear = b.releaseDate ? b.releaseDate.getFullYear() : null;
 
-        // Second: accessory kits last (check notes for "accessory")
+        // Handle null release dates (put them last)
+        if (aReleaseYear === null && bReleaseYear !== null) return 1;
+        if (aReleaseYear !== null && bReleaseYear === null) return -1;
+        if (aReleaseYear === null && bReleaseYear === null) {
+          // Within kits without release date, prioritize by grade
+          const aGradeSlug = a.productLine?.grade?.slug;
+          const bGradeSlug = b.productLine?.grade?.slug;
+          const aGradeIndex = gradePriority.indexOf(aGradeSlug);
+          const bGradeIndex = gradePriority.indexOf(bGradeSlug);
+
+          if (aGradeIndex !== -1 && bGradeIndex !== -1) return aGradeIndex - bGradeIndex;
+          if (aGradeIndex !== -1 && bGradeIndex === -1) return -1;
+          if (aGradeIndex === -1 && bGradeIndex !== -1) return 1;
+
+          return a.name.localeCompare(b.name);
+        }
+
+        if (aReleaseYear >= 2010 && bReleaseYear < 2010) return -1;
+        if (aReleaseYear < 2010 && bReleaseYear >= 2010) return 1;
+
+        // Second: baseKitId (null first) - only within same release era
+        if (aReleaseYear === bReleaseYear || (aReleaseYear >= 2010 && bReleaseYear >= 2010) || (aReleaseYear < 2010 && bReleaseYear < 2010)) {
+          if (a.baseKitId === null && b.baseKitId !== null) return -1;
+          if (a.baseKitId !== null && b.baseKitId === null) return 1;
+        }
+
+        // Third: accessory kits last (check notes for "accessory") - only within same release era and base kit status
         const aIsAccessory = a.notes?.toLowerCase().includes('accessory') || false;
         const bIsAccessory = b.notes?.toLowerCase().includes('accessory') || false;
         if (aIsAccessory && !bIsAccessory) return 1;
         if (!aIsAccessory && bIsAccessory) return -1;
 
-        // Third: main grades prioritized
+        // Fourth: prioritize by grade priority order
         const aGradeSlug = a.productLine?.grade?.slug;
         const bGradeSlug = b.productLine?.grade?.slug;
-        const aIsMainGrade = aGradeSlug ? mainGradeSlugs.includes(aGradeSlug) : false;
-        const bIsMainGrade = bGradeSlug ? mainGradeSlugs.includes(bGradeSlug) : false;
+        const aGradeIndex = gradePriority.indexOf(aGradeSlug);
+        const bGradeIndex = gradePriority.indexOf(bGradeSlug);
 
-        if (aIsMainGrade && !bIsMainGrade) return -1;
-        if (!aIsMainGrade && bIsMainGrade) return 1;
+        if (aGradeIndex !== -1 && bGradeIndex !== -1) {
+          if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
+        } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
+          return -1; // Prioritize kits with preferred grades
+        } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
+          return 1;
+        }
 
-        // If both are main grades, sort by the order in mainGradeSlugs array
-        if (aIsMainGrade && bIsMainGrade) {
-          const aIndex = mainGradeSlugs.indexOf(aGradeSlug!);
-          const bIndex = mainGradeSlugs.indexOf(bGradeSlug!);
-          return aIndex - bIndex;
+        // Within same category, sort by release date (newest first)
+        if (aReleaseYear === bReleaseYear && a.releaseDate && b.releaseDate) {
+          return b.releaseDate.getTime() - a.releaseDate.getTime();
         }
 
         // Finally: sort by name

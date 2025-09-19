@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getKitBySlug } from "@/lib/actions/kits";
 import { getKitCollectionStatus } from "@/lib/actions/collections";
+import { isCurrentUserAdmin } from "@/lib/actions/users";
 import { KitDetailPage } from "@/components/kit-detail-page";
 
 interface KitDetailPageProps {
@@ -32,6 +33,7 @@ export default async function KitDetail({ params }: KitDetailPageProps) {
   }
 
   const collectionStatus = await getKitCollectionStatus(kit.id);
+  const isAdmin = await isCurrentUserAdmin();
 
-  return <KitDetailPage kit={kit} collectionStatus={collectionStatus} />;
+  return <KitDetailPage kit={kit} collectionStatus={collectionStatus} isAdmin={isAdmin} />;
 }

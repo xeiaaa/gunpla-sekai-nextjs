@@ -1,6 +1,8 @@
 "use server";
 
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 interface KitFilters {
   gradeIds?: string[];
@@ -521,6 +523,7 @@ export async function getKitBySlug(slug: string) {
       })),
       uploads: kit.uploads.map(u => ({
         id: u.upload.id,
+        kitUploadId: u.id, // Keep the KitUpload ID for deletion
         url: u.upload.url,
         type: u.type,
         title: u.caption || u.upload.originalFilename,
@@ -535,5 +538,68 @@ export async function getKitBySlug(slug: string) {
   } catch (error) {
     console.error('Error fetching kit by slug:', error);
     return null;
+  }
+}
+
+export interface UpdateKitData {
+  name?: string;
+  slug?: string;
+  number?: string;
+  variant?: string;
+  releaseDate?: Date | null;
+  priceYen?: number | null;
+  region?: string;
+  boxArt?: string;
+  notes?: string;
+  scrapedImages?: string[];
+}
+
+export async function updateKit(kitId: string, data: UpdateKitData) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, error: "User must be authenticated" };
+    }
+
+    // Check if user is admin
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isAdmin: true },
+    });
+
+    if (!user?.isAdmin) {
+      return { success: false, error: "Admin access required" };
+    }
+
+    // Check if kit exists
+    const existingKit = await prisma.kit.findUnique({
+      where: { id: kitId },
+    });
+
+    if (!existingKit) {
+      return { success: false, error: "Kit not found" };
+    }
+
+    // Update the kit
+    const updatedKit = await prisma.kit.update({
+      where: { id: kitId },
+      data: {
+        ...data,
+        updatedAt: new Date(),
+      },
+    });
+
+    // Revalidate relevant paths
+    revalidatePath("/kits");
+    revalidatePath(`/kits/${existingKit.slug}`);
+    if (data.slug && data.slug !== existingKit.slug) {
+      revalidatePath(`/kits/${data.slug}`);
+    }
+
+    return { success: true, kit: updatedKit };
+  } catch (error) {
+    console.error('Error updating kit:', error);
+    return { success: false, error: "Failed to update kit" };
   }
 }

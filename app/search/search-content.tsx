@@ -7,6 +7,7 @@ import { SearchResults } from "./search-results";
 import { SearchEmptyState } from "./search-empty-state";
 import { SearchSuggestions } from "./search-suggestions";
 import { searchKitsAndMobileSuitsWithMeilisearch } from "@/lib/actions/meilisearch";
+import { getFilteredKitsWithMeilisearch } from "@/lib/actions/meilisearch-kits";
 
 interface SearchFilters {
   timeline: string;
@@ -35,46 +36,31 @@ function SearchContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Real database search function
+  // Search function using the same logic as kits page
   const performSearch = async (searchQuery: string, searchFilters: SearchFilters) => {
     setLoading(true);
     setError(null);
 
     try {
-      const searchResults = await searchKitsAndMobileSuitsWithMeilisearch(searchQuery, searchFilters);
+      // Use the same search logic as the kits page for consistency
+      const kitsResult = await getFilteredKitsWithMeilisearch({
+        searchTerm: searchQuery,
+        sortBy: searchFilters.sortBy === 'relevance' ? 'relevance' : searchFilters.sortBy,
+        order: searchFilters.sortBy === 'relevance' ? 'most-relevant' : 'ascending',
+        limit: 8, // Limit for search preview
+        offset: 0
+      });
 
-      // Transform the results to match the KitCard and MobileSuitCard interfaces
-      const transformedKits = searchResults.kits.map(kit => ({
-        id: kit.id,
-        name: kit.name,
-        slug: kit.slug,
-        number: kit.number,
-        variant: kit.variant,
-        releaseDate: kit.releaseDate,
-        priceYen: kit.priceYen,
-        boxArt: kit.boxArt,
-        grade: kit.grade,
-        productLine: kit.productLine,
-        series: kit.series,
-        releaseType: kit.releaseType,
-        mobileSuits: kit.mobileSuits
-      }));
-
-      const transformedMobileSuits = searchResults.mobileSuits.map(ms => ({
-        id: ms.id,
-        name: ms.name,
-        slug: ms.slug,
-        description: ms.description,
-        kitsCount: ms.kitsCount,
-        scrapedImages: ms.scrapedImages
-      }));
+      // For now, we'll focus on kits only and keep mobile suits search separate
+      // TODO: Integrate mobile suits search with the same prioritization logic
+      const mobileSuitsResult = await searchKitsAndMobileSuitsWithMeilisearch(searchQuery, searchFilters);
 
       setResults({
-        kits: transformedKits,
-        mobileSuits: transformedMobileSuits,
-        totalKits: searchResults.totalKits,
-        totalMobileSuits: searchResults.totalMobileSuits,
-        hasMore: searchResults.hasMore
+        kits: kitsResult.kits,
+        mobileSuits: mobileSuitsResult.mobileSuits,
+        totalKits: kitsResult.total,
+        totalMobileSuits: mobileSuitsResult.totalMobileSuits,
+        hasMore: kitsResult.hasMore || mobileSuitsResult.hasMore
       });
     } catch (err) {
       console.error('Search error:', err);

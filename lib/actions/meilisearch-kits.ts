@@ -30,17 +30,124 @@ function isVariantSearch(query: string): boolean {
   return variantKeywords.some(keyword => lowerQuery.includes(keyword));
 }
 
-function rankKitsByBaseKit(kits: any[], shouldPrioritizeBaseKits: boolean): any[] {
+function rankKitsByBaseKitAndReleaseDate(kits: any[], shouldPrioritizeBaseKits: boolean): any[] {
+  // Define grade priority order
+  const gradePriority = ['pg', 'mg', 'rg', 'hg', 'eg', 'fm'];
+
   if (!shouldPrioritizeBaseKits) {
-    return kits; // Return as-is if not prioritizing base kits
+    // Even when not prioritizing base kits, still prioritize by release date and grade
+    // but preserve Meilisearch relevance order within same categories
+    return kits
+      .sort((a, b) => {
+        // Prioritize kits released 2010 and above
+        const aReleaseYear = a.releaseDate ? new Date(a.releaseDate).getFullYear() : null;
+        const bReleaseYear = b.releaseDate ? new Date(b.releaseDate).getFullYear() : null;
+
+        // Handle null release dates (put them last)
+        if (aReleaseYear === null && bReleaseYear !== null) return 1;
+        if (aReleaseYear !== null && bReleaseYear === null) return -1;
+        if (aReleaseYear === null && bReleaseYear === null) {
+          // Within kits without release date, prioritize by grade, but preserve Meilisearch order within same grade
+          const aGradeSlug = a.productLine?.grade?.slug;
+          const bGradeSlug = b.productLine?.grade?.slug;
+          const aGradeIndex = gradePriority.indexOf(aGradeSlug);
+          const bGradeIndex = gradePriority.indexOf(bGradeSlug);
+
+          if (aGradeIndex !== -1 && bGradeIndex !== -1) {
+            if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
+            // Same grade - preserve Meilisearch order (don't sort by name)
+            return 0;
+          }
+          if (aGradeIndex !== -1 && bGradeIndex === -1) return -1;
+          if (aGradeIndex === -1 && bGradeIndex !== -1) return 1;
+
+          // Both unknown grades - preserve Meilisearch order
+          return 0;
+        }
+
+        // 2010+ kits first, then older kits
+        if (aReleaseYear >= 2010 && bReleaseYear < 2010) return -1;
+        if (aReleaseYear < 2010 && bReleaseYear >= 2010) return 1;
+
+        // Within same release era, prioritize by grade, but preserve Meilisearch order within same grade
+        const aGradeSlug = a.productLine?.grade?.slug;
+        const bGradeSlug = b.productLine?.grade?.slug;
+        const aGradeIndex = gradePriority.indexOf(aGradeSlug);
+        const bGradeIndex = gradePriority.indexOf(bGradeSlug);
+
+        if (aGradeIndex !== -1 && bGradeIndex !== -1) {
+          if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
+          // Same grade and era - preserve Meilisearch order (don't sort by release date or name)
+          return 0;
+        } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
+          return -1; // Prioritize kits with preferred grades
+        } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
+          return 1;
+        }
+
+        // Same era, unknown grades - preserve Meilisearch order
+        return 0;
+      });
   }
 
-  // Separate base kits (no baseKitId) from variant kits (has baseKitId)
-  const baseKits = kits.filter(kit => !kit.baseKitId);
-  const variantKits = kits.filter(kit => kit.baseKitId);
+  // Separate kits by release date first, then by base kit status
+  const kits2010AndAbove = kits.filter(kit => {
+    if (!kit.releaseDate) return false;
+    const releaseYear = new Date(kit.releaseDate).getFullYear();
+    return releaseYear >= 2010;
+  });
 
-  // Prioritize base kits, then add variant kits to fill remaining slots
-  const rankedKits = [...baseKits, ...variantKits];
+  const kitsBefore2010 = kits.filter(kit => {
+    if (!kit.releaseDate) return false;
+    const releaseYear = new Date(kit.releaseDate).getFullYear();
+    return releaseYear < 2010;
+  });
+
+  const kitsWithoutReleaseDate = kits.filter(kit => !kit.releaseDate);
+
+  // Helper function to sort by grade priority, but preserve Meilisearch order within same grade
+  const sortByGradePreservingRelevance = (a: any, b: any) => {
+    const aGradeSlug = a.productLine?.grade?.slug;
+    const bGradeSlug = b.productLine?.grade?.slug;
+    const aGradeIndex = gradePriority.indexOf(aGradeSlug);
+    const bGradeIndex = gradePriority.indexOf(bGradeSlug);
+
+    // First sort by grade priority
+    if (aGradeIndex !== -1 && bGradeIndex !== -1) {
+      if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
+      // Same grade - preserve Meilisearch relevance order
+      return 0;
+    } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
+      return -1; // Prioritize kits with preferred grades
+    } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
+      return 1;
+    }
+
+    // Both unknown grades - preserve Meilisearch order
+    return 0;
+  };
+
+  // Within 2010+ kits: prioritize base kits, then variants
+  const baseKits2010Plus = kits2010AndAbove.filter(kit => !kit.baseKitId);
+  const variantKits2010Plus = kits2010AndAbove.filter(kit => kit.baseKitId);
+
+  // Within pre-2010 kits: prioritize base kits, then variants
+  const baseKitsPre2010 = kitsBefore2010.filter(kit => !kit.baseKitId);
+  const variantKitsPre2010 = kitsBefore2010.filter(kit => kit.baseKitId);
+
+  // Within kits without release date: prioritize base kits, then variants
+  const baseKitsNoDate = kitsWithoutReleaseDate.filter(kit => !kit.baseKitId);
+  const variantKitsNoDate = kitsWithoutReleaseDate.filter(kit => kit.baseKitId);
+
+  // Combine in priority order, preserving Meilisearch relevance within each category
+  const rankedKits = [
+    ...baseKits2010Plus.sort(sortByGradePreservingRelevance),
+    ...variantKits2010Plus.sort(sortByGradePreservingRelevance),
+    ...baseKitsPre2010.sort(sortByGradePreservingRelevance),
+    ...variantKitsPre2010.sort(sortByGradePreservingRelevance),
+    ...baseKitsNoDate.sort(sortByGradePreservingRelevance),
+    ...variantKitsNoDate.sort(sortByGradePreservingRelevance)
+  ];
 
   return rankedKits;
 }
@@ -149,8 +256,8 @@ export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
       ]
     });
 
-    // Apply custom ranking to prioritize base kits
-    const rankedKits = rankKitsByBaseKit(kitsResponse.hits, shouldPrioritizeBaseKits);
+    // Apply custom ranking to prioritize base kits, release dates, and grades
+    const rankedKits = rankKitsByBaseKitAndReleaseDate(kitsResponse.hits, shouldPrioritizeBaseKits);
 
     // Apply limit and offset after ranking
     const paginatedKits = rankedKits.slice(0, limit);

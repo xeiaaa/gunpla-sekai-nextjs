@@ -95,9 +95,10 @@ interface KitDetailPageProps {
     }>;
   };
   collectionStatus?: CollectionStatus | null;
+  isAdmin?: boolean;
 }
 
-export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
+export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'reviews' | 'builds'>('overview');
 
@@ -134,7 +135,16 @@ export function KitDetailPage({ kit, collectionStatus }: KitDetailPageProps) {
             {/* Kit Info */}
             <Card>
               <CardHeader>
-                <CardTitle>Kit Information</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Kit Information</CardTitle>
+                  {isAdmin && (
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/debug/kits/${kit.slug}`}>
+                        Edit Kit
+                      </Link>
+                    </Button>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
