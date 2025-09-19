@@ -3,15 +3,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   User,
   Calendar,
   Package,
   Star,
   Heart,
-  Clock,
   ArrowRight,
-  Settings,
   Instagram,
   Youtube,
   ExternalLink,
@@ -30,6 +29,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import { UserProfileData } from "@/lib/actions/users";
+import { useState } from "react";
 
 interface UserProfilePageProps {
   user: UserProfileData;
@@ -38,6 +38,8 @@ interface UserProfilePageProps {
 }
 
 export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'user' }: UserProfilePageProps) {
+  const [selectedReview, setSelectedReview] = useState<typeof user.recentReviews[0] | null>(null);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
 
   const displayName = user.firstName && user.lastName
     ? `${user.firstName} ${user.lastName}`
@@ -48,6 +50,27 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
   // Generate URLs based on route context
   const reviewsUrl = routeContext === 'me' ? '/me/reviews' : `/users/${user.username}/reviews`;
   const collectionsUrl = routeContext === 'me' ? '/me/collections' : `/users/${user.username}/collections`;
+
+  // Handle opening review dialog
+  const handleReviewClick = (review: typeof user.recentReviews[0]) => {
+    setSelectedReview(review);
+    setIsReviewDialogOpen(true);
+  };
+
+  // Color functions for review scores (matching review-display.tsx)
+  const getScoreColor = (score: number) => {
+    if (score >= 8) return "text-green-600";
+    if (score >= 6) return "text-yellow-600";
+    if (score >= 4) return "text-orange-600";
+    return "text-red-600";
+  };
+
+  const getScoreBgColor = (score: number) => {
+    if (score >= 8) return "bg-green-100";
+    if (score >= 6) return "bg-yellow-100";
+    if (score >= 4) return "bg-orange-100";
+    return "bg-red-100";
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -353,7 +376,11 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
                 {user.recentReviews.length > 0 ? (
                   <div className="space-y-3">
                     {user.recentReviews.slice(0, 3).map((review) => (
-                      <div key={review.id} className="flex gap-3">
+                      <div
+                        key={review.id}
+                        className="flex gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
+                        onClick={() => handleReviewClick(review)}
+                      >
                         <div className="relative w-12 h-12 rounded overflow-hidden flex-shrink-0">
                           {review.kit.boxArt ? (
                             <Image
@@ -400,6 +427,107 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
           </div>
         </div>
       </div>
+
+      {/* Review Dialog */}
+      <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col gap-4">
+          <DialogHeader>
+            <DialogTitle>Review Details</DialogTitle>
+          </DialogHeader>
+          {selectedReview && (
+            <div className="space-y-6">
+              {/* Review Header */}
+              <div className="flex items-start gap-4">
+                <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0">
+                  {selectedReview.kit.boxArt ? (
+                    <Image
+                      src={selectedReview.kit.boxArt}
+                      alt={selectedReview.kit.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <Package className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold">{selectedReview.kit.name}</h3>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className={`inline-flex items-center px-3 py-1 rounded-full ${getScoreBgColor(selectedReview.overallScore)}`}>
+                      <Star className="w-4 h-4 text-yellow-500 fill-current mr-1" />
+                      <span className={`text-lg font-bold ${getScoreColor(selectedReview.overallScore)}`}>
+                        {selectedReview.overallScore.toFixed(1)}/10
+                      </span>
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {format(new Date(selectedReview.createdAt), "MMMM d, yyyy")}
+                    </span>
+                  </div>
+                  {selectedReview.title && (
+                    <h4 className="text-lg font-medium mt-2">{selectedReview.title}</h4>
+                  )}
+                </div>
+              </div>
+
+              {/* Category Scores */}
+              {selectedReview.categoryScores && selectedReview.categoryScores.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm text-gray-600 uppercase tracking-wide">
+                    Category Breakdown
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {selectedReview.categoryScores.map((score, index: number) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg gap-2">
+                        <div className="flex-1">
+                          <p className="font-medium text-sm capitalize">{score.category.replace(/_/g, ' ')}</p>
+                          {score.notes && (
+                            <p className="text-xs text-gray-500 mt-1">{score.notes}</p>
+                          )}
+                        </div>
+                        <div className={`px-2 py-1 rounded ${getScoreBgColor(score.score)}`}>
+                          <span className={`text-sm font-medium ${getScoreColor(score.score)}`}>
+                            {score.score}/10
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Review Content */}
+              {selectedReview.content && (
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm text-gray-600 uppercase tracking-wide">
+                    Review
+                  </h4>
+                  <div className="prose prose-sm max-w-none">
+                    <p className="whitespace-pre-wrap">{selectedReview.content}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Feedback */}
+              {selectedReview.feedback && (
+                <div className="pt-4 border-t">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Helpful:</span>
+                      <span className="font-medium">{selectedReview.feedback.helpful}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Not Helpful:</span>
+                      <span className="font-medium">{selectedReview.feedback.notHelpful}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
