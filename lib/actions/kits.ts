@@ -338,10 +338,113 @@ export async function removeKitFromMobileSuits(kitIds: string[], mobileSuitIds: 
   }
 }
 
+export async function updateKitMobileSuits(kitId: string, mobileSuitIds: string[]) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, error: "User must be authenticated" };
+    }
+
+    // Check if user is admin
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isAdmin: true },
+    });
+
+    if (!user?.isAdmin) {
+      return { success: false, error: "Admin access required" };
+    }
+
+    // Check if kit exists
+    const existingKit = await prisma.kit.findUnique({
+      where: { id: kitId },
+    });
+
+    if (!existingKit) {
+      return { success: false, error: "Kit not found" };
+    }
+
+    // Remove all existing mobile suit relationships for this kit
+    await prisma.kitMobileSuit.deleteMany({
+      where: { kitId }
+    });
+
+    // Add new mobile suit relationships
+    if (mobileSuitIds.length > 0) {
+      const kitMobileSuitPairs = mobileSuitIds.map(mobileSuitId => ({
+        kitId,
+        mobileSuitId
+      }));
+
+      await prisma.kitMobileSuit.createMany({
+        data: kitMobileSuitPairs,
+        skipDuplicates: true
+      });
+    }
+
+    // Revalidate relevant paths
+    revalidatePath("/kits");
+    revalidatePath(`/kits/${existingKit.slug}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating kit mobile suits:', error);
+    return { success: false, error: "Failed to update kit mobile suits" };
+  }
+}
+
+export async function getAllProductLines() {
+  try {
+    const productLines = await prisma.productLine.findMany({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        grade: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    return productLines;
+  } catch (error) {
+    console.error('Error fetching product lines:', error);
+    return [];
+  }
+}
+
+export async function getAllSeries() {
+  try {
+    const series = await prisma.series.findMany({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    return series;
+  } catch (error) {
+    console.error('Error fetching series:', error);
+    return [];
+  }
+}
+
 export async function getKitBySlug(slug: string) {
   try {
+    // Decode URL-encoded slug
+    const decodedSlug = decodeURIComponent(slug);
     const kit = await prisma.kit.findUnique({
-      where: { slug },
+      where: { slug: decodedSlug },
       include: {
         productLine: {
           select: {
@@ -372,10 +475,34 @@ export async function getKitBySlug(slug: string) {
             name: true,
             slug: true,
             number: true,
+            variant: true,
+            releaseDate: true,
+            priceYen: true,
             boxArt: true,
+            baseKitId: true,
             productLine: {
               select: {
+                name: true,
                 grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+            releaseType: {
+              select: {
+                name: true,
+              },
+            },
+            mobileSuits: {
+              select: {
+                mobileSuit: {
                   select: {
                     name: true,
                   },
@@ -496,6 +623,8 @@ export async function getKitBySlug(slug: string) {
       notes: kit.notes,
       manualLinks: kit.manualLinks,
       scrapedImages: kit.scrapedImages,
+      productLineId: kit.productLineId,
+      baseKitId: kit.baseKitId,
       grade: kit.productLine?.grade.name || null,
       productLine: kit.productLine ? {
         name: kit.productLine.name,
@@ -506,8 +635,20 @@ export async function getKitBySlug(slug: string) {
       releaseType: kit.releaseType?.name,
       releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit ? {
-        ...kit.baseKit,
+        id: kit.baseKit.id,
+        name: kit.baseKit.name,
+        slug: kit.baseKit.slug,
+        number: kit.baseKit.number,
+        variant: kit.baseKit.variant,
+        releaseDate: kit.baseKit.releaseDate,
+        priceYen: kit.baseKit.priceYen,
+        boxArt: kit.baseKit.boxArt,
+        baseKitId: kit.baseKit.baseKitId,
         grade: kit.baseKit.productLine?.grade.name || null,
+        productLine: kit.baseKit.productLine?.name || null,
+        series: kit.baseKit.series?.name || null,
+        releaseType: kit.baseKit.releaseType?.name || null,
+        mobileSuits: kit.baseKit.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
       } : null,
       variants: kit.variants.map(variant => ({
         ...variant,
@@ -552,6 +693,9 @@ export interface UpdateKitData {
   boxArt?: string;
   notes?: string;
   scrapedImages?: string[];
+  productLineId?: string | null;
+  seriesId?: string | null;
+  baseKitId?: string | null;
 }
 
 export async function updateKit(kitId: string, data: UpdateKitData) {

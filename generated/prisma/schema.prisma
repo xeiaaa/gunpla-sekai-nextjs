@@ -154,6 +154,10 @@ model Kit {
   builds      Build[]
   listings    MarketplaceListing[]
 
+  // Kit expansion relationships (many-to-many)
+  expansions KitRelation[] @relation("KitExpansions")
+  expandedBy KitRelation[] @relation("KitExpandedBy")
+
   @@map("kits")
 }
 
@@ -171,6 +175,38 @@ model KitMobileSuit {
 
   @@unique([kitId, mobileSuitId])
   @@map("kit_mobile_suits")
+}
+
+// Kit expansion types enum
+enum KitExpansionType {
+  EFFECT_PARTS
+  WEAPON_SET
+  ARMOR_EQUIPMENT_PACK
+  CONVERSION_UPGRADE_PARTS
+  BASE_STAND
+  FULL_OPTION_CUSTOMIZATION_PACK
+  CAMPAIGN_LIMITED_ADDON
+}
+
+// Junction table for many-to-many relationship between Kit expansions
+model KitRelation {
+  id          String            @id @default(cuid())
+  kitId       String // The kit that has expansions
+  expansionId String // The expansion kit
+  type        KitExpansionType? // Classification of the expansion
+  notes       String? // Optional notes about the relationship
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relations
+  kit       Kit @relation("KitExpansions", fields: [kitId], references: [id], onDelete: Cascade)
+  expansion Kit @relation("KitExpandedBy", fields: [expansionId], references: [id], onDelete: Cascade)
+
+  @@unique([kitId, expansionId]) // Prevent duplicate relationships
+  @@index([kitId])
+  @@index([expansionId])
+  @@index([type])
+  @@map("kit_relations")
 }
 
 // Upload represents files uploaded to Cloudinary

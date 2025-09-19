@@ -54,6 +54,11 @@ export type Kit = $Result.DefaultSelection<Prisma.$KitPayload>
  */
 export type KitMobileSuit = $Result.DefaultSelection<Prisma.$KitMobileSuitPayload>
 /**
+ * Model KitRelation
+ * 
+ */
+export type KitRelation = $Result.DefaultSelection<Prisma.$KitRelationPayload>
+/**
  * Model Upload
  * 
  */
@@ -138,7 +143,20 @@ export type MarketplaceListing = $Result.DefaultSelection<Prisma.$MarketplaceLis
  * Enums
  */
 export namespace $Enums {
-  export const KitImageType: {
+  export const KitExpansionType: {
+  EFFECT_PARTS: 'EFFECT_PARTS',
+  WEAPON_SET: 'WEAPON_SET',
+  ARMOR_EQUIPMENT_PACK: 'ARMOR_EQUIPMENT_PACK',
+  CONVERSION_UPGRADE_PARTS: 'CONVERSION_UPGRADE_PARTS',
+  BASE_STAND: 'BASE_STAND',
+  FULL_OPTION_CUSTOMIZATION_PACK: 'FULL_OPTION_CUSTOMIZATION_PACK',
+  CAMPAIGN_LIMITED_ADDON: 'CAMPAIGN_LIMITED_ADDON'
+};
+
+export type KitExpansionType = (typeof KitExpansionType)[keyof typeof KitExpansionType]
+
+
+export const KitImageType: {
   BOX_ART: 'BOX_ART',
   PRODUCT_SHOTS: 'PRODUCT_SHOTS',
   RUNNERS: 'RUNNERS',
@@ -197,6 +215,10 @@ export const MilestoneType: {
 export type MilestoneType = (typeof MilestoneType)[keyof typeof MilestoneType]
 
 }
+
+export type KitExpansionType = $Enums.KitExpansionType
+
+export const KitExpansionType: typeof $Enums.KitExpansionType
 
 export type KitImageType = $Enums.KitImageType
 
@@ -415,6 +437,16 @@ export class PrismaClient<
     * ```
     */
   get kitMobileSuit(): Prisma.KitMobileSuitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kitRelation`: Exposes CRUD operations for the **KitRelation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KitRelations
+    * const kitRelations = await prisma.kitRelation.findMany()
+    * ```
+    */
+  get kitRelation(): Prisma.KitRelationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.upload`: Exposes CRUD operations for the **Upload** model.
@@ -1023,6 +1055,7 @@ export namespace Prisma {
     ReleaseType: 'ReleaseType',
     Kit: 'Kit',
     KitMobileSuit: 'KitMobileSuit',
+    KitRelation: 'KitRelation',
     Upload: 'Upload',
     KitUpload: 'KitUpload',
     MobileSuitUpload: 'MobileSuitUpload',
@@ -1057,7 +1090,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1650,6 +1683,80 @@ export namespace Prisma {
           count: {
             args: Prisma.KitMobileSuitCountArgs<ExtArgs>
             result: $Utils.Optional<KitMobileSuitCountAggregateOutputType> | number
+          }
+        }
+      }
+      KitRelation: {
+        payload: Prisma.$KitRelationPayload<ExtArgs>
+        fields: Prisma.KitRelationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KitRelationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KitRelationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          findFirst: {
+            args: Prisma.KitRelationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KitRelationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          findMany: {
+            args: Prisma.KitRelationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>[]
+          }
+          create: {
+            args: Prisma.KitRelationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          createMany: {
+            args: Prisma.KitRelationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KitRelationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>[]
+          }
+          delete: {
+            args: Prisma.KitRelationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          update: {
+            args: Prisma.KitRelationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          deleteMany: {
+            args: Prisma.KitRelationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KitRelationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KitRelationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>[]
+          }
+          upsert: {
+            args: Prisma.KitRelationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KitRelationPayload>
+          }
+          aggregate: {
+            args: Prisma.KitRelationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKitRelation>
+          }
+          groupBy: {
+            args: Prisma.KitRelationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KitRelationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KitRelationCountArgs<ExtArgs>
+            result: $Utils.Optional<KitRelationCountAggregateOutputType> | number
           }
         }
       }
@@ -2941,6 +3048,7 @@ export namespace Prisma {
     releaseType?: ReleaseTypeOmit
     kit?: KitOmit
     kitMobileSuit?: KitMobileSuitOmit
+    kitRelation?: KitRelationOmit
     upload?: UploadOmit
     kitUpload?: KitUploadOmit
     mobileSuitUpload?: MobileSuitUploadOmit
@@ -3248,6 +3356,8 @@ export namespace Prisma {
     reviews: number
     builds: number
     listings: number
+    expansions: number
+    expandedBy: number
   }
 
   export type KitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3258,6 +3368,8 @@ export namespace Prisma {
     reviews?: boolean | KitCountOutputTypeCountReviewsArgs
     builds?: boolean | KitCountOutputTypeCountBuildsArgs
     listings?: boolean | KitCountOutputTypeCountListingsArgs
+    expansions?: boolean | KitCountOutputTypeCountExpansionsArgs
+    expandedBy?: boolean | KitCountOutputTypeCountExpandedByArgs
   }
 
   // Custom InputTypes
@@ -3318,6 +3430,20 @@ export namespace Prisma {
    */
   export type KitCountOutputTypeCountListingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MarketplaceListingWhereInput
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountExpansionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitRelationWhereInput
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountExpandedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitRelationWhereInput
   }
 
 
@@ -10702,6 +10828,8 @@ export namespace Prisma {
     reviews?: boolean | Kit$reviewsArgs<ExtArgs>
     builds?: boolean | Kit$buildsArgs<ExtArgs>
     listings?: boolean | Kit$listingsArgs<ExtArgs>
+    expansions?: boolean | Kit$expansionsArgs<ExtArgs>
+    expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["kit"]>
 
@@ -10792,6 +10920,8 @@ export namespace Prisma {
     reviews?: boolean | Kit$reviewsArgs<ExtArgs>
     builds?: boolean | Kit$buildsArgs<ExtArgs>
     listings?: boolean | Kit$listingsArgs<ExtArgs>
+    expansions?: boolean | Kit$expansionsArgs<ExtArgs>
+    expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type KitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10821,6 +10951,8 @@ export namespace Prisma {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       builds: Prisma.$BuildPayload<ExtArgs>[]
       listings: Prisma.$MarketplaceListingPayload<ExtArgs>[]
+      expansions: Prisma.$KitRelationPayload<ExtArgs>[]
+      expandedBy: Prisma.$KitRelationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11247,6 +11379,8 @@ export namespace Prisma {
     reviews<T extends Kit$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     builds<T extends Kit$buildsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$buildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     listings<T extends Kit$listingsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    expansions<T extends Kit$expansionsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expansionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    expandedBy<T extends Kit$expandedByArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expandedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11932,6 +12066,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MarketplaceListingScalarFieldEnum | MarketplaceListingScalarFieldEnum[]
+  }
+
+  /**
+   * Kit.expansions
+   */
+  export type Kit$expansionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    where?: KitRelationWhereInput
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    cursor?: KitRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitRelationScalarFieldEnum | KitRelationScalarFieldEnum[]
+  }
+
+  /**
+   * Kit.expandedBy
+   */
+  export type Kit$expandedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    where?: KitRelationWhereInput
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    cursor?: KitRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KitRelationScalarFieldEnum | KitRelationScalarFieldEnum[]
   }
 
   /**
@@ -13016,6 +13198,1098 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: KitMobileSuitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KitRelation
+   */
+
+  export type AggregateKitRelation = {
+    _count: KitRelationCountAggregateOutputType | null
+    _min: KitRelationMinAggregateOutputType | null
+    _max: KitRelationMaxAggregateOutputType | null
+  }
+
+  export type KitRelationMinAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    expansionId: string | null
+    type: $Enums.KitExpansionType | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitRelationMaxAggregateOutputType = {
+    id: string | null
+    kitId: string | null
+    expansionId: string | null
+    type: $Enums.KitExpansionType | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KitRelationCountAggregateOutputType = {
+    id: number
+    kitId: number
+    expansionId: number
+    type: number
+    notes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type KitRelationMinAggregateInputType = {
+    id?: true
+    kitId?: true
+    expansionId?: true
+    type?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitRelationMaxAggregateInputType = {
+    id?: true
+    kitId?: true
+    expansionId?: true
+    type?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KitRelationCountAggregateInputType = {
+    id?: true
+    kitId?: true
+    expansionId?: true
+    type?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type KitRelationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitRelation to aggregate.
+     */
+    where?: KitRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitRelations to fetch.
+     */
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KitRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KitRelations
+    **/
+    _count?: true | KitRelationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KitRelationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KitRelationMaxAggregateInputType
+  }
+
+  export type GetKitRelationAggregateType<T extends KitRelationAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitRelation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitRelation[P]>
+      : GetScalarType<T[P], AggregateKitRelation[P]>
+  }
+
+
+
+
+  export type KitRelationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KitRelationWhereInput
+    orderBy?: KitRelationOrderByWithAggregationInput | KitRelationOrderByWithAggregationInput[]
+    by: KitRelationScalarFieldEnum[] | KitRelationScalarFieldEnum
+    having?: KitRelationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KitRelationCountAggregateInputType | true
+    _min?: KitRelationMinAggregateInputType
+    _max?: KitRelationMaxAggregateInputType
+  }
+
+  export type KitRelationGroupByOutputType = {
+    id: string
+    kitId: string
+    expansionId: string
+    type: $Enums.KitExpansionType | null
+    notes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: KitRelationCountAggregateOutputType | null
+    _min: KitRelationMinAggregateOutputType | null
+    _max: KitRelationMaxAggregateOutputType | null
+  }
+
+  type GetKitRelationGroupByPayload<T extends KitRelationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KitRelationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KitRelationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KitRelationGroupByOutputType[P]>
+            : GetScalarType<T[P], KitRelationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KitRelationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    expansionId?: boolean
+    type?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitRelation"]>
+
+  export type KitRelationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    expansionId?: boolean
+    type?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitRelation"]>
+
+  export type KitRelationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kitId?: boolean
+    expansionId?: boolean
+    type?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kitRelation"]>
+
+  export type KitRelationSelectScalar = {
+    id?: boolean
+    kitId?: boolean
+    expansionId?: boolean
+    type?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type KitRelationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "kitId" | "expansionId" | "type" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["kitRelation"]>
+  export type KitRelationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type KitRelationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type KitRelationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+    expansion?: boolean | KitDefaultArgs<ExtArgs>
+  }
+
+  export type $KitRelationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KitRelation"
+    objects: {
+      kit: Prisma.$KitPayload<ExtArgs>
+      expansion: Prisma.$KitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      kitId: string
+      expansionId: string
+      type: $Enums.KitExpansionType | null
+      notes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["kitRelation"]>
+    composites: {}
+  }
+
+  type KitRelationGetPayload<S extends boolean | null | undefined | KitRelationDefaultArgs> = $Result.GetResult<Prisma.$KitRelationPayload, S>
+
+  type KitRelationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KitRelationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KitRelationCountAggregateInputType | true
+    }
+
+  export interface KitRelationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitRelation'], meta: { name: 'KitRelation' } }
+    /**
+     * Find zero or one KitRelation that matches the filter.
+     * @param {KitRelationFindUniqueArgs} args - Arguments to find a KitRelation
+     * @example
+     * // Get one KitRelation
+     * const kitRelation = await prisma.kitRelation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KitRelationFindUniqueArgs>(args: SelectSubset<T, KitRelationFindUniqueArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KitRelation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KitRelationFindUniqueOrThrowArgs} args - Arguments to find a KitRelation
+     * @example
+     * // Get one KitRelation
+     * const kitRelation = await prisma.kitRelation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KitRelationFindUniqueOrThrowArgs>(args: SelectSubset<T, KitRelationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitRelation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationFindFirstArgs} args - Arguments to find a KitRelation
+     * @example
+     * // Get one KitRelation
+     * const kitRelation = await prisma.kitRelation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KitRelationFindFirstArgs>(args?: SelectSubset<T, KitRelationFindFirstArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KitRelation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationFindFirstOrThrowArgs} args - Arguments to find a KitRelation
+     * @example
+     * // Get one KitRelation
+     * const kitRelation = await prisma.kitRelation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KitRelationFindFirstOrThrowArgs>(args?: SelectSubset<T, KitRelationFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KitRelations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KitRelations
+     * const kitRelations = await prisma.kitRelation.findMany()
+     * 
+     * // Get first 10 KitRelations
+     * const kitRelations = await prisma.kitRelation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kitRelationWithIdOnly = await prisma.kitRelation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KitRelationFindManyArgs>(args?: SelectSubset<T, KitRelationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KitRelation.
+     * @param {KitRelationCreateArgs} args - Arguments to create a KitRelation.
+     * @example
+     * // Create one KitRelation
+     * const KitRelation = await prisma.kitRelation.create({
+     *   data: {
+     *     // ... data to create a KitRelation
+     *   }
+     * })
+     * 
+     */
+    create<T extends KitRelationCreateArgs>(args: SelectSubset<T, KitRelationCreateArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KitRelations.
+     * @param {KitRelationCreateManyArgs} args - Arguments to create many KitRelations.
+     * @example
+     * // Create many KitRelations
+     * const kitRelation = await prisma.kitRelation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KitRelationCreateManyArgs>(args?: SelectSubset<T, KitRelationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KitRelations and returns the data saved in the database.
+     * @param {KitRelationCreateManyAndReturnArgs} args - Arguments to create many KitRelations.
+     * @example
+     * // Create many KitRelations
+     * const kitRelation = await prisma.kitRelation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KitRelations and only return the `id`
+     * const kitRelationWithIdOnly = await prisma.kitRelation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KitRelationCreateManyAndReturnArgs>(args?: SelectSubset<T, KitRelationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a KitRelation.
+     * @param {KitRelationDeleteArgs} args - Arguments to delete one KitRelation.
+     * @example
+     * // Delete one KitRelation
+     * const KitRelation = await prisma.kitRelation.delete({
+     *   where: {
+     *     // ... filter to delete one KitRelation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KitRelationDeleteArgs>(args: SelectSubset<T, KitRelationDeleteArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KitRelation.
+     * @param {KitRelationUpdateArgs} args - Arguments to update one KitRelation.
+     * @example
+     * // Update one KitRelation
+     * const kitRelation = await prisma.kitRelation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KitRelationUpdateArgs>(args: SelectSubset<T, KitRelationUpdateArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KitRelations.
+     * @param {KitRelationDeleteManyArgs} args - Arguments to filter KitRelations to delete.
+     * @example
+     * // Delete a few KitRelations
+     * const { count } = await prisma.kitRelation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KitRelationDeleteManyArgs>(args?: SelectSubset<T, KitRelationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KitRelations
+     * const kitRelation = await prisma.kitRelation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KitRelationUpdateManyArgs>(args: SelectSubset<T, KitRelationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KitRelations and returns the data updated in the database.
+     * @param {KitRelationUpdateManyAndReturnArgs} args - Arguments to update many KitRelations.
+     * @example
+     * // Update many KitRelations
+     * const kitRelation = await prisma.kitRelation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more KitRelations and only return the `id`
+     * const kitRelationWithIdOnly = await prisma.kitRelation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KitRelationUpdateManyAndReturnArgs>(args: SelectSubset<T, KitRelationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one KitRelation.
+     * @param {KitRelationUpsertArgs} args - Arguments to update or create a KitRelation.
+     * @example
+     * // Update or create a KitRelation
+     * const kitRelation = await prisma.kitRelation.upsert({
+     *   create: {
+     *     // ... data to create a KitRelation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KitRelation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KitRelationUpsertArgs>(args: SelectSubset<T, KitRelationUpsertArgs<ExtArgs>>): Prisma__KitRelationClient<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KitRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationCountArgs} args - Arguments to filter KitRelations to count.
+     * @example
+     * // Count the number of KitRelations
+     * const count = await prisma.kitRelation.count({
+     *   where: {
+     *     // ... the filter for the KitRelations we want to count
+     *   }
+     * })
+    **/
+    count<T extends KitRelationCountArgs>(
+      args?: Subset<T, KitRelationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KitRelationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KitRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KitRelationAggregateArgs>(args: Subset<T, KitRelationAggregateArgs>): Prisma.PrismaPromise<GetKitRelationAggregateType<T>>
+
+    /**
+     * Group by KitRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KitRelationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KitRelationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KitRelationGroupByArgs['orderBy'] }
+        : { orderBy?: KitRelationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KitRelationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitRelationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KitRelation model
+   */
+  readonly fields: KitRelationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KitRelation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KitRelationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    expansion<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KitRelation model
+   */
+  interface KitRelationFieldRefs {
+    readonly id: FieldRef<"KitRelation", 'String'>
+    readonly kitId: FieldRef<"KitRelation", 'String'>
+    readonly expansionId: FieldRef<"KitRelation", 'String'>
+    readonly type: FieldRef<"KitRelation", 'KitExpansionType'>
+    readonly notes: FieldRef<"KitRelation", 'String'>
+    readonly createdAt: FieldRef<"KitRelation", 'DateTime'>
+    readonly updatedAt: FieldRef<"KitRelation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KitRelation findUnique
+   */
+  export type KitRelationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which KitRelation to fetch.
+     */
+    where: KitRelationWhereUniqueInput
+  }
+
+  /**
+   * KitRelation findUniqueOrThrow
+   */
+  export type KitRelationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which KitRelation to fetch.
+     */
+    where: KitRelationWhereUniqueInput
+  }
+
+  /**
+   * KitRelation findFirst
+   */
+  export type KitRelationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which KitRelation to fetch.
+     */
+    where?: KitRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitRelations to fetch.
+     */
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitRelations.
+     */
+    cursor?: KitRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitRelations.
+     */
+    distinct?: KitRelationScalarFieldEnum | KitRelationScalarFieldEnum[]
+  }
+
+  /**
+   * KitRelation findFirstOrThrow
+   */
+  export type KitRelationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which KitRelation to fetch.
+     */
+    where?: KitRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitRelations to fetch.
+     */
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KitRelations.
+     */
+    cursor?: KitRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KitRelations.
+     */
+    distinct?: KitRelationScalarFieldEnum | KitRelationScalarFieldEnum[]
+  }
+
+  /**
+   * KitRelation findMany
+   */
+  export type KitRelationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which KitRelations to fetch.
+     */
+    where?: KitRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KitRelations to fetch.
+     */
+    orderBy?: KitRelationOrderByWithRelationInput | KitRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KitRelations.
+     */
+    cursor?: KitRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KitRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KitRelations.
+     */
+    skip?: number
+    distinct?: KitRelationScalarFieldEnum | KitRelationScalarFieldEnum[]
+  }
+
+  /**
+   * KitRelation create
+   */
+  export type KitRelationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KitRelation.
+     */
+    data: XOR<KitRelationCreateInput, KitRelationUncheckedCreateInput>
+  }
+
+  /**
+   * KitRelation createMany
+   */
+  export type KitRelationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KitRelations.
+     */
+    data: KitRelationCreateManyInput | KitRelationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KitRelation createManyAndReturn
+   */
+  export type KitRelationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * The data used to create many KitRelations.
+     */
+    data: KitRelationCreateManyInput | KitRelationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitRelation update
+   */
+  export type KitRelationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KitRelation.
+     */
+    data: XOR<KitRelationUpdateInput, KitRelationUncheckedUpdateInput>
+    /**
+     * Choose, which KitRelation to update.
+     */
+    where: KitRelationWhereUniqueInput
+  }
+
+  /**
+   * KitRelation updateMany
+   */
+  export type KitRelationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KitRelations.
+     */
+    data: XOR<KitRelationUpdateManyMutationInput, KitRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which KitRelations to update
+     */
+    where?: KitRelationWhereInput
+    /**
+     * Limit how many KitRelations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitRelation updateManyAndReturn
+   */
+  export type KitRelationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * The data used to update KitRelations.
+     */
+    data: XOR<KitRelationUpdateManyMutationInput, KitRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which KitRelations to update
+     */
+    where?: KitRelationWhereInput
+    /**
+     * Limit how many KitRelations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KitRelation upsert
+   */
+  export type KitRelationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KitRelation to update in case it exists.
+     */
+    where: KitRelationWhereUniqueInput
+    /**
+     * In case the KitRelation found by the `where` argument doesn't exist, create a new KitRelation with this data.
+     */
+    create: XOR<KitRelationCreateInput, KitRelationUncheckedCreateInput>
+    /**
+     * In case the KitRelation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KitRelationUpdateInput, KitRelationUncheckedUpdateInput>
+  }
+
+  /**
+   * KitRelation delete
+   */
+  export type KitRelationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
+    /**
+     * Filter which KitRelation to delete.
+     */
+    where: KitRelationWhereUniqueInput
+  }
+
+  /**
+   * KitRelation deleteMany
+   */
+  export type KitRelationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KitRelations to delete
+     */
+    where?: KitRelationWhereInput
+    /**
+     * Limit how many KitRelations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KitRelation without action
+   */
+  export type KitRelationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KitRelation
+     */
+    select?: KitRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KitRelation
+     */
+    omit?: KitRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KitRelationInclude<ExtArgs> | null
   }
 
 
@@ -31877,6 +33151,19 @@ export namespace Prisma {
   export type KitMobileSuitScalarFieldEnum = (typeof KitMobileSuitScalarFieldEnum)[keyof typeof KitMobileSuitScalarFieldEnum]
 
 
+  export const KitRelationScalarFieldEnum: {
+    id: 'id',
+    kitId: 'kitId',
+    expansionId: 'expansionId',
+    type: 'type',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type KitRelationScalarFieldEnum = (typeof KitRelationScalarFieldEnum)[keyof typeof KitRelationScalarFieldEnum]
+
+
   export const UploadScalarFieldEnum: {
     id: 'id',
     cloudinaryAssetId: 'cloudinaryAssetId',
@@ -32181,6 +33468,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'KitExpansionType'
+   */
+  export type EnumKitExpansionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitExpansionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'KitExpansionType[]'
+   */
+  export type ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitExpansionType[]'>
     
 
 
@@ -32720,6 +34021,8 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     builds?: BuildListRelationFilter
     listings?: MarketplaceListingListRelationFilter
+    expansions?: KitRelationListRelationFilter
+    expandedBy?: KitRelationListRelationFilter
   }
 
   export type KitOrderByWithRelationInput = {
@@ -32753,6 +34056,8 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
     builds?: BuildOrderByRelationAggregateInput
     listings?: MarketplaceListingOrderByRelationAggregateInput
+    expansions?: KitRelationOrderByRelationAggregateInput
+    expandedBy?: KitRelationOrderByRelationAggregateInput
   }
 
   export type KitWhereUniqueInput = Prisma.AtLeast<{
@@ -32789,6 +34094,8 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     builds?: BuildListRelationFilter
     listings?: MarketplaceListingListRelationFilter
+    expansions?: KitRelationListRelationFilter
+    expandedBy?: KitRelationListRelationFilter
   }, "id" | "slug">
 
   export type KitOrderByWithAggregationInput = {
@@ -32900,6 +34207,75 @@ export namespace Prisma {
     mobileSuitId?: StringWithAggregatesFilter<"KitMobileSuit"> | string
     createdAt?: DateTimeWithAggregatesFilter<"KitMobileSuit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"KitMobileSuit"> | Date | string
+  }
+
+  export type KitRelationWhereInput = {
+    AND?: KitRelationWhereInput | KitRelationWhereInput[]
+    OR?: KitRelationWhereInput[]
+    NOT?: KitRelationWhereInput | KitRelationWhereInput[]
+    id?: StringFilter<"KitRelation"> | string
+    kitId?: StringFilter<"KitRelation"> | string
+    expansionId?: StringFilter<"KitRelation"> | string
+    type?: EnumKitExpansionTypeNullableFilter<"KitRelation"> | $Enums.KitExpansionType | null
+    notes?: StringNullableFilter<"KitRelation"> | string | null
+    createdAt?: DateTimeFilter<"KitRelation"> | Date | string
+    updatedAt?: DateTimeFilter<"KitRelation"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    expansion?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }
+
+  export type KitRelationOrderByWithRelationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    expansionId?: SortOrder
+    type?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kit?: KitOrderByWithRelationInput
+    expansion?: KitOrderByWithRelationInput
+  }
+
+  export type KitRelationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    kitId_expansionId?: KitRelationKitIdExpansionIdCompoundUniqueInput
+    AND?: KitRelationWhereInput | KitRelationWhereInput[]
+    OR?: KitRelationWhereInput[]
+    NOT?: KitRelationWhereInput | KitRelationWhereInput[]
+    kitId?: StringFilter<"KitRelation"> | string
+    expansionId?: StringFilter<"KitRelation"> | string
+    type?: EnumKitExpansionTypeNullableFilter<"KitRelation"> | $Enums.KitExpansionType | null
+    notes?: StringNullableFilter<"KitRelation"> | string | null
+    createdAt?: DateTimeFilter<"KitRelation"> | Date | string
+    updatedAt?: DateTimeFilter<"KitRelation"> | Date | string
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    expansion?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }, "id" | "kitId_expansionId">
+
+  export type KitRelationOrderByWithAggregationInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    expansionId?: SortOrder
+    type?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: KitRelationCountOrderByAggregateInput
+    _max?: KitRelationMaxOrderByAggregateInput
+    _min?: KitRelationMinOrderByAggregateInput
+  }
+
+  export type KitRelationScalarWhereWithAggregatesInput = {
+    AND?: KitRelationScalarWhereWithAggregatesInput | KitRelationScalarWhereWithAggregatesInput[]
+    OR?: KitRelationScalarWhereWithAggregatesInput[]
+    NOT?: KitRelationScalarWhereWithAggregatesInput | KitRelationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KitRelation"> | string
+    kitId?: StringWithAggregatesFilter<"KitRelation"> | string
+    expansionId?: StringWithAggregatesFilter<"KitRelation"> | string
+    type?: EnumKitExpansionTypeNullableWithAggregatesFilter<"KitRelation"> | $Enums.KitExpansionType | null
+    notes?: StringNullableWithAggregatesFilter<"KitRelation"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"KitRelation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KitRelation"> | Date | string
   }
 
   export type UploadWhereInput = {
@@ -34683,6 +36059,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateInput = {
@@ -34712,6 +36090,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUpdateInput = {
@@ -34741,6 +36121,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateInput = {
@@ -34770,6 +36152,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitCreateManyInput = {
@@ -34884,6 +36268,74 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     kitId?: StringFieldUpdateOperationsInput | string
     mobileSuitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationCreateInput = {
+    id?: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutExpansionsInput
+    expansion: KitCreateNestedOneWithoutExpandedByInput
+  }
+
+  export type KitRelationUncheckedCreateInput = {
+    id?: string
+    kitId: string
+    expansionId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitRelationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutExpansionsNestedInput
+    expansion?: KitUpdateOneRequiredWithoutExpandedByNestedInput
+  }
+
+  export type KitRelationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    expansionId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationCreateManyInput = {
+    id?: string
+    kitId: string
+    expansionId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitRelationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    expansionId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -36692,6 +38144,12 @@ export namespace Prisma {
     none?: MarketplaceListingWhereInput
   }
 
+  export type KitRelationListRelationFilter = {
+    every?: KitRelationWhereInput
+    some?: KitRelationWhereInput
+    none?: KitRelationWhereInput
+  }
+
   export type KitUploadOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -36709,6 +38167,10 @@ export namespace Prisma {
   }
 
   export type MarketplaceListingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KitRelationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -36849,6 +38311,58 @@ export namespace Prisma {
     mobileSuitId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumKitExpansionTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitExpansionType | EnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel> | $Enums.KitExpansionType | null
+  }
+
+  export type KitRelationKitIdExpansionIdCompoundUniqueInput = {
+    kitId: string
+    expansionId: string
+  }
+
+  export type KitRelationCountOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    expansionId?: SortOrder
+    type?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitRelationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    expansionId?: SortOrder
+    type?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KitRelationMinOrderByAggregateInput = {
+    id?: SortOrder
+    kitId?: SortOrder
+    expansionId?: SortOrder
+    type?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumKitExpansionTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitExpansionType | EnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumKitExpansionTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.KitExpansionType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -38306,6 +39820,20 @@ export namespace Prisma {
     connect?: MarketplaceListingWhereUniqueInput | MarketplaceListingWhereUniqueInput[]
   }
 
+  export type KitRelationCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
+    createMany?: KitRelationCreateManyKitInputEnvelope
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+  }
+
+  export type KitRelationCreateNestedManyWithoutExpansionInput = {
+    create?: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput> | KitRelationCreateWithoutExpansionInput[] | KitRelationUncheckedCreateWithoutExpansionInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutExpansionInput | KitRelationCreateOrConnectWithoutExpansionInput[]
+    createMany?: KitRelationCreateManyExpansionInputEnvelope
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+  }
+
   export type KitUncheckedCreateNestedManyWithoutBaseKitInput = {
     create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
     connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
@@ -38353,6 +39881,20 @@ export namespace Prisma {
     connectOrCreate?: MarketplaceListingCreateOrConnectWithoutKitInput | MarketplaceListingCreateOrConnectWithoutKitInput[]
     createMany?: MarketplaceListingCreateManyKitInputEnvelope
     connect?: MarketplaceListingWhereUniqueInput | MarketplaceListingWhereUniqueInput[]
+  }
+
+  export type KitRelationUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
+    createMany?: KitRelationCreateManyKitInputEnvelope
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+  }
+
+  export type KitRelationUncheckedCreateNestedManyWithoutExpansionInput = {
+    create?: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput> | KitRelationCreateWithoutExpansionInput[] | KitRelationUncheckedCreateWithoutExpansionInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutExpansionInput | KitRelationCreateOrConnectWithoutExpansionInput[]
+    createMany?: KitRelationCreateManyExpansionInputEnvelope
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -38515,6 +40057,34 @@ export namespace Prisma {
     deleteMany?: MarketplaceListingScalarWhereInput | MarketplaceListingScalarWhereInput[]
   }
 
+  export type KitRelationUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
+    upsert?: KitRelationUpsertWithWhereUniqueWithoutKitInput | KitRelationUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitRelationCreateManyKitInputEnvelope
+    set?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    disconnect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    delete?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    update?: KitRelationUpdateWithWhereUniqueWithoutKitInput | KitRelationUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitRelationUpdateManyWithWhereWithoutKitInput | KitRelationUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+  }
+
+  export type KitRelationUpdateManyWithoutExpansionNestedInput = {
+    create?: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput> | KitRelationCreateWithoutExpansionInput[] | KitRelationUncheckedCreateWithoutExpansionInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutExpansionInput | KitRelationCreateOrConnectWithoutExpansionInput[]
+    upsert?: KitRelationUpsertWithWhereUniqueWithoutExpansionInput | KitRelationUpsertWithWhereUniqueWithoutExpansionInput[]
+    createMany?: KitRelationCreateManyExpansionInputEnvelope
+    set?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    disconnect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    delete?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    update?: KitRelationUpdateWithWhereUniqueWithoutExpansionInput | KitRelationUpdateWithWhereUniqueWithoutExpansionInput[]
+    updateMany?: KitRelationUpdateManyWithWhereWithoutExpansionInput | KitRelationUpdateManyWithWhereWithoutExpansionInput[]
+    deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+  }
+
   export type KitUncheckedUpdateManyWithoutBaseKitNestedInput = {
     create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
     connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
@@ -38613,6 +40183,34 @@ export namespace Prisma {
     deleteMany?: MarketplaceListingScalarWhereInput | MarketplaceListingScalarWhereInput[]
   }
 
+  export type KitRelationUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
+    upsert?: KitRelationUpsertWithWhereUniqueWithoutKitInput | KitRelationUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: KitRelationCreateManyKitInputEnvelope
+    set?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    disconnect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    delete?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    update?: KitRelationUpdateWithWhereUniqueWithoutKitInput | KitRelationUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: KitRelationUpdateManyWithWhereWithoutKitInput | KitRelationUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+  }
+
+  export type KitRelationUncheckedUpdateManyWithoutExpansionNestedInput = {
+    create?: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput> | KitRelationCreateWithoutExpansionInput[] | KitRelationUncheckedCreateWithoutExpansionInput[]
+    connectOrCreate?: KitRelationCreateOrConnectWithoutExpansionInput | KitRelationCreateOrConnectWithoutExpansionInput[]
+    upsert?: KitRelationUpsertWithWhereUniqueWithoutExpansionInput | KitRelationUpsertWithWhereUniqueWithoutExpansionInput[]
+    createMany?: KitRelationCreateManyExpansionInputEnvelope
+    set?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    disconnect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    delete?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+    update?: KitRelationUpdateWithWhereUniqueWithoutExpansionInput | KitRelationUpdateWithWhereUniqueWithoutExpansionInput[]
+    updateMany?: KitRelationUpdateManyWithWhereWithoutExpansionInput | KitRelationUpdateManyWithWhereWithoutExpansionInput[]
+    deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+  }
+
   export type KitCreateNestedOneWithoutMobileSuitsInput = {
     create?: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
     connectOrCreate?: KitCreateOrConnectWithoutMobileSuitsInput
@@ -38639,6 +40237,38 @@ export namespace Prisma {
     upsert?: MobileSuitUpsertWithoutKitsInput
     connect?: MobileSuitWhereUniqueInput
     update?: XOR<XOR<MobileSuitUpdateToOneWithWhereWithoutKitsInput, MobileSuitUpdateWithoutKitsInput>, MobileSuitUncheckedUpdateWithoutKitsInput>
+  }
+
+  export type KitCreateNestedOneWithoutExpansionsInput = {
+    create?: XOR<KitCreateWithoutExpansionsInput, KitUncheckedCreateWithoutExpansionsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutExpansionsInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type KitCreateNestedOneWithoutExpandedByInput = {
+    create?: XOR<KitCreateWithoutExpandedByInput, KitUncheckedCreateWithoutExpandedByInput>
+    connectOrCreate?: KitCreateOrConnectWithoutExpandedByInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type NullableEnumKitExpansionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.KitExpansionType | null
+  }
+
+  export type KitUpdateOneRequiredWithoutExpansionsNestedInput = {
+    create?: XOR<KitCreateWithoutExpansionsInput, KitUncheckedCreateWithoutExpansionsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutExpansionsInput
+    upsert?: KitUpsertWithoutExpansionsInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutExpansionsInput, KitUpdateWithoutExpansionsInput>, KitUncheckedUpdateWithoutExpansionsInput>
+  }
+
+  export type KitUpdateOneRequiredWithoutExpandedByNestedInput = {
+    create?: XOR<KitCreateWithoutExpandedByInput, KitUncheckedCreateWithoutExpandedByInput>
+    connectOrCreate?: KitCreateOrConnectWithoutExpandedByInput
+    upsert?: KitUpsertWithoutExpandedByInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutExpandedByInput, KitUpdateWithoutExpandedByInput>, KitUncheckedUpdateWithoutExpandedByInput>
   }
 
   export type UserCreateNestedOneWithoutUploadsInput = {
@@ -40154,6 +41784,23 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumKitExpansionTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitExpansionType | EnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel> | $Enums.KitExpansionType | null
+  }
+
+  export type NestedEnumKitExpansionTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KitExpansionType | EnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.KitExpansionType[] | ListEnumKitExpansionTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumKitExpansionTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.KitExpansionType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumKitExpansionTypeNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -40442,6 +42089,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutSeriesInput = {
@@ -40470,6 +42119,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutSeriesInput = {
@@ -40917,6 +42568,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutProductLineInput = {
@@ -40945,6 +42598,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutProductLineInput = {
@@ -41083,6 +42738,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutReleaseTypeInput = {
@@ -41111,6 +42768,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutReleaseTypeInput = {
@@ -41244,6 +42903,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutVariantsInput = {
@@ -41272,6 +42933,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutVariantsInput = {
@@ -41305,6 +42968,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutBaseKitInput = {
@@ -41333,6 +42998,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutBaseKitInput = {
@@ -41541,6 +43208,62 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type KitRelationCreateWithoutKitInput = {
+    id?: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expansion: KitCreateNestedOneWithoutExpandedByInput
+  }
+
+  export type KitRelationUncheckedCreateWithoutKitInput = {
+    id?: string
+    expansionId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitRelationCreateOrConnectWithoutKitInput = {
+    where: KitRelationWhereUniqueInput
+    create: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitRelationCreateManyKitInputEnvelope = {
+    data: KitRelationCreateManyKitInput | KitRelationCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KitRelationCreateWithoutExpansionInput = {
+    id?: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kit: KitCreateNestedOneWithoutExpansionsInput
+  }
+
+  export type KitRelationUncheckedCreateWithoutExpansionInput = {
+    id?: string
+    kitId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitRelationCreateOrConnectWithoutExpansionInput = {
+    where: KitRelationWhereUniqueInput
+    create: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput>
+  }
+
+  export type KitRelationCreateManyExpansionInputEnvelope = {
+    data: KitRelationCreateManyExpansionInput | KitRelationCreateManyExpansionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProductLineUpsertWithoutKitsInput = {
     update: XOR<ProductLineUpdateWithoutKitsInput, ProductLineUncheckedUpdateWithoutKitsInput>
     create: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
@@ -41675,6 +43398,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutVariantsInput = {
@@ -41703,6 +43428,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUpsertWithWhereUniqueWithoutBaseKitInput = {
@@ -41892,6 +43619,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MarketplaceListing"> | Date | string
   }
 
+  export type KitRelationUpsertWithWhereUniqueWithoutKitInput = {
+    where: KitRelationWhereUniqueInput
+    update: XOR<KitRelationUpdateWithoutKitInput, KitRelationUncheckedUpdateWithoutKitInput>
+    create: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput>
+  }
+
+  export type KitRelationUpdateWithWhereUniqueWithoutKitInput = {
+    where: KitRelationWhereUniqueInput
+    data: XOR<KitRelationUpdateWithoutKitInput, KitRelationUncheckedUpdateWithoutKitInput>
+  }
+
+  export type KitRelationUpdateManyWithWhereWithoutKitInput = {
+    where: KitRelationScalarWhereInput
+    data: XOR<KitRelationUpdateManyMutationInput, KitRelationUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type KitRelationScalarWhereInput = {
+    AND?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+    OR?: KitRelationScalarWhereInput[]
+    NOT?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
+    id?: StringFilter<"KitRelation"> | string
+    kitId?: StringFilter<"KitRelation"> | string
+    expansionId?: StringFilter<"KitRelation"> | string
+    type?: EnumKitExpansionTypeNullableFilter<"KitRelation"> | $Enums.KitExpansionType | null
+    notes?: StringNullableFilter<"KitRelation"> | string | null
+    createdAt?: DateTimeFilter<"KitRelation"> | Date | string
+    updatedAt?: DateTimeFilter<"KitRelation"> | Date | string
+  }
+
+  export type KitRelationUpsertWithWhereUniqueWithoutExpansionInput = {
+    where: KitRelationWhereUniqueInput
+    update: XOR<KitRelationUpdateWithoutExpansionInput, KitRelationUncheckedUpdateWithoutExpansionInput>
+    create: XOR<KitRelationCreateWithoutExpansionInput, KitRelationUncheckedCreateWithoutExpansionInput>
+  }
+
+  export type KitRelationUpdateWithWhereUniqueWithoutExpansionInput = {
+    where: KitRelationWhereUniqueInput
+    data: XOR<KitRelationUpdateWithoutExpansionInput, KitRelationUncheckedUpdateWithoutExpansionInput>
+  }
+
+  export type KitRelationUpdateManyWithWhereWithoutExpansionInput = {
+    where: KitRelationScalarWhereInput
+    data: XOR<KitRelationUpdateManyMutationInput, KitRelationUncheckedUpdateManyWithoutExpansionInput>
+  }
+
   export type KitCreateWithoutMobileSuitsInput = {
     id?: string
     name: string
@@ -41918,6 +43690,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutMobileSuitsInput = {
@@ -41946,6 +43720,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutMobileSuitsInput = {
@@ -42019,6 +43795,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutMobileSuitsInput = {
@@ -42047,6 +43825,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type MobileSuitUpsertWithoutKitsInput = {
@@ -42082,6 +43862,278 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploads?: MobileSuitUploadUncheckedUpdateManyWithoutMobileSuitNestedInput
+  }
+
+  export type KitCreateWithoutExpansionsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
+    reviews?: ReviewCreateNestedManyWithoutKitInput
+    builds?: BuildCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+  }
+
+  export type KitUncheckedCreateWithoutExpansionsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
+    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+  }
+
+  export type KitCreateOrConnectWithoutExpansionsInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutExpansionsInput, KitUncheckedCreateWithoutExpansionsInput>
+  }
+
+  export type KitCreateWithoutExpandedByInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
+    reviews?: ReviewCreateNestedManyWithoutKitInput
+    builds?: BuildCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutExpandedByInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
+    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutExpandedByInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutExpandedByInput, KitUncheckedCreateWithoutExpandedByInput>
+  }
+
+  export type KitUpsertWithoutExpansionsInput = {
+    update: XOR<KitUpdateWithoutExpansionsInput, KitUncheckedUpdateWithoutExpansionsInput>
+    create: XOR<KitCreateWithoutExpansionsInput, KitUncheckedCreateWithoutExpansionsInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutExpansionsInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutExpansionsInput, KitUncheckedUpdateWithoutExpansionsInput>
+  }
+
+  export type KitUpdateWithoutExpansionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUpdateManyWithoutKitNestedInput
+    builds?: BuildUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutExpansionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+  }
+
+  export type KitUpsertWithoutExpandedByInput = {
+    update: XOR<KitUpdateWithoutExpandedByInput, KitUncheckedUpdateWithoutExpandedByInput>
+    create: XOR<KitCreateWithoutExpandedByInput, KitUncheckedCreateWithoutExpandedByInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutExpandedByInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutExpandedByInput, KitUncheckedUpdateWithoutExpandedByInput>
+  }
+
+  export type KitUpdateWithoutExpandedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUpdateManyWithoutKitNestedInput
+    builds?: BuildUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutExpandedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UserCreateWithoutUploadsInput = {
@@ -42572,6 +44624,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutUploadsInput = {
@@ -42600,6 +44654,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutUploadsInput = {
@@ -42693,6 +44749,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutUploadsInput = {
@@ -42721,6 +44779,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type UploadUpsertWithoutKitUploadsInput = {
@@ -43856,6 +45916,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutCollectionsInput = {
@@ -43884,6 +45946,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutCollectionsInput = {
@@ -44005,6 +46069,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutCollectionsInput = {
@@ -44033,6 +46099,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -44132,6 +46200,8 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutReviewsInput = {
@@ -44160,6 +46230,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutReviewsInput = {
@@ -44329,6 +46401,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReviewsInput = {
@@ -44357,6 +46431,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type ReviewScoreUpsertWithWhereUniqueWithoutReviewInput = {
@@ -44775,6 +46851,8 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     reviews?: ReviewCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutBuildsInput = {
@@ -44803,6 +46881,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutBuildsInput = {
@@ -45085,6 +47165,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBuildsInput = {
@@ -45113,6 +47195,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type UploadUpsertWithoutBuildFeaturedImagesInput = {
@@ -46093,6 +48177,8 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
   }
 
   export type KitUncheckedCreateWithoutListingsInput = {
@@ -46121,6 +48207,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
   }
 
   export type KitCreateOrConnectWithoutListingsInput = {
@@ -46196,6 +48284,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutListingsInput = {
@@ -46224,6 +48314,8 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type SeriesCreateManyTimelineInput = {
@@ -46361,6 +48453,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutSeriesInput = {
@@ -46389,6 +48483,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutSeriesInput = {
@@ -46569,6 +48665,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutProductLineInput = {
@@ -46597,6 +48695,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutProductLineInput = {
@@ -46667,6 +48767,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReleaseTypeInput = {
@@ -46695,6 +48797,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutReleaseTypeInput = {
@@ -46801,6 +48905,24 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type KitRelationCreateManyKitInput = {
+    id?: string
+    expansionId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KitRelationCreateManyExpansionInput = {
+    id?: string
+    kitId: string
+    type?: $Enums.KitExpansionType | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type KitUpdateWithoutBaseKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -46827,6 +48949,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBaseKitInput = {
@@ -46855,6 +48979,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutBaseKitInput = {
@@ -47072,6 +49198,60 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     imageUrls?: MarketplaceListingUpdateimageUrlsInput | string[]
     available?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expansion?: KitUpdateOneRequiredWithoutExpandedByNestedInput
+  }
+
+  export type KitRelationUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    expansionId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    expansionId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationUpdateWithoutExpansionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutExpansionsNestedInput
+  }
+
+  export type KitRelationUncheckedUpdateWithoutExpansionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KitRelationUncheckedUpdateManyWithoutExpansionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    type?: NullableEnumKitExpansionTypeFieldUpdateOperationsInput | $Enums.KitExpansionType | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

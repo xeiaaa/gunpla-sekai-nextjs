@@ -210,6 +210,16 @@ exports.Prisma.KitMobileSuitScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.KitRelationScalarFieldEnum = {
+  id: 'id',
+  kitId: 'kitId',
+  expansionId: 'expansionId',
+  type: 'type',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UploadScalarFieldEnum = {
   id: 'id',
   cloudinaryAssetId: 'cloudinaryAssetId',
@@ -412,6 +422,16 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.KitExpansionType = exports.$Enums.KitExpansionType = {
+  EFFECT_PARTS: 'EFFECT_PARTS',
+  WEAPON_SET: 'WEAPON_SET',
+  ARMOR_EQUIPMENT_PACK: 'ARMOR_EQUIPMENT_PACK',
+  CONVERSION_UPGRADE_PARTS: 'CONVERSION_UPGRADE_PARTS',
+  BASE_STAND: 'BASE_STAND',
+  FULL_OPTION_CUSTOMIZATION_PACK: 'FULL_OPTION_CUSTOMIZATION_PACK',
+  CAMPAIGN_LIMITED_ADDON: 'CAMPAIGN_LIMITED_ADDON'
+};
+
 exports.KitImageType = exports.$Enums.KitImageType = {
   BOX_ART: 'BOX_ART',
   PRODUCT_SHOTS: 'PRODUCT_SHOTS',
@@ -465,6 +485,7 @@ exports.Prisma.ModelName = {
   ReleaseType: 'ReleaseType',
   Kit: 'Kit',
   KitMobileSuit: 'KitMobileSuit',
+  KitRelation: 'KitRelation',
   Upload: 'Upload',
   KitUpload: 'KitUpload',
   MobileSuitUpload: 'MobileSuitUpload',

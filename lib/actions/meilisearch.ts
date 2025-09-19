@@ -339,6 +339,97 @@ export async function searchKitsAndMobileSuitsWithMeilisearch(
   }
 }
 
+export async function searchMobileSuitsWithMeilisearch(query: string, limit: number = 20) {
+  try {
+    if (!query.trim()) {
+      return [];
+    }
+
+    const meilisearch = getMeilisearchClient();
+
+    const mobileSuitsResponse = await meilisearch.index('mobile-suits').search(query, {
+      limit,
+      attributesToRetrieve: [
+        'id',
+        'name',
+        'slug',
+        'description',
+        'scrapedImages',
+        'series'
+      ]
+    });
+
+    // Transform mobile suits data to match existing interface
+    const transformedMobileSuits = mobileSuitsResponse.hits.map((ms: any) => ({
+      id: ms.id,
+      name: ms.name,
+      slug: ms.slug,
+      description: ms.description,
+      series: ms.series?.name,
+      timeline: ms.series?.timeline?.name,
+      kitsCount: 0, // Not included in Meilisearch index
+      scrapedImages: ms.scrapedImages || [],
+    }));
+
+    return transformedMobileSuits;
+  } catch (error) {
+    console.error('Error searching mobile suits with Meilisearch:', error);
+    return [];
+  }
+}
+
+export async function searchKitsWithMeilisearch(query: string, limit: number = 20) {
+  try {
+    if (!query.trim()) {
+      return [];
+    }
+
+    const meilisearch = getMeilisearchClient();
+
+    const kitsResponse = await meilisearch.index('kits').search(query, {
+      limit,
+      attributesToRetrieve: [
+        'id',
+        'name',
+        'slug',
+        'number',
+        'variant',
+        'releaseDate',
+        'priceYen',
+        'boxArt',
+        'baseKitId',
+        'productLine',
+        'series',
+        'releaseType',
+        'mobileSuits'
+      ]
+    });
+
+    // Transform kits data to match existing interface
+    const transformedKits = kitsResponse.hits.map((kit: any) => ({
+      id: kit.id,
+      name: kit.name,
+      slug: kit.slug,
+      number: kit.number,
+      variant: kit.variant,
+      releaseDate: kit.releaseDate ? new Date(kit.releaseDate) : null,
+      priceYen: kit.priceYen,
+      boxArt: kit.boxArt,
+      baseKitId: kit.baseKitId,
+      grade: kit.productLine?.grade?.name || null,
+      productLine: kit.productLine?.name,
+      series: kit.series?.name,
+      releaseType: kit.releaseType?.name,
+      mobileSuits: kit.mobileSuits?.map((ms: any) => ms.name) || [],
+    }));
+
+    return transformedKits;
+  } catch (error) {
+    console.error('Error searching kits with Meilisearch:', error);
+    return [];
+  }
+}
+
 export async function getSearchSuggestionsWithMeilisearch(query: string): Promise<string[]> {
   try {
     if (query.length < 2) {
