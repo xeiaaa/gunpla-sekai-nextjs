@@ -260,7 +260,7 @@ export function KitEditForm({ kit }: KitEditFormProps) {
           <KitImageUpload
             kitId={kit.id}
             initialFiles={kit.uploads.map(upload => ({
-              id: upload.kitUploadId, // Use the KitUpload ID for deletion
+              id: upload.id, // Use the upload ID for deletion
               name: upload.title || "Uploaded Image",
               size: 0,
               type: "image/jpeg",
