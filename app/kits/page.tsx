@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Filter, X, RotateCcw, Search } from "lucide-react";
@@ -69,6 +69,9 @@ function KitsPageContent() {
   const [pendingSortBy, setPendingSortBy] = useState("relevance");
   const [pendingOrder, setPendingOrder] = useState("most-relevant");
   const [kitCollectionStatuses, setKitCollectionStatuses] = useState<Map<string, string>>(new Map());
+  const [hasInitialized, setHasInitialized] = useState(false);
+  const [isUpdatingUrl, setIsUpdatingUrl] = useState(false);
+  const isApplyingFilters = useRef(false);
 
   const loadKits = useCallback(async () => {
     setLoading(true);
@@ -97,6 +100,17 @@ function KitsPageContent() {
 
   // Initialize from URL parameters
   useEffect(() => {
+    if (isApplyingFilters.current) {
+      // Skip re-initialization if this change came from applyFilters
+      isApplyingFilters.current = false;
+      return;
+    }
+
+    // Skip if we're currently updating the URL to prevent double loading
+    if (isUpdatingUrl) {
+      return;
+    }
+
     // Only run if filterData is loaded (check if we have any filter data at all)
     const hasFilterData = filterData.grades.length > 0 || filterData.productLines.length > 0 ||
                          filterData.mobileSuits.length > 0 || filterData.series.length > 0 ||
@@ -152,6 +166,9 @@ function KitsPageContent() {
     setPendingSearchTerm(searchTerm);
     setPendingSortBy(sortByParam);
     setPendingOrder(orderParam);
+
+    // Mark as initialized after URL params are processed
+    setHasInitialized(true);
   }, [searchParams, filterData]);
 
   useEffect(() => {
@@ -163,9 +180,12 @@ function KitsPageContent() {
   }, []);
 
   useEffect(() => {
-    // Load kits when component mounts or when applied filters change
-    loadKits();
-  }, [loadKits]);
+    // Only load kits after initialization is complete
+    if (hasInitialized) {
+      loadKits();
+    }
+  }, [loadKits, hasInitialized]);
+
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -181,6 +201,8 @@ function KitsPageContent() {
     sortBy?: string;
     order?: string;
   }) => {
+    setIsUpdatingUrl(true);
+
     const params = new URLSearchParams();
 
     if (filters.grades && filters.grades.length > 0) {
@@ -236,6 +258,9 @@ function KitsPageContent() {
     const queryString = params.toString();
     const newUrl = queryString ? `/kits?${queryString}` : '/kits';
     router.push(newUrl);
+
+    // Reset the flag after a brief delay to allow the URL change to complete
+    setTimeout(() => setIsUpdatingUrl(false), 100);
   };
 
   const clearAllFilters = () => {
@@ -250,6 +275,8 @@ function KitsPageContent() {
   };
 
   const applyFilters = () => {
+    isApplyingFilters.current = true;
+
     // Apply pending filters to applied filters
     setAppliedGrades(pendingGrades);
     setAppliedProductLines(pendingProductLines);
