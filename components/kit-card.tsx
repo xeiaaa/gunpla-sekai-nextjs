@@ -117,12 +117,12 @@ export function KitCard({
             <span>{formatReleaseDate(kit.releaseDate)}</span>
           </div>
 
-          {kit.priceYen && (
+          {/* {kit.priceYen && (
             <div className="flex items-center gap-1 text-muted-foreground">
               <DollarSign className="h-3 w-3" />
               <span className="font-medium">{formatPrice(kit.priceYen)}</span>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Series and Release Type */}
