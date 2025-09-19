@@ -5,13 +5,14 @@ import { isCurrentUserAdmin } from "@/lib/actions/users";
 import { KitDetailPage } from "@/components/kit-detail-page";
 
 interface KitDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: KitDetailPageProps) {
-  const kit = await getKitBySlug(params.slug);
+  const { slug } = await params;
+  const kit = await getKitBySlug(slug);
 
   if (!kit) {
     return {
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: KitDetailPageProps) {
 }
 
 export default async function KitDetail({ params }: KitDetailPageProps) {
-  const kit = await getKitBySlug(params.slug);
+  const { slug } = await params;
+  const kit = await getKitBySlug(slug);
 
   if (!kit) {
     notFound();
