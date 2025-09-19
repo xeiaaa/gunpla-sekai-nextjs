@@ -203,3 +203,53 @@ export async function getKitCollectionStatus(kitId: string) {
     return null;
   }
 }
+
+export async function getUserCollectionByUsername(username: string, status?: CollectionStatus) {
+  try {
+    // First get the user by username
+    const user = await prisma.user.findUnique({
+      where: { username },
+      select: { id: true },
+    });
+
+    if (!user) {
+      return [];
+    }
+
+    const collections = await prisma.userKitCollection.findMany({
+      where: {
+        userId: user.id,
+        ...(status && { status }),
+      },
+      include: {
+        kit: {
+          include: {
+            productLine: {
+              include: {
+                grade: true,
+              },
+            },
+            releaseType: true,
+            mobileSuits: {
+              include: {
+                mobileSuit: {
+                  include: {
+                    series: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        addedAt: "desc",
+      },
+    });
+
+    return collections;
+  } catch (error) {
+    console.error("Error fetching user collection by username:", error);
+    return [];
+  }
+}

@@ -3,9 +3,8 @@ import { redirect } from "next/navigation";
 import { getUserCollection } from "@/lib/actions/collections";
 import { CollectionStatus } from "@/generated/prisma";
 import { KitCard } from "@/components/kit-card";
-import { getKitCollectionStatus } from "@/lib/actions/collections";
 
-export default async function CollectionsPage() {
+export default async function MeCollectionsPage() {
   const { userId } = await auth();
 
   if (!userId) {

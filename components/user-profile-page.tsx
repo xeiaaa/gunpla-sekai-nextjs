@@ -36,6 +36,7 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
   // Generate URLs based on route context
   const buildsUrl = routeContext === 'me' ? '/me/builds' : `/users/${user.username}/builds`;
   const reviewsUrl = routeContext === 'me' ? '/me/reviews' : `/users/${user.username}/reviews`;
+  const collectionsUrl = routeContext === 'me' ? '/me/collections' : `/users/${user.username}/collections`;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -89,9 +90,17 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
       {/* Collection Stats */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Package className="w-5 h-5" />
-            Collection Statistics
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Package className="w-5 h-5" />
+              Collection Statistics
+            </div>
+            <Button variant="outline" size="sm" asChild>
+              <Link href={collectionsUrl}>
+                View All
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Link>
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
