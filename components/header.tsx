@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import {
   SignInButton,
@@ -13,10 +13,17 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState<"kits" | "mobile-suits">("kits");
   const router = useRouter();
 
   const navigation = [
@@ -27,7 +34,25 @@ export function Header() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      const query = encodeURIComponent(searchQuery.trim());
+      if (searchType === "kits") {
+        // Preserve existing URL params for kits page
+        const currentPath = window.location.pathname;
+        const currentSearch = window.location.search;
+
+        if (currentPath === "/kits" && currentSearch) {
+          // We're on kits page with existing filters - preserve them
+          const urlParams = new URLSearchParams(currentSearch);
+          urlParams.set('search', query);
+          router.push(`/kits?${urlParams.toString()}`);
+        } else {
+          // No existing filters or not on kits page
+          router.push(`/kits?search=${query}`);
+        }
+      } else {
+        // Mobile suits - clear all params except search
+        router.push(`/mobile-suits?search=${query}`);
+      }
     }
   };
 
@@ -45,15 +70,36 @@ export function Header() {
 
           {/* Search Bar - Centered */}
           <div className="hidden md:flex items-center flex-1 justify-center max-w-md mx-auto">
-            <form onSubmit={handleSearch} className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search kits, mobile suits..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+            <form onSubmit={handleSearch} className="relative w-full flex">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="rounded-r-none border-r-0 px-3 text-sm"
+                  >
+                    {searchType === "kits" ? "Kits" : "Mobile Suits"}
+                    <ChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setSearchType("kits")}>
+                    Kits
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSearchType("mobile-suits")}>
+                    Mobile Suits
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder={`Search ${searchType === "kits" ? "kits" : "mobile suits"}...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 rounded-l-none"
+                />
+              </div>
             </form>
           </div>
 
@@ -122,16 +168,37 @@ export function Header() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 border-t">
               {/* Mobile Search */}
-              <div className="px-3 py-2">
-                <form onSubmit={handleSearch} className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Search kits, mobile suits..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
+              <div className="px-3 py-2 space-y-2">
+                <form onSubmit={handleSearch} className="space-y-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-between text-sm"
+                      >
+                        {searchType === "kits" ? "Kits" : "Mobile Suits"}
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => setSearchType("kits")}>
+                        Kits
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSearchType("mobile-suits")}>
+                        Mobile Suits
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      placeholder={`Search ${searchType === "kits" ? "kits" : "mobile suits"}...`}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
                 </form>
               </div>
 

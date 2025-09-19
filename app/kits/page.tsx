@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Filter, X, RotateCcw, Search } from "lucide-react";
+import { Filter, X, RotateCcw } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 import { KitCard } from "@/components/kit-card";
 import { getFilterDataWithMeilisearch, getFilteredKitsWithMeilisearch } from "@/lib/actions/meilisearch-kits";
@@ -349,20 +349,6 @@ function KitsPageContent() {
                   </Button>
                 </div>
 
-                {/* Search Input */}
-                <div className="mb-6">
-                  <h3 className="font-medium mb-3">Search</h3>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder="Search kits..."
-                      value={pendingSearchTerm}
-                      onChange={(e) => setPendingSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-3 py-2 border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                    />
-                  </div>
-                </div>
 
                 {/* Sort Section - Compact */}
                 <div className="mb-6">
@@ -413,13 +399,6 @@ function KitsPageContent() {
                     searchPlaceholder={`Search ${filterData.productLines.length} options...`}
                   />
 
-                  <FilterSection
-                    title="Mobile Suit"
-                    options={filterData.mobileSuits}
-                    selectedValues={pendingMobileSuits}
-                    onSelectionChange={setPendingMobileSuits}
-                    searchPlaceholder={`Search ${filterData.mobileSuits.length} options...`}
-                  />
 
                   <FilterSection
                     title="Series"
