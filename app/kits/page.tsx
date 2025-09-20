@@ -28,7 +28,6 @@ interface Kit {
 interface FilterData {
   grades: Array<{ id: string; name: string; slug: string | null }>;
   productLines: Array<{ id: string; name: string; slug: string | null }>;
-  mobileSuits: Array<{ id: string; name: string; slug: string | null }>;
   series: Array<{ id: string; name: string; slug: string | null }>;
   releaseTypes: Array<{ id: string; name: string; slug: string | null }>;
 }
@@ -42,7 +41,6 @@ function KitsPageContent() {
   // Applied filters (what's currently filtering the results)
   const [appliedGrades, setAppliedGrades] = useState<string[]>([]);
   const [appliedProductLines, setAppliedProductLines] = useState<string[]>([]);
-  const [appliedMobileSuits, setAppliedMobileSuits] = useState<string[]>([]);
   const [appliedSeries, setAppliedSeries] = useState<string[]>([]);
   const [appliedReleaseTypes, setAppliedReleaseTypes] = useState<string[]>([]);
   const [appliedSearchTerm, setAppliedSearchTerm] = useState("");
@@ -50,7 +48,6 @@ function KitsPageContent() {
   // Pending filters (what user has selected but not yet applied)
   const [pendingGrades, setPendingGrades] = useState<string[]>([]);
   const [pendingProductLines, setPendingProductLines] = useState<string[]>([]);
-  const [pendingMobileSuits, setPendingMobileSuits] = useState<string[]>([]);
   const [pendingSeries, setPendingSeries] = useState<string[]>([]);
   const [pendingReleaseTypes, setPendingReleaseTypes] = useState<string[]>([]);
   const [pendingSearchTerm, setPendingSearchTerm] = useState("");
@@ -71,7 +68,6 @@ function KitsPageContent() {
     data: filterData = {
       grades: [],
       productLines: [],
-      mobileSuits: [],
       series: [],
       releaseTypes: [],
     },
@@ -85,7 +81,7 @@ function KitsPageContent() {
   } = useKits({
     gradeIds: appliedGrades,
     productLineIds: appliedProductLines,
-    mobileSuitIds: appliedMobileSuits,
+    mobileSuitIds: [],
     seriesIds: appliedSeries,
     releaseTypeIds: appliedReleaseTypes,
     searchTerm: appliedSearchTerm,
@@ -115,7 +111,6 @@ function KitsPageContent() {
     const hasFilterData =
       filterData.grades.length > 0 ||
       filterData.productLines.length > 0 ||
-      filterData.mobileSuits.length > 0 ||
       filterData.series.length > 0 ||
       filterData.releaseTypes.length > 0;
 
@@ -127,8 +122,6 @@ function KitsPageContent() {
       searchParams.get("grades")?.split(",").filter(Boolean) || [];
     const productLineSlugs =
       searchParams.get("productLines")?.split(",").filter(Boolean) || [];
-    const mobileSuitSlugs =
-      searchParams.get("mobileSuits")?.split(",").filter(Boolean) || [];
     const seriesSlugs =
       searchParams.get("series")?.split(",").filter(Boolean) || [];
     const releaseTypeSlugs =
@@ -146,10 +139,6 @@ function KitsPageContent() {
       .map((slug) => filterData.productLines.find((pl) => pl.slug === slug)?.id)
       .filter(Boolean) as string[];
 
-    const mobileSuitIds = mobileSuitSlugs
-      .map((slug) => filterData.mobileSuits.find((ms) => ms.slug === slug)?.id)
-      .filter(Boolean) as string[];
-
     const seriesIds = seriesSlugs
       .map((slug) => filterData.series.find((s) => s.slug === slug)?.id)
       .filter(Boolean) as string[];
@@ -160,7 +149,6 @@ function KitsPageContent() {
 
     setAppliedGrades(gradeIds);
     setAppliedProductLines(productLineIds);
-    setAppliedMobileSuits(mobileSuitIds);
     setAppliedSeries(seriesIds);
     setAppliedReleaseTypes(releaseTypeIds);
     setAppliedSearchTerm(searchTerm);
@@ -168,7 +156,6 @@ function KitsPageContent() {
     setAppliedOrder(orderParam);
     setPendingGrades(gradeIds);
     setPendingProductLines(productLineIds);
-    setPendingMobileSuits(mobileSuitIds);
     setPendingSeries(seriesIds);
     setPendingReleaseTypes(releaseTypeIds);
     setPendingSearchTerm(searchTerm);
@@ -188,7 +175,6 @@ function KitsPageContent() {
   const updateUrlParams = (filters: {
     grades?: string[];
     productLines?: string[];
-    mobileSuits?: string[];
     series?: string[];
     releaseTypes?: string[];
     search?: string;
@@ -213,14 +199,6 @@ function KitsPageContent() {
         .filter(Boolean);
       if (productLineSlugs.length > 0) {
         params.set("productLines", productLineSlugs.join(","));
-      }
-    }
-    if (filters.mobileSuits && filters.mobileSuits.length > 0) {
-      const mobileSuitSlugs = filters.mobileSuits
-        .map((id) => filterData.mobileSuits.find((ms) => ms.id === id)?.slug)
-        .filter(Boolean);
-      if (mobileSuitSlugs.length > 0) {
-        params.set("mobileSuits", mobileSuitSlugs.join(","));
       }
     }
     if (filters.series && filters.series.length > 0) {
@@ -260,7 +238,6 @@ function KitsPageContent() {
   const clearAllFilters = () => {
     setPendingGrades([]);
     setPendingProductLines([]);
-    setPendingMobileSuits([]);
     setPendingSeries([]);
     setPendingReleaseTypes([]);
     setPendingSearchTerm("");
@@ -274,7 +251,6 @@ function KitsPageContent() {
     // Apply pending filters to applied filters
     setAppliedGrades(pendingGrades);
     setAppliedProductLines(pendingProductLines);
-    setAppliedMobileSuits(pendingMobileSuits);
     setAppliedSeries(pendingSeries);
     setAppliedReleaseTypes(pendingReleaseTypes);
     setAppliedSearchTerm(pendingSearchTerm);
@@ -285,7 +261,6 @@ function KitsPageContent() {
     updateUrlParams({
       grades: pendingGrades,
       productLines: pendingProductLines,
-      mobileSuits: pendingMobileSuits,
       series: pendingSeries,
       releaseTypes: pendingReleaseTypes,
       search: pendingSearchTerm,

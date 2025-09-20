@@ -4,31 +4,6 @@ import {
   getFilterDataWithMeilisearch,
 } from "@/lib/actions/meilisearch-kits";
 
-interface Kit {
-  id: string;
-  name: string;
-  slug?: string | null;
-  number: string;
-  variant?: string | null;
-  releaseDate?: Date | null;
-  priceYen?: number | null;
-  boxArt?: string | null;
-  baseKitId?: string | null;
-  grade?: string | null;
-  productLine?: string | null;
-  series?: string | null;
-  releaseType?: string | null;
-  mobileSuits: string[];
-}
-
-interface FilterData {
-  grades: Array<{ id: string; name: string; slug: string | null }>;
-  productLines: Array<{ id: string; name: string; slug: string | null }>;
-  mobileSuits: Array<{ id: string; name: string; slug: string | null }>;
-  series: Array<{ id: string; name: string; slug: string | null }>;
-  releaseTypes: Array<{ id: string; name: string; slug: string | null }>;
-}
-
 interface UseKitsParams {
   gradeIds: string[];
   productLineIds: string[];
