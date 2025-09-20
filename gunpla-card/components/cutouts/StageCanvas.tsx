@@ -1,44 +1,58 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { Stage, Layer, Image as KonvaImage, Transformer } from "react-konva";
 import useImage from "use-image";
 import { useCardBuilder } from "@/gunpla-card/context";
 
-const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; scale: number; rotation: number; onChange: (updates: Partial<{ x: number; y: number; scale: number; rotation: number }>) => void; }>
-  = ({ src, id, x, y, scale, rotation, onChange }) => {
+const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; scale: number; rotation: number; opacity: number; zIndex: number; canvasWidth: number; canvasHeight: number; isSelected: boolean; onChange: (updates: Partial<{ x: number; y: number; scale: number; rotation: number; opacity: number; zIndex: number }>) => void; onSelect: (shapeRef: any) => void; }>
+  = ({ src, x, y, scale, rotation, opacity, zIndex, canvasWidth, canvasHeight, isSelected, onChange, onSelect }) => {
   const [image] = useImage(src, "anonymous");
   const shapeRef = useRef<any>(null);
-  const trRef = useRef<any>(null);
+
+  // Convert relative coordinates (0-1) to absolute coordinates
+  const absoluteX = x * canvasWidth;
+  const absoluteY = y * canvasHeight;
+
+  // Convert relative scale to absolute scale based on canvas size
+  // Use a reference canvas size (e.g., 500px) to normalize the scale
+  const referenceCanvasSize = 500;
+  const absoluteScale = scale * (Math.min(canvasWidth, canvasHeight) / referenceCanvasSize);
 
   return (
-    <>
-      <KonvaImage
-        ref={shapeRef}
-        image={image as any}
-        x={x}
-        y={y}
-        scaleX={scale}
-        scaleY={scale}
-        rotation={rotation}
-        draggable
-        onDragEnd={e => onChange({ x: e.target.x(), y: e.target.y() })}
-        onTransformEnd={() => {
-          const node = shapeRef.current;
-          const newScale = node.scaleX();
-          onChange({ scale: newScale, rotation: node.rotation() });
-        }}
-        onClick={() => {
-          trRef.current?.nodes([shapeRef.current]);
-          trRef.current?.getLayer()?.batchDraw();
-        }}
-        onTap={() => {
-          trRef.current?.nodes([shapeRef.current]);
-          trRef.current?.getLayer()?.batchDraw();
-        }}
-      />
-      <Transformer ref={trRef} rotateEnabled resizeEnabled />
-    </>
+    <KonvaImage
+      ref={shapeRef}
+      image={image as any}
+      x={absoluteX}
+      y={absoluteY}
+      scaleX={absoluteScale}
+      scaleY={absoluteScale}
+      rotation={rotation}
+      opacity={opacity}
+      zIndex={zIndex}
+      draggable
+      stroke={isSelected ? "#3b82f6" : undefined}
+      strokeWidth={isSelected ? 3 : 0}
+      onDragEnd={e => {
+        // Convert absolute coordinates back to relative coordinates
+        const relativeX = e.target.x() / canvasWidth;
+        const relativeY = e.target.y() / canvasHeight;
+        onChange({ x: relativeX, y: relativeY });
+      }}
+      onTransformEnd={() => {
+        const node = shapeRef.current;
+        // Convert absolute scale back to relative scale
+        const absoluteScaleFromNode = node.scaleX();
+        const relativeScale = absoluteScaleFromNode * (referenceCanvasSize / Math.min(canvasWidth, canvasHeight));
+        onChange({ scale: relativeScale, rotation: node.rotation() });
+      }}
+      onClick={() => {
+        onSelect(shapeRef.current);
+      }}
+      onTap={() => {
+        onSelect(shapeRef.current);
+      }}
+    />
   );
 };
 
@@ -47,13 +61,51 @@ const BaseCardImage: React.FC<{ src: string; width: number; height: number }> = 
   return <KonvaImage image={image as any} x={0} y={0} width={width} height={height} />;
 };
 
-const StageCanvas: React.FC = () => {
-  const { baseCard, cutouts, updateCutout } = useCardBuilder();
-  // 60% of 630x880 to keep 63:88 ratio smaller
-  const width = 378 * .7;
-  const height = 528 * .7;
+const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxWidth, maxHeight }) => {
+  const { baseCard, cutouts, updateCutout, selectedCutoutId, setSelectedCutout } = useCardBuilder();
+  const transformerRef = useRef<any>(null);
+  const selectedShapeRef = useRef<any>(null);
+
+  // Calculate size based on available space while maintaining 63:88 aspect ratio
+  const aspectRatio = 63 / 88;
+  let width, height;
+
+  if (maxWidth && maxHeight) {
+    // Use available space but maintain aspect ratio
+    const widthBasedOnHeight = maxHeight * aspectRatio;
+    const heightBasedOnWidth = maxWidth / aspectRatio;
+
+    if (widthBasedOnHeight <= maxWidth) {
+      // Height is the limiting factor
+      width = widthBasedOnHeight;
+      height = maxHeight;
+    } else {
+      // Width is the limiting factor
+      width = maxWidth;
+      height = heightBasedOnWidth;
+    }
+
+    // Add some padding to ensure it fits comfortably
+    width *= 0.9;
+    height *= 0.9;
+  } else {
+    // Fallback to original size
+    width = 378 * .7;
+    height = 528 * .7;
+  }
 
   const baseSrc = baseCard?.croppedUrl ?? "";
+
+  const handleSelect = (cutoutId: string, shapeRef: any) => {
+    setSelectedCutout(cutoutId);
+    selectedShapeRef.current = shapeRef;
+
+    // Attach transformer to the selected shape
+    if (transformerRef.current && shapeRef) {
+      transformerRef.current.nodes([shapeRef]);
+      transformerRef.current.getLayer()?.batchDraw();
+    }
+  };
 
   return (
     <div id="card-canvas-container" className="border rounded overflow-hidden bg-white inline-block">
@@ -69,9 +121,26 @@ const StageCanvas: React.FC = () => {
               y={c.y}
               scale={c.scale}
               rotation={c.rotation}
+              opacity={c.opacity}
+              zIndex={c.zIndex}
+              canvasWidth={width}
+              canvasHeight={height}
+              isSelected={selectedCutoutId === c.id}
               onChange={(updates) => updateCutout(c.id, updates as any)}
+              onSelect={(shapeRef) => handleSelect(c.id, shapeRef)}
             />
           ))}
+          <Transformer
+            ref={transformerRef}
+            rotateEnabled
+            resizeEnabled
+            borderStroke="#3b82f6"
+            borderStrokeWidth={2}
+            anchorStroke="#3b82f6"
+            anchorStrokeWidth={2}
+            anchorFill="#ffffff"
+            anchorSize={8}
+          />
         </Layer>
       </Stage>
     </div>

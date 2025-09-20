@@ -15,7 +15,6 @@ export const SidebarPrimary: React.FC = () => {
 
   return (
     <div className="space-y-2">
-      <TabButton tab="kit" label="Select Kit" />
       <TabButton tab="upload" label="Upload" />
       <TabButton tab="base" label="Base Card" />
       <TabButton tab="cutouts" label="Cutouts" />

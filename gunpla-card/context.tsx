@@ -10,8 +10,8 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [baseCard, setBaseCard] = useState<BaseCard | undefined>(undefined);
   const [cutouts, setCutouts] = useState<Cutout[]>([]);
-  const [activeTab, setActiveTab] = useState<BuilderTab>("kit");
-  const [selectedKit, setSelectedKit] = useState<{ id: string; name: string } | undefined>(undefined);
+  const [selectedCutoutId, setSelectedCutoutId] = useState<string | undefined>(undefined);
+  const [activeTab, setActiveTab] = useState<BuilderTab>("upload");
 
   const addUploadedImages = useCallback((urls: string[]) => {
     setUploadedImages(prev => {
@@ -50,22 +50,26 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setActiveTab("upload");
   }, []);
 
+  const setSelectedCutout = useCallback((id?: string) => {
+    setSelectedCutoutId(id);
+  }, []);
+
   const value = useMemo<CardBuilderState>(() => ({
     uploadedImages,
     baseCard,
     cutouts,
-    selectedKit,
+    selectedCutoutId,
     activeTab,
     setActiveTab,
     addUploadedImages,
-    setSelectedKit,
     setBase,
     setBaseCrop,
     addCutout,
     updateCutout,
     removeCutout,
     replaceBase,
-  }), [uploadedImages, baseCard, cutouts, selectedKit, activeTab, addUploadedImages, setSelectedKit, setBase, setBaseCrop, addCutout, updateCutout, removeCutout, replaceBase]);
+    setSelectedCutout,
+  }), [uploadedImages, baseCard, cutouts, selectedCutoutId, activeTab, addUploadedImages, setBase, setBaseCrop, addCutout, updateCutout, removeCutout, replaceBase, setSelectedCutout]);
 
   return (
     <CardBuilderContext.Provider value={value}>{children}</CardBuilderContext.Provider>

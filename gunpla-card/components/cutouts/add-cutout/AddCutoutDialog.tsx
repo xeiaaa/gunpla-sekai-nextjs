@@ -33,7 +33,7 @@ const AddCutoutDialog: React.FC<{ sourceUrl: string }> = ({ sourceUrl }) => {
       url = await cpRef.current?.getDataUrl();
     }
     if (!url) return;
-    addCutout({ id: nanoid(), url, x: 50, y: 50, scale: 1, rotation: 0 });
+    addCutout({ id: nanoid(), url, x: 0.2, y: 0.2, scale: 0.3, rotation: 0, opacity: 1, zIndex: 1 });
     setOpen(false);
   }, [mode, addCutout]);
 

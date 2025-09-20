@@ -6,7 +6,7 @@ import { CardBuilder } from "@/gunpla-card/components/CardBuilder";
 export default function NewGunplaCardPage() {
   return (
     <CardBuilderProvider>
-      <div className="container mx-auto p-4">
+      <div className="mx-auto h-[calc(100vh-64px)]">
         <CardBuilder />
       </div>
     </CardBuilderProvider>

@@ -16,25 +16,27 @@ export interface Cutout {
   y: number;
   scale: number;
   rotation: number;
+  opacity: number;
+  zIndex: number;
 }
 
-export type BuilderTab = "kit" | "upload" | "base" | "cutouts" | "preview";
+export type BuilderTab = "upload" | "base" | "cutouts" | "preview";
 
 export interface CardBuilderState {
   uploadedImages: UploadedImage[];
   baseCard?: BaseCard;
   cutouts: Cutout[];
-  selectedKit?: { id: string; name: string };
+  selectedCutoutId?: string;
   activeTab: BuilderTab;
   setActiveTab: (tab: BuilderTab) => void;
   addUploadedImages: (urls: string[]) => void;
-  setSelectedKit: (kit: { id: string; name: string } | undefined) => void;
   setBase: (id: string) => void;
   setBaseCrop: (croppedUrl: string) => void;
   addCutout: (cutout: Cutout) => void;
   updateCutout: (id: string, updates: Partial<Cutout>) => void;
   removeCutout: (id: string) => void;
   replaceBase: () => void;
+  setSelectedCutout: (id?: string) => void;
 }
 
 

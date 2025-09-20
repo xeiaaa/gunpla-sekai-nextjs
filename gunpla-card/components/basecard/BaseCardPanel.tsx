@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import Cropper from "react-easy-crop";
 import { useCardBuilder } from "@/gunpla-card/context";
-import { Button } from "@/components/ui/button";
 
 function getCroppedImg(imageSrc: string, crop: { x: number; y: number }, zoom: number, aspect: number, areaPixels: { width: number; height: number; x: number; y: number }): Promise<string> {
   return new Promise((resolve) => {
@@ -33,7 +32,7 @@ function getCroppedImg(imageSrc: string, crop: { x: number; y: number }, zoom: n
   });
 }
 
-export const BaseCardPanel: React.FC = () => {
+export const BaseCardPanel: React.FC<{ onConfirmCrop?: () => void; onConfirmRef?: (confirmFn: () => void) => void; onResetRef?: (resetFn: () => void) => void }> = ({ onConfirmCrop, onConfirmRef, onResetRef }) => {
   const { uploadedImages, baseCard, setBaseCrop, replaceBase } = useCardBuilder();
   const rawUrl = useMemo(() => baseCard?.croppedUrl ?? uploadedImages.find(i => i.isBase)?.url, [baseCard, uploadedImages]);
   const baseUrl = useMemo(() => {
@@ -45,24 +44,63 @@ export const BaseCardPanel: React.FC = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ width: number; height: number; x: number; y: number } | null>(null);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   const onCropComplete = useCallback((_croppedArea, croppedAreaPixelsArg) => {
     setCroppedAreaPixels(croppedAreaPixelsArg);
+    setHasUserInteracted(true);
   }, []);
 
   const handleConfirm = useCallback(async () => {
-    if (!baseUrl || !croppedAreaPixels) return;
+    if (!baseUrl || !croppedAreaPixels) {
+      return;
+    }
     const aspect = 63 / 88; // width/height ratio for Pokemon card
     const result = await getCroppedImg(baseUrl, crop, zoom, aspect, croppedAreaPixels);
-    if (result) setBaseCrop(result);
-  }, [baseUrl, croppedAreaPixels, crop, zoom, setBaseCrop]);
+    if (result) {
+      setBaseCrop(result);
+      onConfirmCrop?.();
+    }
+  }, [baseUrl, croppedAreaPixels, crop, zoom, setBaseCrop, onConfirmCrop]);
+
+  const handleReset = useCallback(() => {
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCroppedAreaPixels(null);
+    setHasUserInteracted(false);
+  }, []);
+
+  // Expose the confirm function to parent component only when user has interacted
+  useEffect(() => {
+    if (hasUserInteracted && croppedAreaPixels) {
+      onConfirmRef?.(handleConfirm);
+    } else {
+      // Clear the confirm function when conditions aren't met
+      onConfirmRef?.(() => {});
+    }
+  }, [onConfirmRef, handleConfirm, croppedAreaPixels, hasUserInteracted]);
+
+  // Expose the reset function to parent component
+  useEffect(() => {
+    onResetRef?.(handleReset);
+    return () => {
+      onResetRef?.(() => {});
+    };
+  }, [onResetRef, handleReset]);
+
+  // Cleanup when component unmounts or when we want to clear the confirm function
+  useEffect(() => {
+    return () => {
+      onConfirmRef?.(() => {});
+    };
+  }, [onConfirmRef]);
 
   if (!baseUrl) return <div>Please choose a base image in Upload tab.</div>;
 
   const aspect = 63 / 88;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full max-w-4xl">
       <div className="relative w-full h-[60vh] bg-black/5">
         <Cropper
           image={baseUrl}
@@ -74,10 +112,6 @@ export const BaseCardPanel: React.FC = () => {
           onCropComplete={onCropComplete}
           showGrid
         />
-      </div>
-      <div className="flex gap-2">
-        <Button onClick={handleConfirm}>Confirm Crop</Button>
-        <Button variant="secondary" onClick={replaceBase}>Replace Base</Button>
       </div>
     </div>
   );
