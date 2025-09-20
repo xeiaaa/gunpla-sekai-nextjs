@@ -158,7 +158,29 @@ model Kit {
   expansions KitRelation[] @relation("KitExpansions")
   expandedBy KitRelation[] @relation("KitExpandedBy")
 
+  // Gunpla cards created for this kit
+  gunplaCards GunplaCard[]
+
   @@map("kits")
+}
+
+// GunplaCard represents user-created gunpla cards for specific kits
+model GunplaCard {
+  id       String @id @default(cuid())
+  uploadId String @unique
+  userId   String
+  kitId    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  upload Upload @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit    Kit    @relation(fields: [kitId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kitId]) // 1 card per user per kit
+  @@map("gunpla_cards")
 }
 
 // Junction table for many-to-many relationship between Kit and MobileSuit
@@ -234,6 +256,7 @@ model Upload {
   buildUploads          BuildUpload[]
   buildMilestoneUploads BuildMilestoneUpload[]
   buildFeaturedImages   Build[]                @relation("BuildFeaturedImage")
+  gunplaCards           GunplaCard[]
 
   @@map("uploads")
 }
@@ -356,6 +379,7 @@ model User {
   buildLikes     BuildLike[]
   buildComments  BuildComment[]
   reviewFeedback ReviewFeedback[]
+  gunplaCards    GunplaCard[]
 
   @@map("users")
 }

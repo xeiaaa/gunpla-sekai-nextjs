@@ -91,7 +91,6 @@ const RectangleCropper = forwardRef<RectangleCropperHandle, { sourceUrl: string 
 
   return (
     <div ref={containerRef} className="relative w-full h-[60vh] bg-black/5">
-      <div className="absolute left-1 top-1 z-10 text-xs bg-white/80 rounded px-2 py-1">Drag to move. Use handles to resize.</div>
       <Stage width={display.width} height={display.height}>
         <Layer>
           <KonvaImage image={image as any} x={0} y={0} width={display.width} height={display.height} />

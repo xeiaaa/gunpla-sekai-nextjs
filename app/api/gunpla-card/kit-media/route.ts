@@ -4,13 +4,17 @@ import { prisma } from "@/lib/prisma";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const kitId = searchParams.get("kitId");
-  if (!kitId) {
-    return new Response(JSON.stringify({ error: "kitId required" }), { status: 400, headers: { "content-type": "application/json" } });
+  const kitSlug = searchParams.get("kitSlug");
+
+  if (!kitId && !kitSlug) {
+    return new Response(JSON.stringify({ error: "kitId or kitSlug required" }), { status: 400, headers: { "content-type": "application/json" } });
   }
 
   try {
+    const whereClause = kitId ? { id: kitId } : { slug: kitSlug };
+
     const kit = await prisma.kit.findUnique({
-      where: { id: kitId },
+      where: whereClause,
       include: {
         uploads: { include: { upload: true } },
         productLine: { select: { scrapedImage: true } },

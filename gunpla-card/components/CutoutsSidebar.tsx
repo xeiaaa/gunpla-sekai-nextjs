@@ -13,7 +13,7 @@ export const CutoutsSidebar: React.FC = () => {
       {cutouts.length > 0 ? (
         <div>
           <div className="font-medium text-sm mb-2">Created Cutouts ({cutouts.length})</div>
-          <div className="space-y-2 max-h-[70vh] overflow-y-auto pr-1">
+          <div className="space-y-2">
             {cutouts.map(cutout => (
               <div
                 key={cutout.id}

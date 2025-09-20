@@ -49,6 +49,11 @@ export type ReleaseType = $Result.DefaultSelection<Prisma.$ReleaseTypePayload>
  */
 export type Kit = $Result.DefaultSelection<Prisma.$KitPayload>
 /**
+ * Model GunplaCard
+ * 
+ */
+export type GunplaCard = $Result.DefaultSelection<Prisma.$GunplaCardPayload>
+/**
  * Model KitMobileSuit
  * 
  */
@@ -427,6 +432,16 @@ export class PrismaClient<
     * ```
     */
   get kit(): Prisma.KitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gunplaCard`: Exposes CRUD operations for the **GunplaCard** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GunplaCards
+    * const gunplaCards = await prisma.gunplaCard.findMany()
+    * ```
+    */
+  get gunplaCard(): Prisma.GunplaCardDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.kitMobileSuit`: Exposes CRUD operations for the **KitMobileSuit** model.
@@ -1054,6 +1069,7 @@ export namespace Prisma {
     ProductLine: 'ProductLine',
     ReleaseType: 'ReleaseType',
     Kit: 'Kit',
+    GunplaCard: 'GunplaCard',
     KitMobileSuit: 'KitMobileSuit',
     KitRelation: 'KitRelation',
     Upload: 'Upload',
@@ -1090,7 +1106,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1609,6 +1625,80 @@ export namespace Prisma {
           count: {
             args: Prisma.KitCountArgs<ExtArgs>
             result: $Utils.Optional<KitCountAggregateOutputType> | number
+          }
+        }
+      }
+      GunplaCard: {
+        payload: Prisma.$GunplaCardPayload<ExtArgs>
+        fields: Prisma.GunplaCardFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GunplaCardFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GunplaCardFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          findFirst: {
+            args: Prisma.GunplaCardFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GunplaCardFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          findMany: {
+            args: Prisma.GunplaCardFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>[]
+          }
+          create: {
+            args: Prisma.GunplaCardCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          createMany: {
+            args: Prisma.GunplaCardCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GunplaCardCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>[]
+          }
+          delete: {
+            args: Prisma.GunplaCardDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          update: {
+            args: Prisma.GunplaCardUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          deleteMany: {
+            args: Prisma.GunplaCardDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GunplaCardUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GunplaCardUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>[]
+          }
+          upsert: {
+            args: Prisma.GunplaCardUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GunplaCardPayload>
+          }
+          aggregate: {
+            args: Prisma.GunplaCardAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGunplaCard>
+          }
+          groupBy: {
+            args: Prisma.GunplaCardGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GunplaCardGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GunplaCardCountArgs<ExtArgs>
+            result: $Utils.Optional<GunplaCardCountAggregateOutputType> | number
           }
         }
       }
@@ -3047,6 +3137,7 @@ export namespace Prisma {
     productLine?: ProductLineOmit
     releaseType?: ReleaseTypeOmit
     kit?: KitOmit
+    gunplaCard?: GunplaCardOmit
     kitMobileSuit?: KitMobileSuitOmit
     kitRelation?: KitRelationOmit
     upload?: UploadOmit
@@ -3358,6 +3449,7 @@ export namespace Prisma {
     listings: number
     expansions: number
     expandedBy: number
+    gunplaCards: number
   }
 
   export type KitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3370,6 +3462,7 @@ export namespace Prisma {
     listings?: boolean | KitCountOutputTypeCountListingsArgs
     expansions?: boolean | KitCountOutputTypeCountExpansionsArgs
     expandedBy?: boolean | KitCountOutputTypeCountExpandedByArgs
+    gunplaCards?: boolean | KitCountOutputTypeCountGunplaCardsArgs
   }
 
   // Custom InputTypes
@@ -3446,6 +3539,13 @@ export namespace Prisma {
     where?: KitRelationWhereInput
   }
 
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountGunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GunplaCardWhereInput
+  }
+
 
   /**
    * Count Type UploadCountOutputType
@@ -3458,6 +3558,7 @@ export namespace Prisma {
     buildUploads: number
     buildMilestoneUploads: number
     buildFeaturedImages: number
+    gunplaCards: number
   }
 
   export type UploadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3467,6 +3568,7 @@ export namespace Prisma {
     buildUploads?: boolean | UploadCountOutputTypeCountBuildUploadsArgs
     buildMilestoneUploads?: boolean | UploadCountOutputTypeCountBuildMilestoneUploadsArgs
     buildFeaturedImages?: boolean | UploadCountOutputTypeCountBuildFeaturedImagesArgs
+    gunplaCards?: boolean | UploadCountOutputTypeCountGunplaCardsArgs
   }
 
   // Custom InputTypes
@@ -3522,6 +3624,13 @@ export namespace Prisma {
     where?: BuildWhereInput
   }
 
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountGunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GunplaCardWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -3535,6 +3644,7 @@ export namespace Prisma {
     buildLikes: number
     buildComments: number
     reviewFeedback: number
+    gunplaCards: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3545,6 +3655,7 @@ export namespace Prisma {
     buildLikes?: boolean | UserCountOutputTypeCountBuildLikesArgs
     buildComments?: boolean | UserCountOutputTypeCountBuildCommentsArgs
     reviewFeedback?: boolean | UserCountOutputTypeCountReviewFeedbackArgs
+    gunplaCards?: boolean | UserCountOutputTypeCountGunplaCardsArgs
   }
 
   // Custom InputTypes
@@ -3605,6 +3716,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountReviewFeedbackArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewFeedbackWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GunplaCardWhereInput
   }
 
 
@@ -10830,6 +10948,7 @@ export namespace Prisma {
     listings?: boolean | Kit$listingsArgs<ExtArgs>
     expansions?: boolean | Kit$expansionsArgs<ExtArgs>
     expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
+    gunplaCards?: boolean | Kit$gunplaCardsArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["kit"]>
 
@@ -10922,6 +11041,7 @@ export namespace Prisma {
     listings?: boolean | Kit$listingsArgs<ExtArgs>
     expansions?: boolean | Kit$expansionsArgs<ExtArgs>
     expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
+    gunplaCards?: boolean | Kit$gunplaCardsArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type KitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10953,6 +11073,7 @@ export namespace Prisma {
       listings: Prisma.$MarketplaceListingPayload<ExtArgs>[]
       expansions: Prisma.$KitRelationPayload<ExtArgs>[]
       expandedBy: Prisma.$KitRelationPayload<ExtArgs>[]
+      gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11381,6 +11502,7 @@ export namespace Prisma {
     listings<T extends Kit$listingsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expansions<T extends Kit$expansionsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expansionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expandedBy<T extends Kit$expandedByArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expandedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    gunplaCards<T extends Kit$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12117,6 +12239,30 @@ export namespace Prisma {
   }
 
   /**
+   * Kit.gunplaCards
+   */
+  export type Kit$gunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    where?: GunplaCardWhereInput
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    cursor?: GunplaCardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
    * Kit without action
    */
   export type KitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12132,6 +12278,1093 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: KitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GunplaCard
+   */
+
+  export type AggregateGunplaCard = {
+    _count: GunplaCardCountAggregateOutputType | null
+    _min: GunplaCardMinAggregateOutputType | null
+    _max: GunplaCardMaxAggregateOutputType | null
+  }
+
+  export type GunplaCardMinAggregateOutputType = {
+    id: string | null
+    uploadId: string | null
+    userId: string | null
+    kitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GunplaCardMaxAggregateOutputType = {
+    id: string | null
+    uploadId: string | null
+    userId: string | null
+    kitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GunplaCardCountAggregateOutputType = {
+    id: number
+    uploadId: number
+    userId: number
+    kitId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GunplaCardMinAggregateInputType = {
+    id?: true
+    uploadId?: true
+    userId?: true
+    kitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GunplaCardMaxAggregateInputType = {
+    id?: true
+    uploadId?: true
+    userId?: true
+    kitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GunplaCardCountAggregateInputType = {
+    id?: true
+    uploadId?: true
+    userId?: true
+    kitId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GunplaCardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GunplaCard to aggregate.
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GunplaCards to fetch.
+     */
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GunplaCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GunplaCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GunplaCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GunplaCards
+    **/
+    _count?: true | GunplaCardCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GunplaCardMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GunplaCardMaxAggregateInputType
+  }
+
+  export type GetGunplaCardAggregateType<T extends GunplaCardAggregateArgs> = {
+        [P in keyof T & keyof AggregateGunplaCard]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGunplaCard[P]>
+      : GetScalarType<T[P], AggregateGunplaCard[P]>
+  }
+
+
+
+
+  export type GunplaCardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GunplaCardWhereInput
+    orderBy?: GunplaCardOrderByWithAggregationInput | GunplaCardOrderByWithAggregationInput[]
+    by: GunplaCardScalarFieldEnum[] | GunplaCardScalarFieldEnum
+    having?: GunplaCardScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GunplaCardCountAggregateInputType | true
+    _min?: GunplaCardMinAggregateInputType
+    _max?: GunplaCardMaxAggregateInputType
+  }
+
+  export type GunplaCardGroupByOutputType = {
+    id: string
+    uploadId: string
+    userId: string
+    kitId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: GunplaCardCountAggregateOutputType | null
+    _min: GunplaCardMinAggregateOutputType | null
+    _max: GunplaCardMaxAggregateOutputType | null
+  }
+
+  type GetGunplaCardGroupByPayload<T extends GunplaCardGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GunplaCardGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GunplaCardGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GunplaCardGroupByOutputType[P]>
+            : GetScalarType<T[P], GunplaCardGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GunplaCardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    uploadId?: boolean
+    userId?: boolean
+    kitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gunplaCard"]>
+
+  export type GunplaCardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    uploadId?: boolean
+    userId?: boolean
+    kitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gunplaCard"]>
+
+  export type GunplaCardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    uploadId?: boolean
+    userId?: boolean
+    kitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gunplaCard"]>
+
+  export type GunplaCardSelectScalar = {
+    id?: boolean
+    uploadId?: boolean
+    userId?: boolean
+    kitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GunplaCardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uploadId" | "userId" | "kitId" | "createdAt" | "updatedAt", ExtArgs["result"]["gunplaCard"]>
+  export type GunplaCardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type GunplaCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type GunplaCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    upload?: boolean | UploadDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+
+  export type $GunplaCardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GunplaCard"
+    objects: {
+      upload: Prisma.$UploadPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+      kit: Prisma.$KitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      uploadId: string
+      userId: string
+      kitId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["gunplaCard"]>
+    composites: {}
+  }
+
+  type GunplaCardGetPayload<S extends boolean | null | undefined | GunplaCardDefaultArgs> = $Result.GetResult<Prisma.$GunplaCardPayload, S>
+
+  type GunplaCardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GunplaCardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GunplaCardCountAggregateInputType | true
+    }
+
+  export interface GunplaCardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GunplaCard'], meta: { name: 'GunplaCard' } }
+    /**
+     * Find zero or one GunplaCard that matches the filter.
+     * @param {GunplaCardFindUniqueArgs} args - Arguments to find a GunplaCard
+     * @example
+     * // Get one GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GunplaCardFindUniqueArgs>(args: SelectSubset<T, GunplaCardFindUniqueArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GunplaCard that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GunplaCardFindUniqueOrThrowArgs} args - Arguments to find a GunplaCard
+     * @example
+     * // Get one GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GunplaCardFindUniqueOrThrowArgs>(args: SelectSubset<T, GunplaCardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GunplaCard that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardFindFirstArgs} args - Arguments to find a GunplaCard
+     * @example
+     * // Get one GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GunplaCardFindFirstArgs>(args?: SelectSubset<T, GunplaCardFindFirstArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GunplaCard that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardFindFirstOrThrowArgs} args - Arguments to find a GunplaCard
+     * @example
+     * // Get one GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GunplaCardFindFirstOrThrowArgs>(args?: SelectSubset<T, GunplaCardFindFirstOrThrowArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GunplaCards that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GunplaCards
+     * const gunplaCards = await prisma.gunplaCard.findMany()
+     * 
+     * // Get first 10 GunplaCards
+     * const gunplaCards = await prisma.gunplaCard.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gunplaCardWithIdOnly = await prisma.gunplaCard.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GunplaCardFindManyArgs>(args?: SelectSubset<T, GunplaCardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GunplaCard.
+     * @param {GunplaCardCreateArgs} args - Arguments to create a GunplaCard.
+     * @example
+     * // Create one GunplaCard
+     * const GunplaCard = await prisma.gunplaCard.create({
+     *   data: {
+     *     // ... data to create a GunplaCard
+     *   }
+     * })
+     * 
+     */
+    create<T extends GunplaCardCreateArgs>(args: SelectSubset<T, GunplaCardCreateArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GunplaCards.
+     * @param {GunplaCardCreateManyArgs} args - Arguments to create many GunplaCards.
+     * @example
+     * // Create many GunplaCards
+     * const gunplaCard = await prisma.gunplaCard.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GunplaCardCreateManyArgs>(args?: SelectSubset<T, GunplaCardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GunplaCards and returns the data saved in the database.
+     * @param {GunplaCardCreateManyAndReturnArgs} args - Arguments to create many GunplaCards.
+     * @example
+     * // Create many GunplaCards
+     * const gunplaCard = await prisma.gunplaCard.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GunplaCards and only return the `id`
+     * const gunplaCardWithIdOnly = await prisma.gunplaCard.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GunplaCardCreateManyAndReturnArgs>(args?: SelectSubset<T, GunplaCardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GunplaCard.
+     * @param {GunplaCardDeleteArgs} args - Arguments to delete one GunplaCard.
+     * @example
+     * // Delete one GunplaCard
+     * const GunplaCard = await prisma.gunplaCard.delete({
+     *   where: {
+     *     // ... filter to delete one GunplaCard
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GunplaCardDeleteArgs>(args: SelectSubset<T, GunplaCardDeleteArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GunplaCard.
+     * @param {GunplaCardUpdateArgs} args - Arguments to update one GunplaCard.
+     * @example
+     * // Update one GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GunplaCardUpdateArgs>(args: SelectSubset<T, GunplaCardUpdateArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GunplaCards.
+     * @param {GunplaCardDeleteManyArgs} args - Arguments to filter GunplaCards to delete.
+     * @example
+     * // Delete a few GunplaCards
+     * const { count } = await prisma.gunplaCard.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GunplaCardDeleteManyArgs>(args?: SelectSubset<T, GunplaCardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GunplaCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GunplaCards
+     * const gunplaCard = await prisma.gunplaCard.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GunplaCardUpdateManyArgs>(args: SelectSubset<T, GunplaCardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GunplaCards and returns the data updated in the database.
+     * @param {GunplaCardUpdateManyAndReturnArgs} args - Arguments to update many GunplaCards.
+     * @example
+     * // Update many GunplaCards
+     * const gunplaCard = await prisma.gunplaCard.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GunplaCards and only return the `id`
+     * const gunplaCardWithIdOnly = await prisma.gunplaCard.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GunplaCardUpdateManyAndReturnArgs>(args: SelectSubset<T, GunplaCardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GunplaCard.
+     * @param {GunplaCardUpsertArgs} args - Arguments to update or create a GunplaCard.
+     * @example
+     * // Update or create a GunplaCard
+     * const gunplaCard = await prisma.gunplaCard.upsert({
+     *   create: {
+     *     // ... data to create a GunplaCard
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GunplaCard we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GunplaCardUpsertArgs>(args: SelectSubset<T, GunplaCardUpsertArgs<ExtArgs>>): Prisma__GunplaCardClient<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GunplaCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardCountArgs} args - Arguments to filter GunplaCards to count.
+     * @example
+     * // Count the number of GunplaCards
+     * const count = await prisma.gunplaCard.count({
+     *   where: {
+     *     // ... the filter for the GunplaCards we want to count
+     *   }
+     * })
+    **/
+    count<T extends GunplaCardCountArgs>(
+      args?: Subset<T, GunplaCardCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GunplaCardCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GunplaCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GunplaCardAggregateArgs>(args: Subset<T, GunplaCardAggregateArgs>): Prisma.PrismaPromise<GetGunplaCardAggregateType<T>>
+
+    /**
+     * Group by GunplaCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GunplaCardGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GunplaCardGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GunplaCardGroupByArgs['orderBy'] }
+        : { orderBy?: GunplaCardGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GunplaCardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGunplaCardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GunplaCard model
+   */
+  readonly fields: GunplaCardFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GunplaCard.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GunplaCardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    upload<T extends UploadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UploadDefaultArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GunplaCard model
+   */
+  interface GunplaCardFieldRefs {
+    readonly id: FieldRef<"GunplaCard", 'String'>
+    readonly uploadId: FieldRef<"GunplaCard", 'String'>
+    readonly userId: FieldRef<"GunplaCard", 'String'>
+    readonly kitId: FieldRef<"GunplaCard", 'String'>
+    readonly createdAt: FieldRef<"GunplaCard", 'DateTime'>
+    readonly updatedAt: FieldRef<"GunplaCard", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GunplaCard findUnique
+   */
+  export type GunplaCardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter, which GunplaCard to fetch.
+     */
+    where: GunplaCardWhereUniqueInput
+  }
+
+  /**
+   * GunplaCard findUniqueOrThrow
+   */
+  export type GunplaCardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter, which GunplaCard to fetch.
+     */
+    where: GunplaCardWhereUniqueInput
+  }
+
+  /**
+   * GunplaCard findFirst
+   */
+  export type GunplaCardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter, which GunplaCard to fetch.
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GunplaCards to fetch.
+     */
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GunplaCards.
+     */
+    cursor?: GunplaCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GunplaCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GunplaCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GunplaCards.
+     */
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
+   * GunplaCard findFirstOrThrow
+   */
+  export type GunplaCardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter, which GunplaCard to fetch.
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GunplaCards to fetch.
+     */
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GunplaCards.
+     */
+    cursor?: GunplaCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GunplaCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GunplaCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GunplaCards.
+     */
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
+   * GunplaCard findMany
+   */
+  export type GunplaCardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter, which GunplaCards to fetch.
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GunplaCards to fetch.
+     */
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GunplaCards.
+     */
+    cursor?: GunplaCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GunplaCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GunplaCards.
+     */
+    skip?: number
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
+   * GunplaCard create
+   */
+  export type GunplaCardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GunplaCard.
+     */
+    data: XOR<GunplaCardCreateInput, GunplaCardUncheckedCreateInput>
+  }
+
+  /**
+   * GunplaCard createMany
+   */
+  export type GunplaCardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GunplaCards.
+     */
+    data: GunplaCardCreateManyInput | GunplaCardCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GunplaCard createManyAndReturn
+   */
+  export type GunplaCardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * The data used to create many GunplaCards.
+     */
+    data: GunplaCardCreateManyInput | GunplaCardCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GunplaCard update
+   */
+  export type GunplaCardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GunplaCard.
+     */
+    data: XOR<GunplaCardUpdateInput, GunplaCardUncheckedUpdateInput>
+    /**
+     * Choose, which GunplaCard to update.
+     */
+    where: GunplaCardWhereUniqueInput
+  }
+
+  /**
+   * GunplaCard updateMany
+   */
+  export type GunplaCardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GunplaCards.
+     */
+    data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyInput>
+    /**
+     * Filter which GunplaCards to update
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * Limit how many GunplaCards to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GunplaCard updateManyAndReturn
+   */
+  export type GunplaCardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * The data used to update GunplaCards.
+     */
+    data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyInput>
+    /**
+     * Filter which GunplaCards to update
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * Limit how many GunplaCards to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GunplaCard upsert
+   */
+  export type GunplaCardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GunplaCard to update in case it exists.
+     */
+    where: GunplaCardWhereUniqueInput
+    /**
+     * In case the GunplaCard found by the `where` argument doesn't exist, create a new GunplaCard with this data.
+     */
+    create: XOR<GunplaCardCreateInput, GunplaCardUncheckedCreateInput>
+    /**
+     * In case the GunplaCard was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GunplaCardUpdateInput, GunplaCardUncheckedUpdateInput>
+  }
+
+  /**
+   * GunplaCard delete
+   */
+  export type GunplaCardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    /**
+     * Filter which GunplaCard to delete.
+     */
+    where: GunplaCardWhereUniqueInput
+  }
+
+  /**
+   * GunplaCard deleteMany
+   */
+  export type GunplaCardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GunplaCards to delete
+     */
+    where?: GunplaCardWhereInput
+    /**
+     * Limit how many GunplaCards to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GunplaCard without action
+   */
+  export type GunplaCardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
   }
 
 
@@ -14574,6 +15807,7 @@ export namespace Prisma {
     buildUploads?: boolean | Upload$buildUploadsArgs<ExtArgs>
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
+    gunplaCards?: boolean | Upload$gunplaCardsArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["upload"]>
 
@@ -14639,6 +15873,7 @@ export namespace Prisma {
     buildUploads?: boolean | Upload$buildUploadsArgs<ExtArgs>
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
+    gunplaCards?: boolean | Upload$gunplaCardsArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14658,6 +15893,7 @@ export namespace Prisma {
       buildUploads: Prisma.$BuildUploadPayload<ExtArgs>[]
       buildMilestoneUploads: Prisma.$BuildMilestoneUploadPayload<ExtArgs>[]
       buildFeaturedImages: Prisma.$BuildPayload<ExtArgs>[]
+      gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15075,6 +16311,7 @@ export namespace Prisma {
     buildUploads<T extends Upload$buildUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildMilestoneUploads<T extends Upload$buildMilestoneUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildMilestoneUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestoneUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildFeaturedImages<T extends Upload$buildFeaturedImagesArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildFeaturedImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    gunplaCards<T extends Upload$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15655,6 +16892,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BuildScalarFieldEnum | BuildScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.gunplaCards
+   */
+  export type Upload$gunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    where?: GunplaCardWhereInput
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    cursor?: GunplaCardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
   }
 
   /**
@@ -20509,6 +21770,7 @@ export namespace Prisma {
     buildLikes?: boolean | User$buildLikesArgs<ExtArgs>
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
+    gunplaCards?: boolean | User$gunplaCardsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -20600,6 +21862,7 @@ export namespace Prisma {
     buildLikes?: boolean | User$buildLikesArgs<ExtArgs>
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
+    gunplaCards?: boolean | User$gunplaCardsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -20616,6 +21879,7 @@ export namespace Prisma {
       buildLikes: Prisma.$BuildLikePayload<ExtArgs>[]
       buildComments: Prisma.$BuildCommentPayload<ExtArgs>[]
       reviewFeedback: Prisma.$ReviewFeedbackPayload<ExtArgs>[]
+      gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21043,6 +22307,7 @@ export namespace Prisma {
     buildLikes<T extends User$buildLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$buildLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildComments<T extends User$buildCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$buildCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewFeedback<T extends User$reviewFeedbackArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewFeedbackArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    gunplaCards<T extends User$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, User$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21667,6 +22932,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewFeedbackScalarFieldEnum | ReviewFeedbackScalarFieldEnum[]
+  }
+
+  /**
+   * User.gunplaCards
+   */
+  export type User$gunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GunplaCard
+     */
+    select?: GunplaCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GunplaCard
+     */
+    omit?: GunplaCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GunplaCardInclude<ExtArgs> | null
+    where?: GunplaCardWhereInput
+    orderBy?: GunplaCardOrderByWithRelationInput | GunplaCardOrderByWithRelationInput[]
+    cursor?: GunplaCardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
   }
 
   /**
@@ -33140,6 +34429,18 @@ export namespace Prisma {
   export type KitScalarFieldEnum = (typeof KitScalarFieldEnum)[keyof typeof KitScalarFieldEnum]
 
 
+  export const GunplaCardScalarFieldEnum: {
+    id: 'id',
+    uploadId: 'uploadId',
+    userId: 'userId',
+    kitId: 'kitId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GunplaCardScalarFieldEnum = (typeof GunplaCardScalarFieldEnum)[keyof typeof GunplaCardScalarFieldEnum]
+
+
   export const KitMobileSuitScalarFieldEnum: {
     id: 'id',
     kitId: 'kitId',
@@ -34023,6 +35324,7 @@ export namespace Prisma {
     listings?: MarketplaceListingListRelationFilter
     expansions?: KitRelationListRelationFilter
     expandedBy?: KitRelationListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }
 
   export type KitOrderByWithRelationInput = {
@@ -34058,6 +35360,7 @@ export namespace Prisma {
     listings?: MarketplaceListingOrderByRelationAggregateInput
     expansions?: KitRelationOrderByRelationAggregateInput
     expandedBy?: KitRelationOrderByRelationAggregateInput
+    gunplaCards?: GunplaCardOrderByRelationAggregateInput
   }
 
   export type KitWhereUniqueInput = Prisma.AtLeast<{
@@ -34096,6 +35399,7 @@ export namespace Prisma {
     listings?: MarketplaceListingListRelationFilter
     expansions?: KitRelationListRelationFilter
     expandedBy?: KitRelationListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }, "id" | "slug">
 
   export type KitOrderByWithAggregationInput = {
@@ -34148,6 +35452,73 @@ export namespace Prisma {
     seriesId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     releaseTypeId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     baseKitId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+  }
+
+  export type GunplaCardWhereInput = {
+    AND?: GunplaCardWhereInput | GunplaCardWhereInput[]
+    OR?: GunplaCardWhereInput[]
+    NOT?: GunplaCardWhereInput | GunplaCardWhereInput[]
+    id?: StringFilter<"GunplaCard"> | string
+    uploadId?: StringFilter<"GunplaCard"> | string
+    userId?: StringFilter<"GunplaCard"> | string
+    kitId?: StringFilter<"GunplaCard"> | string
+    createdAt?: DateTimeFilter<"GunplaCard"> | Date | string
+    updatedAt?: DateTimeFilter<"GunplaCard"> | Date | string
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }
+
+  export type GunplaCardOrderByWithRelationInput = {
+    id?: SortOrder
+    uploadId?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    upload?: UploadOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    kit?: KitOrderByWithRelationInput
+  }
+
+  export type GunplaCardWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    uploadId?: string
+    userId_kitId?: GunplaCardUserIdKitIdCompoundUniqueInput
+    AND?: GunplaCardWhereInput | GunplaCardWhereInput[]
+    OR?: GunplaCardWhereInput[]
+    NOT?: GunplaCardWhereInput | GunplaCardWhereInput[]
+    userId?: StringFilter<"GunplaCard"> | string
+    kitId?: StringFilter<"GunplaCard"> | string
+    createdAt?: DateTimeFilter<"GunplaCard"> | Date | string
+    updatedAt?: DateTimeFilter<"GunplaCard"> | Date | string
+    upload?: XOR<UploadScalarRelationFilter, UploadWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }, "id" | "uploadId" | "userId_kitId">
+
+  export type GunplaCardOrderByWithAggregationInput = {
+    id?: SortOrder
+    uploadId?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GunplaCardCountOrderByAggregateInput
+    _max?: GunplaCardMaxOrderByAggregateInput
+    _min?: GunplaCardMinOrderByAggregateInput
+  }
+
+  export type GunplaCardScalarWhereWithAggregatesInput = {
+    AND?: GunplaCardScalarWhereWithAggregatesInput | GunplaCardScalarWhereWithAggregatesInput[]
+    OR?: GunplaCardScalarWhereWithAggregatesInput[]
+    NOT?: GunplaCardScalarWhereWithAggregatesInput | GunplaCardScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GunplaCard"> | string
+    uploadId?: StringWithAggregatesFilter<"GunplaCard"> | string
+    userId?: StringWithAggregatesFilter<"GunplaCard"> | string
+    kitId?: StringWithAggregatesFilter<"GunplaCard"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"GunplaCard"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GunplaCard"> | Date | string
   }
 
   export type KitMobileSuitWhereInput = {
@@ -34303,6 +35674,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadListRelationFilter
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }
 
   export type UploadOrderByWithRelationInput = {
@@ -34327,6 +35699,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadOrderByRelationAggregateInput
     buildMilestoneUploads?: BuildMilestoneUploadOrderByRelationAggregateInput
     buildFeaturedImages?: BuildOrderByRelationAggregateInput
+    gunplaCards?: GunplaCardOrderByRelationAggregateInput
   }
 
   export type UploadWhereUniqueInput = Prisma.AtLeast<{
@@ -34354,6 +35727,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadListRelationFilter
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }, "id" | "cloudinaryAssetId">
 
   export type UploadOrderByWithAggregationInput = {
@@ -34722,6 +36096,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeListRelationFilter
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -34756,6 +36131,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeOrderByRelationAggregateInput
     buildComments?: BuildCommentOrderByRelationAggregateInput
     reviewFeedback?: ReviewFeedbackOrderByRelationAggregateInput
+    gunplaCards?: GunplaCardOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -34793,6 +36169,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeListRelationFilter
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
+    gunplaCards?: GunplaCardListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -36061,6 +37438,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateInput = {
@@ -36092,6 +37470,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitUpdateInput = {
@@ -36123,6 +37502,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateInput = {
@@ -36154,6 +37534,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitCreateManyInput = {
@@ -36216,6 +37597,66 @@ export namespace Prisma {
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
     releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
     baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GunplaCardCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutGunplaCardsInput
+    user: UserCreateNestedOneWithoutGunplaCardsInput
+    kit: KitCreateNestedOneWithoutGunplaCardsInput
+  }
+
+  export type GunplaCardUncheckedCreateInput = {
+    id?: string
+    uploadId: string
+    userId: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutGunplaCardsNestedInput
+    user?: UserUpdateOneRequiredWithoutGunplaCardsNestedInput
+    kit?: KitUpdateOneRequiredWithoutGunplaCardsNestedInput
+  }
+
+  export type GunplaCardUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardCreateManyInput = {
+    id?: string
+    uploadId: string
+    userId: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type KitMobileSuitCreateInput = {
@@ -36361,6 +37802,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateInput = {
@@ -36384,6 +37826,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUpdateInput = {
@@ -36407,6 +37850,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateInput = {
@@ -36430,6 +37874,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadCreateManyInput = {
@@ -36793,6 +38238,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -36827,6 +38273,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -36861,6 +38308,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -36895,6 +38343,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -38150,6 +39599,12 @@ export namespace Prisma {
     none?: KitRelationWhereInput
   }
 
+  export type GunplaCardListRelationFilter = {
+    every?: GunplaCardWhereInput
+    some?: GunplaCardWhereInput
+    none?: GunplaCardWhereInput
+  }
+
   export type KitUploadOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -38171,6 +39626,10 @@ export namespace Prisma {
   }
 
   export type KitRelationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GunplaCardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -38274,9 +39733,51 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type UploadScalarRelationFilter = {
+    is?: UploadWhereInput
+    isNot?: UploadWhereInput
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type KitScalarRelationFilter = {
     is?: KitWhereInput
     isNot?: KitWhereInput
+  }
+
+  export type GunplaCardUserIdKitIdCompoundUniqueInput = {
+    userId: string
+    kitId: string
+  }
+
+  export type GunplaCardCountOrderByAggregateInput = {
+    id?: SortOrder
+    uploadId?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GunplaCardMaxOrderByAggregateInput = {
+    id?: SortOrder
+    uploadId?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GunplaCardMinOrderByAggregateInput = {
+    id?: SortOrder
+    uploadId?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MobileSuitScalarRelationFilter = {
@@ -38374,11 +39875,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type BuildUploadListRelationFilter = {
@@ -38483,11 +39979,6 @@ export namespace Prisma {
     in?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.KitImageType[] | ListEnumKitImageTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumKitImageTypeFilter<$PrismaModel> | $Enums.KitImageType
-  }
-
-  export type UploadScalarRelationFilter = {
-    is?: UploadWhereInput
-    isNot?: UploadWhereInput
   }
 
   export type KitUploadKitIdUploadIdCompoundUniqueInput = {
@@ -39834,6 +41325,13 @@ export namespace Prisma {
     connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
   }
 
+  export type GunplaCardCreateNestedManyWithoutKitInput = {
+    create?: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput> | GunplaCardCreateWithoutKitInput[] | GunplaCardUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
+    createMany?: GunplaCardCreateManyKitInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
   export type KitUncheckedCreateNestedManyWithoutBaseKitInput = {
     create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
     connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
@@ -39895,6 +41393,13 @@ export namespace Prisma {
     connectOrCreate?: KitRelationCreateOrConnectWithoutExpansionInput | KitRelationCreateOrConnectWithoutExpansionInput[]
     createMany?: KitRelationCreateManyExpansionInputEnvelope
     connect?: KitRelationWhereUniqueInput | KitRelationWhereUniqueInput[]
+  }
+
+  export type GunplaCardUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput> | GunplaCardCreateWithoutKitInput[] | GunplaCardUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
+    createMany?: GunplaCardCreateManyKitInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -40085,6 +41590,20 @@ export namespace Prisma {
     deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
   }
 
+  export type GunplaCardUpdateManyWithoutKitNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput> | GunplaCardCreateWithoutKitInput[] | GunplaCardUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutKitInput | GunplaCardUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: GunplaCardCreateManyKitInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutKitInput | GunplaCardUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutKitInput | GunplaCardUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
   export type KitUncheckedUpdateManyWithoutBaseKitNestedInput = {
     create?: XOR<KitCreateWithoutBaseKitInput, KitUncheckedCreateWithoutBaseKitInput> | KitCreateWithoutBaseKitInput[] | KitUncheckedCreateWithoutBaseKitInput[]
     connectOrCreate?: KitCreateOrConnectWithoutBaseKitInput | KitCreateOrConnectWithoutBaseKitInput[]
@@ -40211,6 +41730,62 @@ export namespace Prisma {
     deleteMany?: KitRelationScalarWhereInput | KitRelationScalarWhereInput[]
   }
 
+  export type GunplaCardUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput> | GunplaCardCreateWithoutKitInput[] | GunplaCardUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutKitInput | GunplaCardUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: GunplaCardCreateManyKitInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutKitInput | GunplaCardUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutKitInput | GunplaCardUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
+  export type UploadCreateNestedOneWithoutGunplaCardsInput = {
+    create?: XOR<UploadCreateWithoutGunplaCardsInput, UploadUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutGunplaCardsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutGunplaCardsInput = {
+    create?: XOR<UserCreateWithoutGunplaCardsInput, UserUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGunplaCardsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type KitCreateNestedOneWithoutGunplaCardsInput = {
+    create?: XOR<KitCreateWithoutGunplaCardsInput, KitUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutGunplaCardsInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type UploadUpdateOneRequiredWithoutGunplaCardsNestedInput = {
+    create?: XOR<UploadCreateWithoutGunplaCardsInput, UploadUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutGunplaCardsInput
+    upsert?: UploadUpsertWithoutGunplaCardsInput
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutGunplaCardsInput, UploadUpdateWithoutGunplaCardsInput>, UploadUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutGunplaCardsNestedInput = {
+    create?: XOR<UserCreateWithoutGunplaCardsInput, UserUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGunplaCardsInput
+    upsert?: UserUpsertWithoutGunplaCardsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGunplaCardsInput, UserUpdateWithoutGunplaCardsInput>, UserUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
+  export type KitUpdateOneRequiredWithoutGunplaCardsNestedInput = {
+    create?: XOR<KitCreateWithoutGunplaCardsInput, KitUncheckedCreateWithoutGunplaCardsInput>
+    connectOrCreate?: KitCreateOrConnectWithoutGunplaCardsInput
+    upsert?: KitUpsertWithoutGunplaCardsInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutGunplaCardsInput, KitUpdateWithoutGunplaCardsInput>, KitUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
   export type KitCreateNestedOneWithoutMobileSuitsInput = {
     create?: XOR<KitCreateWithoutMobileSuitsInput, KitUncheckedCreateWithoutMobileSuitsInput>
     connectOrCreate?: KitCreateOrConnectWithoutMobileSuitsInput
@@ -40319,6 +41894,13 @@ export namespace Prisma {
     connect?: BuildWhereUniqueInput | BuildWhereUniqueInput[]
   }
 
+  export type GunplaCardCreateNestedManyWithoutUploadInput = {
+    create?: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput> | GunplaCardCreateWithoutUploadInput[] | GunplaCardUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUploadInput | GunplaCardCreateOrConnectWithoutUploadInput[]
+    createMany?: GunplaCardCreateManyUploadInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
   export type KitUploadUncheckedCreateNestedManyWithoutUploadInput = {
     create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
@@ -40359,6 +41941,13 @@ export namespace Prisma {
     connectOrCreate?: BuildCreateOrConnectWithoutFeaturedImageInput | BuildCreateOrConnectWithoutFeaturedImageInput[]
     createMany?: BuildCreateManyFeaturedImageInputEnvelope
     connect?: BuildWhereUniqueInput | BuildWhereUniqueInput[]
+  }
+
+  export type GunplaCardUncheckedCreateNestedManyWithoutUploadInput = {
+    create?: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput> | GunplaCardCreateWithoutUploadInput[] | GunplaCardUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUploadInput | GunplaCardCreateOrConnectWithoutUploadInput[]
+    createMany?: GunplaCardCreateManyUploadInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -40461,6 +42050,20 @@ export namespace Prisma {
     deleteMany?: BuildScalarWhereInput | BuildScalarWhereInput[]
   }
 
+  export type GunplaCardUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput> | GunplaCardCreateWithoutUploadInput[] | GunplaCardUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUploadInput | GunplaCardCreateOrConnectWithoutUploadInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutUploadInput | GunplaCardUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: GunplaCardCreateManyUploadInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutUploadInput | GunplaCardUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutUploadInput | GunplaCardUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
   export type KitUploadUncheckedUpdateManyWithoutUploadNestedInput = {
     create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
@@ -40543,6 +42146,20 @@ export namespace Prisma {
     update?: BuildUpdateWithWhereUniqueWithoutFeaturedImageInput | BuildUpdateWithWhereUniqueWithoutFeaturedImageInput[]
     updateMany?: BuildUpdateManyWithWhereWithoutFeaturedImageInput | BuildUpdateManyWithWhereWithoutFeaturedImageInput[]
     deleteMany?: BuildScalarWhereInput | BuildScalarWhereInput[]
+  }
+
+  export type GunplaCardUncheckedUpdateManyWithoutUploadNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput> | GunplaCardCreateWithoutUploadInput[] | GunplaCardUncheckedCreateWithoutUploadInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUploadInput | GunplaCardCreateOrConnectWithoutUploadInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutUploadInput | GunplaCardUpsertWithWhereUniqueWithoutUploadInput[]
+    createMany?: GunplaCardCreateManyUploadInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutUploadInput | GunplaCardUpdateWithWhereUniqueWithoutUploadInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutUploadInput | GunplaCardUpdateManyWithWhereWithoutUploadInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
   }
 
   export type KitCreateNestedOneWithoutUploadsInput = {
@@ -40716,6 +42333,13 @@ export namespace Prisma {
     connect?: ReviewFeedbackWhereUniqueInput | ReviewFeedbackWhereUniqueInput[]
   }
 
+  export type GunplaCardCreateNestedManyWithoutUserInput = {
+    create?: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput> | GunplaCardCreateWithoutUserInput[] | GunplaCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUserInput | GunplaCardCreateOrConnectWithoutUserInput[]
+    createMany?: GunplaCardCreateManyUserInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
   export type UserKitCollectionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -40769,6 +42393,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewFeedbackCreateOrConnectWithoutUserInput | ReviewFeedbackCreateOrConnectWithoutUserInput[]
     createMany?: ReviewFeedbackCreateManyUserInputEnvelope
     connect?: ReviewFeedbackWhereUniqueInput | ReviewFeedbackWhereUniqueInput[]
+  }
+
+  export type GunplaCardUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput> | GunplaCardCreateWithoutUserInput[] | GunplaCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUserInput | GunplaCardCreateOrConnectWithoutUserInput[]
+    createMany?: GunplaCardCreateManyUserInputEnvelope
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -40883,6 +42514,20 @@ export namespace Prisma {
     deleteMany?: ReviewFeedbackScalarWhereInput | ReviewFeedbackScalarWhereInput[]
   }
 
+  export type GunplaCardUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput> | GunplaCardCreateWithoutUserInput[] | GunplaCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUserInput | GunplaCardCreateOrConnectWithoutUserInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutUserInput | GunplaCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GunplaCardCreateManyUserInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutUserInput | GunplaCardUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutUserInput | GunplaCardUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
   export type UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -40989,6 +42634,20 @@ export namespace Prisma {
     update?: ReviewFeedbackUpdateWithWhereUniqueWithoutUserInput | ReviewFeedbackUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReviewFeedbackUpdateManyWithWhereWithoutUserInput | ReviewFeedbackUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ReviewFeedbackScalarWhereInput | ReviewFeedbackScalarWhereInput[]
+  }
+
+  export type GunplaCardUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput> | GunplaCardCreateWithoutUserInput[] | GunplaCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GunplaCardCreateOrConnectWithoutUserInput | GunplaCardCreateOrConnectWithoutUserInput[]
+    upsert?: GunplaCardUpsertWithWhereUniqueWithoutUserInput | GunplaCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GunplaCardCreateManyUserInputEnvelope
+    set?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    disconnect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    delete?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+    update?: GunplaCardUpdateWithWhereUniqueWithoutUserInput | GunplaCardUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GunplaCardUpdateManyWithWhereWithoutUserInput | GunplaCardUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCollectionsInput = {
@@ -42091,6 +43750,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutSeriesInput = {
@@ -42121,6 +43781,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutSeriesInput = {
@@ -42513,6 +44174,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutProductLineLogosInput = {
@@ -42535,6 +44197,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutProductLineLogosInput = {
@@ -42570,6 +44233,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutProductLineInput = {
@@ -42600,6 +44264,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutProductLineInput = {
@@ -42672,6 +44337,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutProductLineLogosInput = {
@@ -42694,6 +44360,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type KitUpsertWithWhereUniqueWithoutProductLineInput = {
@@ -42740,6 +44407,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutReleaseTypeInput = {
@@ -42770,6 +44438,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutReleaseTypeInput = {
@@ -42905,6 +44574,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutVariantsInput = {
@@ -42935,6 +44605,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutVariantsInput = {
@@ -42970,6 +44641,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutBaseKitInput = {
@@ -43000,6 +44672,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutBaseKitInput = {
@@ -43264,6 +44937,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GunplaCardCreateWithoutKitInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutGunplaCardsInput
+    user: UserCreateNestedOneWithoutGunplaCardsInput
+  }
+
+  export type GunplaCardUncheckedCreateWithoutKitInput = {
+    id?: string
+    uploadId: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardCreateOrConnectWithoutKitInput = {
+    where: GunplaCardWhereUniqueInput
+    create: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput>
+  }
+
+  export type GunplaCardCreateManyKitInputEnvelope = {
+    data: GunplaCardCreateManyKitInput | GunplaCardCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProductLineUpsertWithoutKitsInput = {
     update: XOR<ProductLineUpdateWithoutKitsInput, ProductLineUncheckedUpdateWithoutKitsInput>
     create: XOR<ProductLineCreateWithoutKitsInput, ProductLineUncheckedCreateWithoutKitsInput>
@@ -43400,6 +45099,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutVariantsInput = {
@@ -43430,6 +45130,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUpsertWithWhereUniqueWithoutBaseKitInput = {
@@ -43664,6 +45365,434 @@ export namespace Prisma {
     data: XOR<KitRelationUpdateManyMutationInput, KitRelationUncheckedUpdateManyWithoutExpansionInput>
   }
 
+  export type GunplaCardUpsertWithWhereUniqueWithoutKitInput = {
+    where: GunplaCardWhereUniqueInput
+    update: XOR<GunplaCardUpdateWithoutKitInput, GunplaCardUncheckedUpdateWithoutKitInput>
+    create: XOR<GunplaCardCreateWithoutKitInput, GunplaCardUncheckedCreateWithoutKitInput>
+  }
+
+  export type GunplaCardUpdateWithWhereUniqueWithoutKitInput = {
+    where: GunplaCardWhereUniqueInput
+    data: XOR<GunplaCardUpdateWithoutKitInput, GunplaCardUncheckedUpdateWithoutKitInput>
+  }
+
+  export type GunplaCardUpdateManyWithWhereWithoutKitInput = {
+    where: GunplaCardScalarWhereInput
+    data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type GunplaCardScalarWhereInput = {
+    AND?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+    OR?: GunplaCardScalarWhereInput[]
+    NOT?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+    id?: StringFilter<"GunplaCard"> | string
+    uploadId?: StringFilter<"GunplaCard"> | string
+    userId?: StringFilter<"GunplaCard"> | string
+    kitId?: StringFilter<"GunplaCard"> | string
+    createdAt?: DateTimeFilter<"GunplaCard"> | Date | string
+    updatedAt?: DateTimeFilter<"GunplaCard"> | Date | string
+  }
+
+  export type UploadCreateWithoutGunplaCardsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+  }
+
+  export type UploadUncheckedCreateWithoutGunplaCardsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+  }
+
+  export type UploadCreateOrConnectWithoutGunplaCardsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutGunplaCardsInput, UploadUncheckedCreateWithoutGunplaCardsInput>
+  }
+
+  export type UserCreateWithoutGunplaCardsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGunplaCardsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGunplaCardsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGunplaCardsInput, UserUncheckedCreateWithoutGunplaCardsInput>
+  }
+
+  export type KitCreateWithoutGunplaCardsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
+    reviews?: ReviewCreateNestedManyWithoutKitInput
+    builds?: BuildCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+  }
+
+  export type KitUncheckedCreateWithoutGunplaCardsInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
+    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+  }
+
+  export type KitCreateOrConnectWithoutGunplaCardsInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutGunplaCardsInput, KitUncheckedCreateWithoutGunplaCardsInput>
+  }
+
+  export type UploadUpsertWithoutGunplaCardsInput = {
+    update: XOR<UploadUpdateWithoutGunplaCardsInput, UploadUncheckedUpdateWithoutGunplaCardsInput>
+    create: XOR<UploadCreateWithoutGunplaCardsInput, UploadUncheckedCreateWithoutGunplaCardsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutGunplaCardsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutGunplaCardsInput, UploadUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
+  export type UploadUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+  }
+
+  export type UserUpsertWithoutGunplaCardsInput = {
+    update: XOR<UserUpdateWithoutGunplaCardsInput, UserUncheckedUpdateWithoutGunplaCardsInput>
+    create: XOR<UserCreateWithoutGunplaCardsInput, UserUncheckedCreateWithoutGunplaCardsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGunplaCardsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGunplaCardsInput, UserUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
+  export type UserUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type KitUpsertWithoutGunplaCardsInput = {
+    update: XOR<KitUpdateWithoutGunplaCardsInput, KitUncheckedUpdateWithoutGunplaCardsInput>
+    create: XOR<KitCreateWithoutGunplaCardsInput, KitUncheckedCreateWithoutGunplaCardsInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutGunplaCardsInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutGunplaCardsInput, KitUncheckedUpdateWithoutGunplaCardsInput>
+  }
+
+  export type KitUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUpdateManyWithoutKitNestedInput
+    builds?: BuildUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutGunplaCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+  }
+
   export type KitCreateWithoutMobileSuitsInput = {
     id?: string
     name: string
@@ -43692,6 +45821,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutMobileSuitsInput = {
@@ -43722,6 +45852,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutMobileSuitsInput = {
@@ -43797,6 +45928,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutMobileSuitsInput = {
@@ -43827,6 +45959,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type MobileSuitUpsertWithoutKitsInput = {
@@ -43892,6 +46025,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutExpansionsInput = {
@@ -43922,6 +46056,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutExpansionsInput = {
@@ -43957,6 +46092,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutExpandedByInput = {
@@ -43987,6 +46123,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutExpandedByInput = {
@@ -44033,6 +46170,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutExpansionsInput = {
@@ -44063,6 +46201,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUpsertWithoutExpandedByInput = {
@@ -44104,6 +46243,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutExpandedByInput = {
@@ -44134,6 +46274,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UserCreateWithoutUploadsInput = {
@@ -44167,6 +46308,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadsInput = {
@@ -44200,6 +46342,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadsInput = {
@@ -44399,6 +46542,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GunplaCardCreateWithoutUploadInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutGunplaCardsInput
+    kit: KitCreateNestedOneWithoutGunplaCardsInput
+  }
+
+  export type GunplaCardUncheckedCreateWithoutUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardCreateOrConnectWithoutUploadInput = {
+    where: GunplaCardWhereUniqueInput
+    create: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput>
+  }
+
+  export type GunplaCardCreateManyUploadInputEnvelope = {
+    data: GunplaCardCreateManyUploadInput | GunplaCardCreateManyUploadInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutUploadsInput = {
     update: XOR<UserUpdateWithoutUploadsInput, UserUncheckedUpdateWithoutUploadsInput>
     create: XOR<UserCreateWithoutUploadsInput, UserUncheckedCreateWithoutUploadsInput>
@@ -44441,6 +46610,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadsInput = {
@@ -44474,6 +46644,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUploadUpsertWithWhereUniqueWithoutUploadInput = {
@@ -44598,6 +46769,22 @@ export namespace Prisma {
     data: XOR<BuildUpdateManyMutationInput, BuildUncheckedUpdateManyWithoutFeaturedImageInput>
   }
 
+  export type GunplaCardUpsertWithWhereUniqueWithoutUploadInput = {
+    where: GunplaCardWhereUniqueInput
+    update: XOR<GunplaCardUpdateWithoutUploadInput, GunplaCardUncheckedUpdateWithoutUploadInput>
+    create: XOR<GunplaCardCreateWithoutUploadInput, GunplaCardUncheckedCreateWithoutUploadInput>
+  }
+
+  export type GunplaCardUpdateWithWhereUniqueWithoutUploadInput = {
+    where: GunplaCardWhereUniqueInput
+    data: XOR<GunplaCardUpdateWithoutUploadInput, GunplaCardUncheckedUpdateWithoutUploadInput>
+  }
+
+  export type GunplaCardUpdateManyWithWhereWithoutUploadInput = {
+    where: GunplaCardScalarWhereInput
+    data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyWithoutUploadInput>
+  }
+
   export type KitCreateWithoutUploadsInput = {
     id?: string
     name: string
@@ -44626,6 +46813,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutUploadsInput = {
@@ -44656,6 +46844,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutUploadsInput = {
@@ -44683,6 +46872,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutKitUploadsInput = {
@@ -44705,6 +46895,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutKitUploadsInput = {
@@ -44751,6 +46942,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutUploadsInput = {
@@ -44781,6 +46973,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UploadUpsertWithoutKitUploadsInput = {
@@ -44814,6 +47007,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutKitUploadsInput = {
@@ -44836,6 +47030,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type MobileSuitCreateWithoutUploadsInput = {
@@ -44887,6 +47082,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutMobileSuitUploadsInput = {
@@ -44909,6 +47105,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutMobileSuitUploadsInput = {
@@ -44982,6 +47179,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutMobileSuitUploadsInput = {
@@ -45004,6 +47202,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type BuildCreateWithoutUploadsInput = {
@@ -45065,6 +47264,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildUploadsInput = {
@@ -45087,6 +47287,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildUploadsInput = {
@@ -45170,6 +47371,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildUploadsInput = {
@@ -45192,6 +47394,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type BuildMilestoneCreateWithoutUploadsInput = {
@@ -45245,6 +47448,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildMilestoneUploadsInput = {
@@ -45267,6 +47471,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildMilestoneUploadsInput = {
@@ -45342,6 +47547,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildMilestoneUploadsInput = {
@@ -45364,6 +47570,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type UserKitCollectionCreateWithoutUserInput = {
@@ -45517,6 +47724,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutUploadedByInput = {
@@ -45539,6 +47747,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutUploadedByInput = {
@@ -45620,6 +47829,32 @@ export namespace Prisma {
 
   export type ReviewFeedbackCreateManyUserInputEnvelope = {
     data: ReviewFeedbackCreateManyUserInput | ReviewFeedbackCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GunplaCardCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    upload: UploadCreateNestedOneWithoutGunplaCardsInput
+    kit: KitCreateNestedOneWithoutGunplaCardsInput
+  }
+
+  export type GunplaCardUncheckedCreateWithoutUserInput = {
+    id?: string
+    uploadId: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardCreateOrConnectWithoutUserInput = {
+    where: GunplaCardWhereUniqueInput
+    create: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type GunplaCardCreateManyUserInputEnvelope = {
+    data: GunplaCardCreateManyUserInput | GunplaCardCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -45819,6 +48054,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ReviewFeedback"> | Date | string
   }
 
+  export type GunplaCardUpsertWithWhereUniqueWithoutUserInput = {
+    where: GunplaCardWhereUniqueInput
+    update: XOR<GunplaCardUpdateWithoutUserInput, GunplaCardUncheckedUpdateWithoutUserInput>
+    create: XOR<GunplaCardCreateWithoutUserInput, GunplaCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type GunplaCardUpdateWithWhereUniqueWithoutUserInput = {
+    where: GunplaCardWhereUniqueInput
+    data: XOR<GunplaCardUpdateWithoutUserInput, GunplaCardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GunplaCardUpdateManyWithWhereWithoutUserInput = {
+    where: GunplaCardScalarWhereInput
+    data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutCollectionsInput = {
     id: string
     email: string
@@ -45850,6 +48101,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCollectionsInput = {
@@ -45883,6 +48135,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCollectionsInput = {
@@ -45918,6 +48171,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutCollectionsInput = {
@@ -45948,6 +48202,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutCollectionsInput = {
@@ -45997,6 +48252,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCollectionsInput = {
@@ -46030,6 +48286,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutCollectionsInput = {
@@ -46071,6 +48328,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutCollectionsInput = {
@@ -46101,6 +48359,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -46134,6 +48393,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -46167,6 +48427,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -46202,6 +48463,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutReviewsInput = {
@@ -46232,6 +48494,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutReviewsInput = {
@@ -46329,6 +48592,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -46362,6 +48626,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutReviewsInput = {
@@ -46403,6 +48668,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReviewsInput = {
@@ -46433,6 +48699,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type ReviewScoreUpsertWithWhereUniqueWithoutReviewInput = {
@@ -46602,6 +48869,7 @@ export namespace Prisma {
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewFeedbackInput = {
@@ -46635,6 +48903,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewFeedbackInput = {
@@ -46719,6 +48988,7 @@ export namespace Prisma {
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewFeedbackInput = {
@@ -46752,6 +49022,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBuildsInput = {
@@ -46785,6 +49056,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildsInput = {
@@ -46818,6 +49090,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildsInput = {
@@ -46853,6 +49126,7 @@ export namespace Prisma {
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutBuildsInput = {
@@ -46883,6 +49157,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutBuildsInput = {
@@ -46910,6 +49185,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildFeaturedImagesInput = {
@@ -46932,6 +49208,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildFeaturedImagesInput = {
@@ -47093,6 +49370,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildsInput = {
@@ -47126,6 +49404,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutBuildsInput = {
@@ -47167,6 +49446,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBuildsInput = {
@@ -47197,6 +49477,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UploadUpsertWithoutBuildFeaturedImagesInput = {
@@ -47230,6 +49511,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildFeaturedImagesInput = {
@@ -47252,6 +49534,7 @@ export namespace Prisma {
     productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type BuildUploadUpsertWithWhereUniqueWithoutBuildInput = {
@@ -47532,6 +49815,7 @@ export namespace Prisma {
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildLikesInput = {
@@ -47565,6 +49849,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildLikesInput = {
@@ -47659,6 +49944,7 @@ export namespace Prisma {
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildLikesInput = {
@@ -47692,6 +49978,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BuildCreateWithoutCommentsInput = {
@@ -47764,6 +50051,7 @@ export namespace Prisma {
     uploads?: UploadCreateNestedManyWithoutUploadedByInput
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildCommentsInput = {
@@ -47797,6 +50085,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildCommentsInput = {
@@ -47891,6 +50180,7 @@ export namespace Prisma {
     uploads?: UploadUpdateManyWithoutUploadedByNestedInput
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildCommentsInput = {
@@ -47924,6 +50214,7 @@ export namespace Prisma {
     uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStoreInput = {
@@ -47957,6 +50248,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoreInput = {
@@ -47990,6 +50282,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoreInput = {
@@ -48075,6 +50368,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoreInput = {
@@ -48108,6 +50402,7 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MarketplaceListingUpsertWithWhereUniqueWithoutStoreInput = {
@@ -48179,6 +50474,7 @@ export namespace Prisma {
     builds?: BuildCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutListingsInput = {
@@ -48209,6 +50505,7 @@ export namespace Prisma {
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutListingsInput = {
@@ -48286,6 +50583,7 @@ export namespace Prisma {
     builds?: BuildUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutListingsInput = {
@@ -48316,6 +50614,7 @@ export namespace Prisma {
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type SeriesCreateManyTimelineInput = {
@@ -48455,6 +50754,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutSeriesInput = {
@@ -48485,6 +50785,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutSeriesInput = {
@@ -48667,6 +50968,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutProductLineInput = {
@@ -48697,6 +50999,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutProductLineInput = {
@@ -48769,6 +51072,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReleaseTypeInput = {
@@ -48799,6 +51103,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutReleaseTypeInput = {
@@ -48923,6 +51228,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type GunplaCardCreateManyKitInput = {
+    id?: string
+    uploadId: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type KitUpdateWithoutBaseKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -48951,6 +51264,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBaseKitInput = {
@@ -48981,6 +51295,7 @@ export namespace Prisma {
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutBaseKitInput = {
@@ -49256,6 +51571,30 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GunplaCardUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutGunplaCardsNestedInput
+    user?: UserUpdateOneRequiredWithoutGunplaCardsNestedInput
+  }
+
+  export type GunplaCardUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type KitUploadCreateManyUploadInput = {
     id?: string
     kitId: string
@@ -49313,6 +51652,14 @@ export namespace Prisma {
     status?: $Enums.BuildStatus
     startedAt?: Date | string | null
     completedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GunplaCardCreateManyUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49510,6 +51857,30 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GunplaCardUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutGunplaCardsNestedInput
+    kit?: KitUpdateOneRequiredWithoutGunplaCardsNestedInput
+  }
+
+  export type GunplaCardUncheckedUpdateWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardUncheckedUpdateManyWithoutUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserKitCollectionCreateManyUserInput = {
     id?: string
     kitId: string
@@ -49577,6 +51948,14 @@ export namespace Prisma {
     reviewId: string
     isHelpful: boolean
     createdAt?: Date | string
+  }
+
+  export type GunplaCardCreateManyUserInput = {
+    id?: string
+    uploadId: string
+    kitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserKitCollectionUpdateWithoutUserInput = {
@@ -49707,6 +52086,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutUploadedByInput = {
@@ -49729,6 +52109,7 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
   }
 
   export type UploadUncheckedUpdateManyWithoutUploadedByInput = {
@@ -49808,6 +52189,30 @@ export namespace Prisma {
     reviewId?: StringFieldUpdateOperationsInput | string
     isHelpful?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    upload?: UploadUpdateOneRequiredWithoutGunplaCardsNestedInput
+    kit?: KitUpdateOneRequiredWithoutGunplaCardsNestedInput
+  }
+
+  export type GunplaCardUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GunplaCardUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    uploadId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewScoreCreateManyReviewInput = {

@@ -28,6 +28,7 @@ export interface CardBuilderState {
   cutouts: Cutout[];
   selectedCutoutId?: string;
   activeTab: BuilderTab;
+  kitSlug?: string | null;
   setActiveTab: (tab: BuilderTab) => void;
   addUploadedImages: (urls: string[]) => void;
   setBase: (id: string) => void;

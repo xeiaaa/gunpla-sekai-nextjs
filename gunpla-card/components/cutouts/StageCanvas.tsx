@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Stage, Layer, Image as KonvaImage, Transformer } from "react-konva";
 import useImage from "use-image";
 import { useCardBuilder } from "@/gunpla-card/context";
@@ -106,6 +106,18 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxW
       transformerRef.current.getLayer()?.batchDraw();
     }
   };
+
+  // Detach transformer when selected cutout changes or is deleted
+  useEffect(() => {
+    if (!selectedCutoutId) {
+      // No cutout selected, detach transformer
+      if (transformerRef.current) {
+        transformerRef.current.nodes([]);
+        transformerRef.current.getLayer()?.batchDraw();
+      }
+      selectedShapeRef.current = null;
+    }
+  }, [selectedCutoutId]);
 
   return (
     <div id="card-canvas-container" className="border rounded overflow-hidden bg-white inline-block">

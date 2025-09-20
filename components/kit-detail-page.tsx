@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { KitImage } from "@/components/kit-image";
 import { CollectionControls } from "@/components/collection-controls";
 import { ReviewSection } from "@/components/review-section";
@@ -18,9 +19,11 @@ import {
   Users,
   Info,
   MessageSquare,
-  Hammer
+  Hammer,
+  Palette
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CollectionStatus } from "@/generated/prisma";
 
@@ -133,6 +136,8 @@ interface KitDetailPageProps {
 export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'reviews' | 'builds'>('overview');
+  const [showGunplaCardDialog, setShowGunplaCardDialog] = useState(false);
+  const router = useRouter();
 
   const formatPrice = (priceYen: number | null | undefined) => {
     if (!priceYen) return null;
@@ -146,6 +151,12 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
       day: 'numeric',
       year: 'numeric'
     });
+  };
+
+  const handleCreateGunplaCard = () => {
+    if (kit.slug) {
+      router.push(`/gunpla-card/new?kit=${kit.slug}`);
+    }
   };
 
   const allImages = [
@@ -625,6 +636,41 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
           <StartBuildButton
             kit={kit}
           />
+
+          {/* Create Gunpla Card Button */}
+          <Dialog open={showGunplaCardDialog} onOpenChange={setShowGunplaCardDialog}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => setShowGunplaCardDialog(true)}
+              >
+                <Palette className="h-4 w-4 mr-2" />
+                Create Gunpla Card
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="gap-4">
+              <DialogHeader>
+                <DialogTitle>Create Gunpla Card</DialogTitle>
+                <DialogDescription>
+                  The Gunpla Card feature is currently in early development and is considered an experimental feature.
+                  You can create custom cards using kit images, but please note that this feature may have limitations
+                  or changes in future updates.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowGunplaCardDialog(false)}
+                >
+                  Cancel
+                </Button>
+                <Button onClick={handleCreateGunplaCard}>
+                  Create Gunpla Card
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Right Column - Content */}

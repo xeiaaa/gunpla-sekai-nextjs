@@ -1,12 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useState, useCallback } from "react";
+import React, { createContext, useContext, useMemo, useState, useCallback, useEffect } from "react";
 import { nanoid } from "nanoid";
 import type { BaseCard, BuilderTab, CardBuilderState, Cutout, UploadedImage } from "./types";
 
 const CardBuilderContext = createContext<CardBuilderState | null>(null);
 
-export const CardBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CardBuilderProvider: React.FC<{ children: React.ReactNode; kitSlug?: string | null }> = ({ children, kitSlug }) => {
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [baseCard, setBaseCard] = useState<BaseCard | undefined>(undefined);
   const [cutouts, setCutouts] = useState<Cutout[]>([]);
@@ -54,12 +54,34 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setSelectedCutoutId(id);
   }, []);
 
+  // Load kit images when kitSlug is provided
+  useEffect(() => {
+    if (kitSlug) {
+      const fetchKitImages = async () => {
+        try {
+          const response = await fetch(`/api/gunpla-card/kit-media?kitSlug=${encodeURIComponent(kitSlug)}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.images && data.images.length > 0) {
+              addUploadedImages(data.images);
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch kit images:', error);
+        }
+      };
+
+      fetchKitImages();
+    }
+  }, [kitSlug, addUploadedImages]);
+
   const value = useMemo<CardBuilderState>(() => ({
     uploadedImages,
     baseCard,
     cutouts,
     selectedCutoutId,
     activeTab,
+    kitSlug,
     setActiveTab,
     addUploadedImages,
     setBase,
@@ -69,7 +91,7 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ c
     removeCutout,
     replaceBase,
     setSelectedCutout,
-  }), [uploadedImages, baseCard, cutouts, selectedCutoutId, activeTab, addUploadedImages, setBase, setBaseCrop, addCutout, updateCutout, removeCutout, replaceBase, setSelectedCutout]);
+  }), [uploadedImages, baseCard, cutouts, selectedCutoutId, activeTab, kitSlug, addUploadedImages, setBase, setBaseCrop, addCutout, updateCutout, removeCutout, replaceBase, setSelectedCutout]);
 
   return (
     <CardBuilderContext.Provider value={value}>{children}</CardBuilderContext.Provider>

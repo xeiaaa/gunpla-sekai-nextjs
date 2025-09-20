@@ -202,6 +202,15 @@ exports.Prisma.KitScalarFieldEnum = {
   baseKitId: 'baseKitId'
 };
 
+exports.Prisma.GunplaCardScalarFieldEnum = {
+  id: 'id',
+  uploadId: 'uploadId',
+  userId: 'userId',
+  kitId: 'kitId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.KitMobileSuitScalarFieldEnum = {
   id: 'id',
   kitId: 'kitId',
@@ -484,6 +493,7 @@ exports.Prisma.ModelName = {
   ProductLine: 'ProductLine',
   ReleaseType: 'ReleaseType',
   Kit: 'Kit',
+  GunplaCard: 'GunplaCard',
   KitMobileSuit: 'KitMobileSuit',
   KitRelation: 'KitRelation',
   Upload: 'Upload',

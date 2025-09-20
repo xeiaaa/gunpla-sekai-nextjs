@@ -24,8 +24,8 @@ const loadImageEl = (src: string): Promise<HTMLImageElement> => new Promise(reso
   img.src = src.startsWith("http") ? `/api/gunpla-card/proxy-image?url=${encodeURIComponent(src)}` : src;
 });
 
-const CirclePolygonCropper = forwardRef<CirclePolygonCropperHandle, { sourceUrl: string; mode: ShapeMode }>(
-  ({ sourceUrl, mode }, ref) => {
+const CirclePolygonCropper = forwardRef<CirclePolygonCropperHandle, { sourceUrl: string; mode: ShapeMode; onPolygonClosedChange?: (closed: boolean) => void }>(
+  ({ sourceUrl, mode, onPolygonClosedChange }, ref) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
     const proxied = useMemo(() => sourceUrl.startsWith("http") ? `/api/gunpla-card/proxy-image?url=${encodeURIComponent(sourceUrl)}` : sourceUrl, [sourceUrl]);
@@ -79,7 +79,7 @@ const CirclePolygonCropper = forwardRef<CirclePolygonCropperHandle, { sourceUrl:
       setPoints(prev => [...prev, pointer.x, pointer.y]);
     }, [mode, closed, display]);
 
-    const resetPolygon = useCallback(() => { setPoints([]); setClosed(false); }, []);
+    const resetPolygon = useCallback(() => { setPoints([]); setClosed(false); onPolygonClosedChange?.(false); }, [onPolygonClosedChange]);
 
     useImperativeHandle(ref, () => ({
       async getDataUrl() {
@@ -121,9 +121,6 @@ const CirclePolygonCropper = forwardRef<CirclePolygonCropperHandle, { sourceUrl:
 
     return (
       <div ref={containerRef} className="relative w-full h-[60vh] bg-black/5">
-        <div className="absolute left-1 top-1 z-10 text-xs bg-white/80 rounded px-2 py-1">
-          {mode === "circle" ? "Tip: Drag to move. Scroll to resize radius." : (!closed ? "Click to add points. Close when done." : "Polygon closed.")}
-        </div>
         <Stage width={display.width} height={display.height} onWheel={onWheel} onClick={handleStageClick}>
           <Layer>
             <KonvaImage image={image as any} x={0} y={0} width={display.width} height={display.height} />
@@ -161,13 +158,13 @@ const CirclePolygonCropper = forwardRef<CirclePolygonCropperHandle, { sourceUrl:
         </Stage>
         {mode === "polygon" && !closed && points.length >= 6 ? (
           <div className="absolute right-2 bottom-2 z-10 flex gap-2">
-            <button className="px-2 py-1 text-xs bg-white rounded border" onClick={() => setClosed(true)}>Close Polygon</button>
+            <button className="px-2 py-1 text-xs bg-white rounded border" onClick={() => { setClosed(true); onPolygonClosedChange?.(true); }}>Close Polygon</button>
             <button className="px-2 py-1 text-xs bg-white rounded border" onClick={resetPolygon}>Reset</button>
           </div>
         ) : null}
         {mode === "polygon" && closed ? (
           <div className="absolute right-2 bottom-2 z-10 flex gap-2">
-            <button className="px-2 py-1 text-xs bg-white rounded border" onClick={() => setClosed(false)}>Reopen</button>
+            <button className="px-2 py-1 text-xs bg-white rounded border" onClick={() => { setClosed(false); onPolygonClosedChange?.(false); }}>Reopen</button>
             <button className="px-2 py-1 text-xs bg-white rounded border" onClick={resetPolygon}>Reset</button>
           </div>
         ) : null}
