@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense, useRef } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Filter, X, RotateCcw } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 import { KitCard } from "@/components/kit-card";
-import { getFilterDataWithMeilisearch, getFilteredKitsWithMeilisearch } from "@/lib/actions/meilisearch-kits";
+import { useFilterData, useKits } from "@/hooks/use-kits";
 
 interface Kit {
   id: string;
@@ -38,15 +38,6 @@ function KitsPageContent() {
   const searchParams = useSearchParams();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [kits, setKits] = useState<Kit[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filterData, setFilterData] = useState<FilterData>({
-    grades: [],
-    productLines: [],
-    mobileSuits: [],
-    series: [],
-    releaseTypes: [],
-  });
 
   // Applied filters (what's currently filtering the results)
   const [appliedGrades, setAppliedGrades] = useState<string[]>([]);
@@ -68,35 +59,44 @@ function KitsPageContent() {
   const [appliedOrder, setAppliedOrder] = useState("most-relevant");
   const [pendingSortBy, setPendingSortBy] = useState("relevance");
   const [pendingOrder, setPendingOrder] = useState("most-relevant");
-  const [kitCollectionStatuses, setKitCollectionStatuses] = useState<Map<string, string>>(new Map());
+  const [kitCollectionStatuses, setKitCollectionStatuses] = useState<
+    Map<string, string>
+  >(new Map());
   const [hasInitialized, setHasInitialized] = useState(false);
   const [isUpdatingUrl, setIsUpdatingUrl] = useState(false);
   const isApplyingFilters = useRef(false);
 
-  const loadKits = useCallback(async () => {
-    setLoading(true);
-    try {
-      const result = await getFilteredKitsWithMeilisearch({
-        gradeIds: appliedGrades,
-        productLineIds: appliedProductLines,
-        mobileSuitIds: appliedMobileSuits,
-        seriesIds: appliedSeries,
-        releaseTypeIds: appliedReleaseTypes,
-        searchTerm: appliedSearchTerm,
-        sortBy: appliedSortBy,
-        order: appliedOrder,
-        limit: 50,
-        offset: 0,
-      });
-      setKits(result.kits);
-    } catch (error) {
-      console.error('Error loading kits:', error);
-      setKits([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [appliedGrades, appliedProductLines, appliedMobileSuits, appliedSeries, appliedReleaseTypes, appliedSearchTerm, appliedSortBy, appliedOrder]);
+  // React Query hooks
+  const {
+    data: filterData = {
+      grades: [],
+      productLines: [],
+      mobileSuits: [],
+      series: [],
+      releaseTypes: [],
+    },
+    isLoading: filterDataLoading,
+  } = useFilterData();
 
+  const {
+    data: kitsResult,
+    isLoading: kitsLoading,
+    error: kitsError,
+  } = useKits({
+    gradeIds: appliedGrades,
+    productLineIds: appliedProductLines,
+    mobileSuitIds: appliedMobileSuits,
+    seriesIds: appliedSeries,
+    releaseTypeIds: appliedReleaseTypes,
+    searchTerm: appliedSearchTerm,
+    sortBy: appliedSortBy,
+    order: appliedOrder,
+    limit: 50,
+    offset: 0,
+  });
+
+  const kits = kitsResult?.kits || [];
+  const loading = filterDataLoading || kitsLoading;
 
   // Initialize from URL parameters
   useEffect(() => {
@@ -112,43 +112,51 @@ function KitsPageContent() {
     }
 
     // Only run if filterData is loaded (check if we have any filter data at all)
-    const hasFilterData = filterData.grades.length > 0 || filterData.productLines.length > 0 ||
-                         filterData.mobileSuits.length > 0 || filterData.series.length > 0 ||
-                         filterData.releaseTypes.length > 0;
+    const hasFilterData =
+      filterData.grades.length > 0 ||
+      filterData.productLines.length > 0 ||
+      filterData.mobileSuits.length > 0 ||
+      filterData.series.length > 0 ||
+      filterData.releaseTypes.length > 0;
 
     if (!hasFilterData) {
       return;
     }
 
-    const gradeSlugs = searchParams.get('grades')?.split(',').filter(Boolean) || [];
-    const productLineSlugs = searchParams.get('productLines')?.split(',').filter(Boolean) || [];
-    const mobileSuitSlugs = searchParams.get('mobileSuits')?.split(',').filter(Boolean) || [];
-    const seriesSlugs = searchParams.get('series')?.split(',').filter(Boolean) || [];
-    const releaseTypeSlugs = searchParams.get('releaseTypes')?.split(',').filter(Boolean) || [];
-    const searchTerm = searchParams.get('search') || '';
-    const sortByParam = searchParams.get('sortBy') || 'relevance';
-    const orderParam = searchParams.get('order') || 'most-relevant';
+    const gradeSlugs =
+      searchParams.get("grades")?.split(",").filter(Boolean) || [];
+    const productLineSlugs =
+      searchParams.get("productLines")?.split(",").filter(Boolean) || [];
+    const mobileSuitSlugs =
+      searchParams.get("mobileSuits")?.split(",").filter(Boolean) || [];
+    const seriesSlugs =
+      searchParams.get("series")?.split(",").filter(Boolean) || [];
+    const releaseTypeSlugs =
+      searchParams.get("releaseTypes")?.split(",").filter(Boolean) || [];
+    const searchTerm = searchParams.get("search") || "";
+    const sortByParam = searchParams.get("sortBy") || "relevance";
+    const orderParam = searchParams.get("order") || "most-relevant";
 
     // Convert slugs to IDs using filter data
-    const gradeIds = gradeSlugs.map(slug =>
-      filterData.grades.find(grade => grade.slug === slug)?.id
-    ).filter(Boolean) as string[];
+    const gradeIds = gradeSlugs
+      .map((slug) => filterData.grades.find((grade) => grade.slug === slug)?.id)
+      .filter(Boolean) as string[];
 
-    const productLineIds = productLineSlugs.map(slug =>
-      filterData.productLines.find(pl => pl.slug === slug)?.id
-    ).filter(Boolean) as string[];
+    const productLineIds = productLineSlugs
+      .map((slug) => filterData.productLines.find((pl) => pl.slug === slug)?.id)
+      .filter(Boolean) as string[];
 
-    const mobileSuitIds = mobileSuitSlugs.map(slug =>
-      filterData.mobileSuits.find(ms => ms.slug === slug)?.id
-    ).filter(Boolean) as string[];
+    const mobileSuitIds = mobileSuitSlugs
+      .map((slug) => filterData.mobileSuits.find((ms) => ms.slug === slug)?.id)
+      .filter(Boolean) as string[];
 
-    const seriesIds = seriesSlugs.map(slug =>
-      filterData.series.find(s => s.slug === slug)?.id
-    ).filter(Boolean) as string[];
+    const seriesIds = seriesSlugs
+      .map((slug) => filterData.series.find((s) => s.slug === slug)?.id)
+      .filter(Boolean) as string[];
 
-    const releaseTypeIds = releaseTypeSlugs.map(slug =>
-      filterData.releaseTypes.find(rt => rt.slug === slug)?.id
-    ).filter(Boolean) as string[];
+    const releaseTypeIds = releaseTypeSlugs
+      .map((slug) => filterData.releaseTypes.find((rt) => rt.slug === slug)?.id)
+      .filter(Boolean) as string[];
 
     setAppliedGrades(gradeIds);
     setAppliedProductLines(productLineIds);
@@ -171,21 +179,7 @@ function KitsPageContent() {
     setHasInitialized(true);
   }, [searchParams, filterData]);
 
-  useEffect(() => {
-    const loadFilterData = async () => {
-      const data = await getFilterDataWithMeilisearch();
-      setFilterData(data);
-    };
-    loadFilterData();
-  }, []);
-
-  useEffect(() => {
-    // Only load kits after initialization is complete
-    if (hasInitialized) {
-      loadKits();
-    }
-  }, [loadKits, hasInitialized]);
-
+  // No need for separate useEffect hooks for loading data - React Query handles this
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -206,57 +200,57 @@ function KitsPageContent() {
     const params = new URLSearchParams();
 
     if (filters.grades && filters.grades.length > 0) {
-      const gradeSlugs = filters.grades.map(id =>
-        filterData.grades.find(grade => grade.id === id)?.slug
-      ).filter(Boolean);
+      const gradeSlugs = filters.grades
+        .map((id) => filterData.grades.find((grade) => grade.id === id)?.slug)
+        .filter(Boolean);
       if (gradeSlugs.length > 0) {
-        params.set('grades', gradeSlugs.join(','));
+        params.set("grades", gradeSlugs.join(","));
       }
     }
     if (filters.productLines && filters.productLines.length > 0) {
-      const productLineSlugs = filters.productLines.map(id =>
-        filterData.productLines.find(pl => pl.id === id)?.slug
-      ).filter(Boolean);
+      const productLineSlugs = filters.productLines
+        .map((id) => filterData.productLines.find((pl) => pl.id === id)?.slug)
+        .filter(Boolean);
       if (productLineSlugs.length > 0) {
-        params.set('productLines', productLineSlugs.join(','));
+        params.set("productLines", productLineSlugs.join(","));
       }
     }
     if (filters.mobileSuits && filters.mobileSuits.length > 0) {
-      const mobileSuitSlugs = filters.mobileSuits.map(id =>
-        filterData.mobileSuits.find(ms => ms.id === id)?.slug
-      ).filter(Boolean);
+      const mobileSuitSlugs = filters.mobileSuits
+        .map((id) => filterData.mobileSuits.find((ms) => ms.id === id)?.slug)
+        .filter(Boolean);
       if (mobileSuitSlugs.length > 0) {
-        params.set('mobileSuits', mobileSuitSlugs.join(','));
+        params.set("mobileSuits", mobileSuitSlugs.join(","));
       }
     }
     if (filters.series && filters.series.length > 0) {
-      const seriesSlugs = filters.series.map(id =>
-        filterData.series.find(s => s.id === id)?.slug
-      ).filter(Boolean);
+      const seriesSlugs = filters.series
+        .map((id) => filterData.series.find((s) => s.id === id)?.slug)
+        .filter(Boolean);
       if (seriesSlugs.length > 0) {
-        params.set('series', seriesSlugs.join(','));
+        params.set("series", seriesSlugs.join(","));
       }
     }
     if (filters.releaseTypes && filters.releaseTypes.length > 0) {
-      const releaseTypeSlugs = filters.releaseTypes.map(id =>
-        filterData.releaseTypes.find(rt => rt.id === id)?.slug
-      ).filter(Boolean);
+      const releaseTypeSlugs = filters.releaseTypes
+        .map((id) => filterData.releaseTypes.find((rt) => rt.id === id)?.slug)
+        .filter(Boolean);
       if (releaseTypeSlugs.length > 0) {
-        params.set('releaseTypes', releaseTypeSlugs.join(','));
+        params.set("releaseTypes", releaseTypeSlugs.join(","));
       }
     }
     if (filters.search) {
-      params.set('search', filters.search);
+      params.set("search", filters.search);
     }
-    if (filters.sortBy && filters.sortBy !== 'relevance') {
-      params.set('sortBy', filters.sortBy);
+    if (filters.sortBy && filters.sortBy !== "relevance") {
+      params.set("sortBy", filters.sortBy);
     }
-    if (filters.order && filters.order !== 'most-relevant') {
-      params.set('order', filters.order);
+    if (filters.order && filters.order !== "most-relevant") {
+      params.set("order", filters.order);
     }
 
     const queryString = params.toString();
-    const newUrl = queryString ? `/kits?${queryString}` : '/kits';
+    const newUrl = queryString ? `/kits?${queryString}` : "/kits";
     router.push(newUrl);
 
     // Reset the flag after a brief delay to allow the URL change to complete
@@ -301,7 +295,6 @@ function KitsPageContent() {
 
     setIsFilterOpen(false);
   };
-
 
   return (
     <div className="min-h-screen bg-background">
@@ -348,7 +341,6 @@ function KitsPageContent() {
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
-
 
                 {/* Sort Section - Compact */}
                 <div className="mb-6">
@@ -399,7 +391,6 @@ function KitsPageContent() {
                     searchPlaceholder={`Search ${filterData.productLines.length} options...`}
                   />
 
-
                   <FilterSection
                     title="Series"
                     options={filterData.series}
@@ -416,7 +407,6 @@ function KitsPageContent() {
                     searchPlaceholder={`Search ${filterData.releaseTypes.length} options...`}
                   />
                 </div>
-
               </div>
 
               {/* Fixed Action Buttons at Bottom */}
@@ -454,12 +444,24 @@ function KitsPageContent() {
               <p className="text-muted-foreground">Loading kits...</p>
             </div>
           </div>
+        ) : kitsError ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <p className="text-muted-foreground text-lg">
+                Error loading kits
+              </p>
+              <p className="text-muted-foreground text-sm mt-2">
+                Please try again or refresh the page.
+              </p>
+            </div>
+          </div>
         ) : kits.length === 0 ? (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
               <p className="text-muted-foreground text-lg">No kits found</p>
               <p className="text-muted-foreground text-sm mt-2">
-                Try adjusting your filters or clear all filters to see more results.
+                Try adjusting your filters or clear all filters to see more
+                results.
               </p>
             </div>
           </div>
@@ -482,23 +484,25 @@ function KitsPageContent() {
 
 export default function KitsPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-background">
-        <div className="bg-primary text-primary-foreground py-4">
-          <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold">Browse All Kits</h1>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background">
+          <div className="bg-primary text-primary-foreground py-4">
+            <div className="container mx-auto px-4">
+              <h1 className="text-3xl font-bold">Browse All Kits</h1>
+            </div>
           </div>
-        </div>
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-center py-12">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">Loading...</p>
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                <p className="text-muted-foreground">Loading...</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <KitsPageContent />
     </Suspense>
   );
