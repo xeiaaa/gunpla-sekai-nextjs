@@ -265,55 +265,55 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
         <>
           {/* Type Section */}
           <div>
-            <h4 className="font-medium text-sm mb-3">Type</h4>
-                     <div className="flex gap-2">
-                       <button
-                         onClick={() => {
-                           if (selectedItemId && onPaintTypeChange) {
-                             onPaintTypeChange(selectedItemId, "solid");
-                           }
-                         }}
-                         className={`flex-1 py-2 px-3 text-sm rounded-md border transition-colors ${
-                           currentMaterialState.paintType === "solid"
-                             ? "bg-background border-border shadow-sm"
-                             : "bg-muted border-transparent hover:bg-muted/80"
-                         }`}
-                       >
-                         Solid
-                       </button>
-                       <button
-                         onClick={() => {
-                           if (selectedItemId && onPaintTypeChange) {
-                             onPaintTypeChange(selectedItemId, "clear");
-                           }
-                         }}
-                         className={`flex-1 py-2 px-3 text-sm rounded-md border transition-colors ${
-                           currentMaterialState.paintType === "clear"
-                             ? "bg-background border-border shadow-sm"
-                             : "bg-muted border-transparent hover:bg-muted/80"
-                         }`}
-                       >
-                         Clear
-                       </button>
-                     </div>
+            <h4 className="font-medium text-sm mb-3">Opacity</h4>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  if (selectedItemId && onPaintTypeChange) {
+                    onPaintTypeChange(selectedItemId, "solid");
+                  }
+                }}
+                className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
+                  currentMaterialState.paintType === "solid"
+                    ? "bg-background border-border shadow-sm"
+                    : "border-transparent hover:bg-muted/50"
+                }`}
+              >
+                <span>Solid</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (selectedItemId && onPaintTypeChange) {
+                    onPaintTypeChange(selectedItemId, "clear");
+                  }
+                }}
+                className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
+                  currentMaterialState.paintType === "clear"
+                    ? "bg-background border-border shadow-sm"
+                    : "border-transparent hover:bg-muted/50"
+                }`}
+              >
+                <span>Clear</span>
+              </button>
+            </div>
           </div>
 
       {/* Finish Section */}
       <div>
         <h4 className="font-medium text-sm mb-3">Finish</h4>
-        <div className="flex gap-1 flex-wrap">
+        <div className="grid grid-cols-2 gap-2">
           {finishes.map((finish) => (
             <Tooltip key={finish.value}>
               <TooltipTrigger asChild>
                 <button
                   onClick={() => handleFinishSelect(finish.value)}
-                  className={`px-3 py-2 text-sm rounded-md border transition-colors ${
+                  className={`flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
                     currentMaterialState.finish === finish.value
                       ? "bg-background border-border shadow-sm"
-                      : "bg-muted border-transparent hover:bg-muted/80"
+                      : "border-transparent hover:bg-muted/50"
                   }`}
                 >
-                  {finish.label}
+                  <span>{finish.name}</span>
                 </button>
               </TooltipTrigger>
               <TooltipContent className="bg-white text-black border border-gray-300">
@@ -332,30 +332,30 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
       {/* Add Color to Palette */}
       <div>
         <h4 className="font-medium text-sm mb-3">Add Color to Palette</h4>
-        <div className="flex gap-2">
-          <div className="flex-1 relative">
-            <div className="flex items-center gap-2 px-3 py-2 border rounded-md bg-background">
-              <div
-                className="w-4 h-4 rounded-full border border-border"
-                style={{ backgroundColor: customColor }}
-              />
-              <span className="text-sm font-mono">{customColor}</span>
-              <Edit3 className="w-3 h-3 text-muted-foreground ml-auto" />
-            </div>
+        <div className="flex gap-3 items-center">
+          <div className="relative">
+            <div
+              className="w-12 h-12 rounded-full border-2 border-border cursor-pointer shadow-sm hover:shadow-md transition-shadow"
+              style={{ backgroundColor: customColor }}
+            />
             <Input
               type="color"
               value={customColor}
               onChange={(e) => setCustomColor(e.target.value)}
-              className="absolute inset-0 opacity-0 cursor-pointer"
+              className="absolute inset-0 opacity-0 cursor-pointer w-12 h-12 rounded-full"
             />
           </div>
-          <Button
-            onClick={handleAddColor}
-            size="sm"
-            className="px-3"
-          >
-            <Plus className="w-4 h-4" />
-          </Button>
+          <div className="flex-1">
+            <div className="text-sm font-mono text-muted-foreground mb-1">{customColor}</div>
+            <Button
+              onClick={handleAddColor}
+              size="sm"
+              className="w-full"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add to Palette
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -453,6 +453,19 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Separator */}
+            <div className="border-t border-border my-4"></div>
+
+            {/* Reset Button */}
+            <div className="mb-4">
+              <button
+                onClick={() => onResetAll && onResetAll()}
+                className="text-left text-sm text-red-500 hover:text-red-600 transition-colors py-1"
+              >
+                Reset All
+              </button>
             </div>
           </div>
         </>

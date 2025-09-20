@@ -1,12 +1,21 @@
 "use client";
 
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useRef, forwardRef, useImperativeHandle } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 
-function Model({ url, materialId, color, finish, allMaterialStates, isEverythingClear, clearArmorMaterials, clearAlpha, paintType }: { url: string; materialId?: string; color?: string; finish?: string; allMaterialStates?: Record<string, { color: string; finish: string }>; isEverythingClear?: boolean; clearArmorMaterials?: string[]; clearAlpha?: number; paintType?: "solid" | "clear" }) {
+function Model({ url, materialId, color, finish, allMaterialStates, isEverythingClear, clearArmorMaterials, clearAlpha, paintType, onModelLoaded }: { url: string; materialId?: string; color?: string; finish?: string; allMaterialStates?: Record<string, { color: string; finish: string }>; isEverythingClear?: boolean; clearArmorMaterials?: string[]; clearAlpha?: number; paintType?: "solid" | "clear"; onModelLoaded?: () => void }) {
   const { scene, materials } = useGLTF(url);
+  const hasCalledOnModelLoaded = React.useRef(false);
+
+  // Call onModelLoaded when the model is first loaded (only once)
+  React.useEffect(() => {
+    if (onModelLoaded && materials && Object.keys(materials).length > 0 && !hasCalledOnModelLoaded.current) {
+      hasCalledOnModelLoaded.current = true;
+      onModelLoaded();
+    }
+  }, [materials, onModelLoaded]);
   // Update all materials if allMaterialStates is provided (for randomize colors)
   if (allMaterialStates) {
     Object.entries(allMaterialStates).forEach(([id, state]) => {
@@ -152,6 +161,17 @@ function Model({ url, materialId, color, finish, allMaterialStates, isEverything
   );
 }
 
+// Component to expose renderer functionality
+function RendererExposer({ onRendererReady }: { onRendererReady: (renderer: THREE.WebGLRenderer) => void }) {
+  const { gl } = useThree();
+
+  useImperativeHandle(useRef(null), () => {
+    onRendererReady(gl);
+    return gl;
+  });
+
+  return null;
+}
 
 interface ModelViewerProps {
   modelUrl: string;
@@ -164,14 +184,18 @@ interface ModelViewerProps {
   clearArmorMaterials?: string[];
   clearAlpha?: number;
   paintType?: "solid" | "clear";
+  background?: string;
+  onRendererReady?: (renderer: THREE.WebGLRenderer) => void;
+  onModelLoaded?: () => void;
 }
 
-export function ModelViewer({ modelUrl, className = "", materialId, color, finish, allMaterialStates, isEverythingClear, clearArmorMaterials, clearAlpha, paintType }: ModelViewerProps) {
+export function ModelViewer({ modelUrl, className = "", materialId, color, finish, allMaterialStates, isEverythingClear, clearArmorMaterials, clearAlpha, paintType, background = 'transparent', onRendererReady, onModelLoaded }: ModelViewerProps) {
   return (
     <div className={`w-full h-full ${className}`}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
-        style={{ background: 'transparent' }}
+        style={{ background }}
+        gl={{ preserveDrawingBuffer: true }}
       >
         <Suspense fallback={null}>
           {/* Lighting */}
@@ -190,7 +214,7 @@ export function ModelViewer({ modelUrl, className = "", materialId, color, finis
           />
 
           {/* Model */}
-          <Model url={modelUrl} materialId={materialId} color={color} finish={finish} allMaterialStates={allMaterialStates} isEverythingClear={isEverythingClear} clearArmorMaterials={clearArmorMaterials} clearAlpha={clearAlpha} paintType={paintType} />
+          <Model url={modelUrl} materialId={materialId} color={color} finish={finish} allMaterialStates={allMaterialStates} isEverythingClear={isEverythingClear} clearArmorMaterials={clearArmorMaterials} clearAlpha={clearAlpha} paintType={paintType} onModelLoaded={onModelLoaded} />
 
           {/* Controls */}
           <OrbitControls
@@ -201,6 +225,9 @@ export function ModelViewer({ modelUrl, className = "", materialId, color, finis
             maxDistance={10}
             autoRotate={false}
           />
+
+          {/* Renderer Exposer */}
+          {onRendererReady && <RendererExposer onRendererReady={onRendererReady} />}
         </Suspense>
       </Canvas>
     </div>

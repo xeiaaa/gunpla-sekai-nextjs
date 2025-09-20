@@ -5,8 +5,10 @@ import { parts, sazabiMaterialsMap } from "./parts";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CustomizeProvider, useCustomize } from "./context";
 import { CustomizationPanel } from "./components/customization-panel";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FINISH_TYPE } from "./types";
+import { Download } from "lucide-react";
+import * as THREE from "three";
 
 function CustomizePageContent() {
   const { expandedCategory, selectedItem, handleCategoryToggle, setSelectedItem, getSelectedItemName } = useCustomize();
@@ -15,6 +17,24 @@ function CustomizePageContent() {
   const [clearArmorMaterials, setClearArmorMaterials] = useState<string[]>([]);
   const [clearAlpha, setClearAlpha] = useState(0.2);
   const [paintType, setPaintType] = useState<"solid" | "clear">("clear");
+  const modelViewerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      const isSmallScreen = window.innerWidth < 768; // Tailwind's md breakpoint
+      setIsMobile(isMobileDevice || isSmallScreen);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleColorChange = (materialId: string, color: string) => {
     setMaterialStates(prev => ({
@@ -42,7 +62,7 @@ function CustomizePageContent() {
           newMaterialStates[id] = {
             color: existingColor || defaultColor,
             finish: finish,
-            paintType: materialStates[id]?.paintType || "clear"
+            paintType: materialStates[id]?.paintType || (sazabiMaterialsMap[id]?.isClear ? "clear" : "solid")
           };
         });
       });
@@ -59,7 +79,7 @@ function CustomizePageContent() {
           ...prev[materialId],
           color: prev[materialId]?.color || sazabiMaterialsMap[materialId]?.color || "#ffffff",
           finish: finish,
-          paintType: prev[materialId]?.paintType || "clear"
+          paintType: prev[materialId]?.paintType || (sazabiMaterialsMap[materialId]?.isClear ? "clear" : "solid")
         }
       }));
       console.log("Finish change requested:", materialId, finish);
@@ -134,14 +154,14 @@ function CustomizePageContent() {
   };
 
   const handleRandomizeArmorWithColorBlocking = () => {
-    // Group armor materials by their original colors from sazabiMaterialsMap
+    // Group armor and funnel materials by their original colors from sazabiMaterialsMap
     const colorGroups: Record<string, string[]> = {};
 
-    // Get all material IDs from parts and group by original color (only armor materials)
+    // Get all material IDs from parts and group by original color (only armor and funnel materials)
     parts.forEach(part => {
       part.materials.forEach(([materialId]) => {
-        // Only process materials with 'armor' in their ID
-        if (materialId.toLowerCase().includes('armor')) {
+        // Only process materials with 'armor' or 'funnels' in their ID
+        if (materialId.toLowerCase().includes('armor') || materialId.toLowerCase().includes('funnels')) {
           const originalColor = sazabiMaterialsMap[materialId]?.color || "#ffffff";
 
           if (!colorGroups[originalColor]) {
@@ -218,18 +238,18 @@ function CustomizePageContent() {
   };
 
   const handleRandomizeHSL = () => {
-    // Generate random hue (0-360) and saturation (50-100) for all armor materials
+    // Generate random hue (0-360) and saturation (50-100) for all armor and funnel materials
     const randomHue = Math.floor(Math.random() * 360);
     const randomSaturation = Math.floor(Math.random() * 51) + 50; // 50-100%
     const lightness = 50; // Fixed lightness for consistency
 
     const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
 
-    // Apply the same random hue and saturation to all armor materials
+    // Apply the same random hue and saturation to all armor and funnel materials
     parts.forEach(part => {
       part.materials.forEach(([materialId]) => {
-        // Only process materials with 'armor' in their ID
-        if (materialId.toLowerCase().includes('armor')) {
+        // Only process materials with 'armor' or 'funnels' in their ID
+        if (materialId.toLowerCase().includes('armor') || materialId.toLowerCase().includes('funnels')) {
           const newColor = hslToHex(randomHue, randomSaturation, lightness);
 
           newMaterialStates[materialId] = {
@@ -335,6 +355,65 @@ function CustomizePageContent() {
     console.log("Paint type changed for material", materialId, "to:", paintType);
   };
 
+  const handleDownloadImage = async () => {
+    if (!rendererRef.current) {
+      console.error('Renderer not ready');
+      return;
+    }
+
+    try {
+      // Force a re-render
+      window.dispatchEvent(new Event('resize'));
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Use Three.js renderer to capture the scene
+      const canvas = rendererRef.current.domElement;
+      const dataURL = canvas.toDataURL('image/png', 1.0);
+
+      // Create download link
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = `sazabi-customization-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.png`;
+
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (error) {
+      console.error('Error downloading image:', error);
+    }
+  };
+
+  // Show mobile empty state
+  if (isMobile) {
+    return (
+      <div className="flex items-center justify-center" style={{ height: 'calc(100vh - 64px)' }}>
+        <div className="text-center p-8 max-w-md mx-auto">
+          <div className="mb-6">
+            <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold mb-2">3D Customization Not Available</h2>
+            <p className="text-muted-foreground">
+              This feature is not yet available on mobile devices. Please access this page on a desktop to view the 3D customization feature.
+            </p>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <p>For the best experience, please use:</p>
+            <ul className="mt-2 space-y-1">
+              <li>• Desktop computer</li>
+              <li>• Laptop</li>
+              <li>• Tablet in landscape mode</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex overflow-hidden" style={{ height: 'calc(100vh - 64px)' }}>
       {/* Sidebar A - Parts (150px) */}
@@ -439,7 +518,7 @@ function CustomizePageContent() {
               </div>
 
               {/* 3D Model Viewer - Full Space */}
-              <div className="w-full h-full rounded-lg overflow-hidden">
+              <div ref={modelViewerRef} className="w-full h-full rounded-lg overflow-hidden">
                 <ModelViewer
                   modelUrl="/models/sazabi.glb"
                   materialId={selectedItem}
@@ -450,11 +529,27 @@ function CustomizePageContent() {
                   clearArmorMaterials={clearArmorMaterials}
                   clearAlpha={clearAlpha}
                   paintType={paintType}
+                  onRendererReady={(renderer) => {
+                    rendererRef.current = renderer;
+                  }}
+                  onModelLoaded={() => {
+                    // Reset all materials to default state when model loads
+                    handleResetAll();
+                  }}
                 />
               </div>
 
+              {/* Floating Download Button */}
+              <button
+                onClick={handleDownloadImage}
+                className="absolute top-4 right-4 z-20 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg hover:bg-background transition-colors"
+                title="Download current model as image"
+              >
+                <Download className="w-5 h-5 text-foreground" />
+              </button>
+
               {/* Floating Customization Panel (when item is selected) */}
-              {selectedItem && (
+              {/* {selectedItem && (
                 <div className="absolute bottom-4 left-4 right-4 z-10">
                   <div className="bg-background/95 backdrop-blur-sm border rounded-lg p-4 shadow-lg">
                     <h3 className="font-semibold mb-2">Customization Options</h3>
@@ -463,7 +558,7 @@ function CustomizePageContent() {
                     </p>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
