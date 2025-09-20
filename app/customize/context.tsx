@@ -14,8 +14,8 @@ interface CustomizeContextType {
 const CustomizeContext = createContext<CustomizeContextType | undefined>(undefined);
 
 export function CustomizeProvider({ children }: { children: ReactNode }) {
-  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>("head");
+  const [selectedItem, setSelectedItem] = useState<string | null>("head.armor.1");
 
   const handleCategoryToggle = (categorySlug: string) => {
     setExpandedCategory(expandedCategory === categorySlug ? null : categorySlug);

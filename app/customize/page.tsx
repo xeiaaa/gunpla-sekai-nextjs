@@ -2,7 +2,7 @@
 
 import { ModelViewer } from "@/components/model-viewer";
 import { parts, sazabiMaterialsMap } from "./parts";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { CustomizeProvider, useCustomize } from "./context";
 import { CustomizationPanel } from "./components/customization-panel";
 import { useState, useRef, useEffect } from "react";
@@ -20,6 +20,15 @@ function CustomizePageContent() {
   const modelViewerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
+
+  // Check if welcome dialog should be shown
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem('gunpla-sekai-welcome-dialog-dismissed');
+    if (!hasSeenWelcome) {
+      setShowWelcomeDialog(true);
+    }
+  }, []);
 
   // Detect mobile devices
   useEffect(() => {
@@ -385,6 +394,15 @@ function CustomizePageContent() {
     }
   };
 
+  const handleCloseWelcomeDialog = () => {
+    setShowWelcomeDialog(false);
+  };
+
+  const handleDontShowAgain = () => {
+    localStorage.setItem('gunpla-sekai-welcome-dialog-dismissed', 'true');
+    setShowWelcomeDialog(false);
+  };
+
   // Show mobile empty state
   if (isMobile) {
     return (
@@ -415,7 +433,59 @@ function CustomizePageContent() {
   }
 
   return (
-    <div className="flex overflow-hidden" style={{ height: 'calc(100vh - 64px)' }}>
+    <>
+      {/* Welcome Dialog */}
+      {showWelcomeDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-background border border-border rounded-lg shadow-lg max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Welcome to 3D Customization</h2>
+              <button
+                onClick={handleCloseWelcomeDialog}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                This is an experimental feature for now. In the future there will be more mobile suits to customize, save and share with others.
+              </p>
+
+              <p className="text-sm text-muted-foreground">
+                For now enjoy this Sazabi 3D model credits to{" "}
+                <a
+                  href="https://sketchfab.com/kunnatee"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  @kunnatee
+                </a>
+                .
+              </p>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={handleDontShowAgain}
+                className="flex-1 bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
+              >
+                Don&apos;t show this again
+              </button>
+              <button
+                onClick={handleCloseWelcomeDialog}
+                className="flex-1 bg-muted text-muted-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex overflow-hidden" style={{ height: 'calc(100vh - 64px)' }}>
       {/* Sidebar A - Parts (150px) */}
       <div className="w-[180px] border-r bg-muted/30 overflow-y-auto">
         <div className="p-4">
@@ -564,6 +634,7 @@ function CustomizePageContent() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
