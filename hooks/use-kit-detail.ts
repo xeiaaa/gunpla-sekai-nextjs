@@ -4,12 +4,13 @@ import { getKitCollectionStatus } from "@/lib/actions/collections";
 import { isCurrentUserAdmin } from "@/lib/actions/users";
 
 // Hook for kit overview data (10 minutes stale time)
-export function useKitDetail(slug: string) {
+export function useKitDetail(slug: string, initialData?: any) {
   return useQuery({
     queryKey: ["kit", "detail", slug],
     queryFn: () => getKitBySlug(slug),
     staleTime: 10 * 60 * 1000, // 10 minutes
     enabled: !!slug,
+    initialData,
   });
 }
 

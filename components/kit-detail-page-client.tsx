@@ -21,18 +21,13 @@ export function KitDetailPageClient({
     data: kit,
     isLoading: kitLoading,
     error: kitError,
-  } = useKitDetail(slug);
+  } = useKitDetail(slug, initialKit);
   const { data: collectionStatus, isLoading: collectionLoading } =
     useKitCollectionStatus(initialKit.id);
   const { data: isAdmin, isLoading: adminLoading } = useIsAdmin();
 
-  // Use initial data for SSR, then React Query takes over
-  const currentKit = kit || initialKit;
-  const currentCollectionStatus = collectionStatus;
-  const currentIsAdmin = isAdmin;
-
   // Handle loading states
-  if (kitLoading && !initialKit) {
+  if (kitLoading && !kit) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center py-12">
@@ -46,20 +41,20 @@ export function KitDetailPageClient({
   }
 
   // Handle error states
-  if (kitError && !initialKit) {
+  if (kitError) {
     return notFound();
   }
 
   // Handle not found
-  if (!currentKit) {
+  if (!kit) {
     return notFound();
   }
 
   return (
     <KitDetailPage
-      kit={currentKit}
-      collectionStatus={currentCollectionStatus}
-      isAdmin={currentIsAdmin}
+      kit={kit}
+      collectionStatus={collectionStatus}
+      isAdmin={isAdmin}
     />
   );
 }
