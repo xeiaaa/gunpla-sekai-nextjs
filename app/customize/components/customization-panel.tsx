@@ -27,7 +27,7 @@ interface CustomizationPanelProps {
 export function CustomizationPanel({ selectedItemName, selectedItemId, onColorChange, onFinishChange, onRandomizeColors, onRandomizeWithColorBlocking, onRandomizeArmorWithColorBlocking, onRandomizeHSL, onResetAll, onEverythingClear, onClearOuterArmors, onPaintTypeChange, materialStates }: CustomizationPanelProps) {
   // TODO: Use selectedItemName for customization context
   console.log("Customizing:", selectedItemName, "ID:", selectedItemId);
-  const [activeTab, setActiveTab] = useState<"palette" | "paints" | "fun">("palette");
+  const [activeTab, setActiveTab] = useState<"palette" | "decals" | "paints" | "fun">("palette");
   const [paintType, setPaintType] = useState<"solid" | "clear">("clear");
   const [customColor, setCustomColor] = useState("#ffffff");
   const [selectedBrand, setSelectedBrand] = useState("Tamiya Spray");
@@ -237,6 +237,16 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
           >
             My Palette
           </button>
+          <button
+            onClick={() => setActiveTab("decals")}
+            className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              activeTab === "decals"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+            }`}
+          >
+            Decals
+          </button>
           {/* <button
             onClick={() => setActiveTab("paints")}
             className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
@@ -383,6 +393,17 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
           ))}
         </div>
       </div>
+        </>
+      )}
+
+      {activeTab === "decals" && (
+        <>
+          <div>
+            <h4 className="font-medium text-sm mb-3">Decals</h4>
+            <div className="text-sm text-muted-foreground">
+              Decal functionality coming soon...
+            </div>
+          </div>
         </>
       )}
 
