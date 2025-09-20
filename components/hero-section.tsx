@@ -28,19 +28,19 @@ export default function HeroSection() {
       <div className="relative container mx-auto px-4 h-full flex items-center justify-center z-10">
         <div className="text-center space-y-8 max-w-4xl">
           <div className="space-y-6">
-            <Badge variant="secondary" className="bg-gray-900/10 text-gray-900 border-gray-900/20 hover:bg-gray-900/20 text-base px-4 py-2 backdrop-blur-sm">
+            <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20 hover:bg-accent/20 text-base px-4 py-2 backdrop-blur-sm">
               <Star className="w-4 h-4 mr-2" />
               Dedicated to Gunpla
             </Badge>
 
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-gray-900 drop-shadow-lg">
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-foreground drop-shadow-lg">
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              <span className="text-primary bg-clip-text">
                 Gunpla Sekai
               </span>
             </h1>
 
-            <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
+            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto drop-shadow-md">
               At Gunpla Sekai, we&apos;re dedicated to providing the ultimate Gunpla experience.
               Explore our comprehensive shop for the latest kits and tools, customize your
               builds with our 3D configurator, and share your creations with a community
@@ -50,50 +50,50 @@ export default function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button asChild size="lg" className="bg-gray-900 text-white hover:bg-gray-800 font-semibold text-lg px-8 py-4 h-auto shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
+            <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 font-semibold text-lg px-8 py-4 h-auto shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
               <Link href="/kits">
                 <ShoppingBag className="w-6 h-6 mr-3" />
                 Browse Kits
               </Link>
             </Button>
 
-            <Button asChild size="lg" className="bg-blue-600 text-white hover:bg-blue-700 font-semibold text-lg px-8 py-4 h-auto shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 relative overflow-hidden group">
-              <Link href="/builds/new">
+            <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold text-lg px-8 py-4 h-auto shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-secondary/25 relative overflow-hidden group">
+              <Link href="/customize">
                 <Wrench className="w-6 h-6 mr-3" />
-                Start Building
+                Start Customizing
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               </Link>
             </Button>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-900/20 max-w-2xl mx-auto backdrop-blur-sm">
+          <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border/20 max-w-2xl mx-auto backdrop-blur-sm">
             <div className="text-center group">
               <div className="flex justify-center mb-2">
-                <div className="p-3 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors duration-300">
-                  <Package className="w-6 h-6 text-blue-600" />
+                <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-300">
+                  <Package className="w-6 h-6 text-primary" />
                 </div>
               </div>
-              <div className="text-3xl font-bold text-blue-600 drop-shadow-md">4000+</div>
-              <div className="text-base text-gray-600">Kits Available</div>
+              <div className="text-3xl font-bold text-primary drop-shadow-md">4000+</div>
+              <div className="text-base text-muted-foreground">Kits Available</div>
             </div>
             <div className="text-center group">
               <div className="flex justify-center mb-2">
-                <div className="p-3 bg-cyan-100 rounded-full group-hover:bg-cyan-200 transition-colors duration-300">
-                  <Users className="w-6 h-6 text-cyan-600" />
+                <div className="p-3 bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition-colors duration-300">
+                  <Users className="w-6 h-6 text-secondary" />
                 </div>
               </div>
-              <div className="text-3xl font-bold text-cyan-600 drop-shadow-md">1.2K</div>
-              <div className="text-base text-gray-600">Active Builders</div>
+              <div className="text-3xl font-bold text-secondary drop-shadow-md">1.2K</div>
+              <div className="text-base text-muted-foreground">Active Builders</div>
             </div>
             <div className="text-center group">
               <div className="flex justify-center mb-2">
-                <div className="p-3 bg-gray-100 rounded-full group-hover:bg-gray-200 transition-colors duration-300">
-                  <Share2 className="w-6 h-6 text-gray-600" />
+                <div className="p-3 bg-accent/10 rounded-full group-hover:bg-accent/20 transition-colors duration-300">
+                  <Share2 className="w-6 h-6 text-accent" />
                 </div>
               </div>
-              <div className="text-3xl font-bold text-gray-700 drop-shadow-md">5K+</div>
-              <div className="text-base text-gray-600">Builds Shared</div>
+              <div className="text-3xl font-bold text-accent drop-shadow-md">5K+</div>
+              <div className="text-base text-muted-foreground">Builds Shared</div>
             </div>
           </div>
         </div>
