@@ -215,3 +215,8 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Hide footer on customize page */
+.customize-page-hidden {
+  display: none !important;
+}

@@ -29,6 +29,7 @@ export function Header() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Kits", href: "/kits" },
+    { name: "Customize", href: "/customize" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {

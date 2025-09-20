@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import { FooterWrapper } from "@/components/footer-wrapper";
 import { ProgressBar } from "@/components/progress-bar";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -35,7 +35,7 @@ export default function RootLayout({
           <ProgressBar>
             <Header />
             <main className="flex-1">{children}</main>
-            <Footer />
+            <FooterWrapper />
           </ProgressBar>
         </body>
       </html>
