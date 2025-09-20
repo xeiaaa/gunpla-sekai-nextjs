@@ -1,23 +1,30 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReviewForm } from "./review-form";
-import { ReviewDisplay, ReviewStatsDisplay, ReviewList } from "./review-display";
 import {
-  getKitReviews,
-  getUserKitReview,
-  getKitReviewStats,
-  deleteReview
-} from "@/lib/actions/reviews";
+  ReviewDisplay,
+  ReviewStatsDisplay,
+  ReviewList,
+} from "./review-display";
 import {
-  ReviewWithDetails,
-  ReviewStats
-} from "@/lib/types/reviews";
+  useKitReviews,
+  useUserKitReview,
+  useKitReviewStats,
+  useDeleteReview,
+  useInvalidateReviewQueries,
+} from "@/hooks/use-reviews";
+import { ReviewWithDetails, ReviewStats } from "@/lib/types/reviews";
 
-type ReviewSortOption = "newest" | "oldest" | "highest-score" | "lowest-score" | "most-helpful";
+type ReviewSortOption =
+  | "newest"
+  | "oldest"
+  | "highest-score"
+  | "lowest-score"
+  | "most-helpful";
 
 interface ReviewSectionProps {
   kitId: string;
@@ -27,25 +34,43 @@ interface ReviewSectionProps {
 
 export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
   const { userId } = useAuth();
-  const [reviews, setReviews] = useState<ReviewWithDetails[]>([]);
-  const [allReviews, setAllReviews] = useState<ReviewWithDetails[]>([]); // Store all reviews for re-sorting
-  const [stats, setStats] = useState<ReviewStats | null>(null);
-  const [userReview, setUserReview] = useState<ReviewWithDetails | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
-  const [sortOption, setSortOption] = useState<ReviewSortOption>("most-helpful");
+  const [sortOption, setSortOption] =
+    useState<ReviewSortOption>("most-helpful");
   const reviewFormRef = useRef<HTMLDivElement>(null);
 
+  // React Query hooks
+  const { data: allReviews = [], isLoading: reviewsLoading } =
+    useKitReviews(kitId);
+  const { data: stats, isLoading: statsLoading } = useKitReviewStats(kitId);
+  const { data: userReview, isLoading: userReviewLoading } = useUserKitReview(
+    kitId,
+    userId
+  );
+  const deleteReviewMutation = useDeleteReview();
+  const { invalidateReviewQueries } = useInvalidateReviewQueries();
+
+  const isLoading = reviewsLoading || statsLoading || userReviewLoading;
+
   // Sort reviews based on selected option
-  const sortReviews = (reviews: ReviewWithDetails[], sortBy: ReviewSortOption): ReviewWithDetails[] => {
+  const sortReviews = (
+    reviews: ReviewWithDetails[],
+    sortBy: ReviewSortOption
+  ): ReviewWithDetails[] => {
     const sorted = [...reviews];
 
     switch (sortBy) {
       case "newest":
-        return sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        return sorted.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       case "oldest":
-        return sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        return sorted.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
       case "highest-score":
         return sorted.sort((a, b) => b.overallScore - a.overallScore);
       case "lowest-score":
@@ -65,58 +90,17 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
     }
   };
 
-  // Load reviews and stats
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-
-      const [reviewsData, statsData, userReviewData] = await Promise.all([
-        getKitReviews(kitId, 50, 0), // Get more reviews to allow for client-side sorting
-        getKitReviewStats(kitId),
-        userId ? getUserKitReview(kitId) : Promise.resolve(null),
-      ]);
-
-      // Store all reviews for re-sorting
-      setAllReviews(reviewsData);
-      setStats(statsData);
-      setUserReview(userReviewData);
-
-      // Filter out user's review from community reviews and sort
-      const communityReviews = userReviewData
-        ? reviewsData.filter(review => review.id !== userReviewData.id)
-        : reviewsData;
-
-      const sortedReviews = sortReviews(communityReviews, sortOption);
-      setReviews(sortedReviews);
-    } catch (error) {
-      console.error("Error loading review data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadData();
-  }, [kitId, userId]);
-
-  // Handle sort option changes
-  useEffect(() => {
-    if (allReviews.length > 0) {
-      // Filter out user's review from community reviews and sort
-      const communityReviews = userReview
-        ? allReviews.filter(review => review.id !== userReview.id)
-        : allReviews;
-
-      const sortedReviews = sortReviews(communityReviews, sortOption);
-      setReviews(sortedReviews);
-    }
-  }, [sortOption, allReviews, userReview]);
+  // Get sorted reviews (filter out user's review from community reviews)
+  const communityReviews = userReview
+    ? allReviews.filter((review) => review.id !== userReview.id)
+    : allReviews;
+  const reviews = sortReviews(communityReviews, sortOption);
 
   // Handle review form success
   const handleReviewSuccess = () => {
     setShowReviewForm(false);
     setEditingReviewId(null);
-    loadData(); // Reload all data
+    invalidateReviewQueries(kitId); // Invalidate React Query cache
   };
 
   // Handle edit review
@@ -127,21 +111,25 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
     // Scroll to the review form after a brief delay to ensure it's rendered
     setTimeout(() => {
       reviewFormRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: "smooth",
+        block: "start",
       });
     }, 100);
   };
 
   // Handle delete review
   const handleDeleteReview = async (reviewId: string) => {
-    if (!confirm("Are you sure you want to delete this review? This action cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this review? This action cannot be undone."
+      )
+    ) {
       return;
     }
 
     try {
-      await deleteReview(reviewId);
-      loadData(); // Reload all data
+      await deleteReviewMutation.mutateAsync(reviewId);
+      // React Query will automatically invalidate and refetch the data
     } catch (error) {
       console.error("Error deleting review:", error);
       alert("Failed to delete review. Please try again.");
@@ -202,13 +190,14 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
             ) : (
               <div className="text-center space-y-4">
                 <h3 className="text-lg font-semibold">
-                  {reviews.length === 0 ? "Be the First to Review" : "Write a Review"}
+                  {reviews.length === 0
+                    ? "Be the First to Review"
+                    : "Write a Review"}
                 </h3>
                 <p className="text-muted-foreground">
                   {reviews.length === 0
                     ? "Share your experience building this kit and help others decide"
-                    : "Share your experience building this kit with the community"
-                  }
+                    : "Share your experience building this kit with the community"}
                 </p>
                 <Button onClick={() => setShowReviewForm(true)}>
                   {reviews.length === 0 ? "Write First Review" : "Write Review"}
@@ -225,7 +214,9 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
           <ReviewForm
             kitId={kitId}
             kitName={kitName}
-            existingReview={editingReviewId ? userReview || undefined : undefined}
+            existingReview={
+              editingReviewId ? userReview || undefined : undefined
+            }
             onSuccess={handleReviewSuccess}
             onCancel={handleCancelReview}
           />
@@ -239,7 +230,8 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
             <div>
               <CardTitle>Community Reviews</CardTitle>
               <p className="text-sm text-muted-foreground">
-                {reviews.length} review{reviews.length !== 1 ? "s" : ""} from the community
+                {reviews.length} review{reviews.length !== 1 ? "s" : ""} from
+                the community
               </p>
             </div>
             <div className="flex items-center space-x-2">
@@ -249,7 +241,9 @@ export function ReviewSection({ kitId, kitName, kitSlug }: ReviewSectionProps) {
               <select
                 id="sort-select"
                 value={sortOption}
-                onChange={(e) => setSortOption(e.target.value as ReviewSortOption)}
+                onChange={(e) =>
+                  setSortOption(e.target.value as ReviewSortOption)
+                }
                 className="px-3 py-1 border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
               >
                 <option value="newest">Newest</option>

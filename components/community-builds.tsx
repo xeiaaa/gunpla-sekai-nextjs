@@ -1,13 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Image as ImageIcon, ArrowRight, Heart, MessageSquare } from "lucide-react";
+import {
+  Calendar,
+  User,
+  Image as ImageIcon,
+  ArrowRight,
+  Heart,
+  MessageSquare,
+} from "lucide-react";
 import Link from "next/link";
-// Removed server action import - using API route instead
 import { format } from "date-fns";
+import { useKitBuilds } from "@/hooks/use-builds";
 
 interface CommunityBuildsProps {
   kitId: string;
@@ -53,28 +60,14 @@ const STATUS_COLORS = {
   ON_HOLD: "bg-yellow-100 text-yellow-800",
 };
 
-export default function CommunityBuilds({ kitId, kitSlug }: CommunityBuildsProps) {
-  const [builds, setBuilds] = useState<Build[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function CommunityBuilds({
+  kitId,
+  kitSlug,
+}: CommunityBuildsProps) {
+  const [showAll, setShowAll] = useState(false);
 
-  useEffect(() => {
-    const fetchBuilds = async () => {
-      try {
-        const response = await fetch(`/api/builds/kit/${kitId}?limit=6`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch builds");
-        }
-        const buildsData = await response.json();
-        setBuilds(buildsData);
-      } catch (error) {
-        console.error("Error fetching builds:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBuilds();
-  }, [kitId]);
+  // React Query hook
+  const { data: builds = [], isLoading: loading, error } = useKitBuilds(kitId);
 
   const getUserDisplayName = (user: Build["user"]) => {
     if (user.username) return user.username;
@@ -94,7 +87,10 @@ export default function CommunityBuilds({ kitId, kitSlug }: CommunityBuildsProps
     // Fallback to first image of first milestone
     const firstMilestone = build.milestones[0];
     if (firstMilestone?.uploads[0]) {
-      return firstMilestone.uploads[0].upload.eagerUrl || firstMilestone.uploads[0].upload.url;
+      return (
+        firstMilestone.uploads[0].upload.eagerUrl ||
+        firstMilestone.uploads[0].upload.url
+      );
     }
 
     return null;
@@ -131,7 +127,9 @@ export default function CommunityBuilds({ kitId, kitSlug }: CommunityBuildsProps
         <CardContent>
           <div className="text-center py-8">
             <User className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No builds yet</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              No builds yet
+            </h3>
             <p className="mt-1 text-sm text-gray-500">
               Be the first to share your build progress!
             </p>
@@ -178,7 +176,11 @@ export default function CommunityBuilds({ kitId, kitSlug }: CommunityBuildsProps
                       </div>
                     )}
                     <Badge
-                      className={`absolute top-2 right-2 ${STATUS_COLORS[build.status as keyof typeof STATUS_COLORS]}`}
+                      className={`absolute top-2 right-2 ${
+                        STATUS_COLORS[
+                          build.status as keyof typeof STATUS_COLORS
+                        ]
+                      }`}
                     >
                       {build.status.replace("_", " ")}
                     </Badge>
@@ -204,12 +206,15 @@ export default function CommunityBuilds({ kitId, kitSlug }: CommunityBuildsProps
                       </div>
                       <div className="flex items-center">
                         <Calendar className="w-3 h-3 mr-1" />
-                        <span>{format(new Date(build.createdAt), "MMM d")}</span>
+                        <span>
+                          {format(new Date(build.createdAt), "MMM d")}
+                        </span>
                       </div>
                     </div>
                     <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
                       <span>
-                        {build._count.milestones} milestone{build._count.milestones !== 1 ? 's' : ''}
+                        {build._count.milestones} milestone
+                        {build._count.milestones !== 1 ? "s" : ""}
                       </span>
                       <div className="flex items-center gap-3">
                         <div className="flex items-center">

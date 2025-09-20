@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import { getKitBySlug } from "@/lib/actions/kits";
-import { getKitCollectionStatus } from "@/lib/actions/collections";
-import { isCurrentUserAdmin } from "@/lib/actions/users";
-import { KitDetailPage } from "@/components/kit-detail-page";
+import { KitDetailPageClient } from "@/components/kit-detail-page-client";
 
 interface KitDetailPageProps {
   params: Promise<{
@@ -22,7 +20,9 @@ export async function generateMetadata({ params }: KitDetailPageProps) {
 
   return {
     title: `${kit.name} - Gunpla Sekai`,
-    description: `View details for ${kit.name} (${kit.number}) - ${kit.grade || 'Unknown'} grade Gunpla kit`,
+    description: `View details for ${kit.name} (${kit.number}) - ${
+      kit.grade || "Unknown"
+    } grade Gunpla kit`,
   };
 }
 
@@ -34,8 +34,5 @@ export default async function KitDetail({ params }: KitDetailPageProps) {
     notFound();
   }
 
-  const collectionStatus = await getKitCollectionStatus(kit.id);
-  const isAdmin = await isCurrentUserAdmin();
-
-  return <KitDetailPage kit={kit} collectionStatus={collectionStatus} isAdmin={isAdmin} />;
+  return <KitDetailPageClient slug={slug} initialKit={kit} />;
 }
