@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { EnhancedBuildCard } from "@/components/enhanced-build-card";
 import {
   User,
   Calendar,
@@ -193,88 +194,22 @@ export function UserProfilePage({ user, isOwnProfile = false, routeContext = 'us
               {user.recentBuilds.length > 0 ? (
                 <div className="space-y-6">
                   {user.recentBuilds.map((build) => (
-                    <Card key={build.id} className="overflow-hidden">
-                      {/* Build Header */}
-                      <div className="p-4 border-b">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-2">
-                              <Badge variant="secondary" className="text-xs">
-                                {build.kit.productLine?.grade?.name || "Unknown Grade"}
-                              </Badge>
-                              <Badge
-                                variant={build.status === "COMPLETED" ? "default" : "outline"}
-                                className="text-xs"
-                              >
-                                {build.status.replace("_", " ")}
-                              </Badge>
-                            </div>
-                          </div>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        <h3 className="font-semibold text-lg mt-2">{build.title}</h3>
-                        <p className="text-gray-600">{build.kit.name}</p>
-                      </div>
-
-                      {/* Featured Image */}
-                      {build.featuredImage && (
-                        <div className="relative aspect-video">
-                          <Image
-                            src={build.featuredImage.url}
-                            alt={build.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-
-                      {/* Milestone Gallery */}
-                      {build.milestones && build.milestones.length > 0 && (
-                        <div className="p-4">
-                          <div className="grid grid-cols-4 gap-2">
-                            {build.milestones.slice(0, 4).map((milestone) => {
-                              const imageUrl = milestone.imageUrls[0] || milestone.uploads[0]?.upload?.url;
-                              return imageUrl ? (
-                                <div key={milestone.id} className="relative aspect-square rounded overflow-hidden">
-                                  <Image
-                                    src={imageUrl}
-                                    alt={milestone.title}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                </div>
-                              ) : null;
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Engagement Actions */}
-                      <div className="p-4 border-t">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <Button variant="ghost" size="sm" className="gap-2">
-                              <ThumbsUp className="w-4 h-4" />
-                              {build.likes?.count || 0}
-                            </Button>
-                            <Button variant="ghost" size="sm" className="gap-2">
-                              <MessageCircle className="w-4 h-4" />
-                              {build.comments?.count || 0}
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <Share2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                          <Button variant="ghost" size="sm" asChild>
-                            <Link href={`/builds/${build.id}`}>
-                              <Eye className="w-4 h-4" />
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
+                    <EnhancedBuildCard
+                      key={build.id}
+                      build={{
+                        ...build,
+                        user: {
+                          id: user.id,
+                          username: user.username,
+                          firstName: user.firstName,
+                          lastName: user.lastName,
+                          imageUrl: user.imageUrl,
+                          avatarUrl: user.avatarUrl,
+                        },
+                      }}
+                      showUserInfo={false}
+                      variant="feed"
+                    />
                   ))}
                 </div>
               ) : (

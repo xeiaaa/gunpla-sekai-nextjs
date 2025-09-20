@@ -121,6 +121,11 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
                     },
                   },
                 },
+                series: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
             featuredImage: {
