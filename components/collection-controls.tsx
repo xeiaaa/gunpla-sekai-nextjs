@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { CollectionStatus } from "@/generated/prisma";
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,12 @@ import {
   Trash2,
   Loader2,
   ShoppingCart,
-  Wrench
+  Wrench,
 } from "lucide-react";
 import {
   addToCollection,
   removeFromCollection,
-  updateCollectionStatus
+  updateCollectionStatus,
 } from "@/lib/actions/collections";
 
 interface CollectionControlsProps {
@@ -67,11 +67,16 @@ const statusConfig = {
 export function CollectionControls({
   kitId,
   currentStatus,
-  className = ""
+  className = "",
 }: CollectionControlsProps) {
   const { isSignedIn } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState(currentStatus);
+
+  // Sync local state with prop changes
+  useEffect(() => {
+    setStatus(currentStatus);
+  }, [currentStatus]);
 
   // Don't render if user is not signed in
   if (!isSignedIn) {
@@ -115,9 +120,7 @@ export function CollectionControls({
   return (
     <Card className={`p-4 ${className}`}>
       <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-900">
-          Add to Collection
-        </h3>
+        <h3 className="text-sm font-medium text-gray-900">Add to Collection</h3>
 
         <div className="grid grid-cols-5 gap-2">
           {Object.entries(statusConfig).map(([statusKey, config]) => {
@@ -129,13 +132,16 @@ export function CollectionControls({
                 key={statusKey}
                 variant="outline"
                 size="sm"
-                onClick={() => handleStatusChange(statusKey as CollectionStatus)}
+                onClick={() =>
+                  handleStatusChange(statusKey as CollectionStatus)
+                }
                 disabled={isPending}
                 className={`
                   flex flex-col items-center gap-1 h-auto py-3 px-2
-                  ${isActive
-                    ? `${config.bgColor} ${config.borderColor} border-2`
-                    : "hover:bg-gray-50"
+                  ${
+                    isActive
+                      ? `${config.bgColor} ${config.borderColor} border-2`
+                      : "hover:bg-gray-50"
                   }
                   ${isPending ? "opacity-50" : ""}
                 `}
@@ -143,9 +149,17 @@ export function CollectionControls({
                 {isPending ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Icon className={`h-4 w-4 ${isActive ? config.color : "text-gray-400"}`} />
+                  <Icon
+                    className={`h-4 w-4 ${
+                      isActive ? config.color : "text-gray-400"
+                    }`}
+                  />
                 )}
-                <span className={`text-xs ${isActive ? config.color : "text-gray-600"}`}>
+                <span
+                  className={`text-xs ${
+                    isActive ? config.color : "text-gray-600"
+                  }`}
+                >
                   {config.label}
                 </span>
               </Button>
@@ -176,11 +190,16 @@ export function CollectionControls({
 export function CollectionControlsCompact({
   kitId,
   currentStatus,
-  className = ""
+  className = "",
 }: CollectionControlsProps) {
   const { isSignedIn } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState(currentStatus);
+
+  // Sync local state with prop changes
+  useEffect(() => {
+    setStatus(currentStatus);
+  }, [currentStatus]);
 
   // Don't render if user is not signed in
   if (!isSignedIn) {

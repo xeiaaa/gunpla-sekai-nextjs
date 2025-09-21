@@ -41,7 +41,7 @@ export default async function MeCollectionsPage() {
           </div>
 
           {wishlist.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {wishlist.map((collection: any) => (
                 <KitCard
                   key={collection.id}
@@ -86,7 +86,7 @@ export default async function MeCollectionsPage() {
           </div>
 
           {preorder.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {preorder.map((collection: any) => (
                 <KitCard
                   key={collection.id}
@@ -131,7 +131,7 @@ export default async function MeCollectionsPage() {
           </div>
 
           {backlog.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {backlog.map((collection: any) => (
                 <KitCard
                   key={collection.id}
@@ -176,7 +176,7 @@ export default async function MeCollectionsPage() {
           </div>
 
           {inProgress.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {inProgress.map((collection: any) => (
                 <KitCard
                   key={collection.id}
@@ -221,7 +221,7 @@ export default async function MeCollectionsPage() {
           </div>
 
           {built.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {built.map((collection: any) => (
                 <KitCard
                   key={collection.id}
