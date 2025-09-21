@@ -17,6 +17,8 @@ import { ExpandedBySelectionDialog } from "@/components/expanded-by-selection-di
 import { updateKit, getAllProductLines, updateKitMobileSuits, updateKitExpansions, updateKitExpandedBy } from "@/lib/actions/kits";
 import { deleteKitUpload } from "@/lib/actions/uploads";
 import { KitImageType } from "@/generated/prisma";
+import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface KitEditFormProps {
   kit: {
@@ -106,6 +108,8 @@ interface KitEditFormProps {
 
 export function KitEditForm({ kit }: KitEditFormProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { invalidateKitQueries } = useInvalidateKitQueries();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [removedFileIds, setRemovedFileIds] = useState<string[]>([]);
@@ -273,6 +277,20 @@ export function KitEditForm({ kit }: KitEditFormProps) {
         }
 
         setMessage({ type: 'success', text: "Kit updated successfully!" });
+        
+        // Invalidate React Query cache for this kit and related queries
+        invalidateKitQueries(kit.id, result.kit.slug || kit.slug || "");
+        
+        // Also invalidate kits listing queries since kit data might have changed
+        queryClient.invalidateQueries({
+          queryKey: ["kits"],
+        });
+        
+        // Invalidate filter data in case kit properties changed
+        queryClient.invalidateQueries({
+          queryKey: ["filterData"],
+        });
+        
         setTimeout(() => {
           router.push(`/kits/${result.kit.slug || kit.slug}`);
         }, 1000);
