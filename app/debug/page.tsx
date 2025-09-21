@@ -1,31 +1,44 @@
-import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const debugTools = [
   {
-    title: 'Add Kits to Product Lines',
-    description: 'Debug tool for associating kits with their product lines',
-    href: '/debug/add-kits-to-product-lines',
+    title: "Add Kits to Product Lines",
+    description: "Debug tool for associating kits with their product lines",
+    href: "/debug/add-kits-to-product-lines",
   },
   {
-    title: 'Add Kits to Mobile Suits',
-    description: 'Debug tool for creating many-to-many relationships between kits and mobile suits',
-    href: '/debug/add-kits-to-ms',
+    title: "Add Kits to Mobile Suits",
+    description:
+      "Debug tool for creating many-to-many relationships between kits and mobile suits",
+    href: "/debug/add-kits-to-ms",
   },
   {
-    title: 'Add Mobile Suits to Series',
-    description: 'Debug tool for associating mobile suits with their series',
-    href: '/debug/add-ms-to-series',
+    title: "Add Mobile Suits to Series",
+    description: "Debug tool for associating mobile suits with their series",
+    href: "/debug/add-ms-to-series",
   },
   {
-    title: 'Add Series to Timelines',
-    description: 'Debug tool for associating series with their timelines',
-    href: '/debug/add-series-to-timelines',
+    title: "Add Series to Timelines",
+    description: "Debug tool for associating series with their timelines",
+    href: "/debug/add-series-to-timelines",
   },
   {
-    title: 'Timelines',
-    description: 'Debug tool for managing timeline data',
-    href: '/debug/timelines',
+    title: "Kit Accessories",
+    description:
+      "Debug tool for managing kit expansion relationships and accessories",
+    href: "/debug/kit-accessories",
+  },
+  {
+    title: "Timelines",
+    description: "Debug tool for managing timeline data",
+    href: "/debug/timelines",
   },
 ];
 

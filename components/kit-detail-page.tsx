@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { KitImage } from "@/components/kit-image";
 import { CollectionControls } from "@/components/collection-controls";
 import { ReviewSection } from "@/components/review-section";
@@ -20,7 +28,7 @@ import {
   Info,
   MessageSquare,
   Hammer,
-  Palette
+  Palette,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -133,9 +141,15 @@ interface KitDetailPageProps {
   isAdmin?: boolean;
 }
 
-export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageProps) {
+export function KitDetailPage({
+  kit,
+  collectionStatus,
+  isAdmin,
+}: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<'overview' | 'reviews' | 'builds'>('overview');
+  const [activeTab, setActiveTab] = useState<"overview" | "reviews" | "builds">(
+    "overview"
+  );
   const [showGunplaCardDialog, setShowGunplaCardDialog] = useState(false);
   const router = useRouter();
 
@@ -146,10 +160,10 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
 
   const formatReleaseDate = (date: Date | null | undefined) => {
     if (!date) return "TBA";
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -159,20 +173,17 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
     }
   };
 
-  const allImages = [
-    kit.boxArt,
-    ...kit.scrapedImages
-  ].filter(Boolean);
+  const allImages = [kit.boxArt, ...kit.scrapedImages].filter(Boolean);
 
   const tabs = [
-    { id: 'overview' as const, label: 'Overview', icon: Info },
-    { id: 'reviews' as const, label: 'Reviews', icon: MessageSquare },
-    { id: 'builds' as const, label: 'Builds', icon: Hammer },
+    { id: "overview" as const, label: "Overview", icon: Info },
+    { id: "reviews" as const, label: "Reviews", icon: MessageSquare },
+    { id: "builds" as const, label: "Builds", icon: Hammer },
   ];
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'overview':
+      case "overview":
         return (
           <div className="space-y-6">
             {/* Kit Info */}
@@ -182,9 +193,7 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                   <CardTitle>Kit Information</CardTitle>
                   {isAdmin && (
                     <Button asChild variant="outline" size="sm">
-                      <Link href={`/debug/kits/${kit.slug}`}>
-                        Edit Kit
-                      </Link>
+                      <Link href={`/debug/kits/${kit.slug}`}>Edit Kit</Link>
                     </Button>
                   )}
                 </div>
@@ -193,22 +202,32 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Release Date:</span>
-                    <span className="font-medium">{formatReleaseDate(kit.releaseDate)}</span>
+                    <span className="text-sm text-muted-foreground">
+                      Release Date:
+                    </span>
+                    <span className="font-medium">
+                      {formatReleaseDate(kit.releaseDate)}
+                    </span>
                   </div>
 
                   {kit.priceYen && (
                     <div className="flex items-center gap-2">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Price:</span>
-                      <span className="font-medium">{formatPrice(kit.priceYen)}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Price:
+                      </span>
+                      <span className="font-medium">
+                        {formatPrice(kit.priceYen)}
+                      </span>
                     </div>
                   )}
 
                   {kit.region && (
                     <div className="flex items-center gap-2">
                       <Package className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Region:</span>
+                      <span className="text-sm text-muted-foreground">
+                        Region:
+                      </span>
                       <span className="font-medium">{kit.region}</span>
                     </div>
                   )}
@@ -216,9 +235,14 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                   {kit.series && (
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Series:</span>
+                      <span className="text-sm text-muted-foreground">
+                        Series:
+                      </span>
                       {kit.seriesSlug ? (
-                        <Link href={`/series/${kit.seriesSlug}`} className="font-medium text-primary hover:underline">
+                        <Link
+                          href={`/series/${kit.seriesSlug}`}
+                          className="font-medium text-primary hover:underline"
+                        >
                           {kit.series}
                         </Link>
                       ) : (
@@ -230,9 +254,14 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                   {kit.releaseType && (
                     <div className="flex items-center gap-2">
                       <Tag className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Release Type:</span>
+                      <span className="text-sm text-muted-foreground">
+                        Release Type:
+                      </span>
                       {kit.releaseTypeSlug ? (
-                        <Link href={`/release-types/${kit.releaseTypeSlug}`} className="font-medium text-primary hover:underline">
+                        <Link
+                          href={`/release-types/${kit.releaseTypeSlug}`}
+                          className="font-medium text-primary hover:underline"
+                        >
                           {kit.releaseType}
                         </Link>
                       ) : (
@@ -275,24 +304,35 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
             {kit.mobileSuits.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle>{kit.mobileSuits.length === 1 ? "Mobile Suit" : "Mobile Suits"}</CardTitle>
+                  <CardTitle>
+                    {kit.mobileSuits.length === 1
+                      ? "Mobile Suit"
+                      : "Mobile Suits"}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {kit.mobileSuits.map((mobileSuit) => (
-                      <Link key={mobileSuit.id} href={`/mobile-suits/${mobileSuit.slug}`}>
+                      <Link
+                        key={mobileSuit.id}
+                        href={`/mobile-suits/${mobileSuit.slug}`}
+                      >
                         <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                           <div className="w-16 h-16 flex-shrink-0">
                             <KitImage
-                              src={mobileSuit.scrapedImages[0] || ''}
+                              src={mobileSuit.scrapedImages[0] || ""}
                               alt={mobileSuit.name}
                               className="w-full h-full rounded-md"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium truncate">{mobileSuit.name}</h4>
+                            <h4 className="font-medium truncate">
+                              {mobileSuit.name}
+                            </h4>
                             {mobileSuit.series && (
-                              <p className="text-sm text-muted-foreground">{mobileSuit.series}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {mobileSuit.series}
+                              </p>
                             )}
                             {mobileSuit.description && (
                               <p className="text-sm text-muted-foreground line-clamp-2">
@@ -316,120 +356,28 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                   <CardTitle>Base Kit</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Link href={`/kits/${kit.baseKit.slug}`}>
-                    <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                      <div className="w-20 h-20 flex-shrink-0">
-                        <KitImage
-                          src={kit.baseKit.boxArt || ''}
-                          alt={kit.baseKit.name}
-                          className="w-full h-full rounded-md"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium">{kit.baseKit.name}</h4>
-                        <p className="text-sm text-muted-foreground">#{kit.baseKit.number}</p>
-                        <p className="text-sm text-muted-foreground">{kit.baseKit.grade}</p>
-                      </div>
-                      <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
-                    </div>
-                  </Link>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Expansions */}
-            {kit.expansions.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Expansions</CardTitle>
-                </CardHeader>
-                <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {kit.expansions.map((expansion) => (
-                      <Link key={expansion.id} href={`/kits/${expansion.slug}`}>
-                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                          <div className="w-16 h-16 flex-shrink-0">
-                            <KitImage
-                              src={expansion.boxArt || ''}
-                              alt={expansion.name}
-                              className="w-full h-full rounded-md"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-medium truncate">{expansion.name}</h4>
-                            {expansion.variant && (
-                              <p className="text-sm text-muted-foreground">{expansion.variant}</p>
-                            )}
-                            <p className="text-sm text-muted-foreground">#{expansion.number}</p>
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              {expansion.grade && (
-                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
-                                  {expansion.grade}
-                                </span>
-                              )}
-                              {expansion.productLine && (
-                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
-                                  {expansion.productLine}
-                                </span>
-                              )}
-                            </div>
-                            {expansion.series && (
-                              <p className="text-xs text-muted-foreground">{expansion.series}</p>
-                            )}
-                          </div>
-                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                    <Link href={`/kits/${kit.baseKit.slug}`}>
+                      <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="w-20 h-20 flex-shrink-0">
+                          <KitImage
+                            src={kit.baseKit.boxArt || ""}
+                            alt={kit.baseKit.name}
+                            className="w-full h-full rounded-md"
+                          />
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Expanded By */}
-            {kit.expandedBy.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Expanded By</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {kit.expandedBy.map((expandedByKit) => (
-                      <Link key={expandedByKit.id} href={`/kits/${expandedByKit.slug}`}>
-                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
-                          <div className="w-16 h-16 flex-shrink-0">
-                            <KitImage
-                              src={expandedByKit.boxArt || ''}
-                              alt={expandedByKit.name}
-                              className="w-full h-full rounded-md"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-medium truncate">{expandedByKit.name}</h4>
-                            {expandedByKit.variant && (
-                              <p className="text-sm text-muted-foreground">{expandedByKit.variant}</p>
-                            )}
-                            <p className="text-sm text-muted-foreground">#{expandedByKit.number}</p>
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              {expandedByKit.grade && (
-                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
-                                  {expandedByKit.grade}
-                                </span>
-                              )}
-                              {expandedByKit.productLine && (
-                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
-                                  {expandedByKit.productLine}
-                                </span>
-                              )}
-                            </div>
-                            {expandedByKit.series && (
-                              <p className="text-xs text-muted-foreground">{expandedByKit.series}</p>
-                            )}
-                          </div>
-                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium">{kit.baseKit.name}</h4>
+                          <p className="text-sm text-muted-foreground">
+                            #{kit.baseKit.number}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {kit.baseKit.grade}
+                          </p>
                         </div>
-                      </Link>
-                    ))}
+                        <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                      </div>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
@@ -448,18 +396,26 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                         <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                           <div className="w-16 h-16 flex-shrink-0">
                             <KitImage
-                              src={variant.boxArt || ''}
+                              src={variant.boxArt || ""}
                               alt={variant.name}
                               className="w-full h-full rounded-md"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium truncate">{variant.name}</h4>
+                            <h4 className="font-medium truncate">
+                              {variant.name}
+                            </h4>
                             {variant.variant && (
-                              <p className="text-sm text-muted-foreground">{variant.variant}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {variant.variant}
+                              </p>
                             )}
-                            <p className="text-sm text-muted-foreground">#{variant.number}</p>
-                            <p className="text-sm text-muted-foreground">{variant.grade}</p>
+                            <p className="text-sm text-muted-foreground">
+                              #{variant.number}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {variant.grade}
+                            </p>
                             {variant.releaseDate && (
                               <p className="text-sm text-muted-foreground">
                                 {formatReleaseDate(variant.releaseDate)}
@@ -484,25 +440,153 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {kit.otherVariants.map((otherVariant) => (
-                      <Link key={otherVariant.id} href={`/kits/${otherVariant.slug}`}>
+                      <Link
+                        key={otherVariant.id}
+                        href={`/kits/${otherVariant.slug}`}
+                      >
                         <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                           <div className="w-16 h-16 flex-shrink-0">
                             <KitImage
-                              src={otherVariant.boxArt || ''}
+                              src={otherVariant.boxArt || ""}
                               alt={otherVariant.name}
                               className="w-full h-full rounded-md"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium truncate">{otherVariant.name}</h4>
+                            <h4 className="font-medium truncate">
+                              {otherVariant.name}
+                            </h4>
                             {otherVariant.variant && (
-                              <p className="text-sm text-muted-foreground">{otherVariant.variant}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {otherVariant.variant}
+                              </p>
                             )}
-                            <p className="text-sm text-muted-foreground">#{otherVariant.number}</p>
-                            <p className="text-sm text-muted-foreground">{otherVariant.grade}</p>
+                            <p className="text-sm text-muted-foreground">
+                              #{otherVariant.number}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {otherVariant.grade}
+                            </p>
                             {otherVariant.releaseDate && (
                               <p className="text-sm text-muted-foreground">
                                 {formatReleaseDate(otherVariant.releaseDate)}
+                              </p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Expansions */}
+            {kit.expansions.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Expansions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.expansions.map((expansion) => (
+                      <Link key={expansion.id} href={`/kits/${expansion.slug}`}>
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={expansion.boxArt || ""}
+                              alt={expansion.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">
+                              {expansion.name}
+                            </h4>
+                            {expansion.variant && (
+                              <p className="text-sm text-muted-foreground">
+                                {expansion.variant}
+                              </p>
+                            )}
+                            <p className="text-sm text-muted-foreground">
+                              #{expansion.number}
+                            </p>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              {expansion.grade && (
+                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
+                                  {expansion.grade}
+                                </span>
+                              )}
+                              {expansion.productLine && (
+                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
+                                  {expansion.productLine}
+                                </span>
+                              )}
+                            </div>
+                            {expansion.series && (
+                              <p className="text-xs text-muted-foreground">
+                                {expansion.series}
+                              </p>
+                            )}
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Expanded By */}
+            {kit.expandedBy.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Compatible With</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {kit.expandedBy.map((expandedByKit) => (
+                      <Link
+                        key={expandedByKit.id}
+                        href={`/kits/${expandedByKit.slug}`}
+                      >
+                        <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="w-16 h-16 flex-shrink-0">
+                            <KitImage
+                              src={expandedByKit.boxArt || ""}
+                              alt={expandedByKit.name}
+                              className="w-full h-full rounded-md"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium truncate">
+                              {expandedByKit.name}
+                            </h4>
+                            {expandedByKit.variant && (
+                              <p className="text-sm text-muted-foreground">
+                                {expandedByKit.variant}
+                              </p>
+                            )}
+                            <p className="text-sm text-muted-foreground">
+                              #{expandedByKit.number}
+                            </p>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              {expandedByKit.grade && (
+                                <span className="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-xs">
+                                  {expandedByKit.grade}
+                                </span>
+                              )}
+                              {expandedByKit.productLine && (
+                                <span className="bg-secondary/50 text-secondary-foreground px-1.5 py-0.5 rounded text-xs">
+                                  {expandedByKit.productLine}
+                                </span>
+                              )}
+                            </div>
+                            {expandedByKit.series && (
+                              <p className="text-xs text-muted-foreground">
+                                {expandedByKit.series}
                               </p>
                             )}
                           </div>
@@ -534,9 +618,13 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                         </div>
                         <div>
                           {upload.title && (
-                            <h4 className="font-medium text-sm truncate">{upload.title}</h4>
+                            <h4 className="font-medium text-sm truncate">
+                              {upload.title}
+                            </h4>
                           )}
-                          <p className="text-xs text-muted-foreground capitalize">{upload.type}</p>
+                          <p className="text-xs text-muted-foreground capitalize">
+                            {upload.type}
+                          </p>
                           {upload.description && (
                             <p className="text-xs text-muted-foreground line-clamp-2">
                               {upload.description}
@@ -552,7 +640,7 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
           </div>
         );
 
-      case 'reviews':
+      case "reviews":
         return (
           <ReviewSection
             kitId={kit.id}
@@ -561,13 +649,8 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
           />
         );
 
-      case 'builds':
-        return (
-          <CommunityBuilds
-            kitId={kit.id}
-            kitSlug={kit.slug}
-          />
-        );
+      case "builds":
+        return <CommunityBuilds kitId={kit.id} kitSlug={kit.slug} />;
 
       default:
         return null;
@@ -594,7 +677,7 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
             <CardContent className="p-0">
               <div className="aspect-[4/3] relative">
                 <KitImage
-                  src={allImages[selectedImageIndex] || ''}
+                  src={allImages[selectedImageIndex] || ""}
                   alt={kit.name}
                   className="w-full h-full rounded-lg"
                 />
@@ -617,7 +700,7 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
                   )}
                 >
                   <KitImage
-                    src={image || ''}
+                    src={image || ""}
                     alt={`${kit.name} - Image ${index + 1}`}
                     className="w-full h-full"
                   />
@@ -627,18 +710,16 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
           )}
 
           {/* Collection Controls */}
-          <CollectionControls
-            kitId={kit.id}
-            currentStatus={collectionStatus}
-          />
+          <CollectionControls kitId={kit.id} currentStatus={collectionStatus} />
 
           {/* Start Build Button */}
-          <StartBuildButton
-            kit={kit}
-          />
+          <StartBuildButton kit={kit} />
 
           {/* Create Gunpla Card Button */}
-          <Dialog open={showGunplaCardDialog} onOpenChange={setShowGunplaCardDialog}>
+          <Dialog
+            open={showGunplaCardDialog}
+            onOpenChange={setShowGunplaCardDialog}
+          >
             <DialogTrigger asChild>
               <Button
                 variant="outline"
@@ -653,9 +734,10 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
               <DialogHeader>
                 <DialogTitle>Create Gunpla Card</DialogTitle>
                 <DialogDescription>
-                  The Gunpla Card feature is currently in early development and is considered an experimental feature.
-                  You can create custom cards using kit images, but please note that this feature may have limitations
-                  or changes in future updates.
+                  The Gunpla Card feature is currently in early development and
+                  is considered an experimental feature. You can create custom
+                  cards using kit images, but please note that this feature may
+                  have limitations or changes in future updates.
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
@@ -689,7 +771,9 @@ export function KitDetailPage({ kit, collectionStatus, isAdmin }: KitDetailPageP
             </div>
             <h1 className="text-3xl font-bold mb-2">{kit.name}</h1>
             {kit.variant && (
-              <p className="text-lg text-muted-foreground mb-2">{kit.variant}</p>
+              <p className="text-lg text-muted-foreground mb-2">
+                {kit.variant}
+              </p>
             )}
             <div className="flex items-center gap-1 text-muted-foreground">
               <Tag className="h-4 w-4" />

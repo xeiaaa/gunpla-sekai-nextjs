@@ -208,6 +208,8 @@ enum KitExpansionType {
   BASE_STAND
   FULL_OPTION_CUSTOMIZATION_PACK
   CAMPAIGN_LIMITED_ADDON
+  LED_SET
+  ADD_ON
 }
 
 // Junction table for many-to-many relationship between Kit expansions
