@@ -29,11 +29,7 @@ interface KitCardProps {
   className?: string;
 }
 
-export function KitCard({
-  kit,
-  collectionStatus,
-  className
-}: KitCardProps) {
+export function KitCard({ kit, collectionStatus, className }: KitCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const formatPrice = (priceYen: number | null | undefined) => {
@@ -43,12 +39,11 @@ export function KitCard({
 
   const formatReleaseDate = (date: Date | null | undefined) => {
     if (!date) return "TBA";
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'short',
-      year: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
     });
   };
-
 
   const cardContent = (
     <Card
@@ -61,11 +56,10 @@ export function KitCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-
       {/* Kit Image */}
       <div className="relative">
         <KitImage
-          src={kit.boxArt || ''}
+          src={kit.boxArt || ""}
           alt={kit.name}
           className="aspect-[4/3] w-full"
         />
@@ -98,9 +92,7 @@ export function KitCard({
             {kit.name}
           </h3>
           {kit.variant && (
-            <p className="text-sm text-muted-foreground mt-1">
-              {kit.variant}
-            </p>
+            <p className="text-sm text-muted-foreground mt-1">{kit.variant}</p>
           )}
         </div>
 
@@ -146,7 +138,8 @@ export function KitCard({
           <div className="pt-1 mt-auto">
             <div className="text-xs text-muted-foreground line-clamp-1">
               {kit.mobileSuits.slice(0, 2).join(", ")}
-              {kit.mobileSuits.length > 2 && ` +${kit.mobileSuits.length - 2} more`}
+              {kit.mobileSuits.length > 2 &&
+                ` +${kit.mobileSuits.length - 2} more`}
             </div>
           </div>
         )}
