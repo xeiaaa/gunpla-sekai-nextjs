@@ -47,7 +47,9 @@ interface MobileSuitDetailPageProps {
   };
 }
 
-export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) {
+export function MobileSuitDetailPage({
+  mobileSuit,
+}: MobileSuitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const formatPrice = (priceYen: number | null | undefined) => {
@@ -57,10 +59,10 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
 
   const formatReleaseDate = (date: Date | null | undefined) => {
     if (!date) return "TBA";
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -70,7 +72,13 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
     <div className="container mx-auto px-4 py-8">
       {/* Back Button */}
       <div className="mb-6">
-        <Link href={mobileSuit.series ? `/series/${mobileSuit.series.slug}` : "/timelines"}>
+        <Link
+          href={
+            mobileSuit.series
+              ? `/series/${mobileSuit.series.slug}`
+              : "/timelines"
+          }
+        >
           <div className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-4 w-4" />
             Back to {mobileSuit.series ? mobileSuit.series.name : "Series"}
@@ -86,9 +94,10 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
             <CardContent className="p-0">
               <div className="aspect-[4/3] relative">
                 <KitImage
-                  src={allImages[selectedImageIndex] || ''}
+                  src={allImages[selectedImageIndex] || ""}
                   alt={mobileSuit.name}
                   className="w-full h-full rounded-lg"
+                  isContain={true}
                 />
               </div>
             </CardContent>
@@ -109,9 +118,10 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
                   )}
                 >
                   <KitImage
-                    src={image || ''}
+                    src={image || ""}
                     alt={`${mobileSuit.name} - Image ${index + 1}`}
                     className="w-full h-full"
+                    isContain={true}
                   />
                 </button>
               ))}
@@ -157,14 +167,18 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
             <CardContent className="space-y-4">
               <div className="flex items-center gap-2">
                 <Package className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Available Kits:</span>
+                <span className="text-sm text-muted-foreground">
+                  Available Kits:
+                </span>
                 <span className="font-medium">{mobileSuit.kitsCount}</span>
               </div>
 
               {mobileSuit.description && (
                 <div>
                   <h4 className="font-medium mb-2">Description</h4>
-                  <p className="text-sm text-muted-foreground">{mobileSuit.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {mobileSuit.description}
+                  </p>
                 </div>
               )}
             </CardContent>
@@ -183,18 +197,25 @@ export function MobileSuitDetailPage({ mobileSuit }: MobileSuitDetailPageProps) 
                       <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                         <div className="w-16 h-16 flex-shrink-0">
                           <KitImage
-                            src={kit.boxArt || ''}
+                            src={kit.boxArt || ""}
                             alt={kit.name}
                             className="w-full h-full rounded-md"
+                            isContain={true}
                           />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="font-medium truncate">{kit.name}</h4>
                           {kit.variant && (
-                            <p className="text-sm text-muted-foreground">{kit.variant}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {kit.variant}
+                            </p>
                           )}
-                          <p className="text-sm text-muted-foreground">#{kit.number}</p>
-                          <p className="text-sm text-muted-foreground">{kit.grade}</p>
+                          <p className="text-sm text-muted-foreground">
+                            #{kit.number}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {kit.grade}
+                          </p>
                           {kit.releaseDate && (
                             <p className="text-sm text-muted-foreground">
                               {formatReleaseDate(kit.releaseDate)}

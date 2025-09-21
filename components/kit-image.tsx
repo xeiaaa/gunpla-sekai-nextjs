@@ -7,9 +7,15 @@ interface KitImageProps {
   src?: string;
   alt: string;
   className?: string;
+  isContain?: boolean;
 }
 
-export function KitImage({ src, alt, className = "" }: KitImageProps) {
+export function KitImage({
+  src,
+  alt,
+  className = "",
+  isContain = false,
+}: KitImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
 
@@ -41,12 +47,12 @@ export function KitImage({ src, alt, className = "" }: KitImageProps) {
     );
   }
 
-  // Determine object position based on orientation
+  // Determine object position based on orientation (only for cover mode)
   const objectPosition =
     isPortrait === null
       ? "center" // Default while loading
       : isPortrait
-      ? "center 10%" // Portrait: 5% from top
+      ? "center 10%" // Portrait: 10% from top
       : "center"; // Landscape: center
 
   return (
@@ -55,8 +61,8 @@ export function KitImage({ src, alt, className = "" }: KitImageProps) {
         src={src}
         alt={alt}
         fill
-        className="object-cover"
-        style={{ objectPosition }}
+        className={isContain ? "object-contain" : "object-cover"}
+        style={isContain ? undefined : { objectPosition }}
         onError={handleImageError}
         onLoad={handleImageLoad}
         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"

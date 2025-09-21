@@ -1,18 +1,48 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon, Loader2, GripVertical, Trash2, Maximize2, Edit3, Save } from "lucide-react"
-import { useFileUpload } from "@/hooks/use-file-upload"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { KitImageType } from "@/generated/prisma"
-import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client"
-import { createUpload, createKitUpload, deleteKitUpload, updateKitUploadCaption, updateKitUploadType, reorderKitUploads, getKitUploads } from "@/lib/actions/uploads"
-import { cn } from "@/lib/utils"
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  AlertCircleIcon,
+  ImageIcon,
+  UploadIcon,
+  XIcon,
+  Loader2,
+  GripVertical,
+  Trash2,
+  Maximize2,
+  Edit3,
+  Save,
+} from "lucide-react";
+import { useFileUpload } from "@/hooks/use-file-upload";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { KitImageType } from "@/generated/prisma";
+import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
+import {
+  createUpload,
+  createKitUpload,
+  deleteKitUpload,
+  updateKitUploadCaption,
+  updateKitUploadType,
+  reorderKitUploads,
+  getKitUploads,
+} from "@/lib/actions/uploads";
+import { cn } from "@/lib/utils";
 import {
   DndContext,
   closestCenter,
@@ -21,18 +51,16 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
-} from '@dnd-kit/sortable';
-import {
-  useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import NextImage from "next/image"
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import NextImage from "next/image";
 
 interface KitImageItem {
   id: string;
@@ -61,7 +89,9 @@ interface KitImageUploadProps {
   maxFiles?: number;
   maxSizeMB?: number;
   onUploadComplete?: () => void;
-  onFilesChange?: (files: Array<{ id: string; isUploaded: boolean; isUploading: boolean }>) => void;
+  onFilesChange?: (
+    files: Array<{ id: string; isUploaded: boolean; isUploading: boolean }>
+  ) => void;
   onRemovedFilesChange?: (removedFileIds: string[]) => void;
 }
 
@@ -156,20 +186,22 @@ export function KitImageUpload({
   maxSizeMB = 5,
   onUploadComplete,
   onFilesChange,
-  onRemovedFilesChange
+  onRemovedFilesChange,
 }: KitImageUploadProps) {
-  const maxSize = maxSizeMB * 1024 * 1024
-  const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set())
-  const [uploadedFiles, setUploadedFiles] = useState<Set<string>>(new Set(initialFiles.map(f => f.id)))
-  const [removedFiles, setRemovedFiles] = useState<Set<string>>(new Set())
-  const [imageItems, setImageItems] = useState<KitImageItem[]>([])
-  const [uploading, setUploading] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<KitImageItem | null>(null)
-  const [editingCaption, setEditingCaption] = useState(false)
-  const [captionText, setCaptionText] = useState("")
-  const [savingCaption, setSavingCaption] = useState(false)
-  const [savingType, setSavingType] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const maxSize = maxSizeMB * 1024 * 1024;
+  const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set());
+  const [uploadedFiles, setUploadedFiles] = useState<Set<string>>(
+    new Set(initialFiles.map((f) => f.id))
+  );
+  const [removedFiles, setRemovedFiles] = useState<Set<string>>(new Set());
+  const [imageItems, setImageItems] = useState<KitImageItem[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<KitImageItem | null>(null);
+  const [editingCaption, setEditingCaption] = useState(false);
+  const [captionText, setCaptionText] = useState("");
+  const [savingCaption, setSavingCaption] = useState(false);
+  const [savingType, setSavingType] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Drag and drop sensors
   const sensors = useSensors(
@@ -177,25 +209,28 @@ export function KitImageUpload({
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
-  )
+  );
 
   // Use ref to avoid dependency issues
-  const onRemovedFilesChangeRef = useRef(onRemovedFilesChange)
-  onRemovedFilesChangeRef.current = onRemovedFilesChange
+  const onRemovedFilesChangeRef = useRef(onRemovedFilesChange);
+  onRemovedFilesChangeRef.current = onRemovedFilesChange;
 
   // Notify parent when removed files change
   useEffect(() => {
     if (onRemovedFilesChangeRef.current) {
-      console.log('Notifying parent of removed files:', Array.from(removedFiles));
-      onRemovedFilesChangeRef.current(Array.from(removedFiles))
+      console.log(
+        "Notifying parent of removed files:",
+        Array.from(removedFiles)
+      );
+      onRemovedFilesChangeRef.current(Array.from(removedFiles));
     }
-  }, [removedFiles])
+  }, [removedFiles]);
 
   // Load existing kit images
   useEffect(() => {
     const loadKitImages = async () => {
       try {
-        const kitUploads = await getKitUploads(kitId)
+        const kitUploads = await getKitUploads(kitId);
         const items: KitImageItem[] = kitUploads.map((kitUpload) => ({
           id: kitUpload.upload.id,
           kitUploadId: kitUpload.id,
@@ -209,196 +244,221 @@ export function KitImageUpload({
           originalFilename: kitUpload.upload.originalFilename,
           size: kitUpload.upload.size,
           format: kitUpload.upload.format,
-        }))
-        setImageItems(items)
+        }));
+        setImageItems(items);
       } catch (error) {
-        console.error("Error loading kit images:", error)
+        console.error("Error loading kit images:", error);
       }
-    }
+    };
 
-    loadKitImages()
-  }, [kitId])
+    loadKitImages();
+  }, [kitId]);
 
   // Sort items by order
-  const sortedItems = [...imageItems].sort((a, b) => a.order - b.order)
+  const sortedItems = [...imageItems].sort((a, b) => a.order - b.order);
 
-  const handleFileSelect = useCallback(async (files: FileList) => {
-    if (!files.length) return
+  const handleFileSelect = useCallback(
+    async (files: FileList) => {
+      if (!files.length) return;
 
-    setUploading(true)
-    const uploadPromises = Array.from(files).map(async (file) => {
-      try {
-        // Get upload signature
-        const signature = await getUploadSignature("kit-images")
+      setUploading(true);
+      const uploadPromises = Array.from(files).map(async (file) => {
+        try {
+          // Get upload signature
+          const signature = await getUploadSignature("kit-images");
 
-        // Upload to Cloudinary
-        const cloudinaryResult = await uploadToCloudinary(file, signature, "kit-images")
+          // Upload to Cloudinary
+          const cloudinaryResult = await uploadToCloudinary(
+            file,
+            signature,
+            "kit-images"
+          );
 
-        // Create upload record in database
-        const upload = await createUpload({
-          cloudinaryAssetId: cloudinaryResult.asset_id,
-          publicId: cloudinaryResult.public_id,
-          url: cloudinaryResult.secure_url,
-          eagerUrl: cloudinaryResult.eager?.[0]?.secure_url,
-          format: cloudinaryResult.format,
-          resourceType: cloudinaryResult.resource_type,
-          size: cloudinaryResult.bytes,
-          originalFilename: cloudinaryResult.original_filename,
-          uploadedAt: new Date(cloudinaryResult.created_at),
-          uploadedById: "", // Will be set by the server action
-        })
+          // Create upload record in database
+          const upload = await createUpload({
+            cloudinaryAssetId: cloudinaryResult.asset_id,
+            publicId: cloudinaryResult.public_id,
+            url: cloudinaryResult.secure_url,
+            eagerUrl: cloudinaryResult.eager?.[0]?.secure_url,
+            format: cloudinaryResult.format,
+            resourceType: cloudinaryResult.resource_type,
+            size: cloudinaryResult.bytes,
+            originalFilename: cloudinaryResult.original_filename,
+            uploadedAt: new Date(cloudinaryResult.created_at),
+            uploadedById: "", // Will be set by the server action
+          });
 
-        // Create kit upload relationship
-        const kitUpload = await createKitUpload({
-          kitId,
-          uploadId: upload.id,
-          type: 'PRODUCT_SHOTS',
-          caption: undefined,
-          order: imageItems.length,
-        })
+          // Create kit upload relationship
+          const kitUpload = await createKitUpload({
+            kitId,
+            uploadId: upload.id,
+            type: "PRODUCT_SHOTS",
+            caption: undefined,
+            order: imageItems.length,
+          });
 
-        // Create image item
-        const imageItem: KitImageItem = {
-          id: upload.id,
-          kitUploadId: kitUpload.id,
-          uploadId: upload.id,
-          url: upload.url,
-          eagerUrl: upload.eagerUrl,
-          caption: kitUpload.caption || "",
-          type: kitUpload.type,
-          order: kitUpload.order || 0,
-          createdAt: upload.uploadedAt,
-          originalFilename: upload.originalFilename,
-          size: upload.size,
-          format: upload.format,
+          // Create image item
+          const imageItem: KitImageItem = {
+            id: upload.id,
+            kitUploadId: kitUpload.id,
+            uploadId: upload.id,
+            url: upload.url,
+            eagerUrl: upload.eagerUrl,
+            caption: kitUpload.caption || "",
+            type: kitUpload.type,
+            order: kitUpload.order || 0,
+            createdAt: upload.uploadedAt,
+            originalFilename: upload.originalFilename,
+            size: upload.size,
+            format: upload.format,
+          };
+
+          return imageItem;
+        } catch (error) {
+          console.error("Error uploading file:", error);
+          return null;
         }
+      });
 
-        return imageItem
-      } catch (error) {
-        console.error("Error uploading file:", error)
-        return null
-      }
-    })
+      const results = await Promise.all(uploadPromises);
+      const successfulUploads = results.filter(
+        (item): item is KitImageItem => item !== null
+      );
 
-    const results = await Promise.all(uploadPromises)
-    const successfulUploads = results.filter((item): item is KitImageItem => item !== null)
-
-    setImageItems(prev => [...prev, ...successfulUploads])
-    setUploading(false)
-  }, [kitId, imageItems.length])
+      setImageItems((prev) => [...prev, ...successfulUploads]);
+      setUploading(false);
+    },
+    [kitId, imageItems.length]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }, [])
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const files = e.dataTransfer.files
-    if (files.length > 0) {
-      handleFileSelect(files)
-    }
-  }, [handleFileSelect])
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      handleFileSelect(files)
-    }
-  }, [handleFileSelect])
+  const handleFileInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
   const handleDeleteItem = async (item: KitImageItem) => {
     try {
       // Mark for removal from database
-      setRemovedFiles(prev => {
-        const newSet = new Set([...prev, item.kitUploadId])
-        return newSet
-      })
+      setRemovedFiles((prev) => {
+        const newSet = new Set([...prev, item.kitUploadId]);
+        return newSet;
+      });
 
       // Remove from UI
-      setImageItems(prev => prev.filter(i => i.id !== item.id))
+      setImageItems((prev) => prev.filter((i) => i.id !== item.id));
 
       // Close dialog if the deleted image was selected
       if (selectedImage?.id === item.id) {
-        setSelectedImage(null)
-        setEditingCaption(false)
+        setSelectedImage(null);
+        setEditingCaption(false);
       }
     } catch (error) {
-      console.error("Error deleting image item:", error)
+      console.error("Error deleting image item:", error);
     }
-  }
+  };
 
   const handleImageClick = (item: KitImageItem) => {
-    setSelectedImage(item)
-    setCaptionText(item.caption || "")
-    setEditingCaption(false)
-  }
+    setSelectedImage(item);
+    setCaptionText(item.caption || "");
+    setEditingCaption(false);
+  };
 
   const handleSaveCaption = async () => {
-    if (!selectedImage) return
+    if (!selectedImage) return;
 
-    setSavingCaption(true)
+    setSavingCaption(true);
     try {
-      await updateKitUploadCaption(kitId, selectedImage.kitUploadId, captionText)
-      setImageItems(prev =>
-        prev.map(i => i.id === selectedImage.id ? { ...i, caption: captionText } : i)
-      )
-      setSelectedImage(prev => prev ? { ...prev, caption: captionText } : null)
-      setEditingCaption(false)
+      await updateKitUploadCaption(
+        kitId,
+        selectedImage.kitUploadId,
+        captionText
+      );
+      setImageItems((prev) =>
+        prev.map((i) =>
+          i.id === selectedImage.id ? { ...i, caption: captionText } : i
+        )
+      );
+      setSelectedImage((prev) =>
+        prev ? { ...prev, caption: captionText } : null
+      );
+      setEditingCaption(false);
     } catch (error) {
-      console.error("Error updating caption:", error)
+      console.error("Error updating caption:", error);
     } finally {
-      setSavingCaption(false)
+      setSavingCaption(false);
     }
-  }
+  };
 
   const handleTypeChange = async (newType: KitImageType) => {
-    if (!selectedImage) return
+    if (!selectedImage) return;
 
-    setSavingType(true)
+    setSavingType(true);
     try {
-      await updateKitUploadType(kitId, selectedImage.kitUploadId, newType)
-      setImageItems(prev =>
-        prev.map(i => i.id === selectedImage.id ? { ...i, type: newType } : i)
-      )
-      setSelectedImage(prev => prev ? { ...prev, type: newType } : null)
+      await updateKitUploadType(kitId, selectedImage.kitUploadId, newType);
+      setImageItems((prev) =>
+        prev.map((i) =>
+          i.id === selectedImage.id ? { ...i, type: newType } : i
+        )
+      );
+      setSelectedImage((prev) => (prev ? { ...prev, type: newType } : null));
     } catch (error) {
-      console.error("Error updating type:", error)
+      console.error("Error updating type:", error);
     } finally {
-      setSavingType(false)
+      setSavingType(false);
     }
-  }
+  };
 
   const handleCloseLightbox = () => {
-    setSelectedImage(null)
-    setEditingCaption(false)
-    setCaptionText("")
-  }
+    setSelectedImage(null);
+    setEditingCaption(false);
+    setCaptionText("");
+  };
 
   const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event
+    const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = sortedItems.findIndex((item) => item.id === active.id)
-      const newIndex = sortedItems.findIndex((item) => item.id === over.id)
+      const oldIndex = sortedItems.findIndex((item) => item.id === active.id);
+      const newIndex = sortedItems.findIndex((item) => item.id === over.id);
 
       // Update local state immediately for responsive UI
-      const newItems = arrayMove(sortedItems, oldIndex, newIndex)
-      setImageItems(newItems)
+      const newItems = arrayMove(sortedItems, oldIndex, newIndex);
+      setImageItems(newItems);
 
       // Update order in database
       try {
-        const kitUploadIds = newItems.map(item => item.kitUploadId)
-        await reorderKitUploads(kitId, kitUploadIds)
+        const kitUploadIds = newItems.map((item) => item.kitUploadId);
+        await reorderKitUploads(kitId, kitUploadIds);
       } catch (error) {
-        console.error("Error reordering image items:", error)
+        console.error("Error reordering image items:", error);
         // Revert local state on error
-        setImageItems(imageItems)
+        setImageItems(imageItems);
       }
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -428,6 +488,7 @@ export function KitImageUpload({
             </p>
           </div>
           <Button
+            type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
             className="mt-4"
@@ -455,7 +516,7 @@ export function KitImageUpload({
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={sortedItems.map(item => item.id)}
+              items={sortedItems.map((item) => item.id)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
@@ -509,7 +570,9 @@ export function KitImageUpload({
                 <div className="relative w-full h-full">
                   <NextImage
                     src={selectedImage.eagerUrl || selectedImage.url}
-                    alt={selectedImage.caption || selectedImage.originalFilename}
+                    alt={
+                      selectedImage.caption || selectedImage.originalFilename
+                    }
                     width={800}
                     height={600}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
@@ -585,7 +648,8 @@ export function KitImageUpload({
                       ) : (
                         <div className="p-3 bg-gray-50 rounded-lg">
                           <p className="text-sm text-gray-600">
-                            {selectedImage.caption || "No caption added yet. Click Edit to add one."}
+                            {selectedImage.caption ||
+                              "No caption added yet. Click Edit to add one."}
                           </p>
                         </div>
                       )}
@@ -594,7 +658,10 @@ export function KitImageUpload({
 
                   {/* Image Type Section */}
                   <div>
-                    <Label htmlFor="image-type" className="text-sm font-medium mb-3 block">
+                    <Label
+                      htmlFor="image-type"
+                      className="text-sm font-medium mb-3 block"
+                    >
                       Image Type
                     </Label>
                     <Select
@@ -607,7 +674,9 @@ export function KitImageUpload({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="BOX_ART">Box Art</SelectItem>
-                        <SelectItem value="PRODUCT_SHOTS">Product Shots</SelectItem>
+                        <SelectItem value="PRODUCT_SHOTS">
+                          Product Shots
+                        </SelectItem>
                         <SelectItem value="RUNNERS">Runners</SelectItem>
                         <SelectItem value="MANUAL">Manual</SelectItem>
                         <SelectItem value="PROTOTYPE">Prototype</SelectItem>
@@ -621,7 +690,9 @@ export function KitImageUpload({
                   <div className="space-y-2 text-sm text-gray-500 mb-4">
                     <div className="flex justify-between">
                       <span>Size:</span>
-                      <span>{(selectedImage.size / 1024 / 1024).toFixed(1)} MB</span>
+                      <span>
+                        {(selectedImage.size / 1024 / 1024).toFixed(1)} MB
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Format:</span>
@@ -629,7 +700,9 @@ export function KitImageUpload({
                     </div>
                     <div className="flex justify-between">
                       <span>Uploaded:</span>
-                      <span>{new Date(selectedImage.createdAt).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(selectedImage.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
                   </div>
 
@@ -653,5 +726,5 @@ export function KitImageUpload({
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

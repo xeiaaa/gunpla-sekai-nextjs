@@ -50,32 +50,39 @@ export function BaseKitSelectionDialog({
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Kit[]>([]);
-  const [selectedBaseKit, setSelectedBaseKit] = useState<Kit | null>(currentBaseKit);
+  const [selectedBaseKit, setSelectedBaseKit] = useState<Kit | null>(
+    currentBaseKit
+  );
   const [loading, setLoading] = useState(false);
-  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   // Debounced search function
-  const debouncedSearch = useCallback(async (query: string) => {
-    if (query.trim().length < 2) {
-      setSearchResults([]);
-      return;
-    }
+  const debouncedSearch = useCallback(
+    async (query: string) => {
+      if (query.trim().length < 2) {
+        setSearchResults([]);
+        return;
+      }
 
-    setLoading(true);
-    try {
-      const results = await searchKitsWithMeilisearch(query, 20);
-      // Filter out the current kit if excludeKitId is provided
-      const filteredResults = excludeKitId
-        ? results.filter(kit => kit.id !== excludeKitId)
-        : results;
-      setSearchResults(filteredResults);
-    } catch (error) {
-      console.error("Error searching kits:", error);
-      setSearchResults([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [excludeKitId]);
+      setLoading(true);
+      try {
+        const results = await searchKitsWithMeilisearch(query, 20);
+        // Filter out the current kit if excludeKitId is provided
+        const filteredResults = excludeKitId
+          ? results.filter((kit) => kit.id !== excludeKitId)
+          : results;
+        setSearchResults(filteredResults);
+      } catch (error) {
+        console.error("Error searching kits:", error);
+        setSearchResults([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [excludeKitId]
+  );
 
   // Handle search input changes with debouncing
   useEffect(() => {
@@ -132,20 +139,20 @@ export function BaseKitSelectionDialog({
 
   const formatReleaseDate = (date: Date | null | undefined) => {
     if (!date) return "TBA";
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'short',
-      year: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
     });
   };
 
   // Custom kit card component without Link wrapper
   const KitSelectionCard = ({ kit }: { kit: Kit }) => {
     return (
-      <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer">
+      <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer py-0">
         {/* Kit Image */}
         <div className="relative">
           <KitImage
-            src={kit.boxArt || ''}
+            src={kit.boxArt || ""}
             alt={kit.name}
             className="aspect-[4/3] w-full"
           />
@@ -190,43 +197,13 @@ export function BaseKitSelectionDialog({
             <span>#{kit.number}</span>
           </div>
 
-          {/* Release Date and Price */}
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <Calendar className="h-3 w-3" />
-              <span>{formatReleaseDate(kit.releaseDate)}</span>
-            </div>
-
-            {kit.priceYen && (
-              <div className="flex items-center gap-1 text-muted-foreground">
-                <DollarSign className="h-3 w-3" />
-                <span className="font-medium">{formatPrice(kit.priceYen)}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Series and Release Type */}
-          {(kit.series || kit.releaseType) && (
-            <div className="flex flex-wrap gap-1 text-xs">
-              {kit.series && (
-                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
-                  {kit.series}
-                </span>
-              )}
-              {kit.releaseType && (
-                <span className="bg-muted text-muted-foreground px-2 py-1 rounded">
-                  {kit.releaseType}
-                </span>
-              )}
-            </div>
-          )}
-
           {/* Mobile Suits (if any) */}
           {kit.mobileSuits.length > 0 && (
             <div className="pt-1 mt-auto">
               <div className="text-xs text-muted-foreground line-clamp-1">
                 {kit.mobileSuits.slice(0, 2).join(", ")}
-                {kit.mobileSuits.length > 2 && ` +${kit.mobileSuits.length - 2} more`}
+                {kit.mobileSuits.length > 2 &&
+                  ` +${kit.mobileSuits.length - 2} more`}
               </div>
             </div>
           )}
@@ -246,7 +223,8 @@ export function BaseKitSelectionDialog({
         <DialogHeader>
           <DialogTitle>Select Base Kit</DialogTitle>
           <DialogDescription>
-            Search and select a base kit for this kit. Only one kit can be selected.
+            Search and select a base kit for this kit. Only one kit can be
+            selected.
           </DialogDescription>
         </DialogHeader>
 
@@ -278,8 +256,7 @@ export function BaseKitSelectionDialog({
                   <div className="p-4 text-center text-muted-foreground">
                     {searchTerm.length < 2
                       ? "Type at least 2 characters to search"
-                      : "No kits found matching your search."
-                    }
+                      : "No kits found matching your search."}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -289,10 +266,13 @@ export function BaseKitSelectionDialog({
                         className="relative cursor-pointer"
                         onClick={() => handleKitSelect(kit)}
                       >
-                        <div className={cn(
-                          "relative transition-all duration-200",
-                          selectedBaseKit?.id === kit.id && "ring-2 ring-primary ring-offset-2"
-                        )}>
+                        <div
+                          className={cn(
+                            "relative transition-all duration-200",
+                            selectedBaseKit?.id === kit.id &&
+                              "ring-2 ring-primary ring-offset-2"
+                          )}
+                        >
                           <KitSelectionCard kit={kit} />
                           {selectedBaseKit?.id === kit.id && (
                             <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1">
@@ -337,17 +317,10 @@ export function BaseKitSelectionDialog({
         </div>
 
         <DialogFooter className="mt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleCancel}
-          >
+          <Button type="button" variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button
-            type="button"
-            onClick={handleSubmit}
-          >
+          <Button type="button" onClick={handleSubmit}>
             Confirm Selection
           </Button>
         </DialogFooter>

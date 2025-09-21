@@ -50,32 +50,38 @@ export function ExpansionsSelectionDialog({
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Kit[]>([]);
-  const [selectedExpansions, setSelectedExpansions] = useState<Kit[]>(currentExpansions);
+  const [selectedExpansions, setSelectedExpansions] =
+    useState<Kit[]>(currentExpansions);
   const [loading, setLoading] = useState(false);
-  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   // Debounced search function
-  const debouncedSearch = useCallback(async (query: string) => {
-    if (query.trim().length < 2) {
-      setSearchResults([]);
-      return;
-    }
+  const debouncedSearch = useCallback(
+    async (query: string) => {
+      if (query.trim().length < 2) {
+        setSearchResults([]);
+        return;
+      }
 
-    setLoading(true);
-    try {
-      const results = await searchKitsWithMeilisearch(query, 20);
-      // Filter out the current kit if excludeKitId is provided
-      const filteredResults = excludeKitId
-        ? results.filter(kit => kit.id !== excludeKitId)
-        : results;
-      setSearchResults(filteredResults);
-    } catch (error) {
-      console.error("Error searching kits:", error);
-      setSearchResults([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [excludeKitId]);
+      setLoading(true);
+      try {
+        const results = await searchKitsWithMeilisearch(query, 20);
+        // Filter out the current kit if excludeKitId is provided
+        const filteredResults = excludeKitId
+          ? results.filter((kit) => kit.id !== excludeKitId)
+          : results;
+        setSearchResults(filteredResults);
+      } catch (error) {
+        console.error("Error searching kits:", error);
+        setSearchResults([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [excludeKitId]
+  );
 
   // Handle search input changes with debouncing
   useEffect(() => {
@@ -136,9 +142,9 @@ export function ExpansionsSelectionDialog({
 
   const formatReleaseDate = (date: Date | null | undefined) => {
     if (!date) return "TBA";
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'short',
-      year: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
     });
   };
 
@@ -149,9 +155,10 @@ export function ExpansionsSelectionDialog({
         {/* Kit Image */}
         <div className="relative">
           <KitImage
-            src={kit.boxArt || ''}
+            src={kit.boxArt || ""}
             alt={kit.name}
             className="aspect-[4/3] w-full"
+            isContain={true}
           />
 
           <div className="absolute bottom-2 px-2 flex gap-2 justify-between w-full flex-wrap">
@@ -230,7 +237,8 @@ export function ExpansionsSelectionDialog({
             <div className="pt-1 mt-auto">
               <div className="text-xs text-muted-foreground line-clamp-1">
                 {kit.mobileSuits.slice(0, 2).join(", ")}
-                {kit.mobileSuits.length > 2 && ` +${kit.mobileSuits.length - 2} more`}
+                {kit.mobileSuits.length > 2 &&
+                  ` +${kit.mobileSuits.length - 2} more`}
               </div>
             </div>
           )}
@@ -252,7 +260,8 @@ export function ExpansionsSelectionDialog({
         <DialogHeader>
           <DialogTitle>Manage Kit Expansions</DialogTitle>
           <DialogDescription>
-            Search and select expansion kits for this kit. Multiple kits can be selected.
+            Search and select expansion kits for this kit. Multiple kits can be
+            selected.
           </DialogDescription>
         </DialogHeader>
 
@@ -284,8 +293,7 @@ export function ExpansionsSelectionDialog({
                   <div className="p-4 text-center text-muted-foreground">
                     {searchTerm.length < 2
                       ? "Type at least 2 characters to search"
-                      : "No kits found matching your search."
-                    }
+                      : "No kits found matching your search."}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -295,10 +303,13 @@ export function ExpansionsSelectionDialog({
                         className="relative cursor-pointer"
                         onClick={() => handleKitToggle(kit)}
                       >
-                        <div className={cn(
-                          "relative transition-all duration-200",
-                          selectedExpansions.some((k) => k.id === kit.id) && "ring-2 ring-primary ring-offset-2"
-                        )}>
+                        <div
+                          className={cn(
+                            "relative transition-all duration-200",
+                            selectedExpansions.some((k) => k.id === kit.id) &&
+                              "ring-2 ring-primary ring-offset-2"
+                          )}
+                        >
                           <KitSelectionCard kit={kit} />
                           {selectedExpansions.some((k) => k.id === kit.id) && (
                             <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1">
@@ -329,8 +340,12 @@ export function ExpansionsSelectionDialog({
                         className="flex items-center justify-between p-2 border rounded-md bg-muted/50"
                       >
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm truncate">{kit.name}</div>
-                          <div className="text-xs text-muted-foreground">#{kit.number}</div>
+                          <div className="font-medium text-sm truncate">
+                            {kit.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            #{kit.number}
+                          </div>
                         </div>
                         <Button
                           variant="ghost"
@@ -349,17 +364,10 @@ export function ExpansionsSelectionDialog({
         </div>
 
         <DialogFooter className="mt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleCancel}
-          >
+          <Button type="button" variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button
-            type="button"
-            onClick={handleSubmit}
-          >
+          <Button type="button" onClick={handleSubmit}>
             Confirm Selection
           </Button>
         </DialogFooter>

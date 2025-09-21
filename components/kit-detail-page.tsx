@@ -323,6 +323,7 @@ export function KitDetailPage({
                               src={mobileSuit.scrapedImages[0] || ""}
                               alt={mobileSuit.name}
                               className="w-full h-full rounded-md"
+                              isContain={true}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -364,6 +365,7 @@ export function KitDetailPage({
                             src={kit.baseKit.boxArt || ""}
                             alt={kit.baseKit.name}
                             className="w-full h-full rounded-md"
+                            isContain={true}
                           />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -399,6 +401,7 @@ export function KitDetailPage({
                               src={variant.boxArt || ""}
                               alt={variant.name}
                               className="w-full h-full rounded-md"
+                              isContain={true}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -450,6 +453,7 @@ export function KitDetailPage({
                               src={otherVariant.boxArt || ""}
                               alt={otherVariant.name}
                               className="w-full h-full rounded-md"
+                              isContain={true}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -498,6 +502,7 @@ export function KitDetailPage({
                               src={expansion.boxArt || ""}
                               alt={expansion.name}
                               className="w-full h-full rounded-md"
+                              isContain={true}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -558,6 +563,7 @@ export function KitDetailPage({
                               src={expandedByKit.boxArt || ""}
                               alt={expandedByKit.name}
                               className="w-full h-full rounded-md"
+                              isContain={true}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -614,6 +620,7 @@ export function KitDetailPage({
                             src={upload.url}
                             alt={upload.title || `Upload ${upload.type}`}
                             className="w-full h-full"
+                            isContain={true}
                           />
                         </div>
                         <div>
@@ -680,6 +687,7 @@ export function KitDetailPage({
                   src={allImages[selectedImageIndex] || ""}
                   alt={kit.name}
                   className="w-full h-full rounded-lg"
+                  isContain={true}
                 />
               </div>
             </CardContent>
@@ -703,6 +711,7 @@ export function KitDetailPage({
                     src={image || ""}
                     alt={`${kit.name} - Image ${index + 1}`}
                     className="w-full h-full"
+                    isContain={true}
                   />
                 </button>
               ))}
