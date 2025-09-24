@@ -44,6 +44,9 @@ function KitsPageContent() {
   const [appliedSeries, setAppliedSeries] = useState<string[]>([]);
   const [appliedReleaseTypes, setAppliedReleaseTypes] = useState<string[]>([]);
   const [appliedSearchTerm, setAppliedSearchTerm] = useState("");
+  const [appliedIncludeVariants, setAppliedIncludeVariants] = useState(true);
+  const [appliedIncludeExpansions, setAppliedIncludeExpansions] =
+    useState(false);
 
   // Pending filters (what user has selected but not yet applied)
   const [pendingGrades, setPendingGrades] = useState<string[]>([]);
@@ -51,6 +54,9 @@ function KitsPageContent() {
   const [pendingSeries, setPendingSeries] = useState<string[]>([]);
   const [pendingReleaseTypes, setPendingReleaseTypes] = useState<string[]>([]);
   const [pendingSearchTerm, setPendingSearchTerm] = useState("");
+  const [pendingIncludeVariants, setPendingIncludeVariants] = useState(true);
+  const [pendingIncludeExpansions, setPendingIncludeExpansions] =
+    useState(false);
 
   const [appliedSortBy, setAppliedSortBy] = useState("relevance");
   const [appliedOrder, setAppliedOrder] = useState("most-relevant");
@@ -89,6 +95,8 @@ function KitsPageContent() {
     order: appliedOrder,
     limit: 50,
     offset: 0,
+    includeExpansions: appliedIncludeExpansions,
+    includeVariants: appliedIncludeVariants,
   });
 
   const kits = kitsResult?.kits || [];
@@ -129,6 +137,9 @@ function KitsPageContent() {
     const searchTerm = searchParams.get("search") || "";
     const sortByParam = searchParams.get("sortBy") || "relevance";
     const orderParam = searchParams.get("order") || "most-relevant";
+    const includeVariantsParam = searchParams.get("includeVariants") === "true";
+    const includeExpansionsParam =
+      searchParams.get("includeExpansions") === "true";
 
     // Convert slugs to IDs using filter data
     const gradeIds = gradeSlugs
@@ -154,6 +165,8 @@ function KitsPageContent() {
     setAppliedSearchTerm(searchTerm);
     setAppliedSortBy(sortByParam);
     setAppliedOrder(orderParam);
+    setAppliedIncludeVariants(includeVariantsParam);
+    setAppliedIncludeExpansions(includeExpansionsParam);
     setPendingGrades(gradeIds);
     setPendingProductLines(productLineIds);
     setPendingSeries(seriesIds);
@@ -161,6 +174,8 @@ function KitsPageContent() {
     setPendingSearchTerm(searchTerm);
     setPendingSortBy(sortByParam);
     setPendingOrder(orderParam);
+    setPendingIncludeVariants(includeVariantsParam);
+    setPendingIncludeExpansions(includeExpansionsParam);
 
     // Mark as initialized after URL params are processed
     setHasInitialized(true);
@@ -180,6 +195,8 @@ function KitsPageContent() {
     search?: string;
     sortBy?: string;
     order?: string;
+    includeVariants?: boolean;
+    includeExpansions?: boolean;
   }) => {
     setIsUpdatingUrl(true);
 
@@ -226,6 +243,12 @@ function KitsPageContent() {
     if (filters.order && filters.order !== "most-relevant") {
       params.set("order", filters.order);
     }
+    if (filters.includeVariants) {
+      params.set("includeVariants", "true");
+    }
+    if (filters.includeExpansions) {
+      params.set("includeExpansions", "true");
+    }
 
     const queryString = params.toString();
     const newUrl = queryString ? `/kits?${queryString}` : "/kits";
@@ -243,6 +266,8 @@ function KitsPageContent() {
     setPendingSearchTerm("");
     setPendingSortBy("relevance");
     setPendingOrder("most-relevant");
+    setPendingIncludeVariants(false);
+    setPendingIncludeExpansions(false);
   };
 
   const applyFilters = () => {
@@ -256,6 +281,8 @@ function KitsPageContent() {
     setAppliedSearchTerm(pendingSearchTerm);
     setAppliedSortBy(pendingSortBy);
     setAppliedOrder(pendingOrder);
+    setAppliedIncludeVariants(pendingIncludeVariants);
+    setAppliedIncludeExpansions(pendingIncludeExpansions);
 
     // Update URL parameters
     updateUrlParams({
@@ -266,6 +293,8 @@ function KitsPageContent() {
       search: pendingSearchTerm,
       sortBy: pendingSortBy,
       order: pendingOrder,
+      includeVariants: pendingIncludeVariants,
+      includeExpansions: pendingIncludeExpansions,
     });
 
     setIsFilterOpen(false);
@@ -281,15 +310,65 @@ function KitsPageContent() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
-        {/* Filter Button */}
-        <div className="mb-6 flex justify-end">
+        {/* Filter Controls */}
+        <div className="mb-6 flex items-center justify-between">
+          {/* Checkboxes */}
+          <div className="flex items-center gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={appliedIncludeVariants}
+                onChange={(e) => {
+                  setAppliedIncludeVariants(e.target.checked);
+                  updateUrlParams({
+                    grades: appliedGrades,
+                    productLines: appliedProductLines,
+                    series: appliedSeries,
+                    releaseTypes: appliedReleaseTypes,
+                    search: appliedSearchTerm,
+                    sortBy: appliedSortBy,
+                    order: appliedOrder,
+                    includeVariants: e.target.checked,
+                    includeExpansions: appliedIncludeExpansions,
+                  });
+                }}
+                className="rounded border-gray-300"
+              />
+              <span className="text-sm font-medium">Include Variants</span>
+            </label>
+
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={appliedIncludeExpansions}
+                onChange={(e) => {
+                  setAppliedIncludeExpansions(e.target.checked);
+                  updateUrlParams({
+                    grades: appliedGrades,
+                    productLines: appliedProductLines,
+                    series: appliedSeries,
+                    releaseTypes: appliedReleaseTypes,
+                    search: appliedSearchTerm,
+                    sortBy: appliedSortBy,
+                    order: appliedOrder,
+                    includeVariants: appliedIncludeVariants,
+                    includeExpansions: e.target.checked,
+                  });
+                }}
+                className="rounded border-gray-300"
+              />
+              <span className="text-sm font-medium">Include Expansions</span>
+            </label>
+          </div>
+
+          {/* Filter Button */}
           <Button
             onClick={toggleFilter}
             variant="outline"
             className="flex items-center gap-2"
           >
             <Filter className="h-4 w-4" />
-            Filters
+            Show Full Filters
           </Button>
         </div>
 

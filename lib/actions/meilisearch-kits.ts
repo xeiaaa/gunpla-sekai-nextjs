@@ -21,234 +21,6 @@ function getMeilisearchClient() {
   });
 }
 
-function isVariantSearch(query: string): boolean {
-  const variantKeywords = [
-    "metallic",
-    "clear",
-    "ver",
-    "version",
-    "variant",
-    "custom",
-    "special",
-    "plated",
-    "titanium",
-    "pearl",
-    "chrome",
-    "gold",
-    "silver",
-    "transparent",
-    "sd",
-    "hg",
-    "mg",
-    "rg",
-    "pg",
-    "re",
-    "mega",
-    "perfect",
-    "real",
-    "entry",
-  ];
-
-  const lowerQuery = query.toLowerCase();
-  return variantKeywords.some((keyword) => lowerQuery.includes(keyword));
-}
-
-function rankKitsByReleaseDate(kits: any[]): any[] {
-  // Sort by release date descending, with NULL dates at the end
-  return kits.sort((a, b) => {
-    // Handle null release dates (put them last)
-    if (a.releaseDate === null && b.releaseDate !== null) return 1;
-    if (a.releaseDate !== null && b.releaseDate === null) return -1;
-    if (a.releaseDate === null && b.releaseDate === null) return 0;
-
-    // Both have dates, sort by release date descending
-    return (
-      new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-    );
-  });
-}
-
-function rankKitsByGradeAndReleaseDate(kits: any[]): any[] {
-  // Define grade priority order as specified
-  const gradePriority = [
-    "pg",
-    "mg",
-    "rg",
-    "hg",
-    "fm",
-    "eg",
-    "mega-size",
-    "re-100",
-  ];
-
-  return kits.sort((a, b) => {
-    const aGradeSlug = a.productLine?.grade?.slug;
-    const bGradeSlug = b.productLine?.grade?.slug;
-    const aGradeIndex = gradePriority.indexOf(aGradeSlug);
-    const bGradeIndex = gradePriority.indexOf(bGradeSlug);
-
-    // First sort by grade priority
-    if (aGradeIndex !== -1 && bGradeIndex !== -1) {
-      if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
-
-      // Same grade, sort by release date descending
-      if (a.releaseDate && b.releaseDate) {
-        return (
-          new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-        );
-      }
-      // Handle null release dates
-      if (a.releaseDate === null && b.releaseDate !== null) return 1;
-      if (a.releaseDate !== null && b.releaseDate === null) return -1;
-      return 0;
-    } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
-      return -1; // Prioritize kits with known grades
-    } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
-      return 1;
-    }
-
-    // Both unknown grades, sort by release date descending
-    if (a.releaseDate && b.releaseDate) {
-      return (
-        new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-      );
-    }
-    if (a.releaseDate === null && b.releaseDate !== null) return 1;
-    if (a.releaseDate !== null && b.releaseDate === null) return -1;
-    return 0;
-  });
-}
-
-function rankKitsByBaseKitAndReleaseDate(
-  kits: any[],
-  shouldPrioritizeBaseKits: boolean
-): any[] {
-  // Define grade priority order
-  const gradePriority = ["pg", "mg", "rg", "hg", "eg", "fm"];
-
-  if (!shouldPrioritizeBaseKits) {
-    // Even when not prioritizing base kits, still prioritize by release date and grade
-    // but preserve Meilisearch relevance order within same categories
-    return kits.sort((a, b) => {
-      // Prioritize kits released 2010 and above
-      const aReleaseYear = a.releaseDate
-        ? new Date(a.releaseDate).getFullYear()
-        : null;
-      const bReleaseYear = b.releaseDate
-        ? new Date(b.releaseDate).getFullYear()
-        : null;
-
-      // Handle null release dates (put them last)
-      if (aReleaseYear === null && bReleaseYear !== null) return 1;
-      if (aReleaseYear !== null && bReleaseYear === null) return -1;
-      if (aReleaseYear === null && bReleaseYear === null) {
-        // Within kits without release date, prioritize by grade, but preserve Meilisearch order within same grade
-        const aGradeSlug = a.productLine?.grade?.slug;
-        const bGradeSlug = b.productLine?.grade?.slug;
-        const aGradeIndex = gradePriority.indexOf(aGradeSlug);
-        const bGradeIndex = gradePriority.indexOf(bGradeSlug);
-
-        if (aGradeIndex !== -1 && bGradeIndex !== -1) {
-          if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
-          // Same grade - preserve Meilisearch order (don't sort by name)
-          return 0;
-        }
-        if (aGradeIndex !== -1 && bGradeIndex === -1) return -1;
-        if (aGradeIndex === -1 && bGradeIndex !== -1) return 1;
-
-        // Both unknown grades - preserve Meilisearch order
-        return 0;
-      }
-
-      // 2010+ kits first, then older kits
-      if (aReleaseYear >= 2010 && bReleaseYear < 2010) return -1;
-      if (aReleaseYear < 2010 && bReleaseYear >= 2010) return 1;
-
-      // Within same release era, prioritize by grade, but preserve Meilisearch order within same grade
-      const aGradeSlug = a.productLine?.grade?.slug;
-      const bGradeSlug = b.productLine?.grade?.slug;
-      const aGradeIndex = gradePriority.indexOf(aGradeSlug);
-      const bGradeIndex = gradePriority.indexOf(bGradeSlug);
-
-      if (aGradeIndex !== -1 && bGradeIndex !== -1) {
-        if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
-        // Same grade and era - preserve Meilisearch order (don't sort by release date or name)
-        return 0;
-      } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
-        return -1; // Prioritize kits with preferred grades
-      } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
-        return 1;
-      }
-
-      // Same era, unknown grades - preserve Meilisearch order
-      return 0;
-    });
-  }
-
-  // Separate kits by release date first, then by base kit status
-  const kits2010AndAbove = kits.filter((kit) => {
-    if (!kit.releaseDate) return false;
-    const releaseYear = new Date(kit.releaseDate).getFullYear();
-    return releaseYear >= 2010;
-  });
-
-  const kitsBefore2010 = kits.filter((kit) => {
-    if (!kit.releaseDate) return false;
-    const releaseYear = new Date(kit.releaseDate).getFullYear();
-    return releaseYear < 2010;
-  });
-
-  const kitsWithoutReleaseDate = kits.filter((kit) => !kit.releaseDate);
-
-  // Helper function to sort by grade priority, but preserve Meilisearch order within same grade
-  const sortByGradePreservingRelevance = (a: any, b: any) => {
-    const aGradeSlug = a.productLine?.grade?.slug;
-    const bGradeSlug = b.productLine?.grade?.slug;
-    const aGradeIndex = gradePriority.indexOf(aGradeSlug);
-    const bGradeIndex = gradePriority.indexOf(bGradeSlug);
-
-    // First sort by grade priority
-    if (aGradeIndex !== -1 && bGradeIndex !== -1) {
-      if (aGradeIndex !== bGradeIndex) return aGradeIndex - bGradeIndex;
-      // Same grade - preserve Meilisearch relevance order
-      return 0;
-    } else if (aGradeIndex !== -1 && bGradeIndex === -1) {
-      return -1; // Prioritize kits with preferred grades
-    } else if (aGradeIndex === -1 && bGradeIndex !== -1) {
-      return 1;
-    }
-
-    // Both unknown grades - preserve Meilisearch order
-    return 0;
-  };
-
-  // Within 2010+ kits: prioritize base kits, then variants
-  const baseKits2010Plus = kits2010AndAbove.filter((kit) => !kit.baseKitId);
-  const variantKits2010Plus = kits2010AndAbove.filter((kit) => kit.baseKitId);
-
-  // Within pre-2010 kits: prioritize base kits, then variants
-  const baseKitsPre2010 = kitsBefore2010.filter((kit) => !kit.baseKitId);
-  const variantKitsPre2010 = kitsBefore2010.filter((kit) => kit.baseKitId);
-
-  // Within kits without release date: prioritize base kits, then variants
-  const baseKitsNoDate = kitsWithoutReleaseDate.filter((kit) => !kit.baseKitId);
-  const variantKitsNoDate = kitsWithoutReleaseDate.filter(
-    (kit) => kit.baseKitId
-  );
-
-  // Combine in priority order, preserving Meilisearch relevance within each category
-  const rankedKits = [
-    ...baseKits2010Plus.sort(sortByGradePreservingRelevance),
-    ...variantKits2010Plus.sort(sortByGradePreservingRelevance),
-    ...baseKitsPre2010.sort(sortByGradePreservingRelevance),
-    ...variantKitsPre2010.sort(sortByGradePreservingRelevance),
-    ...baseKitsNoDate.sort(sortByGradePreservingRelevance),
-    ...variantKitsNoDate.sort(sortByGradePreservingRelevance),
-  ];
-
-  return rankedKits;
-}
-
 interface KitFilters {
   gradeIds?: string[];
   productLineIds?: string[];
@@ -260,187 +32,192 @@ interface KitFilters {
   order?: string;
   limit?: number;
   offset?: number;
+  includeExpansions?: boolean;
+  includeVariants?: boolean;
+}
+
+interface MeilisearchKit {
+  id: string;
+  name: string;
+  slug: string;
+  number: string;
+  variant?: string | null;
+  releaseDate?: string | null;
+  priceYen?: number | null;
+  boxArt?: string | null;
+  baseKitId?: string | null;
+  productLine?: {
+    id: string;
+    name: string;
+    grade?: {
+      name: string;
+    };
+  };
+  series?: {
+    name: string;
+    timeline?: {
+      name: string;
+    };
+  };
+  releaseType?: {
+    name: string;
+  };
+  mobileSuits?: Array<{
+    name: string;
+  }>;
 }
 
 export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
   try {
     const {
+      searchTerm = "",
+      limit = 50,
+      offset = 0,
       gradeIds = [],
       productLineIds = [],
       mobileSuitIds = [],
       seriesIds = [],
       releaseTypeIds = [],
-      searchTerm = "",
+      includeVariants = true, // Default to true
+      includeExpansions = false, // Default to false
       sortBy = "relevance",
       order = "most-relevant",
-      limit = 50,
-      offset = 0,
     } = filters;
 
-    const meilisearch = getMeilisearchClient();
+    // Decode the search term in case it's URL encoded
+    const decodedSearchTerm = decodeURIComponent(searchTerm);
 
-    // Check if this is a default view (no search term and no filters)
-    const isDefaultView =
-      !searchTerm &&
-      gradeIds.length === 0 &&
-      productLineIds.length === 0 &&
-      mobileSuitIds.length === 0 &&
-      seriesIds.length === 0 &&
-      releaseTypeIds.length === 0;
+    console.log("🔍 Meilisearch search called with:", {
+      originalSearchTerm: searchTerm,
+      decodedSearchTerm,
+      filters,
+    });
+
+    const meilisearch = getMeilisearchClient();
 
     // Build Meilisearch filters
     const meilisearchFilters: string[] = [];
 
-    // Grade filters (using productLine.grade.id)
     if (gradeIds.length > 0) {
-      const gradeFilters = gradeIds.map(
-        (gradeId) => `productLine.grade.id = "${gradeId}"`
+      meilisearchFilters.push(
+        `productLine.grade.id IN [${gradeIds
+          .map((id) => `"${id}"`)
+          .join(", ")}]`
       );
-      meilisearchFilters.push(`(${gradeFilters.join(" OR ")})`);
     }
 
-    // Product line filters
     if (productLineIds.length > 0) {
-      const productLineFilters = productLineIds.map(
-        (plId) => `productLine.id = "${plId}"`
+      meilisearchFilters.push(
+        `productLine.id IN [${productLineIds
+          .map((id) => `"${id}"`)
+          .join(", ")}]`
       );
-      meilisearchFilters.push(`(${productLineFilters.join(" OR ")})`);
     }
 
-    // Mobile suit filters (using mobileSuits.id)
-    if (mobileSuitIds.length > 0) {
-      const mobileSuitFilters = mobileSuitIds.map(
-        (msId) => `mobileSuits.id = "${msId}"`
-      );
-      meilisearchFilters.push(`(${mobileSuitFilters.join(" OR ")})`);
-    }
-
-    // Series filters
     if (seriesIds.length > 0) {
-      const seriesFilters = seriesIds.map(
-        (seriesId) => `series.id = "${seriesId}"`
+      meilisearchFilters.push(
+        `series.id IN [${seriesIds.map((id) => `"${id}"`).join(", ")}]`
       );
-      meilisearchFilters.push(`(${seriesFilters.join(" OR ")})`);
     }
 
-    // Release type filters
     if (releaseTypeIds.length > 0) {
-      const releaseTypeFilters = releaseTypeIds.map(
-        (rtId) => `releaseType.id = "${rtId}"`
+      meilisearchFilters.push(
+        `releaseType.id IN [${releaseTypeIds
+          .map((id) => `"${id}"`)
+          .join(", ")}]`
       );
-      meilisearchFilters.push(`(${releaseTypeFilters.join(" OR ")})`);
     }
 
-    // Handle sorting
-    let sortArray: string[] = [];
+    if (mobileSuitIds.length > 0) {
+      // Note: mobileSuits might not be directly filterable, we may need to handle this differently
+      console.log(
+        "Note: mobileSuitIds filter not implemented - mobileSuits may not be filterable"
+      );
+    }
+
+    // Handle variants and expansions
+    if (!includeVariants) {
+      // Filter out variants - variants have a baseKitId, base kits have baseKitId = null
+      meilisearchFilters.push("baseKitId IS NULL");
+    }
+
+    if (!includeExpansions) {
+      meilisearchFilters.push("isExpansion = false");
+    }
+
+    // Build sort options
+    let sortOptions: string[] = [];
     if (sortBy === "name") {
-      sortArray = order === "ascending" ? ["name:asc"] : ["name:desc"];
+      sortOptions = [`name:${order === "ascending" ? "asc" : "desc"}`];
     } else if (sortBy === "release-date") {
-      sortArray =
-        order === "ascending" ? ["releaseDate:asc"] : ["releaseDate:desc"];
-    } else if (sortBy === "rating") {
-      // For now, use relevance as rating isn't in Meilisearch
-      sortArray = [];
+      sortOptions = [`releaseDate:${order === "ascending" ? "asc" : "desc"}`];
     } else {
-      // Default to relevance
-      sortArray = [];
+      // Default relevance sorting - let Meilisearch handle it
+      sortOptions = [];
     }
 
-    // Search kits with custom ranking
-    const kitsResponse = await meilisearch.index("kits").search(searchTerm, {
+    // Search options
+    const searchOptions: {
+      limit: number;
+      offset: number;
+      filter?: string;
+      sort?: string[];
+    } = {
+      limit,
+      offset,
       filter:
         meilisearchFilters.length > 0
           ? meilisearchFilters.join(" AND ")
           : undefined,
-      sort: sortArray.length > 0 ? sortArray : undefined,
-      limit: limit * 2, // Get more results to re-rank
-      offset: offset,
-      attributesToRetrieve: [
-        "id",
-        "name",
-        "slug",
-        "number",
-        "variant",
-        "releaseDate",
-        "priceYen",
-        "boxArt",
-        "notes",
-        "baseKitId",
-        "productLine",
-        "series",
-        "releaseType",
-        "mobileSuits",
-        "expansions",
-      ],
+      sort: sortOptions.length > 0 ? sortOptions : undefined,
+    };
+
+    console.log("Meilisearch search options:", searchOptions);
+
+    // Search kits with filters
+    const kitsResponse = await meilisearch
+      .index("kits")
+      .search(decodedSearchTerm, searchOptions);
+
+    console.log("------==============----------");
+    console.log("Original search term:", searchTerm);
+    console.log("Decoded search term:", decodedSearchTerm);
+    console.log("Applied filters:", meilisearchFilters);
+    console.log(
+      "Results:",
+      kitsResponse.hits.map(
+        (kit) =>
+          (kit as MeilisearchKit).name + " - " + (kit as MeilisearchKit).slug
+      )
+    );
+    console.log("------==============----------");
+
+    // Use Meilisearch results directly
+    const kits = kitsResponse.hits;
+
+    // Transform data - use whatever fields are available from Meilisearch
+    const transformedKits = kits.map((kit) => {
+      const typedKit = kit as MeilisearchKit;
+      return {
+        id: typedKit.id,
+        name: typedKit.name,
+        slug: typedKit.slug,
+        number: typedKit.number,
+        variant: typedKit.variant,
+        releaseDate: typedKit.releaseDate
+          ? new Date(typedKit.releaseDate)
+          : null,
+        priceYen: typedKit.priceYen,
+        boxArt: typedKit.boxArt,
+        baseKitId: typedKit.baseKitId,
+        grade: typedKit.productLine?.grade?.name || null,
+        productLine: typedKit.productLine?.name,
+        series: typedKit.series?.name,
+        timeline: typedKit.series?.timeline?.name,
+        releaseType: typedKit.releaseType?.name,
+        mobileSuits: typedKit.mobileSuits?.map((ms) => ms.name) || [],
+      };
     });
-
-    let rankedKits: any[];
-
-    if (isDefaultView) {
-      // Default view: sort by release date descending, NULL dates last
-      rankedKits = rankKitsByReleaseDate(kitsResponse.hits);
-    } else if (searchTerm) {
-      // Search query: prioritize base kits first, then variants, then expansions last
-      // Separate kits into categories
-      const baseKits = kitsResponse.hits.filter((kit: any) => {
-        // Base kits: no baseKitId and not expansion kits
-        return (
-          !kit.baseKitId && (!kit.expansions || kit.expansions.length === 0)
-        );
-      });
-
-      const variantKits = kitsResponse.hits.filter((kit: any) => {
-        // Variant kits: have baseKitId but not expansion kits
-        return (
-          kit.baseKitId && (!kit.expansions || kit.expansions.length === 0)
-        );
-      });
-
-      const expansionKits = kitsResponse.hits.filter((kit: any) => {
-        // Expansion kits: have expansions (regardless of baseKitId)
-        return kit.expansions && kit.expansions.length > 0;
-      });
-
-      // Rank each category separately, then combine with expansion kits last
-      const rankedBaseKits = rankKitsByGradeAndReleaseDate(baseKits);
-      const rankedVariantKits = rankKitsByGradeAndReleaseDate(variantKits);
-      const rankedExpansionKits = rankKitsByGradeAndReleaseDate(expansionKits);
-
-      rankedKits = [
-        ...rankedBaseKits,
-        ...rankedVariantKits,
-        ...rankedExpansionKits,
-      ];
-    } else {
-      // Filtered view: use existing logic
-      const shouldPrioritizeBaseKits = !isVariantSearch(searchTerm);
-      rankedKits = rankKitsByBaseKitAndReleaseDate(
-        kitsResponse.hits,
-        shouldPrioritizeBaseKits
-      );
-    }
-
-    // Apply limit and offset after ranking
-    const paginatedKits = rankedKits.slice(0, limit);
-
-    // Transform kits data to match existing interface
-    const transformedKits = paginatedKits.map((kit: any) => ({
-      id: kit.id,
-      name: kit.name,
-      slug: kit.slug,
-      number: kit.number,
-      variant: kit.variant,
-      releaseDate: kit.releaseDate ? new Date(kit.releaseDate) : null,
-      priceYen: kit.priceYen,
-      boxArt: kit.boxArt,
-      baseKitId: kit.baseKitId,
-      grade: kit.productLine?.grade?.name || null,
-      productLine: kit.productLine?.name,
-      series: kit.series?.name,
-      timeline: kit.series?.timeline?.name,
-      releaseType: kit.releaseType?.name,
-      mobileSuits: kit.mobileSuits?.map((ms: any) => ms.name) || [],
-    }));
 
     return {
       kits: transformedKits,

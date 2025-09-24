@@ -82,6 +82,8 @@ interface SearchableKit {
     name: string;
     slug: string | null;
   }>;
+  isExpansion: boolean;
+  isBaseKit: boolean;
   // Searchable text fields
   searchableText: string;
 }
@@ -242,20 +244,7 @@ async function configureIndexes() {
 
   // Configure kits index
   await meilisearch.index(INDEXES.kits).updateSettings({
-    searchableAttributes: [
-      "name",
-      "number",
-      "variant",
-      "searchableText",
-      "productLine.name",
-      "productLine.grade.name",
-      "series.name",
-      "series.timeline.name",
-      "releaseType.name",
-      "mobileSuits.name",
-      "expansions.name",
-      "notes", // Moved to end to give it lower priority
-    ],
+    searchableAttributes: ["searchableText"],
     filterableAttributes: [
       "productLine.id",
       "productLine.grade.id",
@@ -267,21 +256,19 @@ async function configureIndexes() {
       "region",
       "baseKitId",
       "expansions.id",
+      "isExpansion",
+      "isBaseKit",
     ],
-    sortableAttributes: [
-      "name",
-      "number",
-      "releaseDate",
-      "priceYen",
-      "createdAt",
-    ],
+    sortableAttributes: ["name", "releaseDate", "priceYen", "createdAt"],
     rankingRules: [
-      "words",
-      "typo",
-      "proximity",
-      "attribute",
-      "sort",
-      "exactness",
+      // "words", // prioritize documents matching more query words
+      "typo", // fewer typos rank higher
+      "exactness", // exact matches come before partials
+      "proximity", // closer words rank higher
+      "sort", // enable custom sorting (release date, price, etc.)
+      "attribute", // prioritize name/number over notes
+      "releaseDate:desc", // newer kits first (when no explicit sort is given)
+      "isExpansion:asc",
     ],
   });
 
@@ -289,7 +276,6 @@ async function configureIndexes() {
   await meilisearch.index(INDEXES.mobileSuits).updateSettings({
     searchableAttributes: [
       "name",
-      "description",
       "searchableText",
       "series.name",
       "series.timeline.name",
@@ -407,6 +393,7 @@ async function syncKits() {
           expansion: true,
         },
       },
+      expandedBy: true,
     },
   });
 
@@ -468,17 +455,14 @@ async function syncKits() {
       name: exp.expansion.name,
       slug: exp.expansion.slug,
     })),
+    isExpansion: kit.expandedBy.length > 0, // if this kit is used as an expansion
+    isBaseKit: !kit.baseKitId && kit.expandedBy.length === 0, // base kit if not a variant and not an expansion
     searchableText: [
-      kit.name,
-      kit.number,
-      kit.variant,
-      kit.notes,
-      kit.productLine?.name,
-      kit.productLine?.grade.name,
-      kit.series?.name,
-      kit.series?.timeline?.name,
-      kit.releaseType?.name,
-      ...kit.mobileSuits.map((ks) => ks.mobileSuit.name),
+      kit.name, // ex. "RX-0 Unicorn Gundam" - put name first for better relevance
+      kit.productLine?.slug, // ex. "pg"
+      // `(${kit.productLine?.name})`, // ex. "Perfect Grade"
+      // kit.releaseType?.slug, // ex. "p-bandai"
+      // `(${kit.releaseType?.name})`, // ex. "Premium Bandai"
     ]
       .filter(Boolean)
       .join(" "),

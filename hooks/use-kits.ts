@@ -15,6 +15,8 @@ interface UseKitsParams {
   order: string;
   limit?: number;
   offset?: number;
+  includeExpansions?: boolean;
+  includeVariants?: boolean;
 }
 
 // Hook for filter data
@@ -22,7 +24,7 @@ export function useFilterData() {
   return useQuery({
     queryKey: ["filterData"],
     queryFn: getFilterDataWithMeilisearch,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    staleTime: 0, // 24 hours
     gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days in cache
   });
 }
@@ -42,9 +44,11 @@ export function useKits(params: UseKitsParams) {
       params.order,
       params.limit,
       params.offset,
+      params.includeExpansions,
+      params.includeVariants,
     ],
     queryFn: () => getFilteredKitsWithMeilisearch(params),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 0, // 5 minutes
     enabled: true, // Always enabled, but we'll handle loading states
   });
 }
