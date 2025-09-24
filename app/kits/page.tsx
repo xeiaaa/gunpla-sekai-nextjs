@@ -113,7 +113,8 @@ function KitsPageContent() {
     const searchTerm = searchParams.get("search") || "";
     const sortByParam = searchParams.get("sortBy") || "relevance";
     const orderParam = searchParams.get("order") || "most-relevant";
-    const includeVariantsParam = searchParams.get("includeVariants") === "true";
+    const includeVariantsParam =
+      searchParams.get("includeVariants") !== "false";
     const includeExpansionsParam =
       searchParams.get("includeExpansions") === "true";
 
@@ -241,8 +242,8 @@ function KitsPageContent() {
     if (filters.order && filters.order !== "most-relevant") {
       params.set("order", filters.order);
     }
-    if (filters.includeVariants) {
-      params.set("includeVariants", "true");
+    if (filters.includeVariants !== undefined) {
+      params.set("includeVariants", filters.includeVariants ? "true" : "false");
     }
     if (filters.includeExpansions) {
       params.set("includeExpansions", "true");
@@ -264,7 +265,7 @@ function KitsPageContent() {
     setPendingSearchTerm("");
     setPendingSortBy("relevance");
     setPendingOrder("most-relevant");
-    setPendingIncludeVariants(false);
+    setPendingIncludeVariants(true);
     setPendingIncludeExpansions(false);
   };
 
@@ -319,56 +320,7 @@ function KitsPageContent() {
         )}
 
         {/* Filter Controls */}
-        <div className="mb-6 flex items-center justify-between">
-          {/* Checkboxes */}
-          <div className="flex items-center gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={appliedIncludeVariants}
-                onChange={(e) => {
-                  setAppliedIncludeVariants(e.target.checked);
-                  updateUrlParams({
-                    grades: appliedGrades,
-                    productLines: appliedProductLines,
-                    series: appliedSeries,
-                    releaseTypes: appliedReleaseTypes,
-                    search: appliedSearchTerm,
-                    sortBy: appliedSortBy,
-                    order: appliedOrder,
-                    includeVariants: e.target.checked,
-                    includeExpansions: appliedIncludeExpansions,
-                  });
-                }}
-                className="rounded border-gray-300"
-              />
-              <span className="text-sm font-medium">Include Variants</span>
-            </label>
-
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={appliedIncludeExpansions}
-                onChange={(e) => {
-                  setAppliedIncludeExpansions(e.target.checked);
-                  updateUrlParams({
-                    grades: appliedGrades,
-                    productLines: appliedProductLines,
-                    series: appliedSeries,
-                    releaseTypes: appliedReleaseTypes,
-                    search: appliedSearchTerm,
-                    sortBy: appliedSortBy,
-                    order: appliedOrder,
-                    includeVariants: appliedIncludeVariants,
-                    includeExpansions: e.target.checked,
-                  });
-                }}
-                className="rounded border-gray-300"
-              />
-              <span className="text-sm font-medium">Include Expansions</span>
-            </label>
-          </div>
-
+        <div className="mb-6 flex items-center justify-end">
           {/* Filter Button */}
           <Button
             onClick={toggleFilter}
@@ -459,6 +411,40 @@ function KitsPageContent() {
                         )}
                       </select>
                     </div>
+                  </div>
+                </div>
+
+                {/* Include Options */}
+                <div className="mb-6">
+                  <h3 className="font-medium mb-3">Include</h3>
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={pendingIncludeVariants}
+                        onChange={(e) =>
+                          setPendingIncludeVariants(e.target.checked)
+                        }
+                        className="rounded border-gray-300"
+                      />
+                      <span className="text-sm font-medium">
+                        Include Variants
+                      </span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={pendingIncludeExpansions}
+                        onChange={(e) =>
+                          setPendingIncludeExpansions(e.target.checked)
+                        }
+                        className="rounded border-gray-300"
+                      />
+                      <span className="text-sm font-medium">
+                        Include Expansions
+                      </span>
+                    </label>
                   </div>
                 </div>
 
