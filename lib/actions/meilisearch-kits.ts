@@ -151,6 +151,11 @@ export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
       sortOptions = [`name:${order === "ascending" ? "asc" : "desc"}`];
     } else if (sortBy === "release-date") {
       sortOptions = [`releaseDate:${order === "ascending" ? "asc" : "desc"}`];
+    } else if (sortBy === "rating") {
+      // Note: Rating sorting might not be available in current Meilisearch index
+      // For now, fall back to relevance sorting
+      console.log("Rating sorting not implemented - falling back to relevance");
+      sortOptions = [];
     } else {
       // Default relevance sorting - let Meilisearch handle it
       sortOptions = [];

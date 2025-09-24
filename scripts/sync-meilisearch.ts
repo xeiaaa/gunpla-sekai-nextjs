@@ -459,6 +459,7 @@ async function syncKits() {
     isBaseKit: !kit.baseKitId && kit.expandedBy.length === 0, // base kit if not a variant and not an expansion
     searchableText: [
       kit.name, // ex. "RX-0 Unicorn Gundam" - put name first for better relevance
+      kit.productLine?.grade?.slug,
       kit.productLine?.slug, // ex. "pg"
       // `(${kit.productLine?.name})`, // ex. "Perfect Grade"
       // kit.releaseType?.slug, // ex. "p-bandai"

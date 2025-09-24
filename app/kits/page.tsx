@@ -6,31 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Filter, X, RotateCcw } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 import { KitCard } from "@/components/kit-card";
-import { useFilterData, useKits } from "@/hooks/use-kits";
-
-interface Kit {
-  id: string;
-  name: string;
-  slug?: string | null;
-  number: string;
-  variant?: string | null;
-  releaseDate?: Date | null;
-  priceYen?: number | null;
-  boxArt?: string | null;
-  baseKitId?: string | null;
-  grade?: string | null;
-  productLine?: string | null;
-  series?: string | null;
-  releaseType?: string | null;
-  mobileSuits: string[];
-}
-
-interface FilterData {
-  grades: Array<{ id: string; name: string; slug: string | null }>;
-  productLines: Array<{ id: string; name: string; slug: string | null }>;
-  series: Array<{ id: string; name: string; slug: string | null }>;
-  releaseTypes: Array<{ id: string; name: string; slug: string | null }>;
-}
+import { useFilterData, useKitsInfinite } from "@/hooks/use-kits";
 
 function KitsPageContent() {
   const router = useRouter();
@@ -62,12 +38,10 @@ function KitsPageContent() {
   const [appliedOrder, setAppliedOrder] = useState("most-relevant");
   const [pendingSortBy, setPendingSortBy] = useState("relevance");
   const [pendingOrder, setPendingOrder] = useState("most-relevant");
-  const [kitCollectionStatuses, setKitCollectionStatuses] = useState<
-    Map<string, string>
-  >(new Map());
-  const [hasInitialized, setHasInitialized] = useState(false);
+  const [kitCollectionStatuses] = useState<Map<string, string>>(new Map());
   const [isUpdatingUrl, setIsUpdatingUrl] = useState(false);
   const isApplyingFilters = useRef(false);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   // React Query hooks
   const {
@@ -81,10 +55,13 @@ function KitsPageContent() {
   } = useFilterData();
 
   const {
-    data: kitsResult,
+    data: kitsData,
     isLoading: kitsLoading,
     error: kitsError,
-  } = useKits({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useKitsInfinite({
     gradeIds: appliedGrades,
     productLineIds: appliedProductLines,
     mobileSuitIds: [],
@@ -93,13 +70,12 @@ function KitsPageContent() {
     searchTerm: appliedSearchTerm,
     sortBy: appliedSortBy,
     order: appliedOrder,
-    limit: 50,
-    offset: 0,
     includeExpansions: appliedIncludeExpansions,
     includeVariants: appliedIncludeVariants,
   });
 
-  const kits = kitsResult?.kits || [];
+  // Flatten all pages of kits into a single array
+  const kits = kitsData?.pages.flatMap((page) => page.kits) || [];
   const loading = filterDataLoading || kitsLoading;
 
   // Initialize from URL parameters
@@ -176,12 +152,34 @@ function KitsPageContent() {
     setPendingOrder(orderParam);
     setPendingIncludeVariants(includeVariantsParam);
     setPendingIncludeExpansions(includeExpansionsParam);
+  }, [searchParams, filterData, isUpdatingUrl]);
 
-    // Mark as initialized after URL params are processed
-    setHasInitialized(true);
-  }, [searchParams, filterData]);
+  // Infinite scroll intersection observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "100px",
+      }
+    );
 
-  // No need for separate useEffect hooks for loading data - React Query handles this
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -310,6 +308,16 @@ function KitsPageContent() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
+        {/* Results Summary */}
+        {kitsData && kits.length > 0 && (
+          <div className="mb-4">
+            <p className="text-muted-foreground">
+              Showing {kits.length}{" "}
+              {kitsData.pages[0]?.total && `of ${kitsData.pages[0].total}`} kits
+            </p>
+          </div>
+        )}
+
         {/* Filter Controls */}
         <div className="mb-6 flex items-center justify-between">
           {/* Checkboxes */}
@@ -403,7 +411,15 @@ function KitsPageContent() {
                     <div>
                       <select
                         value={pendingSortBy}
-                        onChange={(e) => setPendingSortBy(e.target.value)}
+                        onChange={(e) => {
+                          setPendingSortBy(e.target.value);
+                          // Reset order to appropriate default when sort changes
+                          if (e.target.value === "relevance") {
+                            setPendingOrder("most-relevant");
+                          } else {
+                            setPendingOrder("ascending");
+                          }
+                        }}
                         className="w-full p-2 text-sm border rounded-md bg-background"
                       >
                         <option value="relevance">Relevance</option>
@@ -418,10 +434,29 @@ function KitsPageContent() {
                         onChange={(e) => setPendingOrder(e.target.value)}
                         className="w-full p-2 text-sm border rounded-md bg-background"
                       >
-                        <option value="most-relevant">Most Relevant</option>
-                        <option value="least-relevant">Least Relevant</option>
-                        <option value="ascending">Ascending</option>
-                        <option value="descending">Descending</option>
+                        {pendingSortBy === "relevance" ? (
+                          <>
+                            <option value="most-relevant">Most Relevant</option>
+                            <option value="least-relevant">
+                              Least Relevant
+                            </option>
+                          </>
+                        ) : pendingSortBy === "name" ? (
+                          <>
+                            <option value="ascending">A-Z</option>
+                            <option value="descending">Z-A</option>
+                          </>
+                        ) : pendingSortBy === "release-date" ? (
+                          <>
+                            <option value="descending">Newest</option>
+                            <option value="ascending">Oldest</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value="ascending">Lowest Rating</option>
+                            <option value="descending">Highest Rating</option>
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
@@ -520,16 +555,60 @@ function KitsPageContent() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-stretch">
-            {kits.map((kit) => (
-              <KitCard
-                key={kit.id}
-                kit={kit}
-                collectionStatus={kitCollectionStatuses.get(kit.id) as any}
-                className="h-full"
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-stretch">
+              {kits.map((kit) => (
+                <KitCard
+                  key={kit.id}
+                  kit={kit}
+                  collectionStatus={
+                    kitCollectionStatuses.get(kit.id) as
+                      | "WISHLIST"
+                      | "PREORDER"
+                      | "BACKLOG"
+                      | "IN_PROGRESS"
+                      | "BUILT"
+                      | undefined
+                  }
+                  className="h-full"
+                />
+              ))}
+            </div>
+
+            {/* Infinite scroll trigger and loading indicator */}
+            <div ref={loadMoreRef} className="py-8">
+              {isFetchingNextPage && (
+                <div className="flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto mb-2"></div>
+                    <p className="text-muted-foreground text-sm">
+                      Loading more kits...
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {hasNextPage && !isFetchingNextPage && (
+                <div className="flex items-center justify-center">
+                  <Button
+                    onClick={() => fetchNextPage()}
+                    variant="outline"
+                    className="flex items-center gap-2"
+                  >
+                    Load More Kits
+                  </Button>
+                </div>
+              )}
+
+              {!hasNextPage && kits.length > 0 && (
+                <div className="flex items-center justify-center">
+                  <p className="text-muted-foreground text-sm">
+                    You&apos;ve reached the end of the results
+                  </p>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>

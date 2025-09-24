@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import {
   getFilteredKitsWithMeilisearch,
   getFilterDataWithMeilisearch,
@@ -29,7 +29,7 @@ export function useFilterData() {
   });
 }
 
-// Hook for filtered kits
+// Hook for filtered kits with pagination
 export function useKits(params: UseKitsParams) {
   return useQuery({
     queryKey: [
@@ -50,5 +50,43 @@ export function useKits(params: UseKitsParams) {
     queryFn: () => getFilteredKitsWithMeilisearch(params),
     staleTime: 0, // 5 minutes
     enabled: true, // Always enabled, but we'll handle loading states
+  });
+}
+
+// Hook for infinite scroll kits
+export function useKitsInfinite(
+  params: Omit<UseKitsParams, "limit" | "offset">
+) {
+  const pageSize = 20; // Load 20 kits per page
+
+  return useInfiniteQuery({
+    queryKey: [
+      "kits-infinite",
+      params.gradeIds,
+      params.productLineIds,
+      params.mobileSuitIds,
+      params.seriesIds,
+      params.releaseTypeIds,
+      params.searchTerm,
+      params.sortBy,
+      params.order,
+      params.includeExpansions,
+      params.includeVariants,
+    ],
+    queryFn: ({ pageParam = 0 }) =>
+      getFilteredKitsWithMeilisearch({
+        ...params,
+        limit: pageSize,
+        offset: pageParam * pageSize,
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      // If there are more kits to load, return the next page number
+      if (lastPage.hasMore) {
+        return allPages.length;
+      }
+      return undefined;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    initialPageParam: 0,
   });
 }
