@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
-import { getUserByUsername } from "@/lib/actions/users";
+import { getUserByUsername, getUserBasicInfo } from "@/lib/actions/users";
 import { UserProfilePage } from "@/components/user-profile-page";
 
 interface UserProfilePageProps {
@@ -10,7 +10,8 @@ interface UserProfilePageProps {
 }
 
 export async function generateMetadata({ params }: UserProfilePageProps) {
-  const user = await getUserByUsername(params.username);
+  // Use optimized function for metadata generation (minimal data)
+  const user = await getUserBasicInfo(params.username);
 
   if (!user) {
     return {
@@ -18,9 +19,10 @@ export async function generateMetadata({ params }: UserProfilePageProps) {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName} - Gunpla Sekai`,
@@ -39,5 +41,11 @@ export default async function UserProfile({ params }: UserProfilePageProps) {
   // Check if the current user is viewing their own profile
   const isOwnProfile = userId === user.id;
 
-  return <UserProfilePage user={user} isOwnProfile={isOwnProfile} routeContext="user" />;
+  return (
+    <UserProfilePage
+      user={user}
+      isOwnProfile={isOwnProfile}
+      routeContext="user"
+    />
+  );
 }

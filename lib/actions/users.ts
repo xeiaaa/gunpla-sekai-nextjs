@@ -91,7 +91,9 @@ export interface UserProfileData {
   }>;
 }
 
-export async function getUserByUsername(username: string): Promise<UserProfileData | null> {
+export async function getUserByUsername(
+  username: string
+): Promise<UserProfileData | null> {
   try {
     const user = await prisma.user.findUnique({
       where: { username },
@@ -273,8 +275,10 @@ export async function getUserByUsername(username: string): Promise<UserProfileDa
             },
           });
 
-          const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-          const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+          const helpfulCount =
+            feedbackCounts.find((f) => f.isHelpful)?._count.isHelpful || 0;
+          const notHelpfulCount =
+            feedbackCounts.find((f) => !f.isHelpful)?._count.isHelpful || 0;
 
           return {
             id: review.id,
@@ -334,6 +338,267 @@ export async function getUserById(userId: string) {
     return user;
   } catch (error) {
     console.error("Error fetching user by ID:", error);
+    return null;
+  }
+}
+
+// Optimized function for basic user info (metadata generation)
+export async function getUserBasicInfo(username: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        imageUrl: true,
+        avatarUrl: true,
+        createdAt: true,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user basic info:", error);
+    return null;
+  }
+}
+
+// Optimized function to get full profile by userId (for /me page)
+export async function getUserProfileById(
+  userId: string
+): Promise<UserProfileData | null> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        collections: {
+          select: {
+            status: true,
+          },
+        },
+        builds: {
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          include: {
+            kit: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                boxArt: true,
+                productLine: {
+                  select: {
+                    name: true,
+                    grade: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                  },
+                },
+                series: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            featuredImage: {
+              select: {
+                url: true,
+              },
+            },
+            likes: {
+              select: {
+                id: true,
+              },
+            },
+            comments: {
+              select: {
+                id: true,
+              },
+            },
+            milestones: {
+              take: 2,
+              orderBy: { order: "asc" },
+              include: {
+                uploads: {
+                  take: 1,
+                  include: {
+                    upload: {
+                      select: {
+                        url: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        reviews: {
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          include: {
+            kit: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                boxArt: true,
+              },
+            },
+            feedback: {
+              select: {
+                isHelpful: true,
+              },
+            },
+            categoryScores: {
+              select: {
+                category: true,
+                score: true,
+                notes: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    // Calculate collection stats
+    const collectionStats = {
+      wishlist: 0,
+      preorder: 0,
+      backlog: 0,
+      inProgress: 0,
+      built: 0,
+      total: user.collections.length,
+    };
+
+    user.collections.forEach((collection) => {
+      switch (collection.status) {
+        case CollectionStatus.WISHLIST:
+          collectionStats.wishlist++;
+          break;
+        case CollectionStatus.PREORDER:
+          collectionStats.preorder++;
+          break;
+        case CollectionStatus.BACKLOG:
+          collectionStats.backlog++;
+          break;
+        case CollectionStatus.IN_PROGRESS:
+          collectionStats.inProgress++;
+          break;
+        case CollectionStatus.BUILT:
+          collectionStats.built++;
+          break;
+      }
+    });
+
+    // Get all review feedback counts in a single query to avoid N+1 problem
+    const reviewIds = user.reviews.map((review) => review.id);
+    const allFeedbackCounts =
+      reviewIds.length > 0
+        ? await prisma.reviewFeedback.groupBy({
+            by: ["reviewId", "isHelpful"],
+            where: {
+              reviewId: { in: reviewIds },
+            },
+            _count: {
+              isHelpful: true,
+            },
+          })
+        : [];
+
+    // Create a map for quick lookup
+    const feedbackMap = new Map<
+      string,
+      { helpful: number; notHelpful: number }
+    >();
+    allFeedbackCounts.forEach((feedback) => {
+      const key = feedback.reviewId;
+      if (!feedbackMap.has(key)) {
+        feedbackMap.set(key, { helpful: 0, notHelpful: 0 });
+      }
+      const counts = feedbackMap.get(key)!;
+      if (feedback.isHelpful) {
+        counts.helpful = feedback._count.isHelpful;
+      } else {
+        counts.notHelpful = feedback._count.isHelpful;
+      }
+    });
+
+    return {
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      imageUrl: user.imageUrl,
+      avatarUrl: user.avatarUrl,
+      bio: user.bio,
+      instagramUrl: user.instagramUrl,
+      youtubeUrl: user.youtubeUrl,
+      portfolioUrl: user.portfolioUrl,
+      bannerImageUrl: user.bannerImageUrl,
+      createdAt: user.createdAt,
+      collectionStats,
+      recentBuilds: user.builds.map((build) => ({
+        id: build.id,
+        title: build.title,
+        status: build.status,
+        createdAt: build.createdAt,
+        completedAt: build.completedAt,
+        featuredImage: build.featuredImage,
+        kit: build.kit,
+        likes: {
+          count: build.likes.length,
+        },
+        comments: {
+          count: build.comments.length,
+        },
+        milestones: build.milestones.map((milestone) => ({
+          id: milestone.id,
+          type: milestone.type,
+          title: milestone.title,
+          imageUrls: milestone.imageUrls,
+          uploads: milestone.uploads.map((upload) => ({
+            upload: upload.upload,
+          })),
+        })),
+      })),
+      recentReviews: user.reviews.map((review) => {
+        const feedback = feedbackMap.get(review.id) || {
+          helpful: 0,
+          notHelpful: 0,
+        };
+
+        return {
+          id: review.id,
+          title: review.title,
+          content: review.content,
+          overallScore: review.overallScore,
+          createdAt: review.createdAt,
+          kit: review.kit,
+          feedback: {
+            helpful: feedback.helpful,
+            notHelpful: feedback.notHelpful,
+          },
+          categoryScores: review.categoryScores.map((score) => ({
+            category: score.category,
+            score: score.score,
+            notes: score.notes,
+          })),
+        };
+      }),
+    };
+  } catch (error) {
+    console.error("Error fetching user profile by ID:", error);
     return null;
   }
 }

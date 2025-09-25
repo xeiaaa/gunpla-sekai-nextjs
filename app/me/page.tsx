@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
-import { getUserById, getUserByUsername } from "@/lib/actions/users";
+import { getUserById, getUserProfileById } from "@/lib/actions/users";
 import { UserProfilePage } from "@/components/user-profile-page";
 
 export async function generateMetadata() {
@@ -12,6 +12,7 @@ export async function generateMetadata() {
     };
   }
 
+  // Use optimized function to get basic user info for metadata
   const user = await getUserById(userId);
 
   if (!user || !user.username) {
@@ -20,9 +21,10 @@ export async function generateMetadata() {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName} - Gunpla Sekai`,
@@ -37,21 +39,19 @@ export default async function MePage() {
     redirect("/sign-in");
   }
 
-  // Get current user data to get their username
-  const user = await getUserById(userId);
-
-  if (!user || !user.username) {
-    // If user doesn't have a username, redirect to profile settings
-    redirect("/settings/profile");
-  }
-
-  // Get full user profile data using the same function as the user profile page
-  const userProfileData = await getUserByUsername(user.username);
+  // Get full user profile data in a single optimized query
+  const userProfileData = await getUserProfileById(userId);
 
   if (!userProfileData) {
     redirect("/sign-in");
   }
 
   // Render the same component as the user profile page, but always as own profile
-  return <UserProfilePage user={userProfileData} isOwnProfile={true} routeContext="me" />;
+  return (
+    <UserProfilePage
+      user={userProfileData}
+      isOwnProfile={true}
+      routeContext="me"
+    />
+  );
 }
