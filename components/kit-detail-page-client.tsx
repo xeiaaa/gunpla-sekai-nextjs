@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 
 interface KitDetailPageClientProps {
   slug: string;
-  initialKit: any; // Type this properly based on your kit interface
+  initialKit?: unknown; // Type this properly based on your kit interface
 }
 
 export function KitDetailPageClient({
@@ -22,9 +22,8 @@ export function KitDetailPageClient({
     isLoading: kitLoading,
     error: kitError,
   } = useKitDetail(slug, initialKit);
-  const { data: collectionStatus, isLoading: collectionLoading } =
-    useKitCollectionStatus(initialKit.id);
-  const { data: isAdmin, isLoading: adminLoading } = useIsAdmin();
+  const { data: collectionStatus } = useKitCollectionStatus(kit?.id || "");
+  const { data: isAdmin } = useIsAdmin();
 
   // Handle loading states
   if (kitLoading && !kit) {
