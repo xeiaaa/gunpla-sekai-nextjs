@@ -173,7 +173,26 @@ export function KitDetailPage({
     }
   };
 
-  const allImages = [kit.boxArt, ...kit.scrapedImages].filter(Boolean);
+  // Define the order for upload types
+  const uploadTypeOrder = [
+    "BOX_ART",
+    "PROTOTYPE",
+    "PRODUCT_SHOTS",
+    "RUNNERS",
+    "MANUAL",
+  ];
+
+  // Determine which images to use
+  const allImages =
+    kit.uploads.length > 0
+      ? kit.uploads
+          .sort((a, b) => {
+            const aIndex = uploadTypeOrder.indexOf(a.type);
+            const bIndex = uploadTypeOrder.indexOf(b.type);
+            return aIndex - bIndex;
+          })
+          .map((upload) => upload.url)
+      : [kit.boxArt, ...kit.scrapedImages].filter(Boolean);
 
   const tabs = [
     { id: "overview" as const, label: "Overview", icon: Info },
@@ -606,7 +625,7 @@ export function KitDetailPage({
             )}
 
             {/* Uploads */}
-            {kit.uploads.length > 0 && (
+            {/* {kit.uploads.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Community Uploads</CardTitle>
@@ -643,7 +662,7 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )}
+            )} */}
           </div>
         );
 

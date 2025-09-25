@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 
-import { PrismaClient } from "../generated/prisma";
+import { KitImageType, PrismaClient } from "../generated/prisma";
 import { MeiliSearch } from "meilisearch";
 import * as dotenv from "dotenv";
 
@@ -394,6 +394,11 @@ async function syncKits() {
         },
       },
       expandedBy: true,
+      uploads: {
+        include: {
+          upload: true,
+        },
+      },
     },
   });
 
@@ -406,7 +411,14 @@ async function syncKits() {
     releaseDate: kit.releaseDate?.toISOString() || null,
     priceYen: kit.priceYen,
     region: kit.region,
-    boxArt: kit.boxArt,
+    boxArt:
+      kit.uploads.find((u) => u.type === KitImageType.BOX_ART)?.upload
+        .eagerUrl ||
+      kit.uploads.find((u) => u.type === KitImageType.PROTOTYPE)?.upload
+        .eagerUrl ||
+      kit.boxArt,
+    productShot: kit.uploads.find((u) => u.type === KitImageType.PRODUCT_SHOTS)
+      ?.upload.eagerUrl,
     notes: kit.notes,
     potentialBaseKit: kit.potentialBaseKit,
     baseKitId: kit.baseKitId,
