@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById, getUserByUsername } from "@/lib/actions/users";
-import { getUserBuilds } from "@/lib/actions/builds";
+import { getUserBuildsOptimized } from "@/lib/actions/builds";
 import { UserBuildsPage } from "@/components/user-builds-page";
 
 interface MeBuildsPageProps {
@@ -29,9 +29,10 @@ export async function generateMetadata() {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName}'s Builds - Gunpla Sekai`,
@@ -39,7 +40,9 @@ export async function generateMetadata() {
   };
 }
 
-export default async function MeBuildsPage({ searchParams }: MeBuildsPageProps) {
+export default async function MeBuildsPage({
+  searchParams,
+}: MeBuildsPageProps) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -67,7 +70,12 @@ export default async function MeBuildsPage({ searchParams }: MeBuildsPageProps) 
   const page = parseInt(searchParams.page || "1", 10);
 
   // Get user builds with filtering and sorting
-  const builds = await getUserBuilds(userProfileData.id, 20, status === "all" ? undefined : status, sort);
+  const builds = await getUserBuildsOptimized(
+    userProfileData.id,
+    20,
+    status === "all" ? undefined : status,
+    sort
+  );
 
   return (
     <UserBuildsPage

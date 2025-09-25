@@ -415,14 +415,16 @@ export async function getBuildLikes(buildId: string, userId?: string) {
       prisma.buildLike.count({
         where: { buildId },
       }),
-      userId ? prisma.buildLike.findUnique({
-        where: {
-          buildId_userId: {
-            buildId,
-            userId,
-          },
-        },
-      }) : null,
+      userId
+        ? prisma.buildLike.findUnique({
+            where: {
+              buildId_userId: {
+                buildId,
+                userId,
+              },
+            },
+          })
+        : null,
     ]);
 
     return {
@@ -432,6 +434,352 @@ export async function getBuildLikes(buildId: string, userId?: string) {
   } catch (error) {
     console.error("Error fetching build likes:", error);
     throw new Error("Failed to fetch build likes");
+  }
+}
+
+// Optimized function for edit pages - only loads essential data
+export async function getBuildForEdit(buildId: string, userId?: string) {
+  try {
+    const build = await prisma.build.findUnique({
+      where: { id: buildId },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+        startedAt: true,
+        completedAt: true,
+        kit: {
+          select: {
+            id: true,
+            name: true,
+            number: true,
+            slug: true,
+            boxArt: true,
+            productLine: {
+              select: {
+                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+        featuredImage: {
+          select: {
+            id: true,
+            url: true,
+            eagerUrl: true,
+          },
+        },
+        featuredImageId: true,
+        milestones: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            type: true,
+            order: true,
+            buildId: true,
+            completedAt: true,
+            uploads: {
+              select: {
+                id: true,
+                caption: true,
+                order: true,
+                upload: {
+                  select: {
+                    id: true,
+                    url: true,
+                    eagerUrl: true,
+                  },
+                },
+              },
+              orderBy: { order: "asc" },
+            },
+          },
+          orderBy: { order: "asc" },
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+
+    if (!build) {
+      return null;
+    }
+
+    // Get user's like status if userId is provided
+    let userLiked = false;
+    if (userId) {
+      const userLike = await prisma.buildLike.findUnique({
+        where: {
+          buildId_userId: {
+            buildId,
+            userId,
+          },
+        },
+      });
+      userLiked = !!userLike;
+    }
+
+    return {
+      ...build,
+      likes: build._count.likes,
+      liked: userLiked,
+      comments: build._count.comments,
+    };
+  } catch (error) {
+    console.error("Error fetching build for edit:", error);
+    throw new Error("Failed to fetch build for edit");
+  }
+}
+
+// Optimized function for user builds pages - minimal data for cards
+export async function getUserBuildsOptimized(
+  userId: string,
+  limit: number = 20,
+  status?: string,
+  sort: string = "newest"
+) {
+  try {
+    // Build where clause
+    const where: Prisma.BuildWhereInput = { userId };
+    if (status) {
+      where.status = status as BuildStatus;
+    }
+
+    // Build orderBy clause
+    let orderBy: Prisma.BuildOrderByWithRelationInput = { createdAt: "desc" };
+    switch (sort) {
+      case "oldest":
+        orderBy = { createdAt: "asc" };
+        break;
+      case "completed":
+        orderBy = { completedAt: "desc" };
+        break;
+      case "status":
+        orderBy = { status: "asc" };
+        break;
+      default:
+        orderBy = { createdAt: "desc" };
+    }
+
+    const builds = await prisma.build.findMany({
+      where,
+      take: limit,
+      orderBy,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        completedAt: true,
+        kit: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            boxArt: true,
+            productLine: {
+              select: {
+                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        featuredImage: {
+          select: {
+            url: true,
+          },
+        },
+        milestones: {
+          select: {
+            id: true,
+            type: true,
+            title: true,
+            order: true,
+            uploads: {
+              select: {
+                upload: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+              take: 3, // Only first 3 images per milestone
+              orderBy: { order: "asc" },
+            },
+          },
+          take: 5, // Only first 5 milestones
+          orderBy: { order: "asc" },
+        },
+        _count: {
+          select: {
+            milestones: true,
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+
+    // Transform the data to match the expected interface
+    const transformedBuilds = builds.map((build) => ({
+      ...build,
+      milestones: build.milestones.map((milestone) => ({
+        ...milestone,
+        imageUrls: milestone.uploads.map((upload) => upload.upload.url),
+      })),
+    }));
+
+    return transformedBuilds;
+  } catch (error) {
+    console.error("Error fetching optimized user builds:", error);
+    throw new Error("Failed to fetch optimized user builds");
+  }
+}
+
+// Optimized function for individual build cards (public view)
+export async function getBuildForCard(buildId: string, userId?: string) {
+  try {
+    const build = await prisma.build.findUnique({
+      where: { id: buildId },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        completedAt: true,
+        kit: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            boxArt: true,
+            productLine: {
+              select: {
+                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+        featuredImage: {
+          select: {
+            url: true,
+          },
+        },
+        milestones: {
+          select: {
+            id: true,
+            type: true,
+            title: true,
+            uploads: {
+              select: {
+                upload: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+              take: 3, // Only first 3 images per milestone
+              orderBy: { order: "asc" },
+            },
+          },
+          take: 5, // Only first 5 milestones
+          orderBy: { order: "asc" },
+        },
+        _count: {
+          select: {
+            milestones: true,
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+
+    if (!build) {
+      return null;
+    }
+
+    // Get user's like status if userId is provided
+    let userLiked = false;
+    if (userId) {
+      const userLike = await prisma.buildLike.findUnique({
+        where: {
+          buildId_userId: {
+            buildId,
+            userId,
+          },
+        },
+      });
+      userLiked = !!userLike;
+    }
+
+    return {
+      ...build,
+      likes: build._count.likes,
+      liked: userLiked,
+      comments: build._count.comments,
+    };
+  } catch (error) {
+    console.error("Error fetching build for card:", error);
+    throw new Error("Failed to fetch build for card");
   }
 }
 
