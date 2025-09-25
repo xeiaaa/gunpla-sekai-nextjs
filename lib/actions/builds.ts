@@ -685,11 +685,14 @@ export async function getBuildForCard(buildId: string, userId?: string) {
         description: true,
         status: true,
         createdAt: true,
+        startedAt: true,
         completedAt: true,
+        featuredImageId: true,
         kit: {
           select: {
             id: true,
             name: true,
+            number: true,
             slug: true,
             boxArt: true,
             productLine: {
@@ -720,7 +723,9 @@ export async function getBuildForCard(buildId: string, userId?: string) {
         },
         featuredImage: {
           select: {
+            id: true,
             url: true,
+            eagerUrl: true,
           },
         },
         milestones: {
@@ -728,19 +733,25 @@ export async function getBuildForCard(buildId: string, userId?: string) {
             id: true,
             type: true,
             title: true,
+            description: true,
+            completedAt: true,
+            order: true,
             uploads: {
               select: {
+                id: true,
+                caption: true,
+                order: true,
                 upload: {
                   select: {
+                    id: true,
                     url: true,
+                    eagerUrl: true,
                   },
                 },
               },
-              take: 3, // Only first 3 images per milestone
               orderBy: { order: "asc" },
             },
           },
-          take: 5, // Only first 5 milestones
           orderBy: { order: "asc" },
         },
         _count: {

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getBuild } from "@/lib/actions/builds";
+import { getBuildForCard } from "@/lib/actions/builds";
 import { BuildDetailPublicView } from "@/components/build-detail-public-view";
 import { auth } from "@clerk/nextjs/server";
 
@@ -11,7 +11,7 @@ interface BuildPageProps {
 
 export default async function BuildPage({ params }: BuildPageProps) {
   const { userId } = await auth();
-  const build = await getBuild(params.id, userId || undefined);
+  const build = await getBuildForCard(params.id, userId || undefined);
 
   if (!build) {
     notFound();
