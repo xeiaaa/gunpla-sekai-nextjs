@@ -18,6 +18,27 @@ export interface Cutout {
   rotation: number;
   opacity: number;
   zIndex: number;
+  // Visual Effects
+  shadow?: {
+    enabled: boolean;
+    color: string;
+    blur: number;
+    offsetX: number;
+    offsetY: number;
+    opacity: number;
+  };
+  glow?: {
+    enabled: boolean;
+    color: string;
+    blur: number;
+    opacity: number;
+  };
+  border?: {
+    enabled: boolean;
+    color: string;
+    width: number;
+    style: "solid" | "dashed" | "dotted";
+  };
 }
 
 export type BuilderTab = "upload" | "base" | "cutouts" | "preview";
@@ -39,5 +60,3 @@ export interface CardBuilderState {
   replaceBase: () => void;
   setSelectedCutout: (id?: string) => void;
 }
-
-

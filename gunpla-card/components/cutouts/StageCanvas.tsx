@@ -5,8 +5,66 @@ import { Stage, Layer, Image as KonvaImage, Transformer } from "react-konva";
 import useImage from "use-image";
 import { useCardBuilder } from "@/gunpla-card/context";
 
-const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; scale: number; rotation: number; opacity: number; zIndex: number; canvasWidth: number; canvasHeight: number; isSelected: boolean; onChange: (updates: Partial<{ x: number; y: number; scale: number; rotation: number; opacity: number; zIndex: number }>) => void; onSelect: (shapeRef: any) => void; }>
-  = ({ src, x, y, scale, rotation, opacity, zIndex, canvasWidth, canvasHeight, isSelected, onChange, onSelect }) => {
+const DraggableImage: React.FC<{
+  src: string;
+  id: string;
+  x: number;
+  y: number;
+  scale: number;
+  rotation: number;
+  opacity: number;
+  zIndex: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  isSelected: boolean;
+  shadow?: {
+    enabled: boolean;
+    color: string;
+    blur: number;
+    offsetX: number;
+    offsetY: number;
+    opacity: number;
+  };
+  glow?: {
+    enabled: boolean;
+    color: string;
+    blur: number;
+    opacity: number;
+  };
+  border?: {
+    enabled: boolean;
+    color: string;
+    width: number;
+    style: "solid" | "dashed" | "dotted";
+  };
+  onChange: (
+    updates: Partial<{
+      x: number;
+      y: number;
+      scale: number;
+      rotation: number;
+      opacity: number;
+      zIndex: number;
+    }>
+  ) => void;
+  onSelect: (shapeRef: any) => void;
+}> = ({
+  src,
+  x,
+  y,
+  scale,
+  rotation,
+  opacity,
+  zIndex,
+  canvasWidth,
+  canvasHeight,
+  isSelected,
+  shadow,
+  glow,
+  border,
+  onChange,
+  onSelect,
+}) => {
   const [image] = useImage(src, "anonymous");
   const shapeRef = useRef<any>(null);
 
@@ -17,7 +75,45 @@ const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; 
   // Convert relative scale to absolute scale based on canvas size
   // Use a reference canvas size (e.g., 500px) to normalize the scale
   const referenceCanvasSize = 500;
-  const absoluteScale = scale * (Math.min(canvasWidth, canvasHeight) / referenceCanvasSize);
+  const absoluteScale =
+    scale * (Math.min(canvasWidth, canvasHeight) / referenceCanvasSize);
+
+  // Apply visual effects
+  const shadowConfig = shadow?.enabled
+    ? {
+        shadowColor: shadow.color,
+        shadowBlur: shadow.blur,
+        shadowOffsetX: shadow.offsetX,
+        shadowOffsetY: shadow.offsetY,
+        shadowOpacity: shadow.opacity,
+      }
+    : {};
+
+  const glowConfig = glow?.enabled
+    ? {
+        // For glow, we'll use a combination of shadow and filters
+        // This is a simplified approach - for more complex glow effects, we'd need custom shaders
+        shadowColor: glow.color,
+        shadowBlur: glow.blur,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowOpacity: glow.opacity,
+      }
+    : {};
+
+  const borderConfig = border?.enabled
+    ? {
+        stroke: border.color,
+        strokeWidth: border.width,
+        dashEnabled: border.style !== "solid",
+        dash:
+          border.style === "dashed"
+            ? [5, 5]
+            : border.style === "dotted"
+            ? [2, 2]
+            : undefined,
+      }
+    : {};
 
   return (
     <KonvaImage
@@ -31,9 +127,13 @@ const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; 
       opacity={opacity}
       zIndex={zIndex}
       draggable
-      stroke={isSelected ? "#3b82f6" : undefined}
-      strokeWidth={isSelected ? 3 : 0}
-      onDragEnd={e => {
+      stroke={isSelected ? "#3b82f6" : borderConfig.stroke}
+      strokeWidth={isSelected ? 3 : borderConfig.strokeWidth || 0}
+      dashEnabled={borderConfig.dashEnabled}
+      dash={borderConfig.dash}
+      {...shadowConfig}
+      {...glowConfig}
+      onDragEnd={(e) => {
         // Convert absolute coordinates back to relative coordinates
         const relativeX = e.target.x() / canvasWidth;
         const relativeY = e.target.y() / canvasHeight;
@@ -43,7 +143,9 @@ const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; 
         const node = shapeRef.current;
         // Convert absolute scale back to relative scale
         const absoluteScaleFromNode = node.scaleX();
-        const relativeScale = absoluteScaleFromNode * (referenceCanvasSize / Math.min(canvasWidth, canvasHeight));
+        const relativeScale =
+          absoluteScaleFromNode *
+          (referenceCanvasSize / Math.min(canvasWidth, canvasHeight));
         onChange({ scale: relativeScale, rotation: node.rotation() });
       }}
       onClick={() => {
@@ -56,13 +158,34 @@ const DraggableImage: React.FC<{ src: string; id: string; x: number; y: number; 
   );
 };
 
-const BaseCardImage: React.FC<{ src: string; width: number; height: number }> = ({ src, width, height }) => {
+const BaseCardImage: React.FC<{
+  src: string;
+  width: number;
+  height: number;
+}> = ({ src, width, height }) => {
   const [image] = useImage(src, "anonymous");
-  return <KonvaImage image={image as any} x={0} y={0} width={width} height={height} />;
+  return (
+    <KonvaImage
+      image={image as any}
+      x={0}
+      y={0}
+      width={width}
+      height={height}
+    />
+  );
 };
 
-const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxWidth, maxHeight }) => {
-  const { baseCard, cutouts, updateCutout, selectedCutoutId, setSelectedCutout } = useCardBuilder();
+const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({
+  maxWidth,
+  maxHeight,
+}) => {
+  const {
+    baseCard,
+    cutouts,
+    updateCutout,
+    selectedCutoutId,
+    setSelectedCutout,
+  } = useCardBuilder();
   const transformerRef = useRef<any>(null);
   const selectedShapeRef = useRef<any>(null);
 
@@ -90,8 +213,8 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxW
     height *= 0.9;
   } else {
     // Fallback to original size
-    width = 378 * .7;
-    height = 528 * .7;
+    width = 378 * 0.7;
+    height = 528 * 0.7;
   }
 
   const baseSrc = baseCard?.croppedUrl ?? "";
@@ -120,11 +243,16 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxW
   }, [selectedCutoutId]);
 
   return (
-    <div id="card-canvas-container" className="border rounded overflow-hidden bg-white inline-block">
+    <div
+      id="card-canvas-container"
+      className="border rounded overflow-hidden bg-white inline-block"
+    >
       <Stage width={width} height={height}>
         <Layer>
-          {baseSrc ? <BaseCardImage src={baseSrc} width={width} height={height} /> : null}
-          {cutouts.map(c => (
+          {baseSrc ? (
+            <BaseCardImage src={baseSrc} width={width} height={height} />
+          ) : null}
+          {cutouts.map((c) => (
             <DraggableImage
               key={c.id}
               id={c.id}
@@ -138,6 +266,9 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxW
               canvasWidth={width}
               canvasHeight={height}
               isSelected={selectedCutoutId === c.id}
+              shadow={c.shadow}
+              glow={c.glow}
+              border={c.border}
               onChange={(updates) => updateCutout(c.id, updates as any)}
               onSelect={(shapeRef) => handleSelect(c.id, shapeRef)}
             />
@@ -160,5 +291,3 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({ maxW
 };
 
 export default StageCanvas;
-
-
