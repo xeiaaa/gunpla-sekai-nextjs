@@ -1,47 +1,152 @@
 "use client";
 
-import { useState, useEffect, Suspense, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  Suspense,
+  useRef,
+  useReducer,
+  useMemo,
+  useCallback,
+  useTransition,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Filter, X, RotateCcw } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 import { KitCard } from "@/components/kit-card";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { useFilterData, useKitsInfinite } from "@/hooks/use-kits";
+
+// Consolidated state interface
+interface FilterState {
+  applied: {
+    grades: string[];
+    productLines: string[];
+    series: string[];
+    releaseTypes: string[];
+    searchTerm: string;
+    includeVariants: boolean;
+    includeExpansions: boolean;
+    sortBy: string;
+    order: string;
+  };
+  pending: {
+    grades: string[];
+    productLines: string[];
+    series: string[];
+    releaseTypes: string[];
+    searchTerm: string;
+    includeVariants: boolean;
+    includeExpansions: boolean;
+    sortBy: string;
+    order: string;
+  };
+  ui: {
+    isFilterOpen: boolean;
+    isUpdatingUrl: boolean;
+  };
+}
+
+// Action types for the reducer
+type FilterAction =
+  | { type: "SET_APPLIED_FILTERS"; payload: Partial<FilterState["applied"]> }
+  | { type: "SET_PENDING_FILTERS"; payload: Partial<FilterState["pending"]> }
+  | { type: "APPLY_PENDING_FILTERS" }
+  | { type: "CLEAR_PENDING_FILTERS" }
+  | { type: "SET_UI_STATE"; payload: Partial<FilterState["ui"]> }
+  | { type: "INITIALIZE_FROM_URL"; payload: FilterState["applied"] };
+
+// Initial state
+const initialState: FilterState = {
+  applied: {
+    grades: [],
+    productLines: [],
+    series: [],
+    releaseTypes: [],
+    searchTerm: "",
+    includeVariants: true,
+    includeExpansions: false,
+    sortBy: "relevance",
+    order: "most-relevant",
+  },
+  pending: {
+    grades: [],
+    productLines: [],
+    series: [],
+    releaseTypes: [],
+    searchTerm: "",
+    includeVariants: true,
+    includeExpansions: false,
+    sortBy: "relevance",
+    order: "most-relevant",
+  },
+  ui: {
+    isFilterOpen: false,
+    isUpdatingUrl: false,
+  },
+};
+
+// Reducer function
+function filterReducer(state: FilterState, action: FilterAction): FilterState {
+  switch (action.type) {
+    case "SET_APPLIED_FILTERS":
+      return {
+        ...state,
+        applied: { ...state.applied, ...action.payload },
+      };
+    case "SET_PENDING_FILTERS":
+      return {
+        ...state,
+        pending: { ...state.pending, ...action.payload },
+      };
+    case "APPLY_PENDING_FILTERS":
+      return {
+        ...state,
+        applied: { ...state.pending },
+        ui: { ...state.ui, isFilterOpen: false },
+      };
+    case "CLEAR_PENDING_FILTERS":
+      return {
+        ...state,
+        pending: {
+          grades: [],
+          productLines: [],
+          series: [],
+          releaseTypes: [],
+          searchTerm: "",
+          includeVariants: true,
+          includeExpansions: false,
+          sortBy: "relevance",
+          order: "most-relevant",
+        },
+      };
+    case "SET_UI_STATE":
+      return {
+        ...state,
+        ui: { ...state.ui, ...action.payload },
+      };
+    case "INITIALIZE_FROM_URL":
+      return {
+        ...state,
+        applied: { ...action.payload },
+        pending: { ...action.payload },
+      };
+    default:
+      return state;
+  }
+}
 
 function KitsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  // Applied filters (what's currently filtering the results)
-  const [appliedGrades, setAppliedGrades] = useState<string[]>([]);
-  const [appliedProductLines, setAppliedProductLines] = useState<string[]>([]);
-  const [appliedSeries, setAppliedSeries] = useState<string[]>([]);
-  const [appliedReleaseTypes, setAppliedReleaseTypes] = useState<string[]>([]);
-  const [appliedSearchTerm, setAppliedSearchTerm] = useState("");
-  const [appliedIncludeVariants, setAppliedIncludeVariants] = useState(true);
-  const [appliedIncludeExpansions, setAppliedIncludeExpansions] =
-    useState(false);
-
-  // Pending filters (what user has selected but not yet applied)
-  const [pendingGrades, setPendingGrades] = useState<string[]>([]);
-  const [pendingProductLines, setPendingProductLines] = useState<string[]>([]);
-  const [pendingSeries, setPendingSeries] = useState<string[]>([]);
-  const [pendingReleaseTypes, setPendingReleaseTypes] = useState<string[]>([]);
-  const [pendingSearchTerm, setPendingSearchTerm] = useState("");
-  const [pendingIncludeVariants, setPendingIncludeVariants] = useState(true);
-  const [pendingIncludeExpansions, setPendingIncludeExpansions] =
-    useState(false);
-
-  const [appliedSortBy, setAppliedSortBy] = useState("relevance");
-  const [appliedOrder, setAppliedOrder] = useState("most-relevant");
-  const [pendingSortBy, setPendingSortBy] = useState("relevance");
-  const [pendingOrder, setPendingOrder] = useState("most-relevant");
+  // Consolidated state management
+  const [state, dispatch] = useReducer(filterReducer, initialState);
   const [kitCollectionStatuses] = useState<Map<string, string>>(new Map());
-  const [isUpdatingUrl, setIsUpdatingUrl] = useState(false);
   const isApplyingFilters = useRef(false);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [, startTransition] = useTransition();
 
   // React Query hooks
   const {
@@ -62,46 +167,31 @@ function KitsPageContent() {
     hasNextPage,
     isFetchingNextPage,
   } = useKitsInfinite({
-    gradeIds: appliedGrades,
-    productLineIds: appliedProductLines,
+    gradeIds: state.applied.grades,
+    productLineIds: state.applied.productLines,
     mobileSuitIds: [],
-    seriesIds: appliedSeries,
-    releaseTypeIds: appliedReleaseTypes,
-    searchTerm: appliedSearchTerm,
-    sortBy: appliedSortBy,
-    order: appliedOrder,
-    includeExpansions: appliedIncludeExpansions,
-    includeVariants: appliedIncludeVariants,
+    seriesIds: state.applied.series,
+    releaseTypeIds: state.applied.releaseTypes,
+    searchTerm: state.applied.searchTerm,
+    sortBy: state.applied.sortBy,
+    order: state.applied.order,
+    includeExpansions: state.applied.includeExpansions,
+    includeVariants: state.applied.includeVariants,
   });
 
-  // Flatten all pages of kits into a single array
-  const kits = kitsData?.pages.flatMap((page) => page.kits) || [];
-  const loading = filterDataLoading || kitsLoading;
+  // Memoized computed values
+  const kits = useMemo(
+    () => kitsData?.pages.flatMap((page) => page.kits) || [],
+    [kitsData]
+  );
 
-  // Initialize from URL parameters
-  useEffect(() => {
-    if (isApplyingFilters.current) {
-      // Skip re-initialization if this change came from applyFilters
-      isApplyingFilters.current = false;
-      return;
-    }
+  const loading = useMemo(
+    () => filterDataLoading || kitsLoading,
+    [filterDataLoading, kitsLoading]
+  );
 
-    // Skip if we're currently updating the URL to prevent double loading
-    if (isUpdatingUrl) {
-      return;
-    }
-
-    // Only run if filterData is loaded (check if we have any filter data at all)
-    const hasFilterData =
-      filterData.grades.length > 0 ||
-      filterData.productLines.length > 0 ||
-      filterData.series.length > 0 ||
-      filterData.releaseTypes.length > 0;
-
-    if (!hasFilterData) {
-      return;
-    }
-
+  // Memoized URL parameter processing
+  const urlParams = useMemo(() => {
     const gradeSlugs =
       searchParams.get("grades")?.split(",").filter(Boolean) || [];
     const productLineSlugs =
@@ -118,42 +208,76 @@ function KitsPageContent() {
     const includeExpansionsParam =
       searchParams.get("includeExpansions") === "true";
 
-    // Convert slugs to IDs using filter data
-    const gradeIds = gradeSlugs
+    return {
+      gradeSlugs,
+      productLineSlugs,
+      seriesSlugs,
+      releaseTypeSlugs,
+      searchTerm,
+      sortByParam,
+      orderParam,
+      includeVariantsParam,
+      includeExpansionsParam,
+    };
+  }, [searchParams]);
+
+  // Memoized filter data conversion
+  const convertedFilters = useMemo(() => {
+    if (
+      !filterData.grades.length &&
+      !filterData.productLines.length &&
+      !filterData.series.length &&
+      !filterData.releaseTypes.length
+    ) {
+      return null;
+    }
+
+    const gradeIds = urlParams.gradeSlugs
       .map((slug) => filterData.grades.find((grade) => grade.slug === slug)?.id)
       .filter(Boolean) as string[];
 
-    const productLineIds = productLineSlugs
+    const productLineIds = urlParams.productLineSlugs
       .map((slug) => filterData.productLines.find((pl) => pl.slug === slug)?.id)
       .filter(Boolean) as string[];
 
-    const seriesIds = seriesSlugs
+    const seriesIds = urlParams.seriesSlugs
       .map((slug) => filterData.series.find((s) => s.slug === slug)?.id)
       .filter(Boolean) as string[];
 
-    const releaseTypeIds = releaseTypeSlugs
+    const releaseTypeIds = urlParams.releaseTypeSlugs
       .map((slug) => filterData.releaseTypes.find((rt) => rt.slug === slug)?.id)
       .filter(Boolean) as string[];
 
-    setAppliedGrades(gradeIds);
-    setAppliedProductLines(productLineIds);
-    setAppliedSeries(seriesIds);
-    setAppliedReleaseTypes(releaseTypeIds);
-    setAppliedSearchTerm(searchTerm);
-    setAppliedSortBy(sortByParam);
-    setAppliedOrder(orderParam);
-    setAppliedIncludeVariants(includeVariantsParam);
-    setAppliedIncludeExpansions(includeExpansionsParam);
-    setPendingGrades(gradeIds);
-    setPendingProductLines(productLineIds);
-    setPendingSeries(seriesIds);
-    setPendingReleaseTypes(releaseTypeIds);
-    setPendingSearchTerm(searchTerm);
-    setPendingSortBy(sortByParam);
-    setPendingOrder(orderParam);
-    setPendingIncludeVariants(includeVariantsParam);
-    setPendingIncludeExpansions(includeExpansionsParam);
-  }, [searchParams, filterData, isUpdatingUrl]);
+    return {
+      grades: gradeIds,
+      productLines: productLineIds,
+      series: seriesIds,
+      releaseTypes: releaseTypeIds,
+      searchTerm: urlParams.searchTerm,
+      sortBy: urlParams.sortByParam,
+      order: urlParams.orderParam,
+      includeVariants: urlParams.includeVariantsParam,
+      includeExpansions: urlParams.includeExpansionsParam,
+    };
+  }, [urlParams, filterData]);
+
+  // Initialize from URL parameters
+  useEffect(() => {
+    if (isApplyingFilters.current) {
+      isApplyingFilters.current = false;
+      return;
+    }
+
+    if (state.ui.isUpdatingUrl) {
+      return;
+    }
+
+    if (!convertedFilters) {
+      return;
+    }
+
+    dispatch({ type: "INITIALIZE_FROM_URL", payload: convertedFilters });
+  }, [convertedFilters, state.ui.isUpdatingUrl]);
 
   // Infinite scroll intersection observer
   useEffect(() => {
@@ -182,122 +306,155 @@ function KitsPageContent() {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
-
-  const updateUrlParams = (filters: {
-    grades?: string[];
-    productLines?: string[];
-    series?: string[];
-    releaseTypes?: string[];
-    search?: string;
-    sortBy?: string;
-    order?: string;
-    includeVariants?: boolean;
-    includeExpansions?: boolean;
-  }) => {
-    setIsUpdatingUrl(true);
-
-    const params = new URLSearchParams();
-
-    if (filters.grades && filters.grades.length > 0) {
-      const gradeSlugs = filters.grades
-        .map((id) => filterData.grades.find((grade) => grade.id === id)?.slug)
-        .filter(Boolean);
-      if (gradeSlugs.length > 0) {
-        params.set("grades", gradeSlugs.join(","));
-      }
-    }
-    if (filters.productLines && filters.productLines.length > 0) {
-      const productLineSlugs = filters.productLines
-        .map((id) => filterData.productLines.find((pl) => pl.id === id)?.slug)
-        .filter(Boolean);
-      if (productLineSlugs.length > 0) {
-        params.set("productLines", productLineSlugs.join(","));
-      }
-    }
-    if (filters.series && filters.series.length > 0) {
-      const seriesSlugs = filters.series
-        .map((id) => filterData.series.find((s) => s.id === id)?.slug)
-        .filter(Boolean);
-      if (seriesSlugs.length > 0) {
-        params.set("series", seriesSlugs.join(","));
-      }
-    }
-    if (filters.releaseTypes && filters.releaseTypes.length > 0) {
-      const releaseTypeSlugs = filters.releaseTypes
-        .map((id) => filterData.releaseTypes.find((rt) => rt.id === id)?.slug)
-        .filter(Boolean);
-      if (releaseTypeSlugs.length > 0) {
-        params.set("releaseTypes", releaseTypeSlugs.join(","));
-      }
-    }
-    if (filters.search) {
-      params.set("search", filters.search);
-    }
-    if (filters.sortBy && filters.sortBy !== "relevance") {
-      params.set("sortBy", filters.sortBy);
-    }
-    if (filters.order && filters.order !== "most-relevant") {
-      params.set("order", filters.order);
-    }
-    if (filters.includeVariants !== undefined) {
-      params.set("includeVariants", filters.includeVariants ? "true" : "false");
-    }
-    if (filters.includeExpansions) {
-      params.set("includeExpansions", "true");
-    }
-
-    const queryString = params.toString();
-    const newUrl = queryString ? `/kits?${queryString}` : "/kits";
-    router.push(newUrl);
-
-    // Reset the flag after a brief delay to allow the URL change to complete
-    setTimeout(() => setIsUpdatingUrl(false), 100);
-  };
-
-  const clearAllFilters = () => {
-    setPendingGrades([]);
-    setPendingProductLines([]);
-    setPendingSeries([]);
-    setPendingReleaseTypes([]);
-    setPendingSearchTerm("");
-    setPendingSortBy("relevance");
-    setPendingOrder("most-relevant");
-    setPendingIncludeVariants(true);
-    setPendingIncludeExpansions(false);
-  };
-
-  const applyFilters = () => {
-    isApplyingFilters.current = true;
-
-    // Apply pending filters to applied filters
-    setAppliedGrades(pendingGrades);
-    setAppliedProductLines(pendingProductLines);
-    setAppliedSeries(pendingSeries);
-    setAppliedReleaseTypes(pendingReleaseTypes);
-    setAppliedSearchTerm(pendingSearchTerm);
-    setAppliedSortBy(pendingSortBy);
-    setAppliedOrder(pendingOrder);
-    setAppliedIncludeVariants(pendingIncludeVariants);
-    setAppliedIncludeExpansions(pendingIncludeExpansions);
-
-    // Update URL parameters
-    updateUrlParams({
-      grades: pendingGrades,
-      productLines: pendingProductLines,
-      series: pendingSeries,
-      releaseTypes: pendingReleaseTypes,
-      search: pendingSearchTerm,
-      sortBy: pendingSortBy,
-      order: pendingOrder,
-      includeVariants: pendingIncludeVariants,
-      includeExpansions: pendingIncludeExpansions,
+  const toggleFilter = useCallback(() => {
+    dispatch({
+      type: "SET_UI_STATE",
+      payload: { isFilterOpen: !state.ui.isFilterOpen },
     });
+  }, [state.ui.isFilterOpen]);
 
-    setIsFilterOpen(false);
-  };
+  const updateUrlParams = useCallback(
+    (filters: {
+      grades?: string[];
+      productLines?: string[];
+      series?: string[];
+      releaseTypes?: string[];
+      search?: string;
+      sortBy?: string;
+      order?: string;
+      includeVariants?: boolean;
+      includeExpansions?: boolean;
+    }) => {
+      const params = new URLSearchParams();
+
+      if (filters.grades && filters.grades.length > 0) {
+        const gradeSlugs = filters.grades
+          .map((id) => filterData.grades.find((grade) => grade.id === id)?.slug)
+          .filter(Boolean);
+        if (gradeSlugs.length > 0) {
+          params.set("grades", gradeSlugs.join(","));
+        }
+      }
+      if (filters.productLines && filters.productLines.length > 0) {
+        const productLineSlugs = filters.productLines
+          .map((id) => filterData.productLines.find((pl) => pl.id === id)?.slug)
+          .filter(Boolean);
+        if (productLineSlugs.length > 0) {
+          params.set("productLines", productLineSlugs.join(","));
+        }
+      }
+      if (filters.series && filters.series.length > 0) {
+        const seriesSlugs = filters.series
+          .map((id) => filterData.series.find((s) => s.id === id)?.slug)
+          .filter(Boolean);
+        if (seriesSlugs.length > 0) {
+          params.set("series", seriesSlugs.join(","));
+        }
+      }
+      if (filters.releaseTypes && filters.releaseTypes.length > 0) {
+        const releaseTypeSlugs = filters.releaseTypes
+          .map((id) => filterData.releaseTypes.find((rt) => rt.id === id)?.slug)
+          .filter(Boolean);
+        if (releaseTypeSlugs.length > 0) {
+          params.set("releaseTypes", releaseTypeSlugs.join(","));
+        }
+      }
+      if (filters.search) {
+        params.set("search", filters.search);
+      }
+      if (filters.sortBy && filters.sortBy !== "relevance") {
+        params.set("sortBy", filters.sortBy);
+      }
+      if (filters.order && filters.order !== "most-relevant") {
+        params.set("order", filters.order);
+      }
+      if (filters.includeVariants !== undefined) {
+        params.set(
+          "includeVariants",
+          filters.includeVariants ? "true" : "false"
+        );
+      }
+      if (filters.includeExpansions) {
+        params.set("includeExpansions", "true");
+      }
+
+      const queryString = params.toString();
+      const newUrl = queryString ? `/kits?${queryString}` : "/kits";
+
+      // In Next.js 15 App Router, router.push is immediate
+      router.push(newUrl);
+    },
+    [filterData, router]
+  );
+
+  const clearAllFilters = useCallback(() => {
+    dispatch({ type: "CLEAR_PENDING_FILTERS" });
+  }, []);
+
+  const applyFilters = useCallback(() => {
+    isApplyingFilters.current = true;
+    dispatch({ type: "APPLY_PENDING_FILTERS" });
+
+    // Use startTransition for smooth filter application
+    startTransition(() => {
+      updateUrlParams({
+        grades: state.pending.grades,
+        productLines: state.pending.productLines,
+        series: state.pending.series,
+        releaseTypes: state.pending.releaseTypes,
+        search: state.pending.searchTerm,
+        sortBy: state.pending.sortBy,
+        order: state.pending.order,
+        includeVariants: state.pending.includeVariants,
+        includeExpansions: state.pending.includeExpansions,
+      });
+    });
+  }, [state.pending, updateUrlParams, startTransition]);
+
+  // Memoized filter change handlers
+  const handlePendingGradesChange = useCallback((grades: string[]) => {
+    dispatch({ type: "SET_PENDING_FILTERS", payload: { grades } });
+  }, []);
+
+  const handlePendingProductLinesChange = useCallback(
+    (productLines: string[]) => {
+      dispatch({ type: "SET_PENDING_FILTERS", payload: { productLines } });
+    },
+    []
+  );
+
+  const handlePendingSeriesChange = useCallback((series: string[]) => {
+    dispatch({ type: "SET_PENDING_FILTERS", payload: { series } });
+  }, []);
+
+  const handlePendingReleaseTypesChange = useCallback(
+    (releaseTypes: string[]) => {
+      dispatch({ type: "SET_PENDING_FILTERS", payload: { releaseTypes } });
+    },
+    []
+  );
+
+  const handlePendingSortByChange = useCallback((sortBy: string) => {
+    dispatch({ type: "SET_PENDING_FILTERS", payload: { sortBy } });
+  }, []);
+
+  const handlePendingOrderChange = useCallback((order: string) => {
+    dispatch({ type: "SET_PENDING_FILTERS", payload: { order } });
+  }, []);
+
+  const handlePendingIncludeVariantsChange = useCallback(
+    (includeVariants: boolean) => {
+      dispatch({ type: "SET_PENDING_FILTERS", payload: { includeVariants } });
+    },
+    []
+  );
+
+  const handlePendingIncludeExpansionsChange = useCallback(
+    (includeExpansions: boolean) => {
+      dispatch({ type: "SET_PENDING_FILTERS", payload: { includeExpansions } });
+    },
+    []
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -333,12 +490,17 @@ function KitsPageContent() {
         </div>
 
         {/* Filter Sidebar */}
-        {isFilterOpen && (
+        {state.ui.isFilterOpen && (
           <div className="fixed inset-0 z-50 flex">
             {/* Backdrop */}
             <div
               className="flex-1 bg-black/50"
-              onClick={() => setIsFilterOpen(false)}
+              onClick={() =>
+                dispatch({
+                  type: "SET_UI_STATE",
+                  payload: { isFilterOpen: false },
+                })
+              }
             />
 
             {/* Filter Panel */}
@@ -350,7 +512,12 @@ function KitsPageContent() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setIsFilterOpen(false)}
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_UI_STATE",
+                        payload: { isFilterOpen: false },
+                      })
+                    }
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -362,14 +529,34 @@ function KitsPageContent() {
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <select
-                        value={pendingSortBy}
+                        value={state.pending.sortBy}
                         onChange={(e) => {
-                          setPendingSortBy(e.target.value);
-                          // Reset order to appropriate default when sort changes
-                          if (e.target.value === "relevance") {
-                            setPendingOrder("most-relevant");
-                          } else {
-                            setPendingOrder("ascending");
+                          const newSortBy = e.target.value;
+                          handlePendingSortByChange(newSortBy);
+
+                          // Only reset order if it's not compatible with the new sort type
+                          const currentOrder = state.pending.order;
+                          const isCompatible =
+                            (newSortBy === "relevance" &&
+                              (currentOrder === "most-relevant" ||
+                                currentOrder === "least-relevant")) ||
+                            (newSortBy === "name" &&
+                              (currentOrder === "ascending" ||
+                                currentOrder === "descending")) ||
+                            (newSortBy === "release-date" &&
+                              (currentOrder === "ascending" ||
+                                currentOrder === "descending")) ||
+                            (newSortBy === "rating" &&
+                              (currentOrder === "ascending" ||
+                                currentOrder === "descending"));
+
+                          if (!isCompatible) {
+                            // Set appropriate default for new sort type
+                            if (newSortBy === "relevance") {
+                              handlePendingOrderChange("most-relevant");
+                            } else {
+                              handlePendingOrderChange("ascending");
+                            }
                           }
                         }}
                         className="w-full p-2 text-sm border rounded-md bg-background"
@@ -382,23 +569,25 @@ function KitsPageContent() {
                     </div>
                     <div>
                       <select
-                        value={pendingOrder}
-                        onChange={(e) => setPendingOrder(e.target.value)}
+                        value={state.pending.order}
+                        onChange={(e) =>
+                          handlePendingOrderChange(e.target.value)
+                        }
                         className="w-full p-2 text-sm border rounded-md bg-background"
                       >
-                        {pendingSortBy === "relevance" ? (
+                        {state.pending.sortBy === "relevance" ? (
                           <>
                             <option value="most-relevant">Most Relevant</option>
                             <option value="least-relevant">
                               Least Relevant
                             </option>
                           </>
-                        ) : pendingSortBy === "name" ? (
+                        ) : state.pending.sortBy === "name" ? (
                           <>
                             <option value="ascending">A-Z</option>
                             <option value="descending">Z-A</option>
                           </>
-                        ) : pendingSortBy === "release-date" ? (
+                        ) : state.pending.sortBy === "release-date" ? (
                           <>
                             <option value="descending">Newest</option>
                             <option value="ascending">Oldest</option>
@@ -421,9 +610,9 @@ function KitsPageContent() {
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={pendingIncludeVariants}
+                        checked={state.pending.includeVariants}
                         onChange={(e) =>
-                          setPendingIncludeVariants(e.target.checked)
+                          handlePendingIncludeVariantsChange(e.target.checked)
                         }
                         className="rounded border-gray-300"
                       />
@@ -435,9 +624,9 @@ function KitsPageContent() {
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={pendingIncludeExpansions}
+                        checked={state.pending.includeExpansions}
                         onChange={(e) =>
-                          setPendingIncludeExpansions(e.target.checked)
+                          handlePendingIncludeExpansionsChange(e.target.checked)
                         }
                         className="rounded border-gray-300"
                       />
@@ -450,37 +639,45 @@ function KitsPageContent() {
 
                 {/* Filter Sections */}
                 <div className="space-y-0">
-                  <FilterSection
-                    title="Grade"
-                    options={filterData.grades}
-                    selectedValues={pendingGrades}
-                    onSelectionChange={setPendingGrades}
-                    searchPlaceholder={`Search ${filterData.grades.length} grades...`}
-                  />
+                  <ErrorBoundary>
+                    <FilterSection
+                      title="Grade"
+                      options={filterData.grades}
+                      selectedValues={state.pending.grades}
+                      onSelectionChange={handlePendingGradesChange}
+                      searchPlaceholder={`Search ${filterData.grades.length} grades...`}
+                    />
+                  </ErrorBoundary>
 
-                  <FilterSection
-                    title="Product Line"
-                    options={filterData.productLines}
-                    selectedValues={pendingProductLines}
-                    onSelectionChange={setPendingProductLines}
-                    searchPlaceholder={`Search ${filterData.productLines.length} options...`}
-                  />
+                  <ErrorBoundary>
+                    <FilterSection
+                      title="Product Line"
+                      options={filterData.productLines}
+                      selectedValues={state.pending.productLines}
+                      onSelectionChange={handlePendingProductLinesChange}
+                      searchPlaceholder={`Search ${filterData.productLines.length} options...`}
+                    />
+                  </ErrorBoundary>
 
-                  <FilterSection
-                    title="Series"
-                    options={filterData.series}
-                    selectedValues={pendingSeries}
-                    onSelectionChange={setPendingSeries}
-                    searchPlaceholder={`Search ${filterData.series.length} options...`}
-                  />
+                  <ErrorBoundary>
+                    <FilterSection
+                      title="Series"
+                      options={filterData.series}
+                      selectedValues={state.pending.series}
+                      onSelectionChange={handlePendingSeriesChange}
+                      searchPlaceholder={`Search ${filterData.series.length} options...`}
+                    />
+                  </ErrorBoundary>
 
-                  <FilterSection
-                    title="Release Type"
-                    options={filterData.releaseTypes}
-                    selectedValues={pendingReleaseTypes}
-                    onSelectionChange={setPendingReleaseTypes}
-                    searchPlaceholder={`Search ${filterData.releaseTypes.length} options...`}
-                  />
+                  <ErrorBoundary>
+                    <FilterSection
+                      title="Release Type"
+                      options={filterData.releaseTypes}
+                      selectedValues={state.pending.releaseTypes}
+                      onSelectionChange={handlePendingReleaseTypesChange}
+                      searchPlaceholder={`Search ${filterData.releaseTypes.length} options...`}
+                    />
+                  </ErrorBoundary>
                 </div>
               </div>
 
@@ -500,7 +697,12 @@ function KitsPageContent() {
                   </Button>
                   <Button
                     variant="ghost"
-                    onClick={() => setIsFilterOpen(false)}
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_UI_STATE",
+                        payload: { isFilterOpen: false },
+                      })
+                    }
                     className="w-full"
                   >
                     Cancel
@@ -545,7 +747,7 @@ function KitsPageContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-stretch">
               {kits.map((kit) => (
                 <KitCard
-                  key={kit.id}
+                  key={`${kit.id}-${kit.slug || "no-slug"}`}
                   kit={kit}
                   collectionStatus={
                     kitCollectionStatuses.get(kit.id) as

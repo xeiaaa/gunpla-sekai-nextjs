@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { KitImage } from "@/components/kit-image";
-import { CollectionControlsCompact } from "@/components/collection-controls";
-import { Calendar, DollarSign, Tag } from "lucide-react";
+import { Calendar, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CollectionStatus } from "@/generated/prisma";
 import Link from "next/link";
@@ -29,7 +28,11 @@ interface KitCardProps {
   className?: string;
 }
 
-export function KitCard({ kit, collectionStatus, className }: KitCardProps) {
+const KitCard = memo(function KitCard({
+  kit,
+  collectionStatus,
+  className,
+}: KitCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const formatPrice = (priceYen: number | null | undefined) => {
@@ -157,4 +160,6 @@ export function KitCard({ kit, collectionStatus, className }: KitCardProps) {
   }
 
   return cardContent;
-}
+});
+
+export { KitCard };
