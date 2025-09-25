@@ -25,7 +25,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       releaseTypeIds = [],
       searchTerm = "",
       sortBy = "relevance",
-      order = "most-relevant"
+      order = "most-relevant",
     } = filters;
 
     // Build where clause
@@ -33,7 +33,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
 
     if (gradeIds.length > 0) {
       where.productLine = {
-        gradeId: { in: gradeIds }
+        gradeId: { in: gradeIds },
       };
     }
 
@@ -52,25 +52,25 @@ export async function getFilteredKits(filters: KitFilters = {}) {
     if (mobileSuitIds.length > 0) {
       where.mobileSuits = {
         some: {
-          mobileSuitId: { in: mobileSuitIds }
-        }
+          mobileSuitId: { in: mobileSuitIds },
+        },
       };
     }
 
     if (searchTerm) {
       where.OR = [
-        { name: { contains: searchTerm, mode: 'insensitive' } },
-        { number: { contains: searchTerm, mode: 'insensitive' } },
-        { variant: { contains: searchTerm, mode: 'insensitive' } },
+        { name: { contains: searchTerm, mode: "insensitive" } },
+        { number: { contains: searchTerm, mode: "insensitive" } },
+        { variant: { contains: searchTerm, mode: "insensitive" } },
         {
           mobileSuits: {
             some: {
               mobileSuit: {
-                name: { contains: searchTerm, mode: 'insensitive' }
-              }
-            }
-          }
-        }
+                name: { contains: searchTerm, mode: "insensitive" },
+              },
+            },
+          },
+        },
       ];
     }
 
@@ -95,11 +95,11 @@ export async function getFilteredKits(filters: KitFilters = {}) {
           {
             productLine: {
               grade: {
-                slug: "asc"
-              }
-            }
+                slug: "asc",
+              },
+            },
           },
-          { name: "asc" }
+          { name: "asc" },
         ];
     }
 
@@ -144,7 +144,16 @@ export async function getFilteredKits(filters: KitFilters = {}) {
     });
 
     // Custom sorting logic for main grades and accessory kits
-    const mainGradeSlugs = ['pg', 'rg', 'mg', 'hg', 'eg', 're-100', 'fm', 'mega-size'];
+    const mainGradeSlugs = [
+      "pg",
+      "rg",
+      "mg",
+      "hg",
+      "eg",
+      "re-100",
+      "fm",
+      "mega-size",
+    ];
 
     const sortedKits = kits.sort((a, b) => {
       // First: baseKitId (null first)
@@ -152,16 +161,22 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       if (a.baseKitId !== null && b.baseKitId === null) return 1;
 
       // Second: accessory kits last (check notes for "accessory")
-      const aIsAccessory = a.notes?.toLowerCase().includes('accessory') || false;
-      const bIsAccessory = b.notes?.toLowerCase().includes('accessory') || false;
+      const aIsAccessory =
+        a.notes?.toLowerCase().includes("accessory") || false;
+      const bIsAccessory =
+        b.notes?.toLowerCase().includes("accessory") || false;
       if (aIsAccessory && !bIsAccessory) return 1;
       if (!aIsAccessory && bIsAccessory) return -1;
 
       // Third: main grades prioritized
       const aGradeSlug = a.productLine?.grade?.slug;
       const bGradeSlug = b.productLine?.grade?.slug;
-      const aIsMainGrade = aGradeSlug ? mainGradeSlugs.includes(aGradeSlug) : false;
-      const bIsMainGrade = bGradeSlug ? mainGradeSlugs.includes(bGradeSlug) : false;
+      const aIsMainGrade = aGradeSlug
+        ? mainGradeSlugs.includes(aGradeSlug)
+        : false;
+      const bIsMainGrade = bGradeSlug
+        ? mainGradeSlugs.includes(bGradeSlug)
+        : false;
 
       if (aIsMainGrade && !bIsMainGrade) return -1;
       if (!aIsMainGrade && bIsMainGrade) return 1;
@@ -177,7 +192,7 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       return a.name.localeCompare(b.name);
     });
 
-    return sortedKits.map(kit => ({
+    return sortedKits.map((kit) => ({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
@@ -190,10 +205,10 @@ export async function getFilteredKits(filters: KitFilters = {}) {
       productLine: kit.productLine?.name,
       series: kit.series?.name,
       releaseType: kit.releaseType?.name,
-      mobileSuits: kit.mobileSuits.map(ms => ms.mobileSuit.name),
+      mobileSuits: kit.mobileSuits.map((ms) => ms.mobileSuit.name),
     }));
   } catch (error) {
-    console.error('Error fetching filtered kits:', error);
+    console.error("Error fetching filtered kits:", error);
     return [];
   }
 }
@@ -236,12 +251,10 @@ export async function getAllKits() {
           },
         },
       },
-      orderBy: [
-        { name: "asc" },
-      ],
+      orderBy: [{ name: "asc" }],
     });
 
-    return kits.map(kit => ({
+    return kits.map((kit) => ({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
@@ -255,15 +268,18 @@ export async function getAllKits() {
       productLine: kit.productLine,
       series: kit.series,
       mobileSuitsCount: kit._count.mobileSuits,
-      mobileSuits: kit.mobileSuits.map(ms => ms.mobileSuit.name),
+      mobileSuits: kit.mobileSuits.map((ms) => ms.mobileSuit.name),
     }));
   } catch (error) {
-    console.error('Error fetching all kits:', error);
+    console.error("Error fetching all kits:", error);
     return [];
   }
 }
 
-export async function updateKitProductLine(kitIds: string[], productLineId: string | null) {
+export async function updateKitProductLine(
+  kitIds: string[],
+  productLineId: string | null
+) {
   try {
     const result = await prisma.kit.updateMany({
       where: {
@@ -279,66 +295,75 @@ export async function updateKitProductLine(kitIds: string[], productLineId: stri
       updatedCount: result.count,
     };
   } catch (error) {
-    console.error('Error updating kit product lines:', error);
+    console.error("Error updating kit product lines:", error);
     return {
       success: false,
-      error: 'Failed to update kit product lines',
+      error: "Failed to update kit product lines",
     };
   }
 }
 
-export async function addKitToMobileSuits(kitIds: string[], mobileSuitIds: string[]) {
+export async function addKitToMobileSuits(
+  kitIds: string[],
+  mobileSuitIds: string[]
+) {
   try {
     // Create all combinations of kit-mobile suit pairs
-    const kitMobileSuitPairs = kitIds.flatMap(kitId =>
-      mobileSuitIds.map(mobileSuitId => ({
+    const kitMobileSuitPairs = kitIds.flatMap((kitId) =>
+      mobileSuitIds.map((mobileSuitId) => ({
         kitId,
-        mobileSuitId
+        mobileSuitId,
       }))
     );
 
     // Use createMany with skipDuplicates to handle existing relationships
     const result = await prisma.kitMobileSuit.createMany({
       data: kitMobileSuitPairs,
-      skipDuplicates: true
+      skipDuplicates: true,
     });
 
     return {
       success: true,
-      createdCount: result.count
+      createdCount: result.count,
     };
   } catch (error) {
-    console.error('Error adding kits to mobile suits:', error);
+    console.error("Error adding kits to mobile suits:", error);
     return {
       success: false,
-      error: 'Failed to add kits to mobile suits'
+      error: "Failed to add kits to mobile suits",
     };
   }
 }
 
-export async function removeKitFromMobileSuits(kitIds: string[], mobileSuitIds: string[]) {
+export async function removeKitFromMobileSuits(
+  kitIds: string[],
+  mobileSuitIds: string[]
+) {
   try {
     const result = await prisma.kitMobileSuit.deleteMany({
       where: {
         kitId: { in: kitIds },
-        mobileSuitId: { in: mobileSuitIds }
-      }
+        mobileSuitId: { in: mobileSuitIds },
+      },
     });
 
     return {
       success: true,
-      deletedCount: result.count
+      deletedCount: result.count,
     };
   } catch (error) {
-    console.error('Error removing kits from mobile suits:', error);
+    console.error("Error removing kits from mobile suits:", error);
     return {
       success: false,
-      error: 'Failed to remove kits from mobile suits'
+      error: "Failed to remove kits from mobile suits",
     };
   }
 }
 
-export async function updateKitMobileSuits(kitId: string, mobileSuitIds: string[]) {
+export async function updateKitMobileSuits(
+  kitId: string,
+  mobileSuitIds: string[]
+) {
   try {
     const { userId } = await auth();
 
@@ -367,19 +392,19 @@ export async function updateKitMobileSuits(kitId: string, mobileSuitIds: string[
 
     // Remove all existing mobile suit relationships for this kit
     await prisma.kitMobileSuit.deleteMany({
-      where: { kitId }
+      where: { kitId },
     });
 
     // Add new mobile suit relationships
     if (mobileSuitIds.length > 0) {
-      const kitMobileSuitPairs = mobileSuitIds.map(mobileSuitId => ({
+      const kitMobileSuitPairs = mobileSuitIds.map((mobileSuitId) => ({
         kitId,
-        mobileSuitId
+        mobileSuitId,
       }));
 
       await prisma.kitMobileSuit.createMany({
         data: kitMobileSuitPairs,
-        skipDuplicates: true
+        skipDuplicates: true,
       });
     }
 
@@ -389,12 +414,15 @@ export async function updateKitMobileSuits(kitId: string, mobileSuitIds: string[
 
     return { success: true };
   } catch (error) {
-    console.error('Error updating kit mobile suits:', error);
+    console.error("Error updating kit mobile suits:", error);
     return { success: false, error: "Failed to update kit mobile suits" };
   }
 }
 
-export async function updateKitExpansions(kitId: string, expansionIds: string[]) {
+export async function updateKitExpansions(
+  kitId: string,
+  expansionIds: string[]
+) {
   try {
     const { userId } = await auth();
 
@@ -428,19 +456,19 @@ export async function updateKitExpansions(kitId: string, expansionIds: string[])
 
     // Remove all existing expansion relationships for this kit
     await prisma.kitRelation.deleteMany({
-      where: { kitId }
+      where: { kitId },
     });
 
     // Add new expansion relationships
     if (expansionIds.length > 0) {
-      const kitExpansionPairs = expansionIds.map(expansionId => ({
+      const kitExpansionPairs = expansionIds.map((expansionId) => ({
         kitId,
-        expansionId
+        expansionId,
       }));
 
       await prisma.kitRelation.createMany({
         data: kitExpansionPairs,
-        skipDuplicates: true
+        skipDuplicates: true,
       });
     }
 
@@ -450,12 +478,15 @@ export async function updateKitExpansions(kitId: string, expansionIds: string[])
 
     return { success: true };
   } catch (error) {
-    console.error('Error updating kit expansions:', error);
+    console.error("Error updating kit expansions:", error);
     return { success: false, error: "Failed to update kit expansions" };
   }
 }
 
-export async function updateKitExpandedBy(kitId: string, expandedByIds: string[]) {
+export async function updateKitExpandedBy(
+  kitId: string,
+  expandedByIds: string[]
+) {
   try {
     const { userId } = await auth();
 
@@ -489,19 +520,19 @@ export async function updateKitExpandedBy(kitId: string, expandedByIds: string[]
 
     // Remove all existing "expanded by" relationships for this kit
     await prisma.kitRelation.deleteMany({
-      where: { expansionId: kitId }
+      where: { expansionId: kitId },
     });
 
     // Add new "expanded by" relationships
     if (expandedByIds.length > 0) {
-      const kitExpandedByPairs = expandedByIds.map(expandedById => ({
+      const kitExpandedByPairs = expandedByIds.map((expandedById) => ({
         kitId: expandedById,
-        expansionId: kitId
+        expansionId: kitId,
       }));
 
       await prisma.kitRelation.createMany({
         data: kitExpandedByPairs,
-        skipDuplicates: true
+        skipDuplicates: true,
       });
     }
 
@@ -511,7 +542,7 @@ export async function updateKitExpandedBy(kitId: string, expandedByIds: string[]
 
     return { success: true };
   } catch (error) {
-    console.error('Error updating kit expanded by:', error);
+    console.error("Error updating kit expanded by:", error);
     return { success: false, error: "Failed to update kit expanded by" };
   }
 }
@@ -530,13 +561,13 @@ export async function getAllProductLines() {
         },
       },
       orderBy: {
-        name: 'asc',
+        name: "asc",
       },
     });
 
     return productLines;
   } catch (error) {
-    console.error('Error fetching product lines:', error);
+    console.error("Error fetching product lines:", error);
     return [];
   }
 }
@@ -550,13 +581,13 @@ export async function getAllSeries() {
         slug: true,
       },
       orderBy: {
-        name: 'asc',
+        name: "asc",
       },
     });
 
     return series;
   } catch (error) {
-    console.error('Error fetching series:', error);
+    console.error("Error fetching series:", error);
     return [];
   }
 }
@@ -567,7 +598,21 @@ export async function getKitBySlug(slug: string) {
     const decodedSlug = decodeURIComponent(slug);
     const kit = await prisma.kit.findUnique({
       where: { slug: decodedSlug },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        number: true,
+        variant: true,
+        releaseDate: true,
+        priceYen: true,
+        region: true,
+        boxArt: true,
+        notes: true,
+        manualLinks: true,
+        scrapedImages: true,
+        productLineId: true,
+        baseKitId: true,
         productLine: {
           select: {
             name: true,
@@ -598,33 +643,10 @@ export async function getKitBySlug(slug: string) {
             slug: true,
             number: true,
             variant: true,
-            releaseDate: true,
-            priceYen: true,
             boxArt: true,
-            baseKitId: true,
             productLine: {
               select: {
-                name: true,
                 grade: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            series: {
-              select: {
-                name: true,
-              },
-            },
-            releaseType: {
-              select: {
-                name: true,
-              },
-            },
-            mobileSuits: {
-              select: {
-                mobileSuit: {
                   select: {
                     name: true,
                   },
@@ -654,11 +676,11 @@ export async function getKitBySlug(slug: string) {
             },
           },
           orderBy: {
-            releaseDate: 'asc',
+            releaseDate: "asc",
           },
         },
         mobileSuits: {
-          include: {
+          select: {
             mobileSuit: {
               select: {
                 id: true,
@@ -669,16 +691,6 @@ export async function getKitBySlug(slug: string) {
                 series: {
                   select: {
                     name: true,
-                    timeline: {
-                      select: {
-                        name: true,
-                      },
-                    },
-                  },
-                },
-                _count: {
-                  select: {
-                    kits: true,
                   },
                 },
               },
@@ -686,10 +698,12 @@ export async function getKitBySlug(slug: string) {
           },
         },
         uploads: {
-          include: {
+          select: {
+            id: true,
+            type: true,
+            caption: true,
             upload: {
               select: {
-                id: true,
                 url: true,
                 originalFilename: true,
                 createdAt: true,
@@ -697,11 +711,11 @@ export async function getKitBySlug(slug: string) {
             },
           },
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
         },
         expansions: {
-          include: {
+          select: {
             expansion: {
               select: {
                 id: true,
@@ -709,10 +723,7 @@ export async function getKitBySlug(slug: string) {
                 slug: true,
                 number: true,
                 variant: true,
-                releaseDate: true,
-                priceYen: true,
                 boxArt: true,
-                baseKitId: true,
                 productLine: {
                   select: {
                     name: true,
@@ -726,20 +737,6 @@ export async function getKitBySlug(slug: string) {
                 series: {
                   select: {
                     name: true,
-                  },
-                },
-                releaseType: {
-                  select: {
-                    name: true,
-                  },
-                },
-                mobileSuits: {
-                  select: {
-                    mobileSuit: {
-                      select: {
-                        name: true,
-                      },
-                    },
                   },
                 },
               },
@@ -747,7 +744,7 @@ export async function getKitBySlug(slug: string) {
           },
         },
         expandedBy: {
-          include: {
+          select: {
             kit: {
               select: {
                 id: true,
@@ -755,10 +752,7 @@ export async function getKitBySlug(slug: string) {
                 slug: true,
                 number: true,
                 variant: true,
-                releaseDate: true,
-                priceYen: true,
                 boxArt: true,
-                baseKitId: true,
                 productLine: {
                   select: {
                     name: true,
@@ -772,20 +766,6 @@ export async function getKitBySlug(slug: string) {
                 series: {
                   select: {
                     name: true,
-                  },
-                },
-                releaseType: {
-                  select: {
-                    name: true,
-                  },
-                },
-                mobileSuits: {
-                  select: {
-                    mobileSuit: {
-                      select: {
-                        name: true,
-                      },
-                    },
                   },
                 },
               },
@@ -806,8 +786,8 @@ export async function getKitBySlug(slug: string) {
         where: {
           baseKitId: kit.baseKitId,
           id: {
-            not: kit.id
-          }
+            not: kit.id,
+          },
         },
         select: {
           id: true,
@@ -820,6 +800,7 @@ export async function getKitBySlug(slug: string) {
           priceYen: true,
           productLine: {
             select: {
+              name: true,
               grade: {
                 select: {
                   name: true,
@@ -829,7 +810,7 @@ export async function getKitBySlug(slug: string) {
           },
         },
         orderBy: {
-          releaseDate: 'asc',
+          releaseDate: "asc",
         },
       });
     }
@@ -850,92 +831,76 @@ export async function getKitBySlug(slug: string) {
       productLineId: kit.productLineId,
       baseKitId: kit.baseKitId,
       grade: kit.productLine?.grade.name || null,
-      productLine: kit.productLine ? {
-        name: kit.productLine.name,
-        logo: kit.productLine.logo?.url || null,
-      } : null,
+      productLine: kit.productLine
+        ? {
+            name: kit.productLine.name,
+            logo: kit.productLine.logo?.url || null,
+          }
+        : null,
       series: kit.series?.name,
       seriesSlug: kit.series?.slug,
       releaseType: kit.releaseType?.name,
       releaseTypeSlug: kit.releaseType?.slug,
-      baseKit: kit.baseKit ? {
-        id: kit.baseKit.id,
-        name: kit.baseKit.name,
-        slug: kit.baseKit.slug,
-        number: kit.baseKit.number,
-        variant: kit.baseKit.variant,
-        releaseDate: kit.baseKit.releaseDate,
-        priceYen: kit.baseKit.priceYen,
-        boxArt: kit.baseKit.boxArt,
-        baseKitId: kit.baseKit.baseKitId,
-        grade: kit.baseKit.productLine?.grade.name || null,
-        productLine: kit.baseKit.productLine?.name || null,
-        series: kit.baseKit.series?.name || null,
-        releaseType: kit.baseKit.releaseType?.name || null,
-        mobileSuits: kit.baseKit.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
-      } : null,
-      variants: kit.variants.map(variant => ({
+      baseKit: kit.baseKit
+        ? {
+            id: kit.baseKit.id,
+            name: kit.baseKit.name,
+            slug: kit.baseKit.slug,
+            number: kit.baseKit.number,
+            variant: kit.baseKit.variant,
+            boxArt: kit.baseKit.boxArt,
+            grade: kit.baseKit.productLine?.grade.name || null,
+          }
+        : null,
+      variants: kit.variants.map((variant) => ({
         ...variant,
         grade: variant.productLine?.grade.name || null,
       })),
-      mobileSuits: kit.mobileSuits.map(ms => ({
+      mobileSuits: kit.mobileSuits.map((ms) => ({
         id: ms.mobileSuit.id,
         name: ms.mobileSuit.name,
         slug: ms.mobileSuit.slug,
         description: ms.mobileSuit.description,
         scrapedImages: ms.mobileSuit.scrapedImages,
         series: ms.mobileSuit.series?.name,
-        timeline: ms.mobileSuit.series?.timeline?.name || null,
-        kitsCount: ms.mobileSuit._count.kits,
       })),
-      uploads: kit.uploads.map(u => ({
-        id: u.upload.id,
-        kitUploadId: u.id, // Keep the KitUpload ID for deletion
+      uploads: kit.uploads.map((u) => ({
+        id: u.id,
         url: u.upload.url,
         type: u.type,
         title: u.caption || u.upload.originalFilename,
         description: u.caption,
         createdAt: u.upload.createdAt,
       })),
-      expansions: kit.expansions.map(exp => ({
+      expansions: kit.expansions.map((exp) => ({
         id: exp.expansion.id,
         name: exp.expansion.name,
         slug: exp.expansion.slug,
         number: exp.expansion.number,
         variant: exp.expansion.variant,
-        releaseDate: exp.expansion.releaseDate,
-        priceYen: exp.expansion.priceYen,
         boxArt: exp.expansion.boxArt,
-        baseKitId: exp.expansion.baseKitId,
         grade: exp.expansion.productLine?.grade.name || null,
         productLine: exp.expansion.productLine?.name || null,
         series: exp.expansion.series?.name || null,
-        releaseType: exp.expansion.releaseType?.name || null,
-        mobileSuits: exp.expansion.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
       })),
-      expandedBy: kit.expandedBy.map(exp => ({
+      expandedBy: kit.expandedBy.map((exp) => ({
         id: exp.kit.id,
         name: exp.kit.name,
         slug: exp.kit.slug,
         number: exp.kit.number,
         variant: exp.kit.variant,
-        releaseDate: exp.kit.releaseDate,
-        priceYen: exp.kit.priceYen,
         boxArt: exp.kit.boxArt,
-        baseKitId: exp.kit.baseKitId,
         grade: exp.kit.productLine?.grade.name || null,
         productLine: exp.kit.productLine?.name || null,
         series: exp.kit.series?.name || null,
-        releaseType: exp.kit.releaseType?.name || null,
-        mobileSuits: exp.kit.mobileSuits?.map(ms => ms.mobileSuit.name) || [],
       })),
-      otherVariants: otherVariants.map(variant => ({
+      otherVariants: otherVariants.map((variant) => ({
         ...variant,
         grade: variant.productLine?.grade.name || null,
       })),
     };
   } catch (error) {
-    console.error('Error fetching kit by slug:', error);
+    console.error("Error fetching kit by slug:", error);
     return null;
   }
 }
@@ -1001,7 +966,7 @@ export async function updateKit(kitId: string, data: UpdateKitData) {
 
     return { success: true, kit: updatedKit };
   } catch (error) {
-    console.error('Error updating kit:', error);
+    console.error("Error updating kit:", error);
     return { success: false, error: "Failed to update kit" };
   }
 }
