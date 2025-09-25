@@ -409,7 +409,6 @@ export async function updateKitMobileSuits(
     }
 
     // Revalidate relevant paths
-    revalidatePath("/kits");
     revalidatePath(`/kits/${existingKit.slug}`);
 
     return { success: true };
@@ -473,7 +472,6 @@ export async function updateKitExpansions(
     }
 
     // Revalidate relevant paths
-    revalidatePath("/kits");
     revalidatePath(`/kits/${existingKit.slug}`);
 
     return { success: true };
@@ -537,7 +535,6 @@ export async function updateKitExpandedBy(
     }
 
     // Revalidate relevant paths
-    revalidatePath("/kits");
     revalidatePath(`/kits/${existingKit.slug}`);
 
     return { success: true };
@@ -957,8 +954,7 @@ export async function updateKit(kitId: string, data: UpdateKitData) {
       },
     });
 
-    // Revalidate relevant paths
-    revalidatePath("/kits");
+    // Revalidate relevant paths (ISR cache invalidation)
     revalidatePath(`/kits/${existingKit.slug}`);
     if (data.slug && data.slug !== existingKit.slug) {
       revalidatePath(`/kits/${data.slug}`);

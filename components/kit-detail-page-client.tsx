@@ -1,53 +1,106 @@
 "use client";
 
 import { KitDetailPage } from "@/components/kit-detail-page";
-import {
-  useKitDetail,
-  useKitCollectionStatus,
-  useIsAdmin,
-} from "@/hooks/use-kit-detail";
-import { notFound } from "next/navigation";
+import { useKitCollectionStatus, useIsAdmin } from "@/hooks/use-kit-detail";
 
 interface KitDetailPageClientProps {
-  slug: string;
-  initialKit?: unknown; // Type this properly based on your kit interface
+  kit: {
+    id: string;
+    name: string;
+    slug: string | null;
+    number: string;
+    variant?: string | null;
+    releaseDate?: Date | null;
+    priceYen?: number | null;
+    region?: string | null;
+    boxArt?: string | null;
+    notes?: string | null;
+    manualLinks: string[];
+    scrapedImages: string[];
+    grade: string | null;
+    productLine?: {
+      name: string;
+      logo?: string | null;
+    } | null;
+    series?: string | null;
+    seriesSlug?: string | null;
+    releaseType?: string | null;
+    releaseTypeSlug?: string | null;
+    baseKit?: {
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      boxArt?: string | null;
+      grade: string | null;
+    } | null;
+    variants: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant?: string | null;
+      boxArt?: string | null;
+      releaseDate?: Date | null;
+      priceYen?: number | null;
+      grade: string | null;
+    }>;
+    mobileSuits: Array<{
+      id: string;
+      name: string;
+      slug: string;
+      description?: string | null;
+      scrapedImages: string[];
+      series?: string | null;
+    }>;
+    uploads: Array<{
+      id: string;
+      url: string;
+      type: string;
+      title?: string | null;
+      description?: string | null;
+      createdAt: Date;
+    }>;
+    otherVariants: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant?: string | null;
+      boxArt?: string | null;
+      releaseDate?: Date | null;
+      priceYen?: number | null;
+      grade: string | null;
+    }>;
+    expansions: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      boxArt: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+    }>;
+    expandedBy: Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      number: string;
+      variant: string | null;
+      boxArt: string | null;
+      grade: string | null;
+      productLine: string | null;
+      series: string | null;
+    }>;
+  };
 }
 
-export function KitDetailPageClient({
-  slug,
-  initialKit,
-}: KitDetailPageClientProps) {
-  const {
-    data: kit,
-    isLoading: kitLoading,
-    error: kitError,
-  } = useKitDetail(slug, initialKit);
-  const { data: collectionStatus } = useKitCollectionStatus(kit?.id || "");
+export function KitDetailPageClient({ kit }: KitDetailPageClientProps) {
+  // Only fetch user-specific data on the client
+  const { data: collectionStatus } = useKitCollectionStatus(kit.id);
   const { data: isAdmin } = useIsAdmin();
-
-  // Handle loading states
-  if (kitLoading && !kit) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center py-12">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading kit details...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Handle error states
-  if (kitError) {
-    return notFound();
-  }
-
-  // Handle not found
-  if (!kit) {
-    return notFound();
-  }
 
   return (
     <KitDetailPage
