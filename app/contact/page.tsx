@@ -11,8 +11,8 @@ export default function ContactPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
         <p className="text-muted-foreground">
-          This page is still in progress. We're working on setting up contact
-          forms and support channels.
+          This page is still in progress. We&apos;re working on setting up
+          contact forms and support channels.
         </p>
       </div>
     </div>

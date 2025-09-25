@@ -11,9 +11,9 @@ export default function TermsPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
         <p className="text-muted-foreground">
-          This page is still in progress. We're working on creating clear terms
-          of service that outline the rules and guidelines for using Gunpla
-          Sekai.
+          This page is still in progress. We&apos;re working on creating clear
+          terms of service that outline the rules and guidelines for using
+          Gunpla Sekai.
         </p>
       </div>
     </div>

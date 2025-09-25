@@ -11,7 +11,7 @@ export default function BuildsPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">Builds</h1>
         <p className="text-muted-foreground">
-          This page is still in progress. We're working on bringing you a
+          This page is still in progress. We&apos;re working on bringing you a
           comprehensive view of all community builds.
         </p>
       </div>
