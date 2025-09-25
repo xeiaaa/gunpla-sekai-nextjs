@@ -17,7 +17,8 @@ export function Footer({ className }: FooterProps) {
               <span className="font-bold">Gunpla Sekai</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Your ultimate Gunpla collection management app. Track, build, and showcase your models.
+              Your ultimate Gunpla collection management app. Track, build, and
+              showcase your models.
             </p>
           </div>
 
@@ -26,18 +27,27 @@ export function Footer({ className }: FooterProps) {
             <h3 className="font-semibold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/collection" className="text-muted-foreground hover:text-foreground">
-                  Collection
+                <Link
+                  href="/kits"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Kits
                 </Link>
               </li>
               <li>
-                <Link href="/builds" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/builds"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Builds
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="text-muted-foreground hover:text-foreground">
-                  Gallery
+                <Link
+                  href="/customize"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Customize
                 </Link>
               </li>
             </ul>
@@ -48,17 +58,26 @@ export function Footer({ className }: FooterProps) {
             <h3 className="font-semibold">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/help" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/help"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/faq"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   FAQ
                 </Link>
               </li>
@@ -70,12 +89,18 @@ export function Footer({ className }: FooterProps) {
             <h3 className="font-semibold">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/privacy" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/privacy"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/terms"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Terms of Service
                 </Link>
               </li>
