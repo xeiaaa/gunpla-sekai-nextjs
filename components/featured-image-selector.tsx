@@ -1,9 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import NextImage from "next/image";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Star, Check } from "lucide-react";
 import { getBuildMediaItems } from "@/lib/actions/uploads";
 
@@ -35,7 +41,9 @@ export function FeaturedImageSelector({
   children,
 }: FeaturedImageSelectorProps) {
   const [open, setOpen] = useState(false);
-  const [selectedImageId, setSelectedImageId] = useState<string | null>(currentFeaturedImageId || null);
+  const [selectedImageId, setSelectedImageId] = useState<string | null>(
+    currentFeaturedImageId || null
+  );
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -83,9 +91,7 @@ export function FeaturedImageSelector({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle>Select Featured Image</DialogTitle>
@@ -113,7 +119,7 @@ export function FeaturedImageSelector({
                   onClick={() => setSelectedImageId(image.id)}
                 >
                   <div className="aspect-square relative">
-                    <Image
+                    <NextImage
                       src={image.eagerUrl || image.url}
                       alt={image.caption || image.originalFilename}
                       fill
@@ -129,7 +135,7 @@ export function FeaturedImageSelector({
                     )}
 
                     {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
+                    <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
                       {selectedImageId === image.id && (
                         <div className="bg-blue-500 text-white rounded-full p-2">
                           <Star className="h-4 w-4 fill-current" />
@@ -168,9 +174,7 @@ export function FeaturedImageSelector({
             <Button variant="outline" onClick={handleCancel}>
               Cancel
             </Button>
-            <Button onClick={handleConfirm}>
-              Confirm Selection
-            </Button>
+            <Button onClick={handleConfirm}>Confirm Selection</Button>
           </div>
         </div>
       </DialogContent>
