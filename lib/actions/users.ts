@@ -109,7 +109,7 @@ export async function getUserByUsername(
           },
         },
         builds: {
-          take: 5,
+          take: 10,
           orderBy: { createdAt: "desc" },
           include: {
             kit: {
