@@ -237,7 +237,7 @@ export function UserProfilePage({
           {/* Left Sidebar (25%) */}
           <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-24 lg:self-start">
             {/* Profile Card */}
-            <Card>
+            <Card className="py-0">
               <CardContent className="p-6">
                 <div className="text-center space-y-4">
                   {/* Avatar */}
@@ -327,7 +327,7 @@ export function UserProfilePage({
 
                   {/* Settings Link (only for own profile) */}
                   {isOwnProfile && (
-                    <div className="pt-4 border-t border-gray-200">
+                    <div className="pt-6 border-t border-gray-200">
                       <Button
                         variant="outline"
                         size="sm"
