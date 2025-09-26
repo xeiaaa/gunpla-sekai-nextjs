@@ -113,6 +113,7 @@ export async function updateBuild(buildId: string, data: UpdateBuildData) {
     revalidatePath("/kits");
     revalidatePath(`/kits/${build.kit.slug}`);
     revalidatePath(`/builds/${buildId}`);
+    revalidatePath(`/builds/${buildId}/edit`);
     return build;
   } catch (error) {
     console.error("Error updating build:", error);
@@ -146,6 +147,8 @@ export async function deleteBuild(buildId: string) {
     revalidatePath("/kits");
     revalidatePath(`/kits/${build.kit.slug}`);
     revalidatePath("/builds");
+    revalidatePath(`/builds/${buildId}`);
+    revalidatePath(`/builds/${buildId}/edit`);
   } catch (error) {
     console.error("Error deleting build:", error);
     throw new Error("Failed to delete build");
@@ -671,6 +674,129 @@ export async function getUserBuildsOptimized(
   } catch (error) {
     console.error("Error fetching optimized user builds:", error);
     throw new Error("Failed to fetch optimized user builds");
+  }
+}
+
+// Minimal function for ISG - only essential data for initial render
+export async function getBuildForStaticGeneration(buildId: string) {
+  try {
+    const build = await prisma.build.findUnique({
+      where: { id: buildId },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        startedAt: true,
+        completedAt: true,
+        featuredImageId: true,
+        kit: {
+          select: {
+            id: true,
+            name: true,
+            number: true,
+            slug: true,
+            boxArt: true,
+            productLine: {
+              select: {
+                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+          },
+        },
+        featuredImage: {
+          select: {
+            id: true,
+            url: true,
+            eagerUrl: true,
+          },
+        },
+        _count: {
+          select: {
+            milestones: true,
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+
+    if (!build) {
+      return null;
+    }
+
+    return {
+      ...build,
+      likes: build._count.likes,
+      comments: build._count.comments,
+    };
+  } catch (error) {
+    console.error("Error fetching build for static generation:", error);
+    throw new Error("Failed to fetch build for static generation");
+  }
+}
+
+// Function to get milestones separately (for client-side loading)
+export async function getBuildMilestones(
+  buildId: string,
+  limit: number = 5,
+  offset: number = 0
+) {
+  try {
+    const milestones = await prisma.buildMilestone.findMany({
+      where: { buildId },
+      select: {
+        id: true,
+        type: true,
+        title: true,
+        description: true,
+        completedAt: true,
+        order: true,
+        uploads: {
+          select: {
+            id: true,
+            caption: true,
+            order: true,
+            upload: {
+              select: {
+                id: true,
+                url: true,
+                eagerUrl: true,
+              },
+            },
+          },
+          orderBy: { order: "asc" },
+        },
+      },
+      orderBy: { order: "asc" },
+      take: limit,
+      skip: offset,
+    });
+
+    return milestones;
+  } catch (error) {
+    console.error("Error fetching build milestones:", error);
+    throw new Error("Failed to fetch build milestones");
   }
 }
 

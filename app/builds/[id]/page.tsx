@@ -1,21 +1,45 @@
 import { notFound } from "next/navigation";
-import { getBuildForCard } from "@/lib/actions/builds";
+import {
+  getBuildForStaticGeneration,
+  getBuildMilestones,
+} from "@/lib/actions/builds";
 import { BuildDetailPublicView } from "@/components/build-detail-public-view";
-import { auth } from "@clerk/nextjs/server";
 
 interface BuildPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
+// Generate static params for ISG
+export async function generateStaticParams() {
+  // This would typically fetch a list of build IDs to pre-generate
+  // For now, we'll rely on on-demand generation
+  return [];
+}
+
+// Enable ISG with revalidation
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function BuildPage({ params }: BuildPageProps) {
-  const { userId } = await auth();
-  const build = await getBuildForCard(params.id, userId || undefined);
+  const { id } = await params;
+
+  // Fetch minimal data for initial render
+  const build = await getBuildForStaticGeneration(id);
 
   if (!build) {
     notFound();
   }
 
-  return <BuildDetailPublicView build={build} />;
+  // Get initial milestones (first 5)
+  const initialMilestones = await getBuildMilestones(id, 5, 0);
+
+  return (
+    <BuildDetailPublicView
+      build={{
+        ...build,
+        milestones: initialMilestones,
+      }}
+    />
+  );
 }

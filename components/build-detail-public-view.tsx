@@ -4,9 +4,15 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Package, Clock, CheckCircle, Edit } from "lucide-react";
+import {
+  Calendar,
+  User,
+  Package,
+  Clock,
+  CheckCircle,
+  Edit,
+} from "lucide-react";
 import { format } from "date-fns";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +32,6 @@ interface BuildDetailPublicViewProps {
     createdAt: Date;
     featuredImageId: string | null;
     likes: number;
-    liked: boolean;
     comments: number;
     featuredImage: {
       id: string;
@@ -108,11 +113,12 @@ function getStatusIcon(status: string) {
 }
 
 export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
-  const router = useRouter();
   const { userId } = useAuth();
   const isOwner = userId === build.user.id;
   const milestones = build.milestones.sort((a, b) => a.order - b.order);
-  const [activeTab, setActiveTab] = useState<"milestones" | "comments">("milestones");
+  const [activeTab, setActiveTab] = useState<"milestones" | "comments">(
+    "milestones"
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -125,7 +131,9 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
               <div className="p-8 border-b border-gray-200">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
                   <div>
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">{build.title}</h1>
+                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                      {build.title}
+                    </h1>
                     <div className="flex items-center gap-4 text-sm text-gray-600">
                       <div className="flex items-center gap-1">
                         <User className="h-4 w-4" />
@@ -135,26 +143,37 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                             className="text-blue-600 hover:text-blue-800 hover:underline"
                           >
                             {build.user.firstName} {build.user.lastName}
-                            <span className="text-gray-400"> (@{build.user.username})</span>
+                            <span className="text-gray-400">
+                              {" "}
+                              (@{build.user.username})
+                            </span>
                           </Link>
                         ) : (
-                          <span>{build.user.firstName} {build.user.lastName}</span>
+                          <span>
+                            {build.user.firstName} {build.user.lastName}
+                          </span>
                         )}
                       </div>
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
-                        <span>Created {format(build.createdAt, "MMM d, yyyy")}</span>
+                        <span>
+                          Created {format(build.createdAt, "MMM d, yyyy")}
+                        </span>
                       </div>
                       {build.startedAt && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
-                          <span>Started {format(build.startedAt, "MMM d, yyyy")}</span>
+                          <span>
+                            Started {format(build.startedAt, "MMM d, yyyy")}
+                          </span>
                         </div>
                       )}
                       {build.completedAt && (
                         <div className="flex items-center gap-1">
                           <CheckCircle className="h-4 w-4" />
-                          <span>Completed {format(build.completedAt, "MMM d, yyyy")}</span>
+                          <span>
+                            Completed {format(build.completedAt, "MMM d, yyyy")}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -164,15 +183,16 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     <LikeButton
                       buildId={build.id}
                       initialLikes={build.likes}
-                      initialLiked={build.liked}
+                      initialLiked={false}
                     />
 
-                    <ShareButton
-                      buildId={build.id}
-                      buildTitle={build.title}
-                    />
+                    <ShareButton buildId={build.id} buildTitle={build.title} />
 
-                    <Badge className={`${getStatusColor(build.status)} flex items-center gap-1`}>
+                    <Badge
+                      className={`${getStatusColor(
+                        build.status
+                      )} flex items-center gap-1`}
+                    >
                       {getStatusIcon(build.status)}
                       {build.status.replace("_", " ")}
                     </Badge>
@@ -200,7 +220,10 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                   <div className="mt-6">
                     <div className="relative w-full max-h-96 rounded-lg overflow-hidden flex justify-center">
                       <Image
-                        src={build.featuredImage.eagerUrl || build.featuredImage.url}
+                        src={
+                          build.featuredImage.eagerUrl ||
+                          build.featuredImage.url
+                        }
                         alt={`Featured image for ${build.title}`}
                         width={800}
                         height={600}
@@ -243,12 +266,17 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                 {activeTab === "milestones" ? (
                   milestones.length === 0 ? (
                     <div className="text-center py-12">
-                      <p className="text-gray-500 text-lg">No milestones yet. Check back later!</p>
+                      <p className="text-gray-500 text-lg">
+                        No milestones yet. Check back later!
+                      </p>
                     </div>
                   ) : (
                     <div className="space-y-12">
                       {milestones.map((milestone) => (
-                        <MilestoneSection key={milestone.id} milestone={milestone} />
+                        <MilestoneSection
+                          key={milestone.id}
+                          milestone={milestone}
+                        />
                       ))}
                     </div>
                   )
@@ -267,19 +295,26 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                 <h3 className="text-lg font-semibold mb-3">Build Stats</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Milestones</span>
-                    <span className="font-semibold text-gray-900">{milestones.length}</span>
+                    <span className="text-sm text-gray-600">
+                      Total Milestones
+                    </span>
+                    <span className="font-semibold text-gray-900">
+                      {milestones.length}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Completed</span>
                     <span className="font-semibold text-gray-900">
-                      {milestones.filter(m => m.completedAt).length}
+                      {milestones.filter((m) => m.completedAt).length}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Total Images</span>
                     <span className="font-semibold text-gray-900">
-                      {milestones.reduce((total, milestone) => total + milestone.uploads.length, 0)}
+                      {milestones.reduce(
+                        (total, milestone) => total + milestone.uploads.length,
+                        0
+                      )}
                     </span>
                   </div>
                   {build.startedAt && (
@@ -332,11 +367,14 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     {build.kit.productLine && (
                       <p className="text-sm text-gray-600">
                         {build.kit.productLine.name}
-                        {build.kit.productLine.grade && ` - ${build.kit.productLine.grade.name}`}
+                        {build.kit.productLine.grade &&
+                          ` - ${build.kit.productLine.grade.name}`}
                       </p>
                     )}
                     {build.kit.series && (
-                      <p className="text-sm text-gray-600">{build.kit.series.name}</p>
+                      <p className="text-sm text-gray-600">
+                        {build.kit.series.name}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -350,7 +388,9 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
 }
 
 // Milestone Section Component with Image Gallery
-function MilestoneSection({ milestone }: {
+function MilestoneSection({
+  milestone,
+}: {
   milestone: {
     id: string;
     type: string;
@@ -368,7 +408,7 @@ function MilestoneSection({ milestone }: {
         eagerUrl: string | null;
       };
     }>;
-  }
+  };
 }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -377,7 +417,9 @@ function MilestoneSection({ milestone }: {
       {/* Milestone Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-2xl font-bold text-gray-900">{milestone.title}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {milestone.title}
+          </h2>
           <Badge variant="outline" className="text-xs">
             {milestone.type.replace("_", " ")}
           </Badge>
@@ -402,12 +444,19 @@ function MilestoneSection({ milestone }: {
           {/* Main Image */}
           <div className="relative w-full max-h-96 rounded-lg overflow-hidden flex justify-center">
             <Image
-              src={milestone.uploads[selectedImageIndex].upload.eagerUrl || milestone.uploads[selectedImageIndex].upload.url}
-              alt={milestone.uploads[selectedImageIndex].caption || "Milestone image"}
+              src={
+                milestone.uploads[selectedImageIndex].upload.eagerUrl ||
+                milestone.uploads[selectedImageIndex].upload.url
+              }
+              alt={
+                milestone.uploads[selectedImageIndex].caption ||
+                "Milestone image"
+              }
               width={800}
               height={600}
               className="max-h-96 w-auto object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              priority={selectedImageIndex === 0}
             />
           </div>
 
@@ -420,8 +469,8 @@ function MilestoneSection({ milestone }: {
                   onClick={() => setSelectedImageIndex(index)}
                   className={`flex-shrink-0 relative w-24 h-24 rounded-lg overflow-hidden border-2 transition-colors ${
                     selectedImageIndex === index
-                      ? 'border-blue-500'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? "border-blue-500"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   <Image
@@ -430,6 +479,7 @@ function MilestoneSection({ milestone }: {
                     fill
                     className="object-cover"
                     sizes="96px"
+                    loading={index <= 3 ? "eager" : "lazy"}
                   />
                 </button>
               ))}

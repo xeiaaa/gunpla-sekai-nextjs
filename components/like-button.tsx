@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { useBuildLikes, useToggleBuildLike } from "@/hooks/use-build-likes";
 
 interface LikeButtonProps {
   buildId: string;
@@ -18,15 +19,21 @@ export function LikeButton({
   buildId,
   initialLikes,
   initialLiked,
-  className
+  className,
 }: LikeButtonProps) {
   const { userId } = useAuth();
   const { showToast } = useToast();
-  const [likes, setLikes] = useState(initialLikes);
-  const [liked, setLiked] = useState(initialLiked);
-  const [isLoading, setIsLoading] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Use React Query for likes data
+  const { data: likesData, isLoading: isLoadingLikes } = useBuildLikes(buildId);
+  const toggleLikeMutation = useToggleBuildLike(buildId);
+
+  // Fallback to initial values if React Query hasn't loaded yet
+  const likes = likesData?.likes ?? initialLikes;
+  const liked = likesData?.liked ?? initialLiked;
+  const isLoading = toggleLikeMutation.isPending || isLoadingLikes;
 
   const handleLike = useCallback(async () => {
     if (!userId) {
@@ -43,43 +50,11 @@ export function LikeButton({
 
     // Debounce rapid clicks
     debounceTimeoutRef.current = setTimeout(async () => {
-      setIsLoading(true);
       setIsAnimating(true);
 
-      // Store original values for potential rollback
-      const originalLiked = liked;
-      const originalLikes = likes;
-
-      // Optimistic update
-      const newLiked = !liked;
-      const newLikes = newLiked ? likes + 1 : likes - 1;
-
-      setLiked(newLiked);
-      setLikes(newLikes);
-
       try {
-        const response = await fetch(`/api/builds/${buildId}/like`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ liked: newLiked }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-
-          // Revert optimistic update on error
-          setLiked(originalLiked);
-          setLikes(originalLikes);
-
-          if (response.status === 429) {
-            showToast("Please wait a moment before liking again", "warning");
-          } else {
-            showToast(errorData.error || "Failed to update like. Please try again.", "error");
-          }
-          throw new Error("Failed to update like");
-        }
+        const newLiked = !liked;
+        await toggleLikeMutation.mutateAsync(newLiked);
 
         // Success feedback
         if (newLiked) {
@@ -87,14 +62,19 @@ export function LikeButton({
         }
       } catch (error) {
         console.error("Error updating like:", error);
-        // Error handling is done above in the response.ok check
+        if (error instanceof Error) {
+          if (error.message.includes("429")) {
+            showToast("Please wait a moment before liking again", "warning");
+          } else {
+            showToast("Failed to update like. Please try again.", "error");
+          }
+        }
       } finally {
-        setIsLoading(false);
         // Reset animation state after a short delay
         setTimeout(() => setIsAnimating(false), 300);
       }
     }, 150); // 150ms debounce
-  }, [userId, liked, likes, buildId, isLoading, showToast]);
+  }, [userId, liked, buildId, isLoading, showToast, toggleLikeMutation]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -140,10 +120,12 @@ export function LikeButton({
           />
         )}
       </div>
-      <span className={cn(
-        "text-sm font-medium transition-all duration-200",
-        isAnimating && "scale-105"
-      )}>
+      <span
+        className={cn(
+          "text-sm font-medium transition-all duration-200",
+          isAnimating && "scale-105"
+        )}
+      >
         {likes} {likes === 1 ? "like" : "likes"}
       </span>
       {isLoading && (
