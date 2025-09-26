@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 }
 
 // Enable ISG with revalidation
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 604800; // 1 week
 
 export default async function BuildPage({ params }: BuildPageProps) {
   const { id } = await params;

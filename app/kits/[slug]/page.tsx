@@ -3,7 +3,7 @@ import { getKitBySlug } from "@/lib/actions/kits";
 import { KitDetailPageClient } from "@/components/kit-detail-page-client";
 
 // ISR Configuration
-export const revalidate = 86400; // 24 hours
+export const revalidate = 604800; // 1 week
 
 // Pre-generate popular kit slugs for better performance
 export async function generateStaticParams() {

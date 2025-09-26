@@ -24,8 +24,8 @@ export function useFilterData() {
   return useQuery({
     queryKey: ["filterData"],
     queryFn: getFilterDataWithMeilisearch,
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-    gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days in cache
+    staleTime: 60 * 60 * 1000, // 1 hour - consistent with provider default
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours - consistent with provider default
   });
 }
 
@@ -48,7 +48,8 @@ export function useKits(params: UseKitsParams) {
       params.includeVariants,
     ],
     queryFn: () => getFilteredKitsWithMeilisearch(params),
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    staleTime: 60 * 60 * 1000, // 1 hour - consistent with provider default
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours - consistent with provider default
     enabled: true, // Always enabled, but we'll handle loading states
   });
 }
@@ -86,7 +87,8 @@ export function useKitsInfinite(
       }
       return undefined;
     },
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    staleTime: 60 * 60 * 1000, // 1 hour - consistent with provider default
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours - consistent with provider default
     initialPageParam: 0,
   });
 }
