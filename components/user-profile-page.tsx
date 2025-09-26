@@ -279,14 +279,6 @@ export function UserProfilePage({
                     <span>Joined {joinDate}</span>
                   </div>
 
-                  {/* Stats */}
-                  <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <Package className="w-4 h-4" />
-                      <span>{user.collectionStats.total} Kits</span>
-                    </div>
-                  </div>
-
                   {/* Social Links */}
                   {(user.instagramUrl ||
                     user.youtubeUrl ||

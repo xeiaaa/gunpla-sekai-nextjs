@@ -399,7 +399,7 @@ export async function getUserProfileById(
           },
         },
         builds: {
-          take: 5,
+          take: 10,
           orderBy: { createdAt: "desc" },
           include: {
             kit: {
