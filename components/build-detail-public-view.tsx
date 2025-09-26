@@ -21,6 +21,7 @@ import { MarkdownRenderer } from "./ui/markdown-renderer";
 import { LikeButton } from "./like-button";
 import { CommentsSection } from "./comments-section";
 import { ShareButton } from "./share-button";
+import { pipeThroughCloudinary } from "@/lib/cloudinary-client";
 
 interface BuildDetailPublicViewProps {
   build: {
@@ -128,6 +129,19 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
   const [activeTab, setActiveTab] = useState<
     "milestones" | "gallery" | "comments"
   >("milestones");
+
+  // Handle Cloudinary URL processing for box art
+  const getProcessedSrc = (src: string, width: number = 400) => {
+    if (!src) return src;
+
+    // If it's already a Cloudinary URL, add width parameter before q_auto
+    if (src.startsWith("https://res.cloudinary.com/")) {
+      return src.replace("q_auto", `w_${width},q_auto`);
+    }
+
+    // Otherwise, use pipeThroughCloudinary with the specified width
+    return pipeThroughCloudinary(src, `w_${width},q_auto,f_auto`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -388,7 +402,7 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                   {build.kit.boxArt && (
                     <div className="relative aspect-square w-full">
                       <Image
-                        src={build.kit.boxArt}
+                        src={getProcessedSrc(build.kit.boxArt, 400)}
                         alt={`${build.kit.name} box art`}
                         fill
                         className="object-cover rounded-lg border"
