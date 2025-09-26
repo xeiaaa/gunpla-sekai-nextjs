@@ -5,10 +5,10 @@ import { getUserReviews } from "@/lib/actions/reviews";
 import { UserReviewsPage } from "@/components/user-reviews-page";
 
 interface MeReviewsPageProps {
-  searchParams: {
+  searchParams: Promise<{
     sort?: string;
     page?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata() {
@@ -28,9 +28,10 @@ export async function generateMetadata() {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName}'s Reviews - Gunpla Sekai`,
@@ -38,7 +39,9 @@ export async function generateMetadata() {
   };
 }
 
-export default async function MeReviewsPage({ searchParams }: MeReviewsPageProps) {
+export default async function MeReviewsPage({
+  searchParams,
+}: MeReviewsPageProps) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -61,8 +64,9 @@ export default async function MeReviewsPage({ searchParams }: MeReviewsPageProps
   }
 
   // Parse search params
-  const sort = searchParams.sort || "newest";
-  const page = parseInt(searchParams.page || "1", 10);
+  const resolvedSearchParams = await searchParams;
+  const sort = resolvedSearchParams.sort || "newest";
+  const page = parseInt(resolvedSearchParams.page || "1", 10);
   const limit = 20;
   const offset = (page - 1) * limit;
 

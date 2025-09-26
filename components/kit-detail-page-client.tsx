@@ -56,6 +56,7 @@ interface KitDetailPageClientProps {
     uploads: Array<{
       id: string;
       url: string;
+      eagerUrl: string | null;
       type: string;
       title?: string | null;
       description?: string | null;

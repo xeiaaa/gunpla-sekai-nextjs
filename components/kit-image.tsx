@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { pipeThroughCloudinary } from "@/lib/cloudinary-client";
 
 interface KitImageProps {
   src?: string;
   alt: string;
   className?: string;
   isContain?: boolean;
+  width?: number; // Width for Cloudinary optimization
 }
 
 export function KitImage({
@@ -15,12 +17,28 @@ export function KitImage({
   alt,
   className = "",
   isContain = false,
+  width = 600,
 }: KitImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
 
+  // Handle Cloudinary URL processing
+  const getProcessedSrc = (src: string) => {
+    if (!src) return src;
+
+    // If it's already a Cloudinary URL, add width parameter before q_auto
+    if (src.startsWith("https://res.cloudinary.com/")) {
+      return src.replace("q_auto", `w_${width},q_auto`);
+    }
+
+    // Otherwise, use pipeThroughCloudinary with the specified width
+    return pipeThroughCloudinary(src, `w_${width},q_auto,f_auto`);
+  };
+
+  const processedSrc = getProcessedSrc(src || "");
+
   const handleImageError = () => {
-    console.error("Image failed to load:", src);
+    console.error("Image failed to load:", processedSrc);
     setImageError(true);
   };
 
@@ -31,12 +49,12 @@ export function KitImage({
   };
 
   useEffect(() => {
-    if (src) {
+    if (processedSrc) {
       setIsPortrait(null); // Reset when src changes
     }
-  }, [src]);
+  }, [processedSrc]);
 
-  if (!src || imageError) {
+  if (!processedSrc || imageError) {
     return (
       <div className={`bg-muted flex items-center justify-center ${className}`}>
         <div className="text-center text-muted-foreground">
@@ -58,7 +76,7 @@ export function KitImage({
   return (
     <div className={`relative ${className} bg-muted`}>
       <Image
-        src={src}
+        src={processedSrc}
         alt={alt}
         fill
         className={isContain ? "object-contain" : "object-cover"}

@@ -88,6 +88,7 @@ interface KitDetailPageProps {
     uploads: Array<{
       id: string;
       url: string;
+      eagerUrl: string | null;
       type: string;
       title?: string | null;
       description?: string | null;
@@ -181,7 +182,7 @@ export function KitDetailPage({
             const bIndex = uploadTypeOrder.indexOf(b.type);
             return aIndex - bIndex;
           })
-          .map((upload) => upload.url)
+          .map((upload) => upload.eagerUrl)
       : [kit.boxArt, ...kit.scrapedImages].filter(Boolean);
 
   const tabs = [
@@ -333,6 +334,7 @@ export function KitDetailPage({
                               alt={mobileSuit.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
+                              width={64}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -375,6 +377,7 @@ export function KitDetailPage({
                             alt={kit.baseKit.name}
                             className="w-full h-full rounded-md"
                             isContain={true}
+                            width={64}
                           />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -411,6 +414,7 @@ export function KitDetailPage({
                               alt={variant.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
+                              width={64}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -463,6 +467,7 @@ export function KitDetailPage({
                               alt={otherVariant.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
+                              width={64}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -512,6 +517,7 @@ export function KitDetailPage({
                               alt={expansion.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
+                              width={64}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -573,6 +579,7 @@ export function KitDetailPage({
                               alt={expandedByKit.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
+                              width={64}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -697,6 +704,7 @@ export function KitDetailPage({
                   alt={kit.name}
                   className="w-full h-full rounded-lg"
                   isContain={true}
+                  width={480}
                 />
               </div>
             </CardContent>
@@ -721,6 +729,7 @@ export function KitDetailPage({
                     alt={`${kit.name} - Image ${index + 1}`}
                     className="w-full h-full"
                     isContain={true}
+                    width={120}
                   />
                 </button>
               ))}

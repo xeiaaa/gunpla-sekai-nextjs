@@ -4,14 +4,15 @@ import { getUserByUsername, getUserBasicInfo } from "@/lib/actions/users";
 import { UserProfilePage } from "@/components/user-profile-page";
 
 interface UserProfilePageProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: UserProfilePageProps) {
   // Use optimized function for metadata generation (minimal data)
-  const user = await getUserBasicInfo(params.username);
+  const { username } = await params;
+  const user = await getUserBasicInfo(username);
 
   if (!user) {
     return {
@@ -32,7 +33,8 @@ export async function generateMetadata({ params }: UserProfilePageProps) {
 
 export default async function UserProfile({ params }: UserProfilePageProps) {
   const { userId } = await auth();
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     notFound();

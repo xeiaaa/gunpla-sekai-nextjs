@@ -702,6 +702,7 @@ export async function getKitBySlug(slug: string) {
             upload: {
               select: {
                 url: true,
+                eagerUrl: true,
                 originalFilename: true,
                 createdAt: true,
               },
@@ -864,6 +865,7 @@ export async function getKitBySlug(slug: string) {
       uploads: kit.uploads.map((u) => ({
         id: u.id,
         url: u.upload.url,
+        eagerUrl: u.upload.eagerUrl,
         type: u.type,
         title: u.caption || u.upload.originalFilename,
         description: u.caption,

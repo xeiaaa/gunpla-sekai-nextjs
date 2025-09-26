@@ -4,14 +4,15 @@ import { BuildDetailEditView } from "@/components/build-detail-edit-view";
 import { auth } from "@clerk/nextjs/server";
 
 interface BuildEditPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function BuildEditPage({ params }: BuildEditPageProps) {
   const { userId } = await auth();
-  const build = await getBuildForEdit(params.id, userId || undefined);
+  const { id } = await params;
+  const build = await getBuildForEdit(id, userId || undefined);
 
   if (!build) {
     notFound();

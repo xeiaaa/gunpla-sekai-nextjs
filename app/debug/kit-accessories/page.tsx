@@ -86,6 +86,7 @@ export default function KitAccessoriesDebugPage() {
   const [selectedKits, setSelectedKits] = useState<SelectedKit[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const scrollPositionRef = useRef<number>(0);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetchAccessoryKits();
@@ -113,38 +114,50 @@ export default function KitAccessoriesDebugPage() {
   };
 
   // Debounced search function
-  const debouncedSearch = useCallback(
-    debounce(async (query: string) => {
-      if (!query.trim()) {
-        setSearchResults([]);
-        return;
+  const performSearch = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      setSearchLoading(true);
+      const response = await fetch(
+        `/api/debug/search-kits?q=${encodeURIComponent(query)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      try {
-        setSearchLoading(true);
-        const response = await fetch(
-          `/api/debug/search-kits?q=${encodeURIComponent(query)}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setSearchResults(data);
-      } catch (error) {
-        console.error("Error searching kits:", error);
-        setSearchResults([]);
-      } finally {
-        setSearchLoading(false);
-      }
-    }, 500),
-    []
-  );
+      const data = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error("Error searching kits:", error);
+      setSearchResults([]);
+    } finally {
+      setSearchLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    debouncedSearch(searchQuery);
-  }, [searchQuery, debouncedSearch]);
+    // Clear existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    // Set new timeout
+    searchTimeoutRef.current = setTimeout(() => {
+      performSearch(searchQuery);
+    }, 500);
+
+    // Cleanup function
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [searchQuery, performSearch]);
 
   const addSelectedKit = (kit: Kit) => {
     if (!selectedKits.find((k) => k.id === kit.id)) {
@@ -692,16 +705,4 @@ export default function KitAccessoriesDebugPage() {
       )}
     </div>
   );
-}
-
-// Debounce utility function
-function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
 }

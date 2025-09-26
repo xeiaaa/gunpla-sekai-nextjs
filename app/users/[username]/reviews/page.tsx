@@ -5,17 +5,18 @@ import { getUserReviews } from "@/lib/actions/reviews";
 import { UserReviewsPage } from "@/components/user-reviews-page";
 
 interface UserReviewsPageProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     sort?: string;
     page?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: UserReviewsPageProps) {
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     return {
@@ -23,9 +24,10 @@ export async function generateMetadata({ params }: UserReviewsPageProps) {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName}'s Reviews - Gunpla Sekai`,
@@ -33,9 +35,13 @@ export async function generateMetadata({ params }: UserReviewsPageProps) {
   };
 }
 
-export default async function UserReviews({ params, searchParams }: UserReviewsPageProps) {
+export default async function UserReviews({
+  params,
+  searchParams,
+}: UserReviewsPageProps) {
   const { userId } = await auth();
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     notFound();
@@ -45,8 +51,9 @@ export default async function UserReviews({ params, searchParams }: UserReviewsP
   const isOwnProfile = userId === user.id;
 
   // Parse search params
-  const sort = searchParams.sort || "newest";
-  const page = parseInt(searchParams.page || "1", 10);
+  const resolvedSearchParams = await searchParams;
+  const sort = resolvedSearchParams.sort || "newest";
+  const page = parseInt(resolvedSearchParams.page || "1", 10);
   const limit = 20;
   const offset = (page - 1) * limit;
 

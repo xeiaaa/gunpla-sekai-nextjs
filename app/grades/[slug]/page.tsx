@@ -7,13 +7,14 @@ import { ProductLineCard } from "@/components/product-line-card";
 import { KitCard } from "@/components/kit-card";
 
 interface GradeDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: GradeDetailPageProps) {
-  const grade = await getGradeBySlug(params.slug);
+  const { slug } = await params;
+  const grade = await getGradeBySlug(slug);
 
   if (!grade) {
     return {
@@ -23,12 +24,15 @@ export async function generateMetadata({ params }: GradeDetailPageProps) {
 
   return {
     title: `${grade.name} - Gunpla Sekai`,
-    description: grade.description || `Explore ${grade.name} grade Gunpla kits and product lines`,
+    description:
+      grade.description ||
+      `Explore ${grade.name} grade Gunpla kits and product lines`,
   };
 }
 
 export default async function GradeDetail({ params }: GradeDetailPageProps) {
-  const grade = await getGradeBySlug(params.slug);
+  const { slug } = await params;
+  const grade = await getGradeBySlug(slug);
 
   if (!grade) {
     notFound();
@@ -43,7 +47,12 @@ export default async function GradeDetail({ params }: GradeDetailPageProps) {
       <div className="bg-primary text-primary-foreground py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" asChild className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-primary-foreground hover:bg-primary-foreground/20"
+            >
               <Link href="/grades">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Grades
@@ -73,7 +82,10 @@ export default async function GradeDetail({ params }: GradeDetailPageProps) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {grade.productLines.map((productLine) => (
-                <ProductLineCard key={productLine.id} productLine={{...productLine, gradeName: grade.name}} />
+                <ProductLineCard
+                  key={productLine.id}
+                  productLine={{ ...productLine, gradeName: grade.name }}
+                />
               ))}
             </div>
           </div>
@@ -83,7 +95,9 @@ export default async function GradeDetail({ params }: GradeDetailPageProps) {
         {recentKits.length > 0 && (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-semibold mb-2">Recent {grade.name} Kits</h2>
+              <h2 className="text-2xl font-semibold mb-2">
+                Recent {grade.name} Kits
+              </h2>
               <p className="text-muted-foreground">
                 Latest kits released in {grade.name} grade
               </p>
@@ -109,7 +123,9 @@ export default async function GradeDetail({ params }: GradeDetailPageProps) {
         {grade.productLines.length === 0 && recentKits.length === 0 && (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <p className="text-muted-foreground text-lg">No content found for {grade.name}</p>
+              <p className="text-muted-foreground text-lg">
+                No content found for {grade.name}
+              </p>
               <p className="text-muted-foreground text-sm mt-2">
                 Check back later for {grade.name} content.
               </p>

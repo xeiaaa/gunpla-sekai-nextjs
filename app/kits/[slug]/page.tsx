@@ -13,9 +13,9 @@ export async function generateStaticParams() {
 }
 
 interface KitDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: KitDetailPageProps) {

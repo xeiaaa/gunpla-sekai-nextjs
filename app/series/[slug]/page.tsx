@@ -6,13 +6,14 @@ import { getSeriesBySlug } from "@/lib/actions/series";
 import { MobileSuitCard } from "@/components/mobile-suit-card";
 
 interface SeriesDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: SeriesDetailPageProps) {
-  const series = await getSeriesBySlug(params.slug);
+  const { slug } = await params;
+  const series = await getSeriesBySlug(slug);
 
   if (!series) {
     return {
@@ -22,12 +23,15 @@ export async function generateMetadata({ params }: SeriesDetailPageProps) {
 
   return {
     title: `${series.name} - Gunpla Sekai`,
-    description: series.description || `Explore ${series.name} series and its mobile suits`,
+    description:
+      series.description ||
+      `Explore ${series.name} series and its mobile suits`,
   };
 }
 
 export default async function SeriesDetail({ params }: SeriesDetailPageProps) {
-  const series = await getSeriesBySlug(params.slug);
+  const { slug } = await params;
+  const series = await getSeriesBySlug(slug);
 
   if (!series) {
     notFound();
@@ -39,8 +43,19 @@ export default async function SeriesDetail({ params }: SeriesDetailPageProps) {
       <div className="bg-primary text-primary-foreground py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" asChild className="text-primary-foreground hover:bg-primary-foreground/20">
-              <Link href={series.timeline ? `/timelines/${series.timeline.slug}` : "/timelines"}>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-primary-foreground hover:bg-primary-foreground/20"
+            >
+              <Link
+                href={
+                  series.timeline
+                    ? `/timelines/${series.timeline.slug}`
+                    : "/timelines"
+                }
+              >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to {series.timeline ? series.timeline.name : "Timelines"}
               </Link>
@@ -66,7 +81,9 @@ export default async function SeriesDetail({ params }: SeriesDetailPageProps) {
         {series.mobileSuits.length === 0 ? (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <p className="text-muted-foreground text-lg">No mobile suits found in this series</p>
+              <p className="text-muted-foreground text-lg">
+                No mobile suits found in this series
+              </p>
               <p className="text-muted-foreground text-sm mt-2">
                 Check back later for mobile suit content.
               </p>
@@ -75,7 +92,9 @@ export default async function SeriesDetail({ params }: SeriesDetailPageProps) {
         ) : (
           <>
             <div className="mb-6">
-              <h2 className="text-2xl font-semibold mb-2">Mobile Suits in {series.name}</h2>
+              <h2 className="text-2xl font-semibold mb-2">
+                Mobile Suits in {series.name}
+              </h2>
               <p className="text-muted-foreground">
                 Explore the mobile suits featured in this series
               </p>

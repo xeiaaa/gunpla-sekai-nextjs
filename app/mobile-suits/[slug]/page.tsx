@@ -3,13 +3,14 @@ import { getMobileSuitBySlug } from "@/lib/actions/mobile-suits";
 import { MobileSuitDetailPage } from "@/components/mobile-suit-detail-page";
 
 interface MobileSuitDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: MobileSuitDetailPageProps) {
-  const mobileSuit = await getMobileSuitBySlug(params.slug);
+  const { slug } = await params;
+  const mobileSuit = await getMobileSuitBySlug(slug);
 
   if (!mobileSuit) {
     return {
@@ -19,12 +20,17 @@ export async function generateMetadata({ params }: MobileSuitDetailPageProps) {
 
   return {
     title: `${mobileSuit.name} - Gunpla Sekai`,
-    description: mobileSuit.description || `Explore ${mobileSuit.name} mobile suit and its kits`,
+    description:
+      mobileSuit.description ||
+      `Explore ${mobileSuit.name} mobile suit and its kits`,
   };
 }
 
-export default async function MobileSuitDetail({ params }: MobileSuitDetailPageProps) {
-  const mobileSuit = await getMobileSuitBySlug(params.slug);
+export default async function MobileSuitDetail({
+  params,
+}: MobileSuitDetailPageProps) {
+  const { slug } = await params;
+  const mobileSuit = await getMobileSuitBySlug(slug);
 
   if (!mobileSuit) {
     notFound();

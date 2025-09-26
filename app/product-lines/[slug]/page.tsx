@@ -3,17 +3,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProductLineBySlug, getProductLineKits } from "@/lib/actions/product-lines";
+import {
+  getProductLineBySlug,
+  getProductLineKits,
+} from "@/lib/actions/product-lines";
 import { KitCard } from "@/components/kit-card";
 
 interface ProductLineDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: ProductLineDetailPageProps) {
-  const productLine = await getProductLineBySlug(params.slug);
+  const { slug } = await params;
+  const productLine = await getProductLineBySlug(slug);
 
   if (!productLine) {
     return {
@@ -23,12 +27,17 @@ export async function generateMetadata({ params }: ProductLineDetailPageProps) {
 
   return {
     title: `${productLine.name} - Gunpla Sekai`,
-    description: productLine.description || `Explore ${productLine.name} product line kits`,
+    description:
+      productLine.description ||
+      `Explore ${productLine.name} product line kits`,
   };
 }
 
-export default async function ProductLineDetail({ params }: ProductLineDetailPageProps) {
-  const productLine = await getProductLineBySlug(params.slug);
+export default async function ProductLineDetail({
+  params,
+}: ProductLineDetailPageProps) {
+  const { slug } = await params;
+  const productLine = await getProductLineBySlug(slug);
 
   if (!productLine) {
     notFound();
@@ -43,7 +52,12 @@ export default async function ProductLineDetail({ params }: ProductLineDetailPag
       <div className="bg-primary text-primary-foreground py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" asChild className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-primary-foreground hover:bg-primary-foreground/20"
+            >
               <Link href={`/grades/${productLine.grade.slug}`}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to {productLine.grade.name}
@@ -56,7 +70,9 @@ export default async function ProductLineDetail({ params }: ProductLineDetailPag
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 relative">
                   <Image
-                    src={productLine.logo?.url || productLine.scrapedImage || ''}
+                    src={
+                      productLine.logo?.url || productLine.scrapedImage || ""
+                    }
                     alt={`${productLine.name} logo`}
                     fill
                     className="object-contain"
@@ -72,7 +88,9 @@ export default async function ProductLineDetail({ params }: ProductLineDetailPag
                 {productLine.grade.name} Product Line
               </div>
               {productLine.description && (
-                <p className="text-lg opacity-90 max-w-3xl">{productLine.description}</p>
+                <p className="text-lg opacity-90 max-w-3xl">
+                  {productLine.description}
+                </p>
               )}
               <div className="mt-4 text-sm opacity-75">
                 {productLine.kitsCount} kits
@@ -86,7 +104,9 @@ export default async function ProductLineDetail({ params }: ProductLineDetailPag
         {recentKits.length === 0 ? (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <p className="text-muted-foreground text-lg">No kits found in {productLine.name}</p>
+              <p className="text-muted-foreground text-lg">
+                No kits found in {productLine.name}
+              </p>
               <p className="text-muted-foreground text-sm mt-2">
                 Check back later for {productLine.name} content.
               </p>
@@ -95,7 +115,9 @@ export default async function ProductLineDetail({ params }: ProductLineDetailPag
         ) : (
           <>
             <div className="mb-6">
-              <h2 className="text-2xl font-semibold mb-2">{productLine.name} Kits</h2>
+              <h2 className="text-2xl font-semibold mb-2">
+                {productLine.name} Kits
+              </h2>
               <p className="text-muted-foreground">
                 All kits in the {productLine.name} product line
               </p>

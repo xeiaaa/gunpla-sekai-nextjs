@@ -4,13 +4,14 @@ import { isCurrentUserAdmin } from "@/lib/actions/users";
 import { KitEditForm } from "@/components/kit-edit-form";
 
 interface KitEditPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: KitEditPageProps) {
-  const kit = await getKitBySlug(params.slug);
+  const { slug } = await params;
+  const kit = await getKitBySlug(slug);
 
   if (!kit) {
     return {
@@ -32,7 +33,8 @@ export default async function KitEditPage({ params }: KitEditPageProps) {
     redirect("/");
   }
 
-  const kit = await getKitBySlug(params.slug);
+  const { slug } = await params;
+  const kit = await getKitBySlug(slug);
 
   if (!kit) {
     notFound();

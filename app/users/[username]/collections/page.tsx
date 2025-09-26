@@ -5,13 +5,14 @@ import { CollectionStatus } from "@/generated/prisma";
 import { KitCard } from "@/components/kit-card";
 
 interface UserCollectionsPageProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: UserCollectionsPageProps) {
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     return {
@@ -19,9 +20,10 @@ export async function generateMetadata({ params }: UserCollectionsPageProps) {
     };
   }
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return {
     title: `${displayName}'s Collection - Gunpla Sekai`,
@@ -29,32 +31,39 @@ export async function generateMetadata({ params }: UserCollectionsPageProps) {
   };
 }
 
-export default async function UserCollectionsPage({ params }: UserCollectionsPageProps) {
+export default async function UserCollectionsPage({
+  params,
+}: UserCollectionsPageProps) {
   // Check if user exists
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     notFound();
   }
 
   const [wishlist, preorder, backlog, inProgress, built] = await Promise.all([
-    getUserCollectionByUsername(params.username, CollectionStatus.WISHLIST),
-    getUserCollectionByUsername(params.username, CollectionStatus.PREORDER),
-    getUserCollectionByUsername(params.username, CollectionStatus.BACKLOG),
-    getUserCollectionByUsername(params.username, CollectionStatus.IN_PROGRESS),
-    getUserCollectionByUsername(params.username, CollectionStatus.BUILT),
+    getUserCollectionByUsername(username, CollectionStatus.WISHLIST),
+    getUserCollectionByUsername(username, CollectionStatus.PREORDER),
+    getUserCollectionByUsername(username, CollectionStatus.BACKLOG),
+    getUserCollectionByUsername(username, CollectionStatus.IN_PROGRESS),
+    getUserCollectionByUsername(username, CollectionStatus.BUILT),
   ]);
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{displayName}&apos;s Collection</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          {displayName}&apos;s Collection
+        </h1>
         <p className="text-gray-600">
-          View {displayName}&apos;s Gunpla collection across wishlist, preorder, backlog, in progress, and built kits.
+          View {displayName}&apos;s Gunpla collection across wishlist, preorder,
+          backlog, in progress, and built kits.
         </p>
       </div>
 
@@ -65,9 +74,7 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
             <h2 className="text-2xl font-semibold text-gray-900">
               Wishlist ({wishlist.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits they want to get
-            </p>
+            <p className="text-sm text-gray-500">Kits they want to get</p>
           </div>
 
           {wishlist.length > 0 ? (
@@ -86,9 +93,13 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series:
+                      collection.kit.mobileSuits[0]?.mobileSuit?.series?.name ||
+                      null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: collection.kit.mobileSuits.map(
+                      (ms: any) => ms.mobileSuit.name
+                    ),
                   }}
                   collectionStatus={collection.status}
                 />
@@ -107,9 +118,7 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
             <h2 className="text-2xl font-semibold text-gray-900">
               Preorder ({preorder.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits they have preordered
-            </p>
+            <p className="text-sm text-gray-500">Kits they have preordered</p>
           </div>
 
           {preorder.length > 0 ? (
@@ -128,9 +137,13 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series:
+                      collection.kit.mobileSuits[0]?.mobileSuit?.series?.name ||
+                      null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: collection.kit.mobileSuits.map(
+                      (ms: any) => ms.mobileSuit.name
+                    ),
                   }}
                   collectionStatus={collection.status}
                 />
@@ -170,9 +183,13 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series:
+                      collection.kit.mobileSuits[0]?.mobileSuit?.series?.name ||
+                      null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: collection.kit.mobileSuits.map(
+                      (ms: any) => ms.mobileSuit.name
+                    ),
                   }}
                   collectionStatus={collection.status}
                 />
@@ -212,9 +229,13 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series:
+                      collection.kit.mobileSuits[0]?.mobileSuit?.series?.name ||
+                      null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: collection.kit.mobileSuits.map(
+                      (ms: any) => ms.mobileSuit.name
+                    ),
                   }}
                   collectionStatus={collection.status}
                 />
@@ -233,9 +254,7 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
             <h2 className="text-2xl font-semibold text-gray-900">
               Built ({built.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits they have completed
-            </p>
+            <p className="text-sm text-gray-500">Kits they have completed</p>
           </div>
 
           {built.length > 0 ? (
@@ -254,9 +273,13 @@ export default async function UserCollectionsPage({ params }: UserCollectionsPag
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series:
+                      collection.kit.mobileSuits[0]?.mobileSuit?.series?.name ||
+                      null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: collection.kit.mobileSuits.map(
+                      (ms: any) => ms.mobileSuit.name
+                    ),
                   }}
                   collectionStatus={collection.status}
                 />

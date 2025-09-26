@@ -5,11 +5,11 @@ import { getUserBuildsOptimized } from "@/lib/actions/builds";
 import { UserBuildsPage } from "@/components/user-builds-page";
 
 interface MeBuildsPageProps {
-  searchParams: {
+  searchParams: Promise<{
     status?: string;
     sort?: string;
     page?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata() {
@@ -65,9 +65,10 @@ export default async function MeBuildsPage({
   }
 
   // Parse search params
-  const status = searchParams.status;
-  const sort = searchParams.sort || "newest";
-  const page = parseInt(searchParams.page || "1", 10);
+  const resolvedSearchParams = await searchParams;
+  const status = resolvedSearchParams.status;
+  const sort = resolvedSearchParams.sort || "newest";
+  const page = parseInt(resolvedSearchParams.page || "1", 10);
 
   // Get user builds with filtering and sorting
   const builds = await getUserBuildsOptimized(
