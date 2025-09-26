@@ -30,6 +30,7 @@ import {
   Award,
   ShoppingCart,
   CheckCircle,
+  Settings,
 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -182,6 +183,23 @@ export function UserProfilePage({
                           <ExternalLink className="w-5 h-5" />
                         </a>
                       )}
+                    </div>
+                  )}
+
+                  {/* Settings Link (only for own profile) */}
+                  {isOwnProfile && (
+                    <div className="pt-4 border-t border-gray-200">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="w-full"
+                      >
+                        <Link href="/settings/profile">
+                          <Settings className="w-4 h-4 mr-2" />
+                          Edit Profile
+                        </Link>
+                      </Button>
                     </div>
                   )}
                 </div>
