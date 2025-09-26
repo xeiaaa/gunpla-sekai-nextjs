@@ -11,6 +11,7 @@ import {
   Clock,
   CheckCircle,
   Edit,
+  Grid3X3,
 } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "@clerk/nextjs";
@@ -61,6 +62,14 @@ interface BuildDetailPublicViewProps {
       lastName: string | null;
       imageUrl: string | null;
     };
+    uploads: Array<{
+      id: string;
+      upload: {
+        id: string;
+        url: string;
+        eagerUrl: string | null;
+      };
+    }>;
     milestones: Array<{
       id: string;
       type: string;
@@ -116,9 +125,9 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
   const { userId } = useAuth();
   const isOwner = userId === build.user.id;
   const milestones = build.milestones.sort((a, b) => a.order - b.order);
-  const [activeTab, setActiveTab] = useState<"milestones" | "comments">(
-    "milestones"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "milestones" | "gallery" | "comments"
+  >("milestones");
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -249,6 +258,16 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     Milestones
                   </button>
                   <button
+                    onClick={() => setActiveTab("gallery")}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === "gallery"
+                        ? "border-blue-500 text-blue-600"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    }`}
+                  >
+                    Gallery
+                  </button>
+                  <button
                     onClick={() => setActiveTab("comments")}
                     className={`py-4 px-1 border-b-2 font-medium text-sm ${
                       activeTab === "comments"
@@ -277,6 +296,32 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                           key={milestone.id}
                           milestone={milestone}
                         />
+                      ))}
+                    </div>
+                  )
+                ) : activeTab === "gallery" ? (
+                  build.uploads.length === 0 ? (
+                    <div className="text-center py-12">
+                      <Grid3X3 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                      <p className="text-gray-500 text-lg">
+                        No photos yet. Check back later!
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="columns-2 lg:columns-3 gap-2 space-y-2">
+                      {build.uploads.map((upload) => (
+                        <div
+                          key={upload.id}
+                          className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid"
+                        >
+                          <Image
+                            src={upload.upload.eagerUrl || upload.upload.url}
+                            alt="Build photo"
+                            width={400}
+                            height={300}
+                            className="w-full h-auto object-cover"
+                          />
+                        </div>
                       ))}
                     </div>
                   )

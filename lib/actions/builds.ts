@@ -731,6 +731,17 @@ export async function getBuildForStaticGeneration(buildId: string) {
             eagerUrl: true,
           },
         },
+        uploads: {
+          include: {
+            upload: {
+              select: {
+                id: true,
+                url: true,
+                eagerUrl: true,
+              },
+            },
+          },
+        },
         _count: {
           select: {
             milestones: true,
