@@ -1,10 +1,10 @@
 "use client";
 
 import HeroSection from "@/components/hero-section";
-import FeaturedBuilder from "@/components/featured-builder";
-import FeaturedBuild from "@/components/featured-build";
-import RecentBuilds from "@/components/recent-builds";
-import BestKit from "@/components/best-kit";
+// import FeaturedBuilder from "@/components/featured-builder";
+// import FeaturedBuild from "@/components/featured-build";
+// import RecentBuilds from "@/components/recent-builds";
+// import BestKit from "@/components/best-kit";
 
 export default function Home() {
   return (
@@ -13,13 +13,13 @@ export default function Home() {
       <HeroSection />
 
       {/* Featured Builder */}
-      <FeaturedBuilder />
+      {/* <FeaturedBuilder /> */}
 
       {/* Featured Build */}
-      <FeaturedBuild />
+      {/* <FeaturedBuild /> */}
 
       {/* Recent Builds */}
-      <section className="py-16 bg-gray-50">
+      {/* <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Recent Builds</h2>
@@ -29,10 +29,10 @@ export default function Home() {
           </div>
           <RecentBuilds limit={6} />
         </div>
-      </section>
+      </section> */}
 
       {/* Best Kit */}
-      <BestKit />
+      {/* <BestKit /> */}
     </div>
   );
 }
