@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,22 +20,22 @@ import {
   Youtube,
   ExternalLink,
   Wrench,
-  ThumbsUp,
-  MessageCircle,
-  Eye,
-  Share2,
-  MoreHorizontal,
   Trophy,
   Award,
   ShoppingCart,
   CheckCircle,
   Settings,
+  Grid3X3,
+  FileText,
+  Camera,
 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import { UserProfileData } from "@/lib/actions/users";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface UserProfilePageProps {
   user: UserProfileData;
@@ -49,10 +48,36 @@ export function UserProfilePage({
   isOwnProfile = false,
   routeContext = "user",
 }: UserProfilePageProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedReview, setSelectedReview] = useState<
     (typeof user.recentReviews)[0] | null
   >(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+
+  // Get tab from URL params, default to "gallery"
+  const tabFromUrl = searchParams.get("tab") as "gallery" | "posts" | null;
+  const [activeTab, setActiveTab] = useState<"gallery" | "posts">(
+    tabFromUrl || "gallery"
+  );
+
+  // Update URL when tab changes
+  const handleTabChange = (tab: "gallery" | "posts") => {
+    setActiveTab(tab);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", tab);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  // Sync with URL changes
+  useEffect(() => {
+    const tabFromUrl = searchParams.get("tab") as "gallery" | "posts" | null;
+    if (tabFromUrl && (tabFromUrl === "gallery" || tabFromUrl === "posts")) {
+      setActiveTab(tabFromUrl);
+    } else {
+      setActiveTab("gallery");
+    }
+  }, [searchParams]);
 
   const displayName =
     user.firstName && user.lastName
@@ -88,6 +113,120 @@ export function UserProfilePage({
     if (score >= 6) return "bg-yellow-100";
     if (score >= 4) return "bg-orange-100";
     return "bg-red-100";
+  };
+
+  const tabs = [
+    { id: "gallery" as const, label: "Gallery", icon: Grid3X3 },
+    { id: "posts" as const, label: "Posts", icon: FileText },
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "gallery":
+        return (
+          <div className="columns-2 gap-2 space-y-2">
+            {user.recentBuilds.length > 0 ? (
+              user.recentBuilds.map((build) => {
+                // Get first image from featured image or kit box art
+                const firstImage =
+                  build.featuredImage?.url || build.kit?.boxArt;
+
+                // Get upload count for photo badge
+                const uploadCount = build.uploads?.length || 0;
+
+                return (
+                  <Link
+                    key={build.id}
+                    href={`/builds/${build.id}`}
+                    className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block"
+                  >
+                    {firstImage ? (
+                      <Image
+                        src={firstImage}
+                        alt={build.title}
+                        width={400}
+                        height={300}
+                        className="w-full h-auto object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-48 flex items-center justify-center">
+                        <Package className="w-8 h-8 text-gray-400" />
+                      </div>
+                    )}
+
+                    {/* Photo count badge */}
+                    {uploadCount > 0 && (
+                      <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                        <Camera className="w-3 h-3" />
+                        {uploadCount}
+                      </div>
+                    )}
+                  </Link>
+                );
+              })
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No builds yet
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Start building to share your progress with the community!
+                </p>
+                {isOwnProfile && (
+                  <Button asChild>
+                    <Link href="/builds/new">Start Your First Build</Link>
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      case "posts":
+        return (
+          <div className="space-y-6">
+            {user.recentBuilds.length > 0 ? (
+              user.recentBuilds.map((build) => (
+                <EnhancedBuildCard
+                  key={build.id}
+                  build={{
+                    ...build,
+                    user: {
+                      id: user.id,
+                      username: user.username,
+                      firstName: user.firstName,
+                      lastName: user.lastName,
+                      imageUrl: user.imageUrl,
+                      avatarUrl: user.avatarUrl,
+                    },
+                  }}
+                  showUserInfo={false}
+                  variant="feed"
+                />
+              ))
+            ) : (
+              <Card>
+                <CardContent className="text-center py-12">
+                  <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No builds yet
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Start building to share your progress with the community!
+                  </p>
+                  {isOwnProfile && (
+                    <Button asChild>
+                      <Link href="/builds/new">Start Your First Build</Link>
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -226,46 +365,32 @@ export function UserProfilePage({
           {/* Main Content (50%) */}
           <div className="lg:col-span-2">
             <div className="space-y-6">
-              {/* Builds Feed */}
-              {user.recentBuilds.length > 0 ? (
-                <div className="space-y-6">
-                  {user.recentBuilds.map((build) => (
-                    <EnhancedBuildCard
-                      key={build.id}
-                      build={{
-                        ...build,
-                        user: {
-                          id: user.id,
-                          username: user.username,
-                          firstName: user.firstName,
-                          lastName: user.lastName,
-                          imageUrl: user.imageUrl,
-                          avatarUrl: user.avatarUrl,
-                        },
-                      }}
-                      showUserInfo={false}
-                      variant="feed"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="text-center py-12">
-                    <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      No builds yet
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      Start building to share your progress with the community!
-                    </p>
-                    {isOwnProfile && (
-                      <Button asChild>
-                        <Link href="/builds/new">Start Your First Build</Link>
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              )}
+              {/* Tabs */}
+              <div className="border-b border-border">
+                <nav className="flex space-x-8">
+                  {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => handleTabChange(tab.id)}
+                        className={cn(
+                          "flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors",
+                          activeTab === tab.id
+                            ? "border-primary text-primary"
+                            : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {tab.label}
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Tab Content */}
+              {renderTabContent()}
             </div>
           </div>
 

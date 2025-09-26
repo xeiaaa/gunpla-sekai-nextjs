@@ -30,6 +30,7 @@ export interface UserProfileData {
   recentBuilds: Array<{
     id: string;
     title: string;
+    description: string | null;
     status: string;
     createdAt: Date;
     completedAt: Date | null;
@@ -54,6 +55,10 @@ export interface UserProfileData {
     comments?: {
       count: number;
     };
+    uploads?: Array<{
+      id: string;
+      url: string;
+    }>;
     milestones?: Array<{
       id: string;
       type: string;
@@ -143,6 +148,16 @@ export async function getUserByUsername(
             comments: {
               select: {
                 id: true,
+              },
+            },
+            uploads: {
+              include: {
+                upload: {
+                  select: {
+                    id: true,
+                    url: true,
+                  },
+                },
               },
             },
             milestones: {
@@ -243,6 +258,7 @@ export async function getUserByUsername(
       recentBuilds: user.builds.map((build) => ({
         id: build.id,
         title: build.title,
+        description: build.description,
         status: build.status,
         createdAt: build.createdAt,
         completedAt: build.completedAt,
@@ -254,6 +270,10 @@ export async function getUserByUsername(
         comments: {
           count: build.comments.length,
         },
+        uploads: build.uploads.map((upload) => ({
+          id: upload.id,
+          url: upload.upload.url,
+        })),
         milestones: build.milestones.map((milestone) => ({
           id: milestone.id,
           type: milestone.type,
@@ -420,6 +440,16 @@ export async function getUserProfileById(
                 id: true,
               },
             },
+            uploads: {
+              include: {
+                upload: {
+                  select: {
+                    id: true,
+                    url: true,
+                  },
+                },
+              },
+            },
             milestones: {
               take: 2,
               orderBy: { order: "asc" },
@@ -551,6 +581,7 @@ export async function getUserProfileById(
       recentBuilds: user.builds.map((build) => ({
         id: build.id,
         title: build.title,
+        description: build.description,
         status: build.status,
         createdAt: build.createdAt,
         completedAt: build.completedAt,
@@ -562,6 +593,10 @@ export async function getUserProfileById(
         comments: {
           count: build.comments.length,
         },
+        uploads: build.uploads.map((upload) => ({
+          id: upload.id,
+          url: upload.upload.url,
+        })),
         milestones: build.milestones.map((milestone) => ({
           id: milestone.id,
           type: milestone.type,

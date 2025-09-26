@@ -12,8 +12,6 @@ import {
   MessageCircle,
   Share2,
   MoreHorizontal,
-  ChevronLeft,
-  ChevronRight,
   Camera,
   Play,
   Pause,
@@ -24,7 +22,6 @@ import {
 import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface BuildData {
@@ -134,19 +131,8 @@ export function EnhancedBuildCard({
   variant = "feed",
   className,
 }: EnhancedBuildCardProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // Get all images from featured image and milestones
-  const allImages = [
-    ...(build.featuredImage ? [build.featuredImage.url] : []),
-    ...(build.milestones?.flatMap((m) => [
-      ...m.imageUrls,
-      ...m.uploads.map((u) => u.upload.url),
-    ]) || []),
-  ].filter(Boolean);
-
-  const hasMultipleImages = allImages.length > 1;
-  const currentImage = allImages[currentImageIndex] || build.kit.boxArt;
+  // Use only featured image
+  const currentImage = build.featuredImage?.url || build.kit.boxArt;
 
   const displayName = build.user
     ? build.user.firstName && build.user.lastName
@@ -163,20 +149,6 @@ export function EnhancedBuildCard({
   const gradeColorClass =
     GRADE_COLORS[gradeName as keyof typeof GRADE_COLORS] ||
     GRADE_COLORS.default;
-
-  const nextImage = () => {
-    if (hasMultipleImages) {
-      setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (hasMultipleImages) {
-      setCurrentImageIndex(
-        (prev) => (prev - 1 + allImages.length) % allImages.length
-      );
-    }
-  };
 
   if (variant === "grid") {
     return (
@@ -200,34 +172,6 @@ export function EnhancedBuildCard({
             <div className="aspect-video bg-gray-200 flex items-center justify-center">
               <Camera className="w-12 h-12 text-gray-400" />
             </div>
-          )}
-
-          {/* Image Navigation */}
-          {hasMultipleImages && (
-            <>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={prevImage}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={nextImage}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-
-              {/* Image Indicator */}
-              <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
-                <Camera className="w-3 h-3" />
-                {allImages.length}
-              </div>
-            </>
           )}
 
           {/* Status Badge */}
@@ -281,6 +225,15 @@ export function EnhancedBuildCard({
               </Badge>
             )}
           </div>
+
+          {/* Build Description */}
+          {build.description && (
+            <div className="mb-3">
+              <p className="text-sm text-gray-700 line-clamp-3">
+                {build.description}
+              </p>
+            </div>
+          )}
 
           {/* Build Info */}
           <div className="space-y-2 mb-3">
@@ -412,35 +365,16 @@ export function EnhancedBuildCard({
             <Camera className="w-16 h-16 text-gray-400" />
           </div>
         )}
-
-        {/* Image Navigation */}
-        {hasMultipleImages && (
-          <>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-              onClick={prevImage}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-              onClick={nextImage}
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-
-            {/* Image Indicator */}
-            <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
-              <Camera className="w-3 h-3" />
-              {allImages.length}
-            </div>
-          </>
-        )}
       </div>
+
+      {/* Build Description */}
+      {build.description && (
+        <div className="p-4 border-t">
+          <p className="text-sm text-gray-700 line-clamp-3">
+            {build.description}
+          </p>
+        </div>
+      )}
 
       {/* Engagement Actions */}
       <div className="p-4 border-t">
