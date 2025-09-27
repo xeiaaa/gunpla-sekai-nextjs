@@ -5,18 +5,30 @@ import { parts, sazabiMaterialsMap } from "./parts";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { CustomizeProvider, useCustomize } from "./context";
 import { CustomizationPanel } from "./components/customization-panel";
+import { OrbitControlsDrawer } from "./components/orbit-controls-drawer";
 import { useState, useRef, useEffect } from "react";
 import { FINISH_TYPE } from "./types";
 import { Download } from "lucide-react";
 import * as THREE from "three";
 
 function CustomizePageContent() {
-  const { expandedCategory, selectedItem, handleCategoryToggle, setSelectedItem, getSelectedItemName } = useCustomize();
-  const [materialStates, setMaterialStates] = useState<Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }>>({});
+  const {
+    expandedCategory,
+    selectedItem,
+    handleCategoryToggle,
+    setSelectedItem,
+    getSelectedItemName,
+  } = useCustomize();
+  const [materialStates, setMaterialStates] = useState<
+    Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    >
+  >({});
   const [isEverythingClear, setIsEverythingClear] = useState(false);
   const [clearArmorMaterials, setClearArmorMaterials] = useState<string[]>([]);
   const [clearAlpha, setClearAlpha] = useState(0.2);
-  const [paintType, setPaintType] = useState<"solid" | "clear">("clear");
+  const [paintType] = useState<"solid" | "clear">("clear");
   const modelViewerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -24,7 +36,9 @@ function CustomizePageContent() {
 
   // Check if welcome dialog should be shown
   useEffect(() => {
-    const hasSeenWelcome = localStorage.getItem('gunpla-sekai-welcome-dialog-dismissed');
+    const hasSeenWelcome = localStorage.getItem(
+      "gunpla-sekai-welcome-dialog-dismissed"
+    );
     if (!hasSeenWelcome) {
       setShowWelcomeDialog(true);
     }
@@ -33,26 +47,32 @@ function CustomizePageContent() {
   // Detect mobile devices
   useEffect(() => {
     const checkMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      const userAgent =
+        navigator.userAgent ||
+        navigator.vendor ||
+        (window as unknown as { opera?: string }).opera;
+      const isMobileDevice =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+          userAgent
+        );
       const isSmallScreen = window.innerWidth < 768; // Tailwind's md breakpoint
       setIsMobile(isMobileDevice || isSmallScreen);
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const handleColorChange = (materialId: string, color: string) => {
-    setMaterialStates(prev => ({
+    setMaterialStates((prev) => ({
       ...prev,
       [materialId]: {
         ...prev[materialId],
         color: color,
-        finish: prev[materialId]?.finish || FINISH_TYPE.DEFAULT
-      }
+        finish: prev[materialId]?.finish || FINISH_TYPE.DEFAULT,
+      },
     }));
     console.log("Color change requested:", materialId, color);
   };
@@ -60,9 +80,12 @@ function CustomizePageContent() {
   const handleFinishChange = (materialId: string, finish: FINISH_TYPE) => {
     if (materialId === "all") {
       // Apply finish to all materials
-      const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+      const newMaterialStates: Record<
+        string,
+        { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+      > = {};
 
-      parts.forEach(part => {
+      parts.forEach((part) => {
         part.materials.forEach(([id]) => {
           // Use existing color from materialStates, or fallback to sazabiMaterialsMap, or default to white
           const existingColor = materialStates[id]?.color;
@@ -71,7 +94,9 @@ function CustomizePageContent() {
           newMaterialStates[id] = {
             color: existingColor || defaultColor,
             finish: finish,
-            paintType: materialStates[id]?.paintType || (sazabiMaterialsMap[id]?.isClear ? "clear" : "solid")
+            paintType:
+              materialStates[id]?.paintType ||
+              (sazabiMaterialsMap[id]?.isClear ? "clear" : "solid"),
           };
         });
       });
@@ -82,14 +107,19 @@ function CustomizePageContent() {
       console.log("Finish applied to all materials:", finish);
     } else {
       // Apply finish to single material
-      setMaterialStates(prev => ({
+      setMaterialStates((prev) => ({
         ...prev,
         [materialId]: {
           ...prev[materialId],
-          color: prev[materialId]?.color || sazabiMaterialsMap[materialId]?.color || "#ffffff",
+          color:
+            prev[materialId]?.color ||
+            sazabiMaterialsMap[materialId]?.color ||
+            "#ffffff",
           finish: finish,
-          paintType: prev[materialId]?.paintType || (sazabiMaterialsMap[materialId]?.isClear ? "clear" : "solid")
-        }
+          paintType:
+            prev[materialId]?.paintType ||
+            (sazabiMaterialsMap[materialId]?.isClear ? "clear" : "solid"),
+        },
       }));
       console.log("Finish change requested:", materialId, finish);
     }
@@ -97,18 +127,25 @@ function CustomizePageContent() {
 
   const handleRandomizeColors = () => {
     // Generate random colors for all materials
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
 
     // Get all material IDs from parts
-    parts.forEach(part => {
+    parts.forEach((part) => {
       part.materials.forEach(([materialId]) => {
         // Generate random hex color
-        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        const randomColor =
+          "#" +
+          Math.floor(Math.random() * 16777215)
+            .toString(16)
+            .padStart(6, "0");
 
         newMaterialStates[materialId] = {
           color: randomColor,
           finish: materialStates[materialId]?.finish || FINISH_TYPE.DEFAULT,
-          paintType: materialStates[materialId]?.paintType || "clear"
+          paintType: materialStates[materialId]?.paintType || "clear",
         };
       });
     });
@@ -124,9 +161,10 @@ function CustomizePageContent() {
     const colorGroups: Record<string, string[]> = {};
 
     // Get all material IDs from parts and group by original color
-    parts.forEach(part => {
+    parts.forEach((part) => {
       part.materials.forEach(([materialId]) => {
-        const originalColor = sazabiMaterialsMap[materialId]?.color || "#ffffff";
+        const originalColor =
+          sazabiMaterialsMap[materialId]?.color || "#ffffff";
 
         if (!colorGroups[originalColor]) {
           colorGroups[originalColor] = [];
@@ -136,20 +174,27 @@ function CustomizePageContent() {
     });
 
     // Generate a random color for each color group
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
     const groupColors: Record<string, string> = {};
 
     Object.entries(colorGroups).forEach(([originalColor, materialIds]) => {
       // Generate one random color for this group
-      const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+      const randomColor =
+        "#" +
+        Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, "0");
       groupColors[originalColor] = randomColor;
 
       // Apply the same random color to all materials in this group
-      materialIds.forEach(materialId => {
+      materialIds.forEach((materialId) => {
         newMaterialStates[materialId] = {
           color: randomColor,
           finish: materialStates[materialId]?.finish || FINISH_TYPE.DEFAULT,
-          paintType: materialStates[materialId]?.paintType || "clear"
+          paintType: materialStates[materialId]?.paintType || "clear",
         };
       });
     });
@@ -167,11 +212,15 @@ function CustomizePageContent() {
     const colorGroups: Record<string, string[]> = {};
 
     // Get all material IDs from parts and group by original color (only armor and funnel materials)
-    parts.forEach(part => {
+    parts.forEach((part) => {
       part.materials.forEach(([materialId]) => {
         // Only process materials with 'armor' or 'funnels' in their ID
-        if (materialId.toLowerCase().includes('armor') || materialId.toLowerCase().includes('funnels')) {
-          const originalColor = sazabiMaterialsMap[materialId]?.color || "#ffffff";
+        if (
+          materialId.toLowerCase().includes("armor") ||
+          materialId.toLowerCase().includes("funnels")
+        ) {
+          const originalColor =
+            sazabiMaterialsMap[materialId]?.color || "#ffffff";
 
           if (!colorGroups[originalColor]) {
             colorGroups[originalColor] = [];
@@ -182,20 +231,27 @@ function CustomizePageContent() {
     });
 
     // Generate a random color for each color group
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
     const groupColors: Record<string, string> = {};
 
     Object.entries(colorGroups).forEach(([originalColor, materialIds]) => {
       // Generate one random color for this group
-      const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+      const randomColor =
+        "#" +
+        Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, "0");
       groupColors[originalColor] = randomColor;
 
       // Apply the same random color to all armor materials in this group
-      materialIds.forEach(materialId => {
+      materialIds.forEach((materialId) => {
         newMaterialStates[materialId] = {
           color: randomColor,
           finish: materialStates[materialId]?.finish || FINISH_TYPE.DEFAULT,
-          paintType: materialStates[materialId]?.paintType || "clear"
+          paintType: materialStates[materialId]?.paintType || "clear",
         };
       });
     });
@@ -206,7 +262,10 @@ function CustomizePageContent() {
     setMaterialStates(finalMaterialStates);
     setIsEverythingClear(false); // Reset clear state
     setClearArmorMaterials([]); // Reset armor clear state
-    console.log("Randomized armor colors with color blocking:", newMaterialStates);
+    console.log(
+      "Randomized armor colors with color blocking:",
+      newMaterialStates
+    );
     console.log("Armor color groups:", colorGroups);
     console.log("Armor group colors:", groupColors);
   };
@@ -220,9 +279,9 @@ function CustomizePageContent() {
     const hue2rgb = (p: number, q: number, t: number) => {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
-      if (t < 1/6) return p + (q - p) * 6 * t;
-      if (t < 1/2) return q;
-      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
       return p;
     };
 
@@ -233,14 +292,14 @@ function CustomizePageContent() {
     } else {
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1/3);
+      r = hue2rgb(p, q, h + 1 / 3);
       g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
+      b = hue2rgb(p, q, h - 1 / 3);
     }
 
     const toHex = (c: number) => {
       const hex = Math.round(c * 255).toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
+      return hex.length === 1 ? "0" + hex : hex;
     };
 
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
@@ -252,19 +311,25 @@ function CustomizePageContent() {
     const randomSaturation = Math.floor(Math.random() * 51) + 50; // 50-100%
     const lightness = 50; // Fixed lightness for consistency
 
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
 
     // Apply the same random hue and saturation to all armor and funnel materials
-    parts.forEach(part => {
+    parts.forEach((part) => {
       part.materials.forEach(([materialId]) => {
         // Only process materials with 'armor' or 'funnels' in their ID
-        if (materialId.toLowerCase().includes('armor') || materialId.toLowerCase().includes('funnels')) {
+        if (
+          materialId.toLowerCase().includes("armor") ||
+          materialId.toLowerCase().includes("funnels")
+        ) {
           const newColor = hslToHex(randomHue, randomSaturation, lightness);
 
           newMaterialStates[materialId] = {
             color: newColor,
             finish: materialStates[materialId]?.finish || FINISH_TYPE.DEFAULT,
-            paintType: materialStates[materialId]?.paintType || "clear"
+            paintType: materialStates[materialId]?.paintType || "clear",
           };
         }
       });
@@ -277,18 +342,28 @@ function CustomizePageContent() {
     setIsEverythingClear(false); // Reset clear state
     setClearArmorMaterials([]); // Reset armor clear state
     console.log("Randomized HSL for armor materials:", newMaterialStates);
-    console.log("Random HSL values - Hue:", randomHue, "Saturation:", randomSaturation, "Lightness:", lightness);
+    console.log(
+      "Random HSL values - Hue:",
+      randomHue,
+      "Saturation:",
+      randomSaturation,
+      "Lightness:",
+      lightness
+    );
   };
 
   const handleResetAll = () => {
     // Reset all materials to their default values from sazabiMaterialsMap
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
 
     Object.entries(sazabiMaterialsMap).forEach(([materialId, materialData]) => {
       newMaterialStates[materialId] = {
         color: materialData.color,
         finish: materialData.finish,
-        paintType: materialData.isClear ? "clear" : "solid" // Use correct default from sazabiMaterialsMap
+        paintType: materialData.isClear ? "clear" : "solid", // Use correct default from sazabiMaterialsMap
       };
     });
 
@@ -300,7 +375,10 @@ function CustomizePageContent() {
 
   const handleEverythingClear = (alpha: number) => {
     // Apply clear/transparent effect to all materials while preserving current colors
-    const newMaterialStates: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }> = {};
+    const newMaterialStates: Record<
+      string,
+      { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+    > = {};
 
     Object.entries(sazabiMaterialsMap).forEach(([materialId, materialData]) => {
       // Preserve existing color from materialStates, or use default from sazabiMaterialsMap
@@ -310,7 +388,9 @@ function CustomizePageContent() {
       newMaterialStates[materialId] = {
         color: existingColor || defaultColor,
         finish: FINISH_TYPE.DEFAULT, // Keep original finish but mark as clear
-        paintType: materialStates[materialId]?.paintType || (materialData.isClear ? "clear" : "solid")
+        paintType:
+          materialStates[materialId]?.paintType ||
+          (materialData.isClear ? "clear" : "solid"),
       };
     });
 
@@ -326,7 +406,7 @@ function CustomizePageContent() {
     const armorMaterialIds: string[] = [];
 
     Object.keys(sazabiMaterialsMap).forEach((materialId) => {
-      if (materialId.toLowerCase().includes('armor')) {
+      if (materialId.toLowerCase().includes("armor")) {
         armorMaterialIds.push(materialId);
       }
     });
@@ -334,63 +414,84 @@ function CustomizePageContent() {
     setClearArmorMaterials(armorMaterialIds);
     setIsEverythingClear(false); // Reset the global clear state
     setClearAlpha(alpha);
-    console.log("Applied clear effect to armor materials:", armorMaterialIds, "with alpha:", alpha);
+    console.log(
+      "Applied clear effect to armor materials:",
+      armorMaterialIds,
+      "with alpha:",
+      alpha
+    );
   };
 
-  const handlePaintTypeChange = (materialId: string, paintType: "solid" | "clear") => {
+  const handlePaintTypeChange = (
+    materialId: string,
+    paintType: "solid" | "clear"
+  ) => {
     // Update the specific material's paint type
-    setMaterialStates(prev => ({
+    setMaterialStates((prev) => ({
       ...prev,
       [materialId]: {
         ...prev[materialId],
-        color: prev[materialId]?.color || sazabiMaterialsMap[materialId]?.color || "#ffffff",
-        finish: prev[materialId]?.finish || sazabiMaterialsMap[materialId]?.finish || FINISH_TYPE.DEFAULT,
-        paintType: paintType
-      }
+        color:
+          prev[materialId]?.color ||
+          sazabiMaterialsMap[materialId]?.color ||
+          "#ffffff",
+        finish:
+          prev[materialId]?.finish ||
+          sazabiMaterialsMap[materialId]?.finish ||
+          FINISH_TYPE.DEFAULT,
+        paintType: paintType,
+      },
     }));
 
     // Update clear armor materials list based on paint type
-    setClearArmorMaterials(prev => {
+    setClearArmorMaterials((prev) => {
       if (paintType === "clear") {
         // Add material to clear list if not already present
         return prev.includes(materialId) ? prev : [...prev, materialId];
       } else {
         // Remove material from clear list if switching to solid
-        return prev.filter(id => id !== materialId);
+        return prev.filter((id) => id !== materialId);
       }
     });
 
     setIsEverythingClear(false); // Disable global clear effect when individual paint types change
-    console.log("Paint type changed for material", materialId, "to:", paintType);
+    console.log(
+      "Paint type changed for material",
+      materialId,
+      "to:",
+      paintType
+    );
   };
 
   const handleDownloadImage = async () => {
     if (!rendererRef.current) {
-      console.error('Renderer not ready');
+      console.error("Renderer not ready");
       return;
     }
 
     try {
       // Force a re-render
-      window.dispatchEvent(new Event('resize'));
-      await new Promise(resolve => setTimeout(resolve, 500));
+      window.dispatchEvent(new Event("resize"));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Use Three.js renderer to capture the scene
       const canvas = rendererRef.current.domElement;
-      const dataURL = canvas.toDataURL('image/png', 1.0);
+      const dataURL = canvas.toDataURL("image/png", 1.0);
 
       // Create download link
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = dataURL;
-      link.download = `sazabi-customization-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.png`;
+      link.download = `sazabi-customization-${new Date()
+        .toISOString()
+        .slice(0, 19)
+        .replace(/:/g, "-")}.png`;
 
       // Trigger download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
     } catch (error) {
-      console.error('Error downloading image:', error);
+      console.error("Error downloading image:", error);
     }
   };
 
@@ -399,24 +500,40 @@ function CustomizePageContent() {
   };
 
   const handleDontShowAgain = () => {
-    localStorage.setItem('gunpla-sekai-welcome-dialog-dismissed', 'true');
+    localStorage.setItem("gunpla-sekai-welcome-dialog-dismissed", "true");
     setShowWelcomeDialog(false);
   };
 
   // Show mobile empty state
   if (isMobile) {
     return (
-      <div className="flex items-center justify-center" style={{ height: 'calc(100vh - 64px)' }}>
+      <div
+        className="flex items-center justify-center"
+        style={{ height: "calc(100vh - 64px)" }}
+      >
         <div className="text-center p-8 max-w-md mx-auto">
           <div className="mb-6">
             <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              <svg
+                className="w-8 h-8 text-muted-foreground"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold mb-2">3D Customization Not Available</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              3D Customization Not Available
+            </h2>
             <p className="text-muted-foreground">
-              This feature is not yet available on mobile devices. Please access this page on a desktop to view the 3D customization feature.
+              This feature is not yet available on mobile devices. Please access
+              this page on a desktop to view the 3D customization feature.
             </p>
           </div>
           <div className="text-sm text-muted-foreground">
@@ -439,7 +556,9 @@ function CustomizePageContent() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-background border border-border rounded-lg shadow-lg max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold">Welcome to 3D Customization</h2>
+              <h2 className="text-lg font-semibold">
+                Welcome to 3D Customization
+              </h2>
               <button
                 onClick={handleCloseWelcomeDialog}
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -450,7 +569,9 @@ function CustomizePageContent() {
 
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                This is an experimental feature for now. In the future there will be more mobile suits to customize, save and share with others.
+                This is an experimental feature for now. In the future there
+                will be more mobile suits to customize, save and share with
+                others.
               </p>
 
               <p className="text-sm text-muted-foreground">
@@ -485,141 +606,158 @@ function CustomizePageContent() {
         </div>
       )}
 
-      <div className="flex overflow-hidden" style={{ height: 'calc(100vh - 64px)' }}>
-      {/* Sidebar A - Parts (150px) */}
-      <div className="w-[180px] border-r bg-muted/30 overflow-y-auto">
-        <div className="p-4">
-          <h3 className="font-semibold text-sm mb-3">Parts</h3>
-          <div className="space-y-0">
-            {parts.map((part) => (
-              <div key={part.slug} className="border-b border-border pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0">
-                <button
-                  onClick={() => handleCategoryToggle(part.slug)}
-                  className="flex items-center justify-between w-full text-left font-medium hover:text-primary transition-colors"
+      <div
+        className="flex overflow-hidden"
+        style={{ height: "calc(100vh - 64px)" }}
+      >
+        {/* Sidebar A - Parts (150px) */}
+        <div className="w-[180px] border-r bg-muted/30 overflow-y-auto">
+          <div className="p-4">
+            <h3 className="font-semibold text-sm mb-3">Parts</h3>
+            <div className="space-y-0">
+              {parts.map((part) => (
+                <div
+                  key={part.slug}
+                  className="border-b border-border pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0"
                 >
-                  <span>{part.label}</span>
-                  {expandedCategory === part.slug ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </button>
+                  <button
+                    onClick={() => handleCategoryToggle(part.slug)}
+                    className="flex items-center justify-between w-full text-left font-medium hover:text-primary transition-colors"
+                  >
+                    <span>{part.label}</span>
+                    {expandedCategory === part.slug ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                  </button>
 
-                {expandedCategory === part.slug && (
-                  <div className="mt-3">
-                    <div className="space-y-2">
-                      {part.materials.map(([materialId, materialName]) => (
-              <button
-                          key={materialId}
-                          onClick={() => setSelectedItem(materialId)}
-                className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
-                            selectedItem === materialId
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted"
-                }`}
-              >
-                          {materialName}
-              </button>
-                      ))}
+                  {expandedCategory === part.slug && (
+                    <div className="mt-3">
+                      <div className="space-y-2">
+                        {part.materials.map(([materialId, materialName]) => (
+                          <button
+                            key={materialId}
+                            onClick={() => setSelectedItem(materialId)}
+                            className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                              selectedItem === materialId
+                                ? "bg-primary text-primary-foreground"
+                                : "hover:bg-muted"
+                            }`}
+                          >
+                            {materialName}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Sidebar B - Customization Panel (300px) */}
-      <div className="w-[300px] border-r bg-muted/20 overflow-y-auto">
-        {selectedItem ? (
-          <CustomizationPanel
-            selectedItemName={getSelectedItemName()}
-            selectedItemId={selectedItem}
-            onColorChange={handleColorChange}
-            onFinishChange={handleFinishChange}
-            onRandomizeColors={handleRandomizeColors}
-            onRandomizeWithColorBlocking={handleRandomizeWithColorBlocking}
-            onRandomizeArmorWithColorBlocking={handleRandomizeArmorWithColorBlocking}
-            onRandomizeHSL={handleRandomizeHSL}
-            onResetAll={handleResetAll}
-            onEverythingClear={handleEverythingClear}
-            onClearOuterArmors={handleClearOuterArmors}
-            onPaintTypeChange={handlePaintTypeChange}
-            materialStates={materialStates}
-          />
-        ) : (
-        <div className="p-4">
-            <h3 className="font-semibold text-sm mb-3">Customization Panel</h3>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">
-                Select a material from the left sidebar to customize it.
-              </p>
-            </div>
+        {/* Sidebar B - Customization Panel (300px) */}
+        <div className="w-[300px] border-r bg-muted/20 overflow-y-auto">
+          {selectedItem ? (
+            <CustomizationPanel
+              selectedItemName={getSelectedItemName()}
+              selectedItemId={selectedItem}
+              onColorChange={handleColorChange}
+              onFinishChange={handleFinishChange}
+              onRandomizeColors={handleRandomizeColors}
+              onRandomizeWithColorBlocking={handleRandomizeWithColorBlocking}
+              onRandomizeArmorWithColorBlocking={
+                handleRandomizeArmorWithColorBlocking
+              }
+              onRandomizeHSL={handleRandomizeHSL}
+              onResetAll={handleResetAll}
+              onEverythingClear={handleEverythingClear}
+              onClearOuterArmors={handleClearOuterArmors}
+              onPaintTypeChange={handlePaintTypeChange}
+              materialStates={materialStates}
+            />
+          ) : (
+            <div className="p-4">
+              <h3 className="font-semibold text-sm mb-3">
+                Customization Panel
+              </h3>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">
+                  Select a material from the left sidebar to customize it.
+                </p>
+              </div>
             </div>
           )}
-      </div>
+        </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-hidden">
-        <div className="h-full">
-          <div className="h-full flex flex-col">
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-hidden">
+          <div className="h-full">
+            <div className="h-full flex flex-col">
+              <div className="flex-1 relative">
+                {/* Floating Header Section */}
+                <div className="absolute top-4 left-4 right-4 z-10">
+                  {selectedItem ? (
+                    <div>
+                      <h2 className="text-xl font-semibold mb-1 text-muted-foreground drop-shadow-lg">
+                        Customizing: {getSelectedItemName()}
+                      </h2>
+                    </div>
+                  ) : (
+                    <div>
+                      <h2 className="text-xl font-semibold mb-1 text-muted-foreground drop-shadow-lg">
+                        MSN-04 Sazabi
+                      </h2>
+                      <p className="text-sm text-muted-foreground drop-shadow-lg">
+                        Choose a part from the left sidebar to get started
+                      </p>
+                    </div>
+                  )}
+                </div>
 
-            <div className="flex-1 relative">
-              {/* Floating Header Section */}
-              <div className="absolute top-4 left-4 right-4 z-10">
-                {selectedItem ? (
-                  <div>
-                    <h2 className="text-xl font-semibold mb-1 text-muted-foreground drop-shadow-lg">
-                      Customizing: {getSelectedItemName()}
-                    </h2>
+                {/* 3D Model Viewer - Full Space */}
+                <div
+                  ref={modelViewerRef}
+                  className="w-full h-full rounded-lg overflow-hidden"
+                >
+                  <ModelViewer
+                    modelUrl="/models/sazabi.glb"
+                    materialId={selectedItem}
+                    color={selectedItem && materialStates[selectedItem]?.color}
+                    finish={
+                      selectedItem && materialStates[selectedItem]?.finish
+                    }
+                    allMaterialStates={materialStates}
+                    isEverythingClear={isEverythingClear}
+                    clearArmorMaterials={clearArmorMaterials}
+                    clearAlpha={clearAlpha}
+                    paintType={paintType}
+                    onRendererReady={(renderer) => {
+                      rendererRef.current = renderer;
+                    }}
+                    onModelLoaded={() => {
+                      // Reset all materials to default state when model loads
+                      handleResetAll();
+                    }}
+                  />
+                </div>
 
-                  </div>
-                ) : (
-                  <div>
-                    <h2 className="text-xl font-semibold mb-1 text-muted-foreground drop-shadow-lg">
-                      MSN-04 Sazabi
-                    </h2>
-                    <p className="text-sm text-muted-foreground drop-shadow-lg">
-                      Choose a part from the left sidebar to get started
-                    </p>
-                  </div>
-                )}
-              </div>
+                {/* Floating Control Buttons */}
+                <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+                  <button
+                    onClick={handleDownloadImage}
+                    className="bg-background/95 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-colors w-10 h-10 flex items-center justify-center rounded-md"
+                    title="Download current model as image"
+                  >
+                    <Download className="w-5 h-5 text-foreground" />
+                  </button>
 
-              {/* 3D Model Viewer - Full Space */}
-              <div ref={modelViewerRef} className="w-full h-full rounded-lg overflow-hidden">
-                <ModelViewer
-                  modelUrl="/models/sazabi.glb"
-                  materialId={selectedItem}
-                  color={selectedItem && materialStates[selectedItem]?.color}
-                  finish={selectedItem && materialStates[selectedItem]?.finish}
-                  allMaterialStates={materialStates}
-                  isEverythingClear={isEverythingClear}
-                  clearArmorMaterials={clearArmorMaterials}
-                  clearAlpha={clearAlpha}
-                  paintType={paintType}
-                  onRendererReady={(renderer) => {
-                    rendererRef.current = renderer;
-                  }}
-                  onModelLoaded={() => {
-                    // Reset all materials to default state when model loads
-                    handleResetAll();
-                  }}
-                />
-              </div>
+                  <OrbitControlsDrawer />
+                </div>
 
-              {/* Floating Download Button */}
-              <button
-                onClick={handleDownloadImage}
-                className="absolute top-4 right-4 z-20 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg hover:bg-background transition-colors"
-                title="Download current model as image"
-              >
-                <Download className="w-5 h-5 text-foreground" />
-              </button>
-
-              {/* Floating Customization Panel (when item is selected) */}
-              {/* {selectedItem && (
+                {/* Floating Customization Panel (when item is selected) */}
+                {/* {selectedItem && (
                 <div className="absolute bottom-4 left-4 right-4 z-10">
                   <div className="bg-background/95 backdrop-blur-sm border rounded-lg p-4 shadow-lg">
                     <h3 className="font-semibold mb-2">Customization Options</h3>
@@ -629,11 +767,11 @@ function CustomizePageContent() {
                   </div>
                 </div>
               )} */}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

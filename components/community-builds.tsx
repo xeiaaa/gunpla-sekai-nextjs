@@ -156,27 +156,27 @@ export default function CommunityBuilds({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
           {builds.map((build) => {
             const previewImage = getPreviewImage(build);
 
             return (
               <Link key={build.id} href={`/builds/${build.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="relative">
+                <div className="relative group overflow-hidden rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+                  <div className="aspect-square relative">
                     {previewImage ? (
                       <img
                         src={previewImage}
                         alt={build.title}
-                        className="w-full h-32 object-cover rounded-t-lg"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-32 bg-gray-100 rounded-t-lg flex items-center justify-center">
+                      <div className="w-full h-full bg-gray-100 flex items-center justify-center">
                         <ImageIcon className="h-8 w-8 text-gray-400" />
                       </div>
                     )}
                     <Badge
-                      className={`absolute top-2 right-2 ${
+                      className={`absolute top-2 right-2 text-xs ${
                         STATUS_COLORS[
                           build.status as keyof typeof STATUS_COLORS
                         ]
@@ -184,51 +184,43 @@ export default function CommunityBuilds({
                     >
                       {build.status.replace("_", " ")}
                     </Badge>
+
+                    {/* Hover overlay with build info */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors flex items-end">
+                      <div className="p-3 w-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 className="font-semibold text-sm text-white mb-1 line-clamp-2">
+                          {build.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-xs text-gray-200">
+                          <div className="flex items-center">
+                            {build.user.imageUrl ? (
+                              <img
+                                src={build.user.imageUrl}
+                                alt={getUserDisplayName(build.user)}
+                                className="w-3 h-3 rounded-full mr-1"
+                              />
+                            ) : (
+                              <User className="w-3 h-3 mr-1" />
+                            )}
+                            <span className="truncate">
+                              {getUserDisplayName(build.user)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center">
+                              <Heart className="w-3 h-3 mr-1" />
+                              <span>{build._count.likes}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <MessageSquare className="w-3 h-3 mr-1" />
+                              <span>{build._count.comments}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <CardContent className="p-4">
-                    <h3 className="font-semibold text-sm mb-2 line-clamp-2">
-                      {build.title}
-                    </h3>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <div className="flex items-center">
-                        {build.user.imageUrl ? (
-                          <img
-                            src={build.user.imageUrl}
-                            alt={getUserDisplayName(build.user)}
-                            className="w-4 h-4 rounded-full mr-1"
-                          />
-                        ) : (
-                          <User className="w-4 h-4 mr-1" />
-                        )}
-                        <span className="truncate">
-                          {getUserDisplayName(build.user)}
-                        </span>
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="w-3 h-3 mr-1" />
-                        <span>
-                          {format(new Date(build.createdAt), "MMM d")}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-                      <span>
-                        {build._count.milestones} milestone
-                        {build._count.milestones !== 1 ? "s" : ""}
-                      </span>
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center">
-                          <Heart className="w-3 h-3 mr-1" />
-                          <span>{build._count.likes}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <MessageSquare className="w-3 h-3 mr-1" />
-                          <span>{build._count.comments}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                </div>
               </Link>
             );
           })}
