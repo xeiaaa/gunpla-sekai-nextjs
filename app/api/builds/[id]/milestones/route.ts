@@ -28,7 +28,7 @@ export async function GET(
       );
     }
 
-    const milestones = await getBuildMilestones(id, limit, offset);
+    const milestones = await getBuildMilestones(id);
 
     return NextResponse.json(milestones);
   } catch (error) {

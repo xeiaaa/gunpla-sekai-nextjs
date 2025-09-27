@@ -32,7 +32,7 @@ export default async function BuildPage({ params }: BuildPageProps) {
   }
 
   // Get initial milestones (first 5)
-  const initialMilestones = await getBuildMilestones(id, 5, 0);
+  const initialMilestones = await getBuildMilestones(id);
 
   return (
     <BuildDetailPublicView
