@@ -61,7 +61,7 @@ export default async function UserBuilds({
   const builds = await getUserBuildsOptimized(
     user.id,
     20,
-    status === "all" ? undefined : status,
+    status === "all" ? undefined : parseInt(status, 10),
     sort
   );
 

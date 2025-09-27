@@ -74,7 +74,7 @@ export default async function MeBuildsPage({
   const builds = await getUserBuildsOptimized(
     userProfileData.id,
     20,
-    status === "all" ? undefined : status,
+    status === "all" ? undefined : parseInt(status, 10),
     sort
   );
 
