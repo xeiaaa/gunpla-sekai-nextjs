@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
-import { useBuildLikes, useToggleBuildLike } from "@/hooks/use-build-likes";
 
 interface LikeButtonProps {
   buildId: string;
@@ -24,16 +23,10 @@ export function LikeButton({
   const { userId } = useAuth();
   const { showToast } = useToast();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [likes, setLikes] = useState(initialLikes);
+  const [liked, setLiked] = useState(initialLiked);
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Use React Query for likes data
-  const { data: likesData, isLoading: isLoadingLikes } = useBuildLikes(buildId);
-  const toggleLikeMutation = useToggleBuildLike(buildId);
-
-  // Fallback to initial values if React Query hasn't loaded yet
-  const likes = likesData?.likes ?? initialLikes;
-  const liked = likesData?.liked ?? initialLiked;
-  const isLoading = toggleLikeMutation.isPending || isLoadingLikes;
 
   const handleLike = useCallback(async () => {
     if (!userId) {
@@ -51,16 +44,43 @@ export function LikeButton({
     // Debounce rapid clicks
     debounceTimeoutRef.current = setTimeout(async () => {
       setIsAnimating(true);
+      setIsLoading(true);
 
       try {
         const newLiked = !liked;
-        await toggleLikeMutation.mutateAsync(newLiked);
+
+        // Optimistically update UI
+        setLiked(newLiked);
+        setLikes((prev) => (newLiked ? prev + 1 : prev - 1));
+
+        // Make API call
+        const response = await fetch(`/api/builds/${buildId}/like`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ liked: newLiked }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        // Update with actual server response
+        setLikes(result.likes);
+        setLiked(result.liked);
 
         // Success feedback
         if (newLiked) {
           showToast("You liked this build!", "success");
         }
       } catch (error) {
+        // Revert optimistic update on error
+        setLiked(!liked);
+        setLikes((prev) => (liked ? prev + 1 : prev - 1));
+
         console.error("Error updating like:", error);
         if (error instanceof Error) {
           if (error.message.includes("429")) {
@@ -70,11 +90,12 @@ export function LikeButton({
           }
         }
       } finally {
+        setIsLoading(false);
         // Reset animation state after a short delay
         setTimeout(() => setIsAnimating(false), 300);
       }
     }, 150); // 150ms debounce
-  }, [userId, liked, buildId, isLoading, showToast, toggleLikeMutation]);
+  }, [userId, liked, buildId, isLoading, showToast]);
 
   // Cleanup timeout on unmount
   useEffect(() => {

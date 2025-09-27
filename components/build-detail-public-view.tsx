@@ -189,7 +189,7 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                     {/* Owner Actions */}
                     {isOwner && (
                       <Link href={`/builds/${build.id}/edit`}>
-                        <Button className="flex items-center gap-2">
+                        <Button size="sm" className="flex items-center gap-2">
                           <Edit className="h-4 w-4" />
                           Edit Build
                         </Button>
