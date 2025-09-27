@@ -5,10 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function addToCollection(
-  kitId: string,
-  status: CollectionStatus
-) {
+export async function addToCollection(kitId: string, status: CollectionStatus) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -47,6 +44,7 @@ export async function addToCollection(
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return { success: true, collection };
   } catch (error) {
@@ -83,6 +81,7 @@ export async function removeFromCollection(kitId: string) {
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return { success: true };
   } catch (error) {
@@ -126,6 +125,7 @@ export async function updateCollectionStatus(
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return { success: true, collection };
   } catch (error) {
@@ -204,7 +204,10 @@ export async function getKitCollectionStatus(kitId: string) {
   }
 }
 
-export async function getUserCollectionByUsername(username: string, status?: CollectionStatus) {
+export async function getUserCollectionByUsername(
+  username: string,
+  status?: CollectionStatus
+) {
   try {
     // First get the user by username
     const user = await prisma.user.findUnique({

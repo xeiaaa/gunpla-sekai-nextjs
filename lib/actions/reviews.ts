@@ -44,13 +44,16 @@ function validateScore(score: number): boolean {
   return score >= MIN_SCORE && score <= MAX_SCORE && Number.isInteger(score);
 }
 
-function validateScores(scores: ReviewScoreInput[]): { isValid: boolean; errors: string[] } {
+function validateScores(scores: ReviewScoreInput[]): {
+  isValid: boolean;
+  errors: string[];
+} {
   const errors: string[] = [];
 
   // Check if all required categories are present
-  const providedCategories = scores.map(s => s.category);
+  const providedCategories = scores.map((s) => s.category);
   const missingCategories = REQUIRED_CATEGORIES.filter(
-    category => !providedCategories.includes(category)
+    (category) => !providedCategories.includes(category)
   );
 
   if (missingCategories.length > 0) {
@@ -74,19 +77,24 @@ function validateScores(scores: ReviewScoreInput[]): { isValid: boolean; errors:
   // Validate individual scores
   for (const scoreInput of scores) {
     if (!validateScore(scoreInput.score)) {
-      errors.push(`Invalid score for ${scoreInput.category}: ${scoreInput.score}. Must be integer between ${MIN_SCORE}-${MAX_SCORE}`);
+      errors.push(
+        `Invalid score for ${scoreInput.category}: ${scoreInput.score}. Must be integer between ${MIN_SCORE}-${MAX_SCORE}`
+      );
     }
   }
 
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
 // Check if user has access to review (removed collection requirement)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function checkReviewAccess(userId: string, kitId: string): Promise<boolean> {
+async function checkReviewAccess(
+  userId: string,
+  kitId: string
+): Promise<boolean> {
   // Allow all authenticated users to review any kit
   return true;
 }
@@ -159,7 +167,7 @@ export async function createReview(input: CreateReviewInput) {
 
       // Create category scores
       await tx.reviewScore.createMany({
-        data: input.scores.map(score => ({
+        data: input.scores.map((score) => ({
           reviewId: newReview.id,
           category: score.category,
           score: score.score,
@@ -174,6 +182,7 @@ export async function createReview(input: CreateReviewInput) {
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return review;
   } catch (error) {
@@ -242,7 +251,7 @@ export async function updateReview(input: UpdateReviewInput) {
 
         // Create new scores
         await tx.reviewScore.createMany({
-          data: input.scores.map(score => ({
+          data: input.scores.map((score) => ({
             reviewId: input.reviewId,
             category: score.category,
             score: score.score,
@@ -265,6 +274,7 @@ export async function updateReview(input: UpdateReviewInput) {
       revalidatePath(`/kits/${kit.slug}`);
     }
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return updatedReview;
   } catch (error) {
@@ -312,6 +322,7 @@ export async function deleteReview(reviewId: string) {
       revalidatePath(`/kits/${kit.slug}`);
     }
     revalidatePath("/collections");
+    revalidatePath(`/users/${userId}`);
 
     return { success: true };
   } catch (error) {
@@ -321,7 +332,11 @@ export async function deleteReview(reviewId: string) {
 }
 
 // Get reviews for a specific kit
-export async function getKitReviews(kitId: string, limit: number = 10, offset: number = 0) {
+export async function getKitReviews(
+  kitId: string,
+  limit: number = 10,
+  offset: number = 0
+) {
   const { userId } = await auth();
 
   const reviews = await prisma.review.findMany({
@@ -344,11 +359,11 @@ export async function getKitReviews(kitId: string, limit: number = 10, offset: n
   });
 
   // Get feedback data for all reviews
-  const reviewIds = reviews.map(r => r.id);
+  const reviewIds = reviews.map((r) => r.id);
   const feedbackCounts = await prisma.reviewFeedback.groupBy({
     by: ["reviewId", "isHelpful"],
     where: {
-      reviewId: { in: reviewIds }
+      reviewId: { in: reviewIds },
     },
     _count: {
       isHelpful: true,
@@ -356,7 +371,11 @@ export async function getKitReviews(kitId: string, limit: number = 10, offset: n
   });
 
   // Get user's feedback for all reviews if authenticated
-  let userFeedback: Array<{ reviewId: string; userId: string; isHelpful: boolean }> = [];
+  let userFeedback: Array<{
+    reviewId: string;
+    userId: string;
+    isHelpful: boolean;
+  }> = [];
   if (userId) {
     userFeedback = await prisma.reviewFeedback.findMany({
       where: {
@@ -386,7 +405,7 @@ export async function getKitReviews(kitId: string, limit: number = 10, offset: n
   }, {} as Record<string, { isHelpful: boolean }>);
 
   // Add feedback data to reviews
-  const reviewsWithFeedback = reviews.map(review => ({
+  const reviewsWithFeedback = reviews.map((review) => ({
     ...review,
     feedback: {
       helpful: countsByReview[review.id]?.helpful || 0,
@@ -440,8 +459,10 @@ export async function getUserKitReview(kitId: string) {
     },
   });
 
-  const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-  const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+  const helpfulCount =
+    feedbackCounts.find((f) => f.isHelpful)?._count.isHelpful || 0;
+  const notHelpfulCount =
+    feedbackCounts.find((f) => !f.isHelpful)?._count.isHelpful || 0;
 
   // Get user's feedback for this review
   const userFeedback = await prisma.reviewFeedback.findUnique({
@@ -483,8 +504,10 @@ export async function getKitReviewStats(kitId: string) {
 
   return {
     totalReviews: stats._count.id,
-    averageScore: stats._avg.overallScore ? Math.round(stats._avg.overallScore * 10) / 10 : 0,
-    categoryAverages: categoryStats.map(stat => ({
+    averageScore: stats._avg.overallScore
+      ? Math.round(stats._avg.overallScore * 10) / 10
+      : 0,
+    categoryAverages: categoryStats.map((stat) => ({
       category: stat.category,
       averageScore: stat._avg.score ? Math.round(stat._avg.score * 10) / 10 : 0,
       reviewCount: stat._count.score,
@@ -493,7 +516,12 @@ export async function getKitReviewStats(kitId: string) {
 }
 
 // Get all reviews by a user
-export async function getUserReviews(userId: string, limit: number = 10, offset: number = 0, sort: string = "newest") {
+export async function getUserReviews(
+  userId: string,
+  limit: number = 10,
+  offset: number = 0,
+  sort: string = "newest"
+) {
   let orderBy: Prisma.ReviewOrderByWithRelationInput = { createdAt: "desc" };
 
   switch (sort) {
@@ -529,11 +557,11 @@ export async function getUserReviews(userId: string, limit: number = 10, offset:
   });
 
   // Get feedback data for all reviews
-  const reviewIds = reviews.map(r => r.id);
+  const reviewIds = reviews.map((r) => r.id);
   const feedbackCounts = await prisma.reviewFeedback.groupBy({
     by: ["reviewId", "isHelpful"],
     where: {
-      reviewId: { in: reviewIds }
+      reviewId: { in: reviewIds },
     },
     _count: {
       isHelpful: true,
@@ -554,7 +582,7 @@ export async function getUserReviews(userId: string, limit: number = 10, offset:
   }, {} as Record<string, { helpful: number; notHelpful: number }>);
 
   // Add feedback data to reviews
-  const reviewsWithFeedback = reviews.map(review => ({
+  const reviewsWithFeedback = reviews.map((review) => ({
     ...review,
     feedback: {
       helpful: countsByReview[review.id]?.helpful || 0,
