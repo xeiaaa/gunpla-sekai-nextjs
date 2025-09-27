@@ -30,10 +30,25 @@ import {
   type CreateMilestoneData,
   type UpdateMilestoneData,
 } from "@/lib/actions/milestones";
+import { getBuildMediaItems } from "@/lib/actions/uploads";
 import { MilestoneType } from "@/generated/prisma";
 
 // Types
 export type BuildTab = "info" | "gallery" | "milestones" | "social";
+
+export interface MediaItem {
+  id: string;
+  uploadId: string;
+  url: string;
+  eagerUrl?: string | null;
+  caption: string;
+  order: number;
+  createdAt: Date;
+  originalFilename: string;
+  size: number;
+  format: string;
+  buildUploadId?: string; // ID of the BuildUpload junction table entry
+}
 
 // Validation schemas
 const buildFormSchema = z
@@ -195,6 +210,10 @@ export interface BuildEditContextType {
   setReorderMode: (mode: boolean) => void;
   mediaLibraryCount: number;
   setMediaLibraryCount: (count: number) => void;
+  mediaItems: MediaItem[];
+  setMediaItems: (items: MediaItem[]) => void;
+  imageFit: "cover" | "contain";
+  setImageFit: (fit: "cover" | "contain") => void;
 
   // Milestone State
   showAddForm: boolean;
@@ -268,6 +287,8 @@ export function BuildEditContextProvider({
   const [activeTab, setActiveTabState] = useState<BuildTab>("info");
   const [reorderMode, setReorderMode] = useState(false);
   const [mediaLibraryCount, setMediaLibraryCount] = useState(0);
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [imageFit, setImageFit] = useState<"cover" | "contain">("cover");
 
   // Form State
   const buildForm = useForm<BuildFormDataLenient>({
@@ -342,6 +363,35 @@ export function BuildEditContextProvider({
       setIsFormInitialized(true);
     }
   }, [buildData, buildForm]);
+
+  // Load media items when build data is available
+  useEffect(() => {
+    const loadMediaItems = async () => {
+      if (!buildData?.id) return;
+
+      try {
+        const uploads = await getBuildMediaItems(buildData.id);
+        const mediaItems: MediaItem[] = uploads.map((upload) => ({
+          id: upload.id,
+          uploadId: upload.id,
+          url: upload.url,
+          eagerUrl: upload.eagerUrl,
+          caption: upload.caption || "",
+          order: upload.order || 0,
+          createdAt: upload.uploadedAt,
+          originalFilename: upload.originalFilename,
+          size: upload.size,
+          format: upload.format,
+          buildUploadId: upload.buildUploadId,
+        }));
+        setMediaItems(mediaItems);
+      } catch (error) {
+        console.error("Error loading media items:", error);
+      }
+    };
+
+    loadMediaItems();
+  }, [buildData?.id]);
 
   // Switch to proper validation schema after form is initialized
   useEffect(() => {
@@ -789,6 +839,10 @@ export function BuildEditContextProvider({
     setReorderMode,
     mediaLibraryCount,
     setMediaLibraryCount,
+    mediaItems,
+    setMediaItems,
+    imageFit,
+    setImageFit,
 
     // Milestone State
     showAddForm,

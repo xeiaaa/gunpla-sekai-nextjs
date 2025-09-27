@@ -30,7 +30,6 @@ import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import {
   createUpload,
   deleteUpload,
-  getBuildMediaItems,
   addUploadToBuild,
   removeUploadFromBuild,
   updateBuildUploadCaption,
@@ -38,6 +37,7 @@ import {
 } from "@/lib/actions/uploads";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
+import { useBuildEdit } from "@/contexts/build-edit";
 import {
   DndContext,
   closestCenter,
@@ -57,19 +57,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import NextImage from "next/image";
 
-interface MediaItem {
-  id: string;
-  uploadId: string;
-  url: string;
-  eagerUrl?: string | null;
-  caption: string;
-  order: number;
-  createdAt: Date;
-  originalFilename: string;
-  size: number;
-  format: string;
-  buildUploadId?: string; // ID of the BuildUpload junction table entry
-}
+// Import MediaItem type from context
+import { MediaItem } from "@/contexts/build-edit";
 
 interface BuildMediaLibraryProps {
   buildId: string;
@@ -217,9 +206,8 @@ export default function BuildMediaLibrary({
   onMediaCountChange,
 }: BuildMediaLibraryProps) {
   const { userId } = useAuth();
-  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const { mediaItems, setMediaItems, imageFit, setImageFit } = useBuildEdit();
   const [uploading, setUploading] = useState(false);
-  const [imageFit, setImageFit] = useState<"cover" | "contain">("cover");
   const [selectedImage, setSelectedImage] = useState<MediaItem | null>(null);
   const [editingCaption, setEditingCaption] = useState(false);
   const [captionText, setCaptionText] = useState("");
@@ -241,33 +229,6 @@ export default function BuildMediaLibrary({
   useEffect(() => {
     onMediaCountChange?.(mediaItems.length);
   }, [mediaItems.length, onMediaCountChange]);
-
-  // Load existing media items
-  useEffect(() => {
-    const loadMediaItems = async () => {
-      try {
-        const uploads = await getBuildMediaItems(buildId);
-        const mediaItems: MediaItem[] = uploads.map((upload) => ({
-          id: upload.id,
-          uploadId: upload.id,
-          url: upload.url,
-          eagerUrl: upload.eagerUrl,
-          caption: upload.caption || "",
-          order: upload.order || 0,
-          createdAt: upload.uploadedAt,
-          originalFilename: upload.originalFilename,
-          size: upload.size,
-          format: upload.format,
-          buildUploadId: upload.buildUploadId,
-        }));
-        setMediaItems(mediaItems);
-      } catch (error) {
-        console.error("Error loading media items:", error);
-      }
-    };
-
-    loadMediaItems();
-  }, [buildId]);
 
   const handleFileSelect = useCallback(
     async (files: FileList) => {
@@ -340,7 +301,7 @@ export default function BuildMediaLibrary({
         (item): item is MediaItem => item !== null
       );
 
-      setMediaItems((prev) => [...prev, ...successfulUploads]);
+      setMediaItems([...mediaItems, ...successfulUploads]);
       setUploading(false);
     },
     [buildId, mediaItems.length, userId]
@@ -380,7 +341,7 @@ export default function BuildMediaLibrary({
       await removeUploadFromBuild(buildId, item.uploadId);
       // Then delete the upload (this will cascade delete the junction table entry)
       await deleteUpload(item.uploadId);
-      setMediaItems((prev) => prev.filter((i) => i.id !== item.id));
+      setMediaItems(mediaItems.filter((i) => i.id !== item.id));
 
       // Close lightbox if the deleted image was selected
       if (selectedImage?.id === item.id) {
@@ -409,8 +370,8 @@ export default function BuildMediaLibrary({
         selectedImage.uploadId,
         captionText
       );
-      setMediaItems((prev) =>
-        prev.map((i) =>
+      setMediaItems(
+        mediaItems.map((i) =>
           i.id === selectedImage.id ? { ...i, caption: captionText } : i
         )
       );
