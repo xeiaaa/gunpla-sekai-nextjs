@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, memo } from "react";
+import { memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { KitImage } from "@/components/kit-image";
 import { Calendar, Tag } from "lucide-react";
@@ -33,8 +33,6 @@ const KitCard = memo(function KitCard({
   collectionStatus,
   className,
 }: KitCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   const formatPrice = (priceYen: number | null | undefined) => {
     if (!priceYen) return null;
     return `¥${priceYen.toLocaleString()}`;
@@ -52,19 +50,17 @@ const KitCard = memo(function KitCard({
     <Card
       className={cn(
         "group relative overflow-hidden transition-all duration-300 cursor-pointer py-0 h-full flex flex-col",
-        "hover:shadow-xl hover:scale-[1.02] hover:border-primary/20",
+        "hover:shadow-xl hover:border-primary/20",
         "bg-card border-border",
         className
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Kit Image */}
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <KitImage
           src={kit.boxArt || ""}
           alt={kit.name}
-          className="aspect-[4/3] w-full"
+          className="aspect-[4/3] w-full transition-transform duration-300 group-hover:scale-105"
         />
 
         <div className="absolute bottom-2 px-2 flex gap-2 justify-between w-full flex-wrap">

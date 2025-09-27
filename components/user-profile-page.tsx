@@ -33,9 +33,54 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import { UserProfileData } from "@/lib/actions/users";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useUserBuildsInfinite } from "@/hooks/use-builds";
+
+interface BuildData {
+  id: string;
+  title: string;
+  description: string | null;
+  status: string;
+  createdAt: Date;
+  completedAt: Date | null;
+  featuredImage: {
+    url: string;
+  } | null;
+  kit: {
+    id: string;
+    name: string;
+    slug: string | null;
+    boxArt: string | null;
+    productLine: {
+      name: string;
+      grade: {
+        name: string;
+      };
+    } | null;
+    series: {
+      name: string;
+    } | null;
+  };
+  milestones: Array<{
+    id: string;
+    type: string;
+    title: string;
+    order: number;
+    imageUrls: string[];
+    uploads: Array<{
+      upload: {
+        url: string;
+      };
+    }>;
+  }>;
+  _count: {
+    milestones: number;
+    likes: number;
+    comments: number;
+  };
+}
 
 interface UserProfilePageProps {
   user: UserProfileData;
@@ -54,11 +99,71 @@ export function UserProfilePage({
   >(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
 
+  // React Query for user builds with infinite scroll
+  const {
+    data: buildsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    error,
+    isFetched,
+  } = useUserBuildsInfinite(user.id, {
+    sort: "newest",
+    limit: 10,
+  });
+
+  // Flatten all builds from all pages and deduplicate by ID
+  const allBuilds = useMemo(() => {
+    if (!buildsData?.pages) return [];
+    const builds = buildsData.pages.flatMap(
+      (page) => (page as { builds: BuildData[] }).builds
+    );
+
+    // Deduplicate by ID to prevent duplicate keys
+    const seen = new Set<string>();
+    return builds.filter((build) => {
+      if (seen.has(build.id)) {
+        return false;
+      }
+      seen.add(build.id);
+      return true;
+    });
+  }, [buildsData]);
+
+  // Intersection observer for infinite scroll
+  const galleryLoadMoreRef = useRef<HTMLDivElement>(null);
+  const postsLoadMoreRef = useRef<HTMLDivElement>(null);
+
   // Initialize tab from URL params, default to "gallery"
   const initialTab =
     (searchParams.get("tab") as "gallery" | "posts") || "gallery";
   const [activeTab, setActiveTab] = useState<"gallery" | "posts">(initialTab);
   const [isTabChanging, setIsTabChanging] = useState(false);
+
+  // Trigger fetch when intersection is observed
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    // Observe the appropriate ref based on active tab
+    const currentRef =
+      activeTab === "gallery"
+        ? galleryLoadMoreRef.current
+        : postsLoadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage, activeTab]);
 
   // Optimized tab change handler - use replaceState instead of push
   const handleTabChange = useCallback(
@@ -132,73 +237,184 @@ export function UserProfilePage({
   ];
 
   // Memoize tab content to prevent unnecessary re-renders
-  const galleryContent = useMemo(
-    () => (
-      <div className="columns-2 gap-2 space-y-2">
-        {user.recentBuilds.length > 0 ? (
-          user.recentBuilds.map((build) => {
-            // Get first image from featured image or kit box art
-            const firstImage = build.featuredImage?.url || build.kit?.boxArt;
+  const galleryContent = useMemo(() => {
+    if (isLoading && !allBuilds.length) {
+      return (
+        <div className="columns-2 gap-2 space-y-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-48 bg-gray-200 rounded-lg animate-pulse break-inside-avoid"
+            />
+          ))}
+        </div>
+      );
+    }
 
-            // Get upload count for photo badge
-            const uploadCount = build.uploads?.length || 0;
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Failed to load builds
+          </h3>
+          <p className="text-gray-600 mb-4">
+            There was an error loading the builds. Please try again.
+          </p>
+        </div>
+      );
+    }
 
-            return (
-              <Link
-                key={build.id}
-                href={`/builds/${build.id}`}
-                className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block"
-              >
-                {firstImage ? (
-                  <Image
-                    src={firstImage}
-                    alt={build.title}
-                    width={400}
-                    height={300}
-                    className="w-full h-auto object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-48 flex items-center justify-center">
-                    <Package className="w-8 h-8 text-gray-400" />
+    if (allBuilds.length > 0) {
+      return (
+        <div className="space-y-4">
+          <div className="columns-2 gap-2 space-y-2">
+            {allBuilds.map((build) => {
+              // Get first image from featured image or kit box art
+              const firstImage = build.featuredImage?.url || build.kit?.boxArt;
+
+              // Get upload count for photo badge
+              const uploadCount =
+                build.milestones?.reduce(
+                  (total, milestone) =>
+                    total + (milestone.uploads?.length || 0),
+                  0
+                ) || 0;
+
+              return (
+                <Link
+                  key={build.id}
+                  href={`/builds/${build.id}`}
+                  className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block"
+                >
+                  {firstImage ? (
+                    <Image
+                      src={firstImage}
+                      alt={build.title}
+                      width={400}
+                      height={300}
+                      className="w-full h-auto object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-48 flex items-center justify-center">
+                      <Package className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
+
+                  {/* Photo count badge */}
+                  {uploadCount > 0 && (
+                    <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                      <Camera className="w-3 h-3" />
+                      {uploadCount}
+                    </div>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+          {/* Load more trigger */}
+          {hasNextPage && (
+            <div ref={galleryLoadMoreRef} className="flex justify-center py-4">
+              {isFetchingNextPage ? (
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                  Loading more builds...
+                </div>
+              ) : (
+                <div className="text-gray-400 text-sm">Scroll to load more</div>
+              )}
+            </div>
+          )}
+          {/* Refreshing indicator */}
+          {isFetching && (
+            <div className="flex justify-center py-2">
+              <span className="text-xs text-gray-400">Refreshing…</span>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (isFetched && allBuilds.length === 0) {
+      return (
+        <div className="col-span-full text-center py-12">
+          <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            No builds yet
+          </h3>
+          <p className="text-gray-600 mb-4">
+            Start building to share your progress with the community!
+          </p>
+          {isOwnProfile && (
+            <Button asChild>
+              <Link href="/builds/new">Start Your First Build</Link>
+            </Button>
+          )}
+        </div>
+      );
+    }
+
+    return null;
+  }, [
+    allBuilds,
+    isLoading,
+    isFetching,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    isOwnProfile,
+    galleryLoadMoreRef,
+    isFetched,
+  ]);
+
+  const postsContent = useMemo(() => {
+    if (isLoading && !allBuilds.length) {
+      return (
+        <div className="space-y-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i}>
+              <CardContent className="p-6">
+                <div className="animate-pulse space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gray-200 rounded-full" />
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-32" />
+                      <div className="h-3 bg-gray-200 rounded w-24" />
+                    </div>
                   </div>
-                )}
-
-                {/* Photo count badge */}
-                {uploadCount > 0 && (
-                  <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
-                    <Camera className="w-3 h-3" />
-                    {uploadCount}
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded w-1/2" />
                   </div>
-                )}
-              </Link>
-            );
-          })
-        ) : (
-          <div className="col-span-full text-center py-12">
+                  <div className="h-48 bg-gray-200 rounded" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <Card>
+          <CardContent className="text-center py-12">
             <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              No builds yet
+              Failed to load builds
             </h3>
             <p className="text-gray-600 mb-4">
-              Start building to share your progress with the community!
+              There was an error loading the builds. Please try again.
             </p>
-            {isOwnProfile && (
-              <Button asChild>
-                <Link href="/builds/new">Start Your First Build</Link>
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
-    ),
-    [user.recentBuilds, isOwnProfile]
-  );
+          </CardContent>
+        </Card>
+      );
+    }
 
-  const postsContent = useMemo(
-    () => (
-      <div className="space-y-6">
-        {user.recentBuilds.length > 0 ? (
-          user.recentBuilds.map((build) => (
+    if (allBuilds.length > 0) {
+      return (
+        <div className="space-y-6">
+          {allBuilds.map((build) => (
             <EnhancedBuildCard
               key={build.id}
               build={{
@@ -215,38 +431,69 @@ export function UserProfilePage({
               showUserInfo={false}
               variant="feed"
             />
-          ))
-        ) : (
-          <Card>
-            <CardContent className="text-center py-12">
-              <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No builds yet
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Start building to share your progress with the community!
-              </p>
-              {isOwnProfile && (
-                <Button asChild>
-                  <Link href="/builds/new">Start Your First Build</Link>
-                </Button>
+          ))}
+          {/* Load more trigger */}
+          {hasNextPage && (
+            <div ref={postsLoadMoreRef} className="flex justify-center py-4">
+              {isFetchingNextPage ? (
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                  Loading more builds...
+                </div>
+              ) : (
+                <div className="text-gray-400 text-sm">Scroll to load more</div>
               )}
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    ),
-    [
-      user.recentBuilds,
-      user.id,
-      user.username,
-      user.firstName,
-      user.lastName,
-      user.imageUrl,
-      user.avatarUrl,
-      isOwnProfile,
-    ]
-  );
+            </div>
+          )}
+          {/* Refreshing indicator */}
+          {isFetching && (
+            <div className="flex justify-center py-2">
+              <span className="text-xs text-gray-400">Refreshing…</span>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (isFetched && allBuilds.length === 0) {
+      return (
+        <Card>
+          <CardContent className="text-center py-12">
+            <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              No builds yet
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Start building to share your progress with the community!
+            </p>
+            {isOwnProfile && (
+              <Button asChild>
+                <Link href="/builds/new">Start Your First Build</Link>
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      );
+    }
+
+    return null;
+  }, [
+    allBuilds,
+    isLoading,
+    isFetching,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    user.id,
+    user.username,
+    user.firstName,
+    user.lastName,
+    user.imageUrl,
+    user.avatarUrl,
+    isOwnProfile,
+    postsLoadMoreRef,
+    isFetched,
+  ]);
 
   const renderTabContent = () => {
     switch (activeTab) {

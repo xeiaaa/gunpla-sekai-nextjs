@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
+import { revalidatePath } from "next/cache";
 
 export interface UserProfileData {
   id: string;
@@ -106,366 +107,6 @@ export async function getUserByUsername(
         collections: {
           select: {
             status: true,
-          },
-        },
-        builds: {
-          take: 10,
-          orderBy: { createdAt: "desc" },
-          include: {
-            kit: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                boxArt: true,
-                productLine: {
-                  select: {
-                    name: true,
-                    grade: {
-                      select: {
-                        name: true,
-                      },
-                    },
-                  },
-                },
-                series: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            featuredImage: {
-              select: {
-                url: true,
-              },
-            },
-            likes: {
-              select: {
-                id: true,
-              },
-            },
-            comments: {
-              select: {
-                id: true,
-              },
-            },
-            uploads: {
-              include: {
-                upload: {
-                  select: {
-                    id: true,
-                    url: true,
-                  },
-                },
-              },
-            },
-            milestones: {
-              take: 2,
-              orderBy: { order: "asc" },
-              include: {
-                uploads: {
-                  take: 1,
-                  include: {
-                    upload: {
-                      select: {
-                        url: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        reviews: {
-          take: 5,
-          orderBy: { createdAt: "desc" },
-          include: {
-            kit: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                boxArt: true,
-              },
-            },
-            feedback: {
-              select: {
-                isHelpful: true,
-              },
-            },
-            categoryScores: {
-              select: {
-                category: true,
-                score: true,
-                notes: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    if (!user) {
-      return null;
-    }
-
-    // Calculate collection stats
-    const collectionStats = {
-      wishlist: 0,
-      preorder: 0,
-      backlog: 0,
-      inProgress: 0,
-      built: 0,
-      total: user.collections.length,
-    };
-
-    user.collections.forEach((collection) => {
-      switch (collection.status) {
-        case CollectionStatus.WISHLIST:
-          collectionStats.wishlist++;
-          break;
-        case CollectionStatus.PREORDER:
-          collectionStats.preorder++;
-          break;
-        case CollectionStatus.BACKLOG:
-          collectionStats.backlog++;
-          break;
-        case CollectionStatus.IN_PROGRESS:
-          collectionStats.inProgress++;
-          break;
-        case CollectionStatus.BUILT:
-          collectionStats.built++;
-          break;
-      }
-    });
-
-    return {
-      id: user.id,
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      imageUrl: user.imageUrl,
-      avatarUrl: user.avatarUrl,
-      bio: user.bio,
-      instagramUrl: user.instagramUrl,
-      youtubeUrl: user.youtubeUrl,
-      portfolioUrl: user.portfolioUrl,
-      bannerImageUrl: user.bannerImageUrl,
-      createdAt: user.createdAt,
-      collectionStats,
-      recentBuilds: user.builds.map((build) => ({
-        id: build.id,
-        title: build.title,
-        description: build.description,
-        status: build.status,
-        createdAt: build.createdAt,
-        completedAt: build.completedAt,
-        featuredImage: build.featuredImage,
-        kit: build.kit,
-        likes: {
-          count: build.likes.length,
-        },
-        comments: {
-          count: build.comments.length,
-        },
-        uploads: build.uploads.map((upload) => ({
-          id: upload.id,
-          url: upload.upload.url,
-        })),
-        milestones: build.milestones.map((milestone) => ({
-          id: milestone.id,
-          type: milestone.type,
-          title: milestone.title,
-          imageUrls: milestone.imageUrls,
-          uploads: milestone.uploads.map((upload) => ({
-            upload: upload.upload,
-          })),
-        })),
-      })),
-      recentReviews: await Promise.all(
-        user.reviews.map(async (review) => {
-          // Get feedback counts for this review
-          const feedbackCounts = await prisma.reviewFeedback.groupBy({
-            by: ["isHelpful"],
-            where: { reviewId: review.id },
-            _count: {
-              isHelpful: true,
-            },
-          });
-
-          const helpfulCount =
-            feedbackCounts.find((f) => f.isHelpful)?._count.isHelpful || 0;
-          const notHelpfulCount =
-            feedbackCounts.find((f) => !f.isHelpful)?._count.isHelpful || 0;
-
-          return {
-            id: review.id,
-            title: review.title,
-            content: review.content,
-            overallScore: review.overallScore,
-            createdAt: review.createdAt,
-            kit: review.kit,
-            feedback: {
-              helpful: helpfulCount,
-              notHelpful: notHelpfulCount,
-            },
-            categoryScores: review.categoryScores.map((score) => ({
-              category: score.category,
-              score: score.score,
-              notes: score.notes,
-            })),
-          };
-        })
-      ),
-    };
-  } catch (error) {
-    console.error("Error fetching user by username:", error);
-    return null;
-  }
-}
-
-export async function getUserById(userId: string) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        avatarUrl: true,
-        createdAt: true,
-        // Gunpla Sekai specific fields
-        bio: true,
-        instagramUrl: true,
-        twitterUrl: true,
-        youtubeUrl: true,
-        portfolioUrl: true,
-        bannerImageUrl: true,
-        themeColor: true,
-        isPublic: true,
-        showCollections: true,
-        showBuilds: true,
-        showActivity: true,
-        showBadges: true,
-        emailNotifications: true,
-      },
-    });
-
-    return user;
-  } catch (error) {
-    console.error("Error fetching user by ID:", error);
-    return null;
-  }
-}
-
-// Optimized function for basic user info (metadata generation)
-export async function getUserBasicInfo(username: string) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { username },
-      select: {
-        id: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        avatarUrl: true,
-        createdAt: true,
-      },
-    });
-
-    return user;
-  } catch (error) {
-    console.error("Error fetching user basic info:", error);
-    return null;
-  }
-}
-
-// Optimized function to get full profile by userId (for /me page)
-export async function getUserProfileById(
-  userId: string
-): Promise<UserProfileData | null> {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        collections: {
-          select: {
-            status: true,
-          },
-        },
-        builds: {
-          take: 10,
-          orderBy: { createdAt: "desc" },
-          include: {
-            kit: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                boxArt: true,
-                productLine: {
-                  select: {
-                    name: true,
-                    grade: {
-                      select: {
-                        name: true,
-                      },
-                    },
-                  },
-                },
-                series: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            featuredImage: {
-              select: {
-                url: true,
-              },
-            },
-            likes: {
-              select: {
-                id: true,
-              },
-            },
-            comments: {
-              select: {
-                id: true,
-              },
-            },
-            uploads: {
-              include: {
-                upload: {
-                  select: {
-                    id: true,
-                    url: true,
-                  },
-                },
-              },
-            },
-            milestones: {
-              take: 2,
-              orderBy: { order: "asc" },
-              include: {
-                uploads: {
-                  take: 1,
-                  include: {
-                    upload: {
-                      select: {
-                        url: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
           },
         },
         reviews: {
@@ -578,35 +219,221 @@ export async function getUserProfileById(
       bannerImageUrl: user.bannerImageUrl,
       createdAt: user.createdAt,
       collectionStats,
-      recentBuilds: user.builds.map((build) => ({
-        id: build.id,
-        title: build.title,
-        description: build.description,
-        status: build.status,
-        createdAt: build.createdAt,
-        completedAt: build.completedAt,
-        featuredImage: build.featuredImage,
-        kit: build.kit,
-        likes: {
-          count: build.likes.length,
-        },
-        comments: {
-          count: build.comments.length,
-        },
-        uploads: build.uploads.map((upload) => ({
-          id: upload.id,
-          url: upload.upload.url,
-        })),
-        milestones: build.milestones.map((milestone) => ({
-          id: milestone.id,
-          type: milestone.type,
-          title: milestone.title,
-          imageUrls: milestone.imageUrls,
-          uploads: milestone.uploads.map((upload) => ({
-            upload: upload.upload,
+      recentBuilds: [], // No builds data for public profiles
+      recentReviews: user.reviews.map((review) => {
+        const feedback = feedbackMap.get(review.id) || {
+          helpful: 0,
+          notHelpful: 0,
+        };
+
+        return {
+          id: review.id,
+          title: review.title,
+          content: review.content,
+          overallScore: review.overallScore,
+          createdAt: review.createdAt,
+          kit: review.kit,
+          feedback: {
+            helpful: feedback.helpful,
+            notHelpful: feedback.notHelpful,
+          },
+          categoryScores: review.categoryScores.map((score) => ({
+            category: score.category,
+            score: score.score,
+            notes: score.notes,
           })),
-        })),
-      })),
+        };
+      }),
+    };
+  } catch (error) {
+    console.error("Error fetching user by username:", error);
+    return null;
+  }
+}
+
+export async function getUserById(userId: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        imageUrl: true,
+        avatarUrl: true,
+        createdAt: true,
+        // Gunpla Sekai specific fields
+        bio: true,
+        instagramUrl: true,
+        twitterUrl: true,
+        youtubeUrl: true,
+        portfolioUrl: true,
+        bannerImageUrl: true,
+        themeColor: true,
+        isPublic: true,
+        showCollections: true,
+        showBuilds: true,
+        showActivity: true,
+        showBadges: true,
+        emailNotifications: true,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    return null;
+  }
+}
+
+// Optimized function for basic user info (metadata generation)
+export async function getUserBasicInfo(username: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        imageUrl: true,
+        avatarUrl: true,
+        createdAt: true,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user basic info:", error);
+    return null;
+  }
+}
+
+// Optimized function to get full profile by userId (for /me page)
+export async function getUserProfileById(
+  userId: string
+): Promise<UserProfileData | null> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        collections: {
+          select: {
+            status: true,
+          },
+        },
+        reviews: {
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          include: {
+            kit: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                boxArt: true,
+              },
+            },
+            feedback: {
+              select: {
+                isHelpful: true,
+              },
+            },
+            categoryScores: {
+              select: {
+                category: true,
+                score: true,
+                notes: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    // Calculate collection stats
+    const collectionStats = {
+      wishlist: 0,
+      preorder: 0,
+      backlog: 0,
+      inProgress: 0,
+      built: 0,
+      total: user.collections.length,
+    };
+
+    user.collections.forEach((collection) => {
+      switch (collection.status) {
+        case CollectionStatus.WISHLIST:
+          collectionStats.wishlist++;
+          break;
+        case CollectionStatus.PREORDER:
+          collectionStats.preorder++;
+          break;
+        case CollectionStatus.BACKLOG:
+          collectionStats.backlog++;
+          break;
+        case CollectionStatus.IN_PROGRESS:
+          collectionStats.inProgress++;
+          break;
+        case CollectionStatus.BUILT:
+          collectionStats.built++;
+          break;
+      }
+    });
+
+    // Get all review feedback counts in a single query to avoid N+1 problem
+    const reviewIds = user.reviews.map((review) => review.id);
+    const allFeedbackCounts =
+      reviewIds.length > 0
+        ? await prisma.reviewFeedback.groupBy({
+            by: ["reviewId", "isHelpful"],
+            where: {
+              reviewId: { in: reviewIds },
+            },
+            _count: {
+              isHelpful: true,
+            },
+          })
+        : [];
+
+    // Create a map for quick lookup
+    const feedbackMap = new Map<
+      string,
+      { helpful: number; notHelpful: number }
+    >();
+    allFeedbackCounts.forEach((feedback) => {
+      const key = feedback.reviewId;
+      if (!feedbackMap.has(key)) {
+        feedbackMap.set(key, { helpful: 0, notHelpful: 0 });
+      }
+      const counts = feedbackMap.get(key)!;
+      if (feedback.isHelpful) {
+        counts.helpful = feedback._count.isHelpful;
+      } else {
+        counts.notHelpful = feedback._count.isHelpful;
+      }
+    });
+
+    return {
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      imageUrl: user.imageUrl,
+      avatarUrl: user.avatarUrl,
+      bio: user.bio,
+      instagramUrl: user.instagramUrl,
+      youtubeUrl: user.youtubeUrl,
+      portfolioUrl: user.portfolioUrl,
+      bannerImageUrl: user.bannerImageUrl,
+      createdAt: user.createdAt,
+      collectionStats,
+      recentBuilds: [], // No builds data for profile pages
       recentReviews: user.reviews.map((review) => {
         const feedback = feedbackMap.get(review.id) || {
           helpful: 0,
@@ -685,6 +512,14 @@ export async function updateUser(userId: string, data: UpdateUserData) {
         emailNotifications: true,
       },
     });
+
+    // Revalidate the user's public profile page if they have a username
+    if (user.username) {
+      revalidatePath(`/users/${user.username}`);
+    }
+
+    // Also revalidate the settings page
+    revalidatePath("/settings/profile");
 
     return { success: true, user };
   } catch (error) {

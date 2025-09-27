@@ -3,6 +3,9 @@ import { auth } from "@clerk/nextjs/server";
 import { getUserByUsername, getUserBasicInfo } from "@/lib/actions/users";
 import { UserProfilePage } from "@/components/user-profile-page";
 
+// ISR: Revalidate every 7 days (604800 seconds)
+export const revalidate = 604800;
+
 interface UserProfilePageProps {
   params: Promise<{
     username: string;

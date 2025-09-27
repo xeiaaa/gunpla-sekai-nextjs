@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 
 interface Build {
   id: string;
@@ -48,6 +52,41 @@ export function useKitBuilds(kitId: string) {
   });
 }
 
+// Hook for user builds with infinite scroll
+export function useUserBuildsInfinite(
+  userId: string,
+  options?: {
+    status?: string;
+    sort?: string;
+    limit?: number;
+  }
+) {
+  const { status, sort = "newest", limit = 20 } = options || {};
+
+  return useInfiniteQuery({
+    queryKey: ["user", "builds", userId, { status, sort }],
+    queryFn: async ({ pageParam = 0 }) => {
+      const offset = pageParam * limit;
+      const response = await fetch(
+        `/api/builds/user/${userId}?limit=${limit}&offset=${offset}${
+          status ? `&status=${status}` : ""
+        }&sort=${sort}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user builds");
+      }
+      return response.json();
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage.hasMore) return undefined;
+      return allPages.length;
+    },
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    enabled: !!userId,
+  });
+}
+
 // Utility function to invalidate build queries
 export function useInvalidateBuildQueries() {
   const queryClient = useQueryClient();
@@ -58,5 +97,11 @@ export function useInvalidateBuildQueries() {
     });
   };
 
-  return { invalidateBuildQueries };
+  const invalidateUserBuildQueries = (userId: string) => {
+    queryClient.invalidateQueries({
+      queryKey: ["user", "builds", userId],
+    });
+  };
+
+  return { invalidateBuildQueries, invalidateUserBuildQueries };
 }

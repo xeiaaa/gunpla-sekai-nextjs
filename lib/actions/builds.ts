@@ -565,6 +565,7 @@ export async function getBuildForEdit(buildId: string, userId?: string) {
 export async function getUserBuildsOptimized(
   userId: string,
   limit: number = 20,
+  offset: number = 0,
   status?: string,
   sort: string = "newest"
 ) {
@@ -594,6 +595,7 @@ export async function getUserBuildsOptimized(
     const builds = await prisma.build.findMany({
       where,
       take: limit,
+      skip: offset,
       orderBy,
       select: {
         id: true,
