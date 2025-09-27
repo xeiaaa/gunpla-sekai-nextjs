@@ -682,16 +682,6 @@ export function KitDetailPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Back Button */}
-      <div className="mb-6">
-        <Link href="/kits">
-          <Button variant="ghost" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Kits
-          </Button>
-        </Link>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Images & Actions */}
         <div className="lg:col-span-1 space-y-4">

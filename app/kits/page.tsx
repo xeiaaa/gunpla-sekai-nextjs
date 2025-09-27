@@ -466,18 +466,16 @@ function KitsPageContent() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
-        {/* Results Summary */}
-        {kitsData && kits.length > 0 && (
-          <div className="mb-4">
+        {/* Filter Controls */}
+        <div className="mb-6 flex items-center justify-between">
+          {/* Results Summary */}
+          {kitsData && kits.length > 0 && (
             <p className="text-muted-foreground">
               Showing {kits.length}{" "}
               {kitsData.pages[0]?.total && `of ${kitsData.pages[0].total}`} kits
             </p>
-          </div>
-        )}
+          )}
 
-        {/* Filter Controls */}
-        <div className="mb-6 flex items-center justify-end">
           {/* Filter Button */}
           <Button
             onClick={toggleFilter}
