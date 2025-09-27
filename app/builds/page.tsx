@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { AllBuildsPage } from "@/components/all-builds-page";
 
 export const metadata: Metadata = {
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function BuildsPage() {
-  return <AllBuildsPage />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AllBuildsPage />
+    </Suspense>
+  );
 }
