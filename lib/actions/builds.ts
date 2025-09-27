@@ -771,9 +771,9 @@ export async function getBuildForStaticGeneration(buildId: string) {
 
 // Function to get milestones separately (for client-side loading)
 export async function getBuildMilestones(
-  buildId: string,
-  limit: number = 5,
-  offset: number = 0
+  buildId: string
+  // limit: number = 5,
+  // offset: number = 0
 ) {
   try {
     const milestones = await prisma.buildMilestone.findMany({
@@ -802,8 +802,6 @@ export async function getBuildMilestones(
         },
       },
       orderBy: { order: "asc" },
-      take: limit,
-      skip: offset,
     });
 
     return milestones;
