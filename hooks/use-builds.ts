@@ -87,6 +87,37 @@ export function useUserBuildsInfinite(
   });
 }
 
+// Hook for all builds with infinite scroll (global feed)
+export function useAllBuildsInfinite(options?: {
+  status?: string;
+  sort?: string;
+  limit?: number;
+}) {
+  const { status, sort = "newest", limit = 20 } = options || {};
+
+  return useInfiniteQuery({
+    queryKey: ["all", "builds", { status, sort }],
+    queryFn: async ({ pageParam = 0 }) => {
+      const offset = pageParam * limit;
+      const response = await fetch(
+        `/api/builds/all?limit=${limit}&offset=${offset}${
+          status ? `&status=${status}` : ""
+        }&sort=${sort}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch all builds");
+      }
+      return response.json();
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage.hasMore) return undefined;
+      return allPages.length;
+    },
+    staleTime: 2 * 60 * 1000, // 2 minutes
+  });
+}
+
 // Utility function to invalidate build queries
 export function useInvalidateBuildQueries() {
   const queryClient = useQueryClient();
@@ -103,5 +134,15 @@ export function useInvalidateBuildQueries() {
     });
   };
 
-  return { invalidateBuildQueries, invalidateUserBuildQueries };
+  const invalidateAllBuildQueries = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["all", "builds"],
+    });
+  };
+
+  return {
+    invalidateBuildQueries,
+    invalidateUserBuildQueries,
+    invalidateAllBuildQueries,
+  };
 }

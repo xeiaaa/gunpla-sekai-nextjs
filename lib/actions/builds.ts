@@ -1130,3 +1130,130 @@ export async function updateBuildComment(commentId: string, content: string) {
     throw new Error("Failed to update comment");
   }
 }
+
+// Optimized function for all builds (global feed) - minimal data for cards
+export async function getAllBuildsOptimized(
+  limit: number = 20,
+  offset: number = 0,
+  status?: string,
+  sort: string = "newest"
+) {
+  try {
+    // Build where clause - no userId filter for global feed
+    const where: Prisma.BuildWhereInput = {};
+    if (status) {
+      where.status = status as BuildStatus;
+    }
+
+    // Build orderBy clause
+    let orderBy: Prisma.BuildOrderByWithRelationInput = { createdAt: "desc" };
+    switch (sort) {
+      case "oldest":
+        orderBy = { createdAt: "asc" };
+        break;
+      case "completed":
+        orderBy = { completedAt: "desc" };
+        break;
+      case "status":
+        orderBy = { status: "asc" };
+        break;
+      default:
+        orderBy = { createdAt: "desc" };
+    }
+
+    const builds = await prisma.build.findMany({
+      where,
+      take: limit,
+      skip: offset,
+      orderBy,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        completedAt: true,
+        kit: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            boxArt: true,
+            productLine: {
+              select: {
+                name: true,
+                grade: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            series: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageUrl: true,
+            avatarUrl: true,
+          },
+        },
+        featuredImage: {
+          select: {
+            url: true,
+          },
+        },
+        milestones: {
+          select: {
+            id: true,
+            type: true,
+            title: true,
+            order: true,
+            uploads: {
+              select: {
+                upload: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+              take: 3, // Only first 3 images per milestone
+              orderBy: { order: "asc" },
+            },
+          },
+          take: 5, // Only first 5 milestones
+          orderBy: { order: "asc" },
+        },
+        _count: {
+          select: {
+            milestones: true,
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+
+    // Transform the data to match the expected interface
+    const transformedBuilds = builds.map((build) => ({
+      ...build,
+      milestones: build.milestones.map((milestone) => ({
+        ...milestone,
+        imageUrls: milestone.uploads.map((upload) => upload.upload.url),
+      })),
+    }));
+
+    return transformedBuilds;
+  } catch (error) {
+    console.error("Error fetching all builds:", error);
+    throw new Error("Failed to fetch all builds");
+  }
+}

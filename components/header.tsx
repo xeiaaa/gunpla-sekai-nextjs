@@ -29,6 +29,7 @@ export function Header() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Kits", href: "/kits" },
+    { name: "Builds", href: "/builds" },
     { name: "Customize", href: "/customize" },
   ];
 
@@ -44,7 +45,7 @@ export function Header() {
         if (currentPath === "/kits" && currentSearch) {
           // We're on kits page with existing filters - preserve them
           const urlParams = new URLSearchParams(currentSearch);
-          urlParams.set('search', query);
+          urlParams.set("search", query);
           router.push(`/kits?${urlParams.toString()}`);
         } else {
           // No existing filters or not on kits page
@@ -86,7 +87,9 @@ export function Header() {
                   <DropdownMenuItem onClick={() => setSearchType("kits")}>
                     Kits
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSearchType("mobile-suits")}>
+                  <DropdownMenuItem
+                    onClick={() => setSearchType("mobile-suits")}
+                  >
                     Mobile Suits
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -95,7 +98,9 @@ export function Header() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder={`Search ${searchType === "kits" ? "kits" : "mobile suits"}...`}
+                  placeholder={`Search ${
+                    searchType === "kits" ? "kits" : "mobile suits"
+                  }...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 rounded-l-none"
@@ -136,9 +141,7 @@ export function Header() {
                   </Button>
                 </SignInButton>
                 <SignUpButton>
-                  <Button size="sm">
-                    Get Started
-                  </Button>
+                  <Button size="sm">Get Started</Button>
                 </SignUpButton>
               </SignedOut>
               <SignedIn>
@@ -185,7 +188,9 @@ export function Header() {
                       <DropdownMenuItem onClick={() => setSearchType("kits")}>
                         Kits
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSearchType("mobile-suits")}>
+                      <DropdownMenuItem
+                        onClick={() => setSearchType("mobile-suits")}
+                      >
                         Mobile Suits
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -194,7 +199,9 @@ export function Header() {
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       type="search"
-                      placeholder={`Search ${searchType === "kits" ? "kits" : "mobile suits"}...`}
+                      placeholder={`Search ${
+                        searchType === "kits" ? "kits" : "mobile suits"
+                      }...`}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
