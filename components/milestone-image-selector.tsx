@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import {
   Image as ImageIcon,
@@ -11,7 +17,7 @@ import {
   X,
   GripVertical,
   Trash2,
-  Check
+  Check,
 } from "lucide-react";
 import NextImage from "next/image";
 import { cn } from "@/lib/utils";
@@ -24,17 +30,15 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
-} from '@dnd-kit/sortable';
-import {
-  useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface MediaItem {
   id: string;
@@ -136,13 +140,19 @@ function SortableSelectedImage({
       </div>
 
       {/* Image */}
-      <NextImage
-        src={image.eagerUrl || image.url}
-        alt={image.caption || "Milestone image"}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-      />
+      {image.eagerUrl || image.url ? (
+        <NextImage
+          src={image.eagerUrl || image.url}
+          alt={image.caption || "Milestone image"}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+        />
+      ) : (
+        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+          <span className="text-gray-500 text-sm">Loading...</span>
+        </div>
+      )}
 
       {/* Caption overlay */}
       {image.caption && (
@@ -172,7 +182,7 @@ function MediaLibraryItem({
         "relative group overflow-hidden rounded-lg aspect-square cursor-pointer",
         isSelected && "ring-2 ring-primary ring-offset-2"
       )}
-      onClick={() => isSelected ? onDeselect(mediaItem) : onSelect(mediaItem)}
+      onClick={() => (isSelected ? onDeselect(mediaItem) : onSelect(mediaItem))}
     >
       {/* Selection indicator */}
       <div className="absolute top-2 right-2 z-10">
@@ -259,19 +269,19 @@ export default function MilestoneImageSelector({
 
   // Initialize temp selection with currently selected images
   useEffect(() => {
-    setTempSelectedIds(selectedImages.map(img => img.uploadId));
+    setTempSelectedIds(selectedImages.map((img) => img.uploadId));
   }, [selectedImages]);
 
   const handleOpenSelector = () => {
-    setTempSelectedIds(selectedImages.map(img => img.uploadId));
+    setTempSelectedIds(selectedImages.map((img) => img.uploadId));
     setShowSelector(true);
   };
 
   const handleSelectImage = (mediaItem: MediaItem) => {
     if (tempSelectedIds.includes(mediaItem.id)) {
-      setTempSelectedIds(prev => prev.filter(id => id !== mediaItem.id));
+      setTempSelectedIds((prev) => prev.filter((id) => id !== mediaItem.id));
     } else if (tempSelectedIds.length < maxImages) {
-      setTempSelectedIds(prev => [...prev, mediaItem.id]);
+      setTempSelectedIds((prev) => [...prev, mediaItem.id]);
     }
   };
 
@@ -280,24 +290,28 @@ export default function MilestoneImageSelector({
     onLoadingChange?.(true);
 
     try {
-      const selectedMediaItems = mediaItems.filter(item =>
+      const selectedMediaItems = mediaItems.filter((item) =>
         tempSelectedIds.includes(item.id)
       );
 
-      const newSelectedImages: MilestoneImage[] = selectedMediaItems.map((item, index) => {
-        // Find existing image to preserve milestoneImageId if it exists
-        const existingImage = selectedImages.find(img => img.uploadId === item.id);
+      const newSelectedImages: MilestoneImage[] = selectedMediaItems.map(
+        (item, index) => {
+          // Find existing image to preserve milestoneImageId if it exists
+          const existingImage = selectedImages.find(
+            (img) => img.uploadId === item.id
+          );
 
-        return {
-          id: existingImage?.id || `temp-${item.id}`,
-          uploadId: item.id,
-          url: item.url,
-          eagerUrl: item.eagerUrl,
-          caption: item.caption,
-          order: index,
-          milestoneImageId: existingImage?.milestoneImageId,
-        };
-      });
+          return {
+            id: existingImage?.id || `temp-${item.id}`,
+            uploadId: item.id,
+            url: item.url,
+            eagerUrl: item.eagerUrl,
+            caption: item.caption,
+            order: index,
+            milestoneImageId: existingImage?.milestoneImageId,
+          };
+        }
+      );
 
       await onImagesChange(newSelectedImages);
       setShowSelector(false);
@@ -308,13 +322,13 @@ export default function MilestoneImageSelector({
   };
 
   const handleRemoveImage = async (imageId: string) => {
-    setRemovingImages(prev => new Set(prev).add(imageId));
+    setRemovingImages((prev) => new Set(prev).add(imageId));
     onLoadingChange?.(true);
 
     try {
-      await onImagesChange(selectedImages.filter(img => img.id !== imageId));
+      await onImagesChange(selectedImages.filter((img) => img.id !== imageId));
     } finally {
-      setRemovingImages(prev => {
+      setRemovingImages((prev) => {
         const newSet = new Set(prev);
         newSet.delete(imageId);
         return newSet;
@@ -327,8 +341,12 @@ export default function MilestoneImageSelector({
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = selectedImages.findIndex((image) => image.id === active.id);
-      const newIndex = selectedImages.findIndex((image) => image.id === over.id);
+      const oldIndex = selectedImages.findIndex(
+        (image) => image.id === active.id
+      );
+      const newIndex = selectedImages.findIndex(
+        (image) => image.id === over.id
+      );
 
       const newImages = arrayMove(selectedImages, oldIndex, newIndex);
       // Update order
@@ -371,7 +389,7 @@ export default function MilestoneImageSelector({
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={selectedImages.map(img => img.id)}
+              items={selectedImages.map((img) => img.id)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
@@ -410,11 +428,7 @@ export default function MilestoneImageSelector({
           <p className="text-sm text-gray-600 mb-3">
             No images selected for this milestone
           </p>
-          <Button
-            size="sm"
-            onClick={handleOpenSelector}
-            className="h-8 px-3"
-          >
+          <Button size="sm" onClick={handleOpenSelector} className="h-8 px-3">
             <Plus className="h-4 w-4 mr-1" />
             Select Images
           </Button>
@@ -426,6 +440,10 @@ export default function MilestoneImageSelector({
         <DialogContent className="max-w-4xl h-[80vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>Select Images for Milestone</DialogTitle>
+            <DialogDescription>
+              Choose up to {maxImages} images from your build gallery to
+              associate with this milestone.
+            </DialogDescription>
           </DialogHeader>
 
           <div className="flex-1 min-h-0 flex flex-col">
@@ -477,7 +495,8 @@ export default function MilestoneImageSelector({
                       No images in build gallery
                     </h3>
                     <p className="text-gray-600">
-                      Upload images to the build gallery first, then select them for milestones.
+                      Upload images to the build gallery first, then select them
+                      for milestones.
                     </p>
                   </div>
                 </div>

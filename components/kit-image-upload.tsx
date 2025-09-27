@@ -19,6 +19,7 @@ import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -549,9 +550,14 @@ export function KitImageUpload({
         <DialogContent className="max-w-4xl h-[85vh] p-0 flex flex-col overflow-hidden [&>button]:hidden">
           <DialogHeader className="p-4 pb-2 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-lg font-semibold truncate">
-                {selectedImage?.originalFilename}
-              </DialogTitle>
+              <div>
+                <DialogTitle className="text-lg font-semibold truncate">
+                  {selectedImage?.originalFilename}
+                </DialogTitle>
+                <DialogDescription>
+                  View and edit kit image details and caption.
+                </DialogDescription>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"

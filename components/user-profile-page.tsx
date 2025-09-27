@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -909,6 +910,9 @@ export function UserProfilePage({
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>Review Details</DialogTitle>
+            <DialogDescription>
+              View detailed information about this build review.
+            </DialogDescription>
           </DialogHeader>
           {selectedReview && (
             <div className="space-y-6">

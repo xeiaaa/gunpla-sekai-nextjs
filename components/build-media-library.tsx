@@ -3,7 +3,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,7 +24,7 @@ import {
   X,
   Save,
   Edit3,
-  Star
+  Star,
 } from "lucide-react";
 import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import {
@@ -28,7 +34,7 @@ import {
   addUploadToBuild,
   removeUploadFromBuild,
   updateBuildUploadCaption,
-  reorderBuildUploads
+  reorderBuildUploads,
 } from "@/lib/actions/uploads";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
@@ -40,17 +46,15 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
-} from '@dnd-kit/sortable';
-import {
-  useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import NextImage from "next/image";
 
 interface MediaItem {
@@ -111,7 +115,6 @@ function SortableMediaItem({
     opacity: isDragging ? 0.5 : 1,
   };
 
-
   return (
     <div
       ref={setNodeRef}
@@ -153,16 +156,23 @@ function SortableMediaItem({
         className="aspect-square relative cursor-pointer group"
         onClick={() => onImageClick?.(mediaItem)}
       >
-        <NextImage
-          src={mediaItem.eagerUrl || mediaItem.url}
-          alt={mediaItem.caption || mediaItem.originalFilename}
-          fill
-          className={cn(
-            "transition-transform group-hover:scale-105",
-            imageFit === 'cover' ? 'object-cover' : 'object-contain'
-          )}
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-        />
+        {mediaItem.eagerUrl || mediaItem.url ? (
+          <NextImage
+            src={mediaItem.eagerUrl || mediaItem.url}
+            alt={mediaItem.caption || mediaItem.originalFilename}
+            fill
+            className={cn(
+              "transition-transform group-hover:scale-105",
+              imageFit === "cover" ? "object-cover" : "object-contain"
+            )}
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500 text-sm">Loading...</span>
+          </div>
+        )}
+
         {/* Featured image indicator */}
         {isFeatured && (
           <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-1 shadow-lg">
@@ -209,7 +219,7 @@ export default function BuildMediaLibrary({
   const { userId } = useAuth();
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [imageFit, setImageFit] = useState<'cover' | 'contain'>('cover');
+  const [imageFit, setImageFit] = useState<"cover" | "contain">("cover");
   const [selectedImage, setSelectedImage] = useState<MediaItem | null>(null);
   const [editingCaption, setEditingCaption] = useState(false);
   const [captionText, setCaptionText] = useState("");
@@ -259,99 +269,110 @@ export default function BuildMediaLibrary({
     loadMediaItems();
   }, [buildId]);
 
-  const handleFileSelect = useCallback(async (files: FileList) => {
-    if (!files.length) return;
+  const handleFileSelect = useCallback(
+    async (files: FileList) => {
+      if (!files.length) return;
 
-    setUploading(true);
-    const uploadPromises = Array.from(files).map(async (file) => {
-      try {
-        // Check if user is authenticated
-        if (!userId) {
-          throw new Error("User must be authenticated to upload images");
+      setUploading(true);
+      const uploadPromises = Array.from(files).map(async (file) => {
+        try {
+          // Check if user is authenticated
+          if (!userId) {
+            throw new Error("User must be authenticated to upload images");
+          }
+
+          // Get upload signature
+          const signature = await getUploadSignature(`builds/${buildId}`);
+
+          // Upload to Cloudinary
+          const cloudinaryResult = await uploadToCloudinary(
+            file,
+            signature,
+            `builds/${buildId}`
+          );
+
+          // Create upload record in database
+          const upload = await createUpload({
+            cloudinaryAssetId: cloudinaryResult.asset_id,
+            publicId: cloudinaryResult.public_id,
+            url: cloudinaryResult.secure_url,
+            eagerUrl: cloudinaryResult.eager?.[0]?.secure_url,
+            format: cloudinaryResult.format,
+            resourceType: cloudinaryResult.resource_type,
+            size: cloudinaryResult.bytes,
+            originalFilename: cloudinaryResult.original_filename,
+            uploadedAt: new Date(),
+            uploadedById: userId,
+          });
+
+          // Add upload to build via junction table
+          const buildUpload = await addUploadToBuild(
+            buildId,
+            upload.id,
+            "",
+            mediaItems.length
+          );
+
+          // Create media item
+          const mediaItem: MediaItem = {
+            id: upload.id,
+            uploadId: upload.id,
+            url: upload.url,
+            eagerUrl: upload.eagerUrl,
+            caption: buildUpload.caption || "",
+            order: buildUpload.order || 0,
+            createdAt: upload.uploadedAt,
+            originalFilename: upload.originalFilename,
+            size: upload.size,
+            format: upload.format,
+            buildUploadId: buildUpload.id,
+          };
+
+          return mediaItem;
+        } catch (error) {
+          console.error("Error uploading file:", error);
+          return null;
         }
+      });
 
-        // Get upload signature
-        const signature = await getUploadSignature(`builds/${buildId}`);
+      const results = await Promise.all(uploadPromises);
+      const successfulUploads = results.filter(
+        (item): item is MediaItem => item !== null
+      );
 
-        // Upload to Cloudinary
-        const cloudinaryResult = await uploadToCloudinary(
-          file,
-          signature,
-          `builds/${buildId}`
-        );
-
-        // Create upload record in database
-        const upload = await createUpload({
-          cloudinaryAssetId: cloudinaryResult.asset_id,
-          publicId: cloudinaryResult.public_id,
-          url: cloudinaryResult.secure_url,
-          eagerUrl: cloudinaryResult.eager?.[0]?.secure_url,
-          format: cloudinaryResult.format,
-          resourceType: cloudinaryResult.resource_type,
-          size: cloudinaryResult.bytes,
-          originalFilename: cloudinaryResult.original_filename,
-          uploadedAt: new Date(),
-          uploadedById: userId,
-        });
-
-        // Add upload to build via junction table
-        const buildUpload = await addUploadToBuild(
-          buildId,
-          upload.id,
-          "",
-          mediaItems.length
-        );
-
-        // Create media item
-        const mediaItem: MediaItem = {
-          id: upload.id,
-          uploadId: upload.id,
-          url: upload.url,
-          eagerUrl: upload.eagerUrl,
-          caption: buildUpload.caption || "",
-          order: buildUpload.order || 0,
-          createdAt: upload.uploadedAt,
-          originalFilename: upload.originalFilename,
-          size: upload.size,
-          format: upload.format,
-          buildUploadId: buildUpload.id,
-        };
-
-        return mediaItem;
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        return null;
-      }
-    });
-
-    const results = await Promise.all(uploadPromises);
-    const successfulUploads = results.filter((item): item is MediaItem => item !== null);
-
-    setMediaItems(prev => [...prev, ...successfulUploads]);
-    setUploading(false);
-  }, [buildId, mediaItems.length, userId]);
+      setMediaItems((prev) => [...prev, ...successfulUploads]);
+      setUploading(false);
+    },
+    [buildId, mediaItems.length, userId]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileSelect(files);
-    }
-  }, [handleFileSelect]);
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      handleFileSelect(files);
-    }
-  }, [handleFileSelect]);
+  const handleFileInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
   const handleDeleteItem = async (item: MediaItem) => {
     try {
@@ -359,7 +380,7 @@ export default function BuildMediaLibrary({
       await removeUploadFromBuild(buildId, item.uploadId);
       // Then delete the upload (this will cascade delete the junction table entry)
       await deleteUpload(item.uploadId);
-      setMediaItems(prev => prev.filter(i => i.id !== item.id));
+      setMediaItems((prev) => prev.filter((i) => i.id !== item.id));
 
       // Close lightbox if the deleted image was selected
       if (selectedImage?.id === item.id) {
@@ -383,11 +404,19 @@ export default function BuildMediaLibrary({
 
     setSavingCaption(true);
     try {
-      await updateBuildUploadCaption(buildId, selectedImage.uploadId, captionText);
-      setMediaItems(prev =>
-        prev.map(i => i.id === selectedImage.id ? { ...i, caption: captionText } : i)
+      await updateBuildUploadCaption(
+        buildId,
+        selectedImage.uploadId,
+        captionText
       );
-      setSelectedImage(prev => prev ? { ...prev, caption: captionText } : null);
+      setMediaItems((prev) =>
+        prev.map((i) =>
+          i.id === selectedImage.id ? { ...i, caption: captionText } : i
+        )
+      );
+      setSelectedImage((prev) =>
+        prev ? { ...prev, caption: captionText } : null
+      );
       setEditingCaption(false);
     } catch (error) {
       console.error("Error updating caption:", error);
@@ -402,7 +431,6 @@ export default function BuildMediaLibrary({
     setCaptionText("");
   };
 
-
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -416,7 +444,7 @@ export default function BuildMediaLibrary({
 
       // Update order in database
       try {
-        const uploadIds = newItems.map(item => item.uploadId);
+        const uploadIds = newItems.map((item) => item.uploadId);
         await reorderBuildUploads(buildId, uploadIds);
       } catch (error) {
         console.error("Error reordering media items:", error);
@@ -478,10 +506,12 @@ export default function BuildMediaLibrary({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setImageFit(imageFit === 'cover' ? 'contain' : 'cover')}
+            onClick={() =>
+              setImageFit(imageFit === "cover" ? "contain" : "cover")
+            }
             className="h-8 px-3"
           >
-            {imageFit === 'cover' ? (
+            {imageFit === "cover" ? (
               <>
                 <Maximize2 className="h-4 w-4 mr-1" />
                 Cover
@@ -505,22 +535,22 @@ export default function BuildMediaLibrary({
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={sortedItems.map(item => item.id)}
+              items={sortedItems.map((item) => item.id)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
                 {sortedItems.map((item) => (
-                <SortableMediaItem
-                  key={item.id}
-                  mediaItem={item}
-                  isSelected={selectedImages.includes(item.id)}
-                  onSelect={onImageClick || (() => {})}
-                  onDelete={handleDeleteItem}
-                  showSelection={showSelection}
-                  onImageClick={handleImageClick}
-                  imageFit={imageFit}
-                  isFeatured={featuredImageId === item.id}
-                />
+                  <SortableMediaItem
+                    key={item.id}
+                    mediaItem={item}
+                    isSelected={selectedImages.includes(item.id)}
+                    onSelect={onImageClick || (() => {})}
+                    onDelete={handleDeleteItem}
+                    showSelection={showSelection}
+                    onImageClick={handleImageClick}
+                    imageFit={imageFit}
+                    isFeatured={featuredImageId === item.id}
+                  />
                 ))}
               </div>
             </SortableContext>
@@ -543,9 +573,14 @@ export default function BuildMediaLibrary({
         <DialogContent className="max-w-4xl h-[85vh] p-0 flex flex-col overflow-hidden [&>button]:hidden">
           <DialogHeader className="p-4 pb-2 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-lg font-semibold truncate">
-                {selectedImage?.originalFilename}
-              </DialogTitle>
+              <div>
+                <DialogTitle className="text-lg font-semibold truncate">
+                  {selectedImage?.originalFilename}
+                </DialogTitle>
+                <DialogDescription>
+                  View and edit image details and caption.
+                </DialogDescription>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
@@ -562,14 +597,22 @@ export default function BuildMediaLibrary({
               {/* Image Display */}
               <div className="flex-1 p-4 flex items-center justify-center bg-gray-50 min-h-0">
                 <div className="relative w-full h-full">
-                  <NextImage
-                    src={selectedImage.eagerUrl || selectedImage.url}
-                    alt={selectedImage.caption || selectedImage.originalFilename}
-                    width={800}
-                    height={600}
-                    className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
-                    sizes="(max-width: 1024px) 100vw, 800px"
-                  />
+                  {selectedImage.eagerUrl || selectedImage.url ? (
+                    <NextImage
+                      src={selectedImage.eagerUrl || selectedImage.url}
+                      alt={
+                        selectedImage.caption || selectedImage.originalFilename
+                      }
+                      width={800}
+                      height={600}
+                      className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                      sizes="(max-width: 1024px) 100vw, 800px"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500 text-sm">Loading...</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -638,7 +681,8 @@ export default function BuildMediaLibrary({
                     ) : (
                       <div className="h-full p-3 bg-gray-50 rounded-lg overflow-y-auto">
                         <p className="text-sm text-gray-600">
-                          {selectedImage.caption || "No caption added yet. Click Edit to add one."}
+                          {selectedImage.caption ||
+                            "No caption added yet. Click Edit to add one."}
                         </p>
                       </div>
                     )}
@@ -650,7 +694,9 @@ export default function BuildMediaLibrary({
                   <div className="space-y-2 text-sm text-gray-500 mb-4">
                     <div className="flex justify-between">
                       <span>Size:</span>
-                      <span>{(selectedImage.size / 1024 / 1024).toFixed(1)} MB</span>
+                      <span>
+                        {(selectedImage.size / 1024 / 1024).toFixed(1)} MB
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Format:</span>
@@ -658,7 +704,9 @@ export default function BuildMediaLibrary({
                     </div>
                     <div className="flex justify-between">
                       <span>Uploaded:</span>
-                      <span>{new Date(selectedImage.createdAt).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(selectedImage.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
                   </div>
 

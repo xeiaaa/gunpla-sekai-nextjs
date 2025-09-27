@@ -7,8 +7,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MarkdownEditor } from "@/components/ui/markdown-editor";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Loader2, Plus } from "lucide-react";
 import { createBuild } from "@/lib/actions/builds";
 
@@ -35,7 +48,9 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
   // Build form state
   const [buildTitle, setBuildTitle] = useState("");
   const [buildDescription, setBuildDescription] = useState("");
-  const [buildStatus, setBuildStatus] = useState<"PLANNING" | "IN_PROGRESS" | "COMPLETED">("PLANNING");
+  const [buildStatus, setBuildStatus] = useState<
+    "PLANNING" | "IN_PROGRESS" | "COMPLETED"
+  >("PLANNING");
 
   const handleCreateBuild = async () => {
     if (!buildTitle.trim()) {
@@ -77,12 +92,14 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Start a New Build</DialogTitle>
+          <DialogDescription>
+            Create a new build for the {kit.name} kit and start tracking your
+            progress.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="">
@@ -114,7 +131,12 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
 
               <div>
                 <Label htmlFor="build-status">Initial Status</Label>
-                <Select value={buildStatus} onValueChange={(value: "PLANNING" | "IN_PROGRESS" | "COMPLETED") => setBuildStatus(value)}>
+                <Select
+                  value={buildStatus}
+                  onValueChange={(
+                    value: "PLANNING" | "IN_PROGRESS" | "COMPLETED"
+                  ) => setBuildStatus(value)}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>

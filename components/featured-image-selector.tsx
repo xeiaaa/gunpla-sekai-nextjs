@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -95,6 +96,10 @@ export function FeaturedImageSelector({
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle>Select Featured Image</DialogTitle>
+          <DialogDescription>
+            Choose an image to represent your build in galleries and social
+            previews.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto">
@@ -119,13 +124,21 @@ export function FeaturedImageSelector({
                   onClick={() => setSelectedImageId(image.id)}
                 >
                   <div className="aspect-square relative">
-                    <NextImage
-                      src={image.eagerUrl || image.url}
-                      alt={image.caption || image.originalFilename}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    />
+                    {image.eagerUrl || image.url ? (
+                      <NextImage
+                        src={image.eagerUrl || image.url}
+                        alt={image.caption || image.originalFilename}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span className="text-gray-500 text-sm">
+                          Loading...
+                        </span>
+                      </div>
+                    )}
 
                     {/* Selection indicator */}
                     {selectedImageId === image.id && (

@@ -295,9 +295,9 @@ export function EnhancedBuildCard({
                   src={build.user.imageUrl || build.user.avatarUrl || ""}
                   className="object-cover"
                 />
-                <AvatarFallback>
+                {/* <AvatarFallback>
                   <User className="w-5 h-5" />
-                </AvatarFallback>
+                </AvatarFallback> */}
               </Avatar>
               <div>
                 <Link
