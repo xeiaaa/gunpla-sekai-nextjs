@@ -428,7 +428,7 @@ export function UserProfilePage({
                   avatarUrl: user.avatarUrl,
                 },
               }}
-              showUserInfo={false}
+              showUserInfo={true}
               variant="feed"
             />
           ))}

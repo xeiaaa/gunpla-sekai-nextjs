@@ -23,6 +23,7 @@ import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { pipeThroughCloudinary } from "@/lib/cloudinary-client";
 
 interface BuildData {
   id: string;
@@ -283,7 +284,7 @@ export function EnhancedBuildCard({
 
   // Feed variant (default)
   return (
-    <Card className={cn("overflow-hidden py-0", className)}>
+    <Card className={cn("overflow-hidden py-0 gap-0", className)}>
       {/* Header with User Info */}
       {showUserInfo && build.user && (
         <div className="p-4 border-b">
@@ -292,6 +293,7 @@ export function EnhancedBuildCard({
               <Avatar className="w-10 h-10">
                 <AvatarImage
                   src={build.user.imageUrl || build.user.avatarUrl || ""}
+                  className="object-cover"
                 />
                 <AvatarFallback>
                   <User className="w-5 h-5" />
@@ -318,38 +320,6 @@ export function EnhancedBuildCard({
         </div>
       )}
 
-      {/* Build Header */}
-      <div className="p-4 border-b flex flex-row justify-between">
-        <div>
-          <Link
-            href={`/builds/${build.id}`}
-            className="font-semibold text-lg mb-1 hover:text-blue-600 transition-colors block"
-          >
-            {build.title}
-          </Link>
-          <Link
-            href={`/kits/${build.kit.slug || build.kit.id}`}
-            className="text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1"
-          >
-            {build.kit.name}
-            <ExternalLink className="w-3 h-3" />
-          </Link>
-        </div>
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Badge className={cn("text-xs", gradeColorClass)}>
-              {gradeName}
-            </Badge>
-            <Badge
-              className={cn("text-xs", statusConfig.bg, statusConfig.color)}
-            >
-              <StatusIcon className="w-3 h-3 mr-1" />
-              {statusConfig.label}
-            </Badge>
-          </div>
-        </div>
-      </div>
-
       {/* Main Image */}
       <div className="relative">
         {currentImage ? (
@@ -367,14 +337,53 @@ export function EnhancedBuildCard({
         )}
       </div>
 
-      {/* Build Description */}
-      {build.description && (
-        <div className="p-4 border-t">
-          <p className="text-sm text-gray-700 line-clamp-3">
-            {build.description}
-          </p>
+      <div className="p-4 border-t flex flex-col gap-3">
+        {/* Kit Header */}
+        <div className="flex items-start gap-3">
+          {build.kit.boxArt && (
+            <div className="relative w-12 h-12 rounded overflow-hidden flex-shrink-0">
+              <Image
+                src={pipeThroughCloudinary(
+                  build.kit.boxArt,
+                  "w_48,h_48,q_auto,f_auto"
+                )}
+                alt={build.kit.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+            <Link
+              href={`/builds/${build.id}`}
+              className="font-semibold text-lg line-clamp-2 mb-0 hover:text-blue-600 transition-colors block"
+            >
+              {build.title}
+            </Link>
+            <Link
+              href={`/kits/${build.kit.slug || build.kit.id}`}
+              className="text-sm text-gray-600 hover:text-blue-600 transition-colors line-clamp-1"
+            >
+              {build.kit.name}
+            </Link>
+          </div>
         </div>
-      )}
+
+        {/* Metadata */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge className={cn("text-xs", gradeColorClass)}>{gradeName}</Badge>
+          {build.kit.series && (
+            <Badge variant="outline" className="text-xs">
+              {build.kit.series.name}
+            </Badge>
+          )}
+        </div>
+
+        {/* Build Description */}
+        {build.description && (
+          <p className="text-sm text-gray-700">{build.description}</p>
+        )}
+      </div>
 
       {/* Engagement Actions */}
       <div className="p-4 border-t">
