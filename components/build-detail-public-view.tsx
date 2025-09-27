@@ -152,37 +152,85 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
             <Card className="overflow-hidden">
               {/* Blog Header */}
               <div className="p-8 border-b border-gray-200">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
-                  <div>
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                {/* First Line: Title + Actions */}
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
+                  <div className="flex-1">
+                    <h1 className="text-4xl font-bold text-gray-900 mb-3">
                       {build.title}
                     </h1>
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        {build.user.username ? (
-                          <Link
-                            href={`/users/${build.user.username}`}
-                            className="text-blue-600 hover:text-blue-800 hover:underline"
-                          >
-                            {build.user.firstName} {build.user.lastName}
-                            <span className="text-gray-400">
-                              {" "}
-                              (@{build.user.username})
-                            </span>
-                          </Link>
-                        ) : (
-                          <span>
-                            {build.user.firstName} {build.user.lastName}
+                    {/* Status Badge - More prominent placement */}
+                    {/* <div className="inline-block">
+                      <Badge
+                        className={`${getStatusColor(
+                          build.status
+                        )} flex items-center gap-1 text-sm px-3 py-1`}
+                      >
+                        {getStatusIcon(build.status)}
+                        {build.status.replace("_", " ")}
+                      </Badge>
+                    </div> */}
+                  </div>
+
+                  {/* Action Buttons - Grouped logically */}
+                  <div className="flex items-center gap-3">
+                    {/* Social Actions */}
+                    <div className="flex items-center gap-2">
+                      <LikeButton
+                        buildId={build.id}
+                        initialLikes={build.likes}
+                        initialLiked={false}
+                      />
+                      <ShareButton
+                        buildId={build.id}
+                        buildTitle={build.title}
+                      />
+                    </div>
+
+                    {/* Owner Actions */}
+                    {isOwner && (
+                      <Link href={`/builds/${build.id}/edit`}>
+                        <Button className="flex items-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Edit Build
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+
+                {/* Second Line: Metadata - Cleaner, more organized */}
+                <div className="space-y-3 mb-3 flex flex-row items-start justify-between">
+                  {/* Author and Creation Info */}
+                  <div className="flex items-center gap-6 text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <User className="h-4 w-4" />
+                      {build.user.username ? (
+                        <Link
+                          href={`/users/${build.user.username}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                        >
+                          {build.user.firstName} {build.user.lastName}
+                          <span className="text-gray-400 ml-1">
+                            (@{build.user.username})
                           </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>
-                          Created {format(build.createdAt, "MMM d, yyyy")}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">
+                          {build.user.firstName} {build.user.lastName}
                         </span>
-                      </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      <span>
+                        Created {format(build.createdAt, "MMM d, yyyy")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Timeline - More compact, grouped together */}
+                  {(build.startedAt || build.completedAt) && (
+                    <div className="flex items-center gap-6 text-sm text-gray-500">
                       {build.startedAt && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
@@ -200,35 +248,7 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                         </div>
                       )}
                     </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <LikeButton
-                      buildId={build.id}
-                      initialLikes={build.likes}
-                      initialLiked={false}
-                    />
-
-                    <ShareButton buildId={build.id} buildTitle={build.title} />
-
-                    <Badge
-                      className={`${getStatusColor(
-                        build.status
-                      )} flex items-center gap-1`}
-                    >
-                      {getStatusIcon(build.status)}
-                      {build.status.replace("_", " ")}
-                    </Badge>
-
-                    {isOwner && (
-                      <Link href={`/builds/${build.id}/edit`}>
-                        <Button className="flex items-center gap-2">
-                          <Edit className="h-4 w-4" />
-                          Edit Build
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
+                  )}
                 </div>
 
                 {/* Build Description */}
