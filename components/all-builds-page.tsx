@@ -11,6 +11,7 @@ import {
   Heart,
   MessageSquare,
   User,
+  Plus,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,6 +19,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAllBuildsInfinite } from "@/hooks/use-builds";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 interface BuildData {
   id: string;
@@ -489,9 +491,19 @@ export function AllBuildsPage() {
         <div className="mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Community Builds
-            </h1>
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-3xl font-bold text-gray-900">
+                Community Builds
+              </h1>
+              <SignedIn>
+                <Button asChild>
+                  <Link href="/builds/new">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Start Build
+                  </Link>
+                </Button>
+              </SignedIn>
+            </div>
             <p className="text-gray-600">
               Discover amazing Gunpla builds from builders around the world
             </p>

@@ -31,6 +31,7 @@ import {
   FileText,
   Camera,
   MessageSquare,
+  Plus,
 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -655,7 +656,13 @@ export function UserProfilePage({
 
                   {/* Settings Link (only for own profile) */}
                   {isOwnProfile && (
-                    <div className="pt-6 border-t border-gray-200">
+                    <div className="pt-6 border-t border-gray-200 space-y-2">
+                      <Button asChild size="sm" className="w-full">
+                        <Link href="/builds/new">
+                          <Plus className="w-4 h-4 mr-2" />
+                          Start Build
+                        </Link>
+                      </Button>
                       <Button
                         variant="outline"
                         size="sm"

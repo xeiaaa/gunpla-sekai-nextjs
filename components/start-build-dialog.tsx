@@ -22,7 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, ExternalLink } from "lucide-react";
 import { createBuild } from "@/lib/actions/builds";
 
 interface StartBuildDialogProps {
@@ -165,6 +165,30 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
                   </>
                 )}
               </Button>
+
+              {/* Link to standalone page */}
+              <div className="pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const params = new URLSearchParams({
+                      kitId: kit.id,
+                      kitName: kit.name,
+                      kitSlug: kit.slug || "",
+                      kitNumber: kit.productLine?.name || "",
+                      kitBoxArt: "",
+                      kitGrade: kit.productLine?.grade?.name || "",
+                      kitProductLine: kit.productLine?.name || "",
+                      kitSeries: "",
+                    });
+                    router.push(`/builds/new?${params.toString()}`);
+                  }}
+                  className="w-full"
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Open Full Build Creator
+                </Button>
+              </div>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function BuildsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <AllBuildsPage />
     </Suspense>
   );
