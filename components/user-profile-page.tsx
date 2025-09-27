@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +29,7 @@ import {
   Grid3X3,
   FileText,
   Camera,
+  MessageSquare,
 } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -81,6 +83,13 @@ interface BuildData {
     comments: number;
   };
 }
+
+const STATUS_COLORS = {
+  PLANNING: "bg-gray-100 text-gray-800",
+  IN_PROGRESS: "bg-blue-100 text-blue-800",
+  COMPLETED: "bg-green-100 text-green-800",
+  ON_HOLD: "bg-yellow-100 text-yellow-800",
+};
 
 interface UserProfilePageProps {
   user: UserProfileData;
@@ -195,6 +204,15 @@ export function UserProfilePage({
     }
   }, [searchParams, activeTab]);
 
+  const getUserDisplayName = (userData: UserProfileData) => {
+    if (userData.username) return userData.username;
+    if (userData.firstName && userData.lastName) {
+      return `${userData.firstName} ${userData.lastName}`;
+    }
+    if (userData.firstName) return userData.firstName;
+    return "Anonymous User";
+  };
+
   const displayName =
     user.firstName && user.lastName
       ? `${user.firstName} ${user.lastName}`
@@ -285,7 +303,7 @@ export function UserProfilePage({
                 <Link
                   key={build.id}
                   href={`/builds/${build.id}`}
-                  className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block"
+                  className="relative group rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block hover:shadow-md transition-shadow"
                 >
                   {firstImage ? (
                     <Image
@@ -293,7 +311,7 @@ export function UserProfilePage({
                       alt={build.title}
                       width={400}
                       height={300}
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-cover transition-transform group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-48 flex items-center justify-center">
@@ -308,6 +326,45 @@ export function UserProfilePage({
                       {uploadCount}
                     </div>
                   )}
+
+                  {/* Hover overlay with build info */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                    <div className="p-3 w-full">
+                      <h3 className="font-semibold text-sm text-white mb-1 line-clamp-2">
+                        {build.title}
+                      </h3>
+                      <div className="flex items-center justify-between text-xs text-gray-200">
+                        <div className="flex items-center">
+                          {user.imageUrl || user.avatarUrl ? (
+                            <div className="w-3 h-3 rounded-full mr-1 overflow-hidden">
+                              <Image
+                                src={user.imageUrl || user.avatarUrl || ""}
+                                alt={getUserDisplayName(user)}
+                                width={12}
+                                height={12}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <User className="w-3 h-3 mr-1" />
+                          )}
+                          <span className="truncate">
+                            {getUserDisplayName(user)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center">
+                            <Heart className="w-3 h-3 mr-1" />
+                            <span>{build._count.likes}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <MessageSquare className="w-3 h-3 mr-1" />
+                            <span>{build._count.comments}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               );
             })}
@@ -365,6 +422,7 @@ export function UserProfilePage({
     isOwnProfile,
     galleryLoadMoreRef,
     isFetched,
+    user,
   ]);
 
   const postsContent = useMemo(() => {

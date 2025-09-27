@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById, getUserProfileById } from "@/lib/actions/users";
 import { UserProfilePage } from "@/components/user-profile-page";
@@ -48,10 +49,12 @@ export default async function MePage() {
 
   // Render the same component as the user profile page, but always as own profile
   return (
-    <UserProfilePage
-      user={userProfileData}
-      isOwnProfile={true}
-      routeContext="me"
-    />
+    <Suspense fallback={<div></div>}>
+      <UserProfilePage
+        user={userProfileData}
+        isOwnProfile={true}
+        routeContext="me"
+      />
+    </Suspense>
   );
 }
