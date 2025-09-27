@@ -747,7 +747,7 @@ function CustomizePageContent() {
                 <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
                   <button
                     onClick={handleDownloadImage}
-                    className="bg-background/95 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-colors w-10 h-10 flex items-center justify-center rounded-md"
+                    className="bg-background/95 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-colors w-9 h-9 flex items-center justify-center rounded-md"
                     title="Download current model as image"
                   >
                     <Download className="w-5 h-5 text-foreground" />
