@@ -50,6 +50,7 @@ interface Build {
     milestones: number;
     likes: number;
     comments: number;
+    uploads: number;
   };
 }
 

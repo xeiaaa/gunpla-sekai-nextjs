@@ -71,6 +71,7 @@ interface Build {
   }>;
   _count: {
     milestones: number;
+    uploads: number;
   };
 }
 

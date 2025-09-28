@@ -77,6 +77,7 @@ interface BuildData {
   }>;
   _count?: {
     milestones: number;
+    uploads: number;
   };
 }
 
@@ -184,6 +185,14 @@ export function EnhancedBuildCard({
               {statusConfig.label}
             </Badge>
           </div>
+
+          {/* Photo count badge */}
+          {build._count?.uploads && build._count.uploads > 0 && (
+            <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+              <Camera className="w-3 h-3" />
+              {build._count.uploads}
+            </div>
+          )}
         </div>
 
         <CardContent className="p-4">
@@ -335,6 +344,14 @@ export function EnhancedBuildCard({
             <Camera className="w-16 h-16 text-gray-400" />
           </div>
         )}
+
+        {/* Photo count badge */}
+        {build._count?.uploads && build._count.uploads > 0 ? (
+          <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+            <Camera className="w-3 h-3" />
+            {build._count.uploads}
+          </div>
+        ) : null}
       </div>
 
       <div className="p-4 border-t flex flex-col gap-3">

@@ -83,6 +83,7 @@ interface BuildData {
     milestones: number;
     likes: number;
     comments: number;
+    uploads: number;
   };
 }
 
@@ -302,12 +303,7 @@ export function UserProfilePage({
                   build.featuredImage?.url || build.kit?.boxArt;
 
                 // Get upload count for photo badge
-                const uploadCount =
-                  build.milestones?.reduce(
-                    (total, milestone) =>
-                      total + (milestone.uploads?.length || 0),
-                    0
-                  ) || 0;
+                const uploadCount = build._count?.uploads || 0;
 
                 return (
                   <Link

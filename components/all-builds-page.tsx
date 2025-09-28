@@ -70,6 +70,7 @@ interface BuildData {
     milestones: number;
     likes: number;
     comments: number;
+    uploads: number;
   };
 }
 
@@ -275,10 +276,10 @@ export function AllBuildsPage() {
                     </Badge> */}
 
                     {/* Photo count badge */}
-                    {uploadCount > 0 && (
+                    {build._count.uploads > 0 && (
                       <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
                         <Camera className="w-3 h-3" />
-                        {uploadCount}
+                        {build._count.uploads}
                       </div>
                     )}
 
