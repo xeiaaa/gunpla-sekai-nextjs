@@ -7,6 +7,7 @@ import { useCardBuilder } from "@/gunpla-card/context";
 import { Button } from "@/components/ui/button";
 import { nanoid } from "nanoid";
 import dynamic from "next/dynamic";
+import { getProcessedSrc } from "@/lib/cloudinary-client";
 
 const AddCutoutDialog = dynamic(
   () => import("@/gunpla-card/components/cutouts/add-cutout/AddCutoutDialog"),
@@ -72,10 +73,10 @@ export const UploadPanel: React.FC<{ onSetBase?: () => void }> = ({
           <div key={img.id} className="border rounded overflow-hidden">
             <div className="relative w-full h-20">
               <Image
-                src={img.url}
+                src={getProcessedSrc(img.url, 160)}
                 alt="upload"
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="(max-width: 768px) 40vw, 20vw"
               />
             </div>

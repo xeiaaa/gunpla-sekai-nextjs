@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useCallback, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
 
 const StageCanvas = dynamic(
   () => import("@/gunpla-card/components/cutouts/StageCanvas"),
@@ -32,20 +31,6 @@ export const PreviewPanel: React.FC = () => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const handleSave = useCallback(async (type: "png" | "jpeg") => {
-    const { toPng, toJpeg } = await import("html-to-image");
-    const node = document.getElementById("card-canvas-container");
-    if (!node) return;
-    const dataUrl =
-      type === "png"
-        ? await toPng(node)
-        : await toJpeg(node, { quality: 0.92 });
-    const link = document.createElement("a");
-    link.download = `gunpla-card.${type}`;
-    link.href = dataUrl;
-    link.click();
-  }, []);
-
   return (
     <div className="space-y-4">
       <div
@@ -56,6 +41,7 @@ export const PreviewPanel: React.FC = () => {
           <StageCanvas
             maxWidth={canvasDimensions.width}
             maxHeight={canvasDimensions.height}
+            isPreviewMode={true}
           />
         )}
       </div>

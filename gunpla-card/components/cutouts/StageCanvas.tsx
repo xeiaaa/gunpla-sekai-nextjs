@@ -175,10 +175,11 @@ const BaseCardImage: React.FC<{
   );
 };
 
-const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({
-  maxWidth,
-  maxHeight,
-}) => {
+const StageCanvas: React.FC<{
+  maxWidth?: number;
+  maxHeight?: number;
+  isPreviewMode?: boolean;
+}> = ({ maxWidth, maxHeight, isPreviewMode = false }) => {
   const {
     baseCard,
     cutouts,
@@ -209,12 +210,20 @@ const StageCanvas: React.FC<{ maxWidth?: number; maxHeight?: number }> = ({
     }
 
     // Add some padding to ensure it fits comfortably
-    width *= 0.9;
-    height *= 0.9;
+    const baseScale = 0.9;
+    const scaleMultiplier = isPreviewMode ? 1.5 : 1;
+    width *= baseScale * scaleMultiplier;
+    height *= baseScale * scaleMultiplier;
+
+    // Ensure we don't exceed the available space
+    width = Math.min(width, maxWidth);
+    height = Math.min(height, maxHeight);
   } else {
     // Fallback to original size
-    width = 378 * 0.7;
-    height = 528 * 0.7;
+    const baseScale = 0.7;
+    const scaleMultiplier = isPreviewMode ? 1.5 : 1;
+    width = 378 * baseScale * scaleMultiplier;
+    height = 528 * baseScale * scaleMultiplier;
   }
 
   const baseSrc = baseCard?.croppedUrl ?? "";

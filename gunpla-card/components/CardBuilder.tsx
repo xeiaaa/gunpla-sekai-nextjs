@@ -569,6 +569,7 @@ export const CardBuilder: React.FC = () => {
                     <StageCanvas
                       maxWidth={canvasDimensions.width}
                       maxHeight={canvasDimensions.height}
+                      isPreviewMode={false}
                     />
                   )}
                 </div>
