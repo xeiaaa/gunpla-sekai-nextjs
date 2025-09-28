@@ -7,8 +7,15 @@ import { Button } from "@/components/ui/button";
 export const SidebarPrimary: React.FC = () => {
   const { activeTab, setActiveTab } = useCardBuilder();
 
-  const TabButton: React.FC<{ tab: Parameters<typeof setActiveTab>[0]; label: string }> = ({ tab, label }) => (
-    <Button variant={activeTab === tab ? "default" : "secondary"} className="w-full mb-2" onClick={() => setActiveTab(tab)}>
+  const TabButton: React.FC<{
+    tab: Parameters<typeof setActiveTab>[0];
+    label: string;
+  }> = ({ tab, label }) => (
+    <Button
+      variant={activeTab === tab ? "default" : "secondary"}
+      className="w-full mb-2"
+      onClick={() => setActiveTab(tab)}
+    >
       {label}
     </Button>
   );
@@ -22,5 +29,3 @@ export const SidebarPrimary: React.FC = () => {
     </div>
   );
 };
-
-

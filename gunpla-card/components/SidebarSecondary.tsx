@@ -16,5 +16,3 @@ export const SidebarSecondary: React.FC = () => {
     </div>
   );
 };
-
-

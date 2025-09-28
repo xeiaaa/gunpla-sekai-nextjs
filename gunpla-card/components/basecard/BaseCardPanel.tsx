@@ -4,7 +4,13 @@ import React, { useCallback, useMemo, useState, useEffect } from "react";
 import Cropper from "react-easy-crop";
 import { useCardBuilder } from "@/gunpla-card/context";
 
-function getCroppedImg(imageSrc: string, crop: { x: number; y: number }, zoom: number, aspect: number, areaPixels: { width: number; height: number; x: number; y: number }): Promise<string> {
+function getCroppedImg(
+  imageSrc: string,
+  crop: { x: number; y: number },
+  zoom: number,
+  aspect: number,
+  areaPixels: { width: number; height: number; x: number; y: number }
+): Promise<string> {
   return new Promise((resolve) => {
     const image = new Image();
     image.crossOrigin = "anonymous";
@@ -32,18 +38,32 @@ function getCroppedImg(imageSrc: string, crop: { x: number; y: number }, zoom: n
   });
 }
 
-export const BaseCardPanel: React.FC<{ onConfirmCrop?: () => void; onConfirmRef?: (confirmFn: () => void) => void; onResetRef?: (resetFn: () => void) => void }> = ({ onConfirmCrop, onConfirmRef, onResetRef }) => {
-  const { uploadedImages, baseCard, setBaseCrop, replaceBase } = useCardBuilder();
-  const rawUrl = useMemo(() => baseCard?.croppedUrl ?? uploadedImages.find(i => i.isBase)?.url, [baseCard, uploadedImages]);
+export const BaseCardPanel: React.FC<{
+  onConfirmCrop?: () => void;
+  onConfirmRef?: (confirmFn: () => void) => void;
+  onResetRef?: (resetFn: () => void) => void;
+}> = ({ onConfirmCrop, onConfirmRef, onResetRef }) => {
+  const { uploadedImages, baseCard, setBaseCrop, replaceBase } =
+    useCardBuilder();
+  const rawUrl = useMemo(
+    () => baseCard?.croppedUrl ?? uploadedImages.find((i) => i.isBase)?.url,
+    [baseCard, uploadedImages]
+  );
   const baseUrl = useMemo(() => {
     if (!rawUrl) return undefined;
     // Proxy remote images to avoid CORS tainting when drawing to canvas
-    if (rawUrl.startsWith("http")) return `/api/gunpla-card/proxy-image?url=${encodeURIComponent(rawUrl)}`;
+    if (rawUrl.startsWith("http"))
+      return `/api/gunpla-card/proxy-image?url=${encodeURIComponent(rawUrl)}`;
     return rawUrl;
   }, [rawUrl]);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ width: number; height: number; x: number; y: number } | null>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+  } | null>(null);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   const onCropComplete = useCallback((_croppedArea, croppedAreaPixelsArg) => {
@@ -56,7 +76,13 @@ export const BaseCardPanel: React.FC<{ onConfirmCrop?: () => void; onConfirmRef?
       return;
     }
     const aspect = 63 / 88; // width/height ratio for Pokemon card
-    const result = await getCroppedImg(baseUrl, crop, zoom, aspect, croppedAreaPixels);
+    const result = await getCroppedImg(
+      baseUrl,
+      crop,
+      zoom,
+      aspect,
+      croppedAreaPixels
+    );
     if (result) {
       setBaseCrop(result);
       onConfirmCrop?.();
@@ -116,5 +142,3 @@ export const BaseCardPanel: React.FC<{ onConfirmCrop?: () => void; onConfirmRef?
     </div>
   );
 };
-
-

@@ -1,52 +1,79 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useState, useCallback, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import { nanoid } from "nanoid";
-import type { BaseCard, BuilderTab, CardBuilderState, Cutout, UploadedImage } from "./types";
+import type {
+  BaseCard,
+  BuilderTab,
+  CardBuilderState,
+  Cutout,
+  UploadedImage,
+} from "./types";
 
 const CardBuilderContext = createContext<CardBuilderState | null>(null);
 
-export const CardBuilderProvider: React.FC<{ children: React.ReactNode; kitSlug?: string | null }> = ({ children, kitSlug }) => {
+export const CardBuilderProvider: React.FC<{
+  children: React.ReactNode;
+  kitSlug?: string | null;
+}> = ({ children, kitSlug }) => {
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [baseCard, setBaseCard] = useState<BaseCard | undefined>(undefined);
   const [cutouts, setCutouts] = useState<Cutout[]>([]);
-  const [selectedCutoutId, setSelectedCutoutId] = useState<string | undefined>(undefined);
+  const [selectedCutoutId, setSelectedCutoutId] = useState<string | undefined>(
+    undefined
+  );
   const [activeTab, setActiveTab] = useState<BuilderTab>("upload");
 
   const addUploadedImages = useCallback((urls: string[]) => {
-    setUploadedImages(prev => {
+    setUploadedImages((prev) => {
       const remaining = Math.max(0, 30 - prev.length);
-      const next = urls.slice(0, remaining).map(url => ({ id: nanoid(), url, isBase: false }));
+      const next = urls
+        .slice(0, remaining)
+        .map((url) => ({ id: nanoid(), url, isBase: false }));
       return [...prev, ...next];
     });
   }, []);
 
-  const setBase = useCallback((id: string) => {
-    setUploadedImages(prev => prev.map(img => ({ ...img, isBase: img.id === id })));
-    const base = uploadedImages.find(i => i.id === id) ?? undefined;
-    if (base) setBaseCard({ id: base.id, croppedUrl: base.url });
-    setActiveTab("base");
-  }, [uploadedImages]);
+  const setBase = useCallback(
+    (id: string) => {
+      setUploadedImages((prev) =>
+        prev.map((img) => ({ ...img, isBase: img.id === id }))
+      );
+      const base = uploadedImages.find((i) => i.id === id) ?? undefined;
+      if (base) setBaseCard({ id: base.id, croppedUrl: base.url });
+      setActiveTab("base");
+    },
+    [uploadedImages]
+  );
 
   const setBaseCrop = useCallback((croppedUrl: string) => {
-    setBaseCard(prev => (prev ? { ...prev, croppedUrl } : undefined));
+    setBaseCard((prev) => (prev ? { ...prev, croppedUrl } : undefined));
   }, []);
 
   const addCutout = useCallback((cutout: Cutout) => {
-    setCutouts(prev => [...prev, cutout]);
+    setCutouts((prev) => [...prev, cutout]);
   }, []);
 
   const updateCutout = useCallback((id: string, updates: Partial<Cutout>) => {
-    setCutouts(prev => prev.map(c => (c.id === id ? { ...c, ...updates } : c)));
+    setCutouts((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...updates } : c))
+    );
   }, []);
 
   const removeCutout = useCallback((id: string) => {
-    setCutouts(prev => prev.filter(c => c.id !== id));
+    setCutouts((prev) => prev.filter((c) => c.id !== id));
   }, []);
 
   const replaceBase = useCallback(() => {
     setBaseCard(undefined);
-    setUploadedImages(prev => prev.map(i => ({ ...i, isBase: false })));
+    setUploadedImages((prev) => prev.map((i) => ({ ...i, isBase: false })));
     setActiveTab("upload");
   }, []);
 
@@ -59,7 +86,9 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode; kitSlug?
     if (kitSlug) {
       const fetchKitImages = async () => {
         try {
-          const response = await fetch(`/api/gunpla-card/kit-media?kitSlug=${encodeURIComponent(kitSlug)}`);
+          const response = await fetch(
+            `/api/gunpla-card/kit-media?kitSlug=${encodeURIComponent(kitSlug)}`
+          );
           if (response.ok) {
             const data = await response.json();
             if (data.images && data.images.length > 0) {
@@ -67,7 +96,7 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode; kitSlug?
             }
           }
         } catch (error) {
-          console.error('Failed to fetch kit images:', error);
+          console.error("Failed to fetch kit images:", error);
         }
       };
 
@@ -75,33 +104,52 @@ export const CardBuilderProvider: React.FC<{ children: React.ReactNode; kitSlug?
     }
   }, [kitSlug, addUploadedImages]);
 
-  const value = useMemo<CardBuilderState>(() => ({
-    uploadedImages,
-    baseCard,
-    cutouts,
-    selectedCutoutId,
-    activeTab,
-    kitSlug,
-    setActiveTab,
-    addUploadedImages,
-    setBase,
-    setBaseCrop,
-    addCutout,
-    updateCutout,
-    removeCutout,
-    replaceBase,
-    setSelectedCutout,
-  }), [uploadedImages, baseCard, cutouts, selectedCutoutId, activeTab, kitSlug, addUploadedImages, setBase, setBaseCrop, addCutout, updateCutout, removeCutout, replaceBase, setSelectedCutout]);
+  const value = useMemo<CardBuilderState>(
+    () => ({
+      uploadedImages,
+      baseCard,
+      cutouts,
+      selectedCutoutId,
+      activeTab,
+      kitSlug,
+      setActiveTab,
+      addUploadedImages,
+      setBase,
+      setBaseCrop,
+      addCutout,
+      updateCutout,
+      removeCutout,
+      replaceBase,
+      setSelectedCutout,
+    }),
+    [
+      uploadedImages,
+      baseCard,
+      cutouts,
+      selectedCutoutId,
+      activeTab,
+      kitSlug,
+      addUploadedImages,
+      setBase,
+      setBaseCrop,
+      addCutout,
+      updateCutout,
+      removeCutout,
+      replaceBase,
+      setSelectedCutout,
+    ]
+  );
 
   return (
-    <CardBuilderContext.Provider value={value}>{children}</CardBuilderContext.Provider>
+    <CardBuilderContext.Provider value={value}>
+      {children}
+    </CardBuilderContext.Provider>
   );
 };
 
 export const useCardBuilder = (): CardBuilderState => {
   const ctx = useContext(CardBuilderContext);
-  if (!ctx) throw new Error("useCardBuilder must be used within CardBuilderProvider");
+  if (!ctx)
+    throw new Error("useCardBuilder must be used within CardBuilderProvider");
   return ctx;
 };
-
-

@@ -7,7 +7,14 @@ import { CutoutsSidebar } from "@/gunpla-card/components/CutoutsSidebar";
 import { BaseCardPanel } from "@/gunpla-card/components/basecard/BaseCardPanel";
 import { useCardBuilder } from "@/gunpla-card/context";
 import { FloatingDock } from "@/components/ui/floating-dock";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   IconArrowLeft,
@@ -17,21 +24,37 @@ import {
   IconRefresh,
   IconCheck,
   IconCrop,
-  IconDeviceFloppy
+  IconDeviceFloppy,
 } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 
-const StageCanvas = dynamic(() => import("@/gunpla-card/components/cutouts/StageCanvas"), { ssr: false });
-const PreviewPanel = dynamic(() => import("@/gunpla-card/components/preview/PreviewPanel").then(mod => ({ default: mod.PreviewPanel })), { ssr: false });
+const StageCanvas = dynamic(
+  () => import("@/gunpla-card/components/cutouts/StageCanvas"),
+  { ssr: false }
+);
+const PreviewPanel = dynamic(
+  () =>
+    import("@/gunpla-card/components/preview/PreviewPanel").then((mod) => ({
+      default: mod.PreviewPanel,
+    })),
+  { ssr: false }
+);
 
 export const CardBuilder: React.FC = () => {
   const { baseCard, kitSlug } = useCardBuilder();
   const [isCropping, setIsCropping] = React.useState(false);
   const [isPreviewMode, setIsPreviewMode] = React.useState(false);
-  const [confirmCropFunction, setConfirmCropFunction] = React.useState<(() => void) | null>(null);
-  const [resetCropFunction, setResetCropFunction] = React.useState<(() => void) | null>(null);
+  const [confirmCropFunction, setConfirmCropFunction] = React.useState<
+    (() => void) | null
+  >(null);
+  const [resetCropFunction, setResetCropFunction] = React.useState<
+    (() => void) | null
+  >(null);
   const canvasContainerRef = React.useRef<HTMLDivElement>(null);
-  const [canvasDimensions, setCanvasDimensions] = React.useState<{ width: number; height: number } | null>(null);
+  const [canvasDimensions, setCanvasDimensions] = React.useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
   // Dialog states
   const [showOverwriteDialog, setShowOverwriteDialog] = React.useState(false);
@@ -43,13 +66,19 @@ export const CardBuilder: React.FC = () => {
     }
   };
 
-  const handleSetConfirmFunction = React.useCallback((fn: (() => void) | null) => {
-    setConfirmCropFunction(() => fn);
-  }, []);
+  const handleSetConfirmFunction = React.useCallback(
+    (fn: (() => void) | null) => {
+      setConfirmCropFunction(() => fn);
+    },
+    []
+  );
 
-  const handleSetResetFunction = React.useCallback((fn: (() => void) | null) => {
-    setResetCropFunction(() => fn);
-  }, []);
+  const handleSetResetFunction = React.useCallback(
+    (fn: (() => void) | null) => {
+      setResetCropFunction(() => fn);
+    },
+    []
+  );
 
   const handleStartCrop = () => {
     setConfirmCropFunction(null); // Clear any existing confirm function
@@ -69,7 +98,10 @@ export const CardBuilder: React.FC = () => {
     const { toPng, toJpeg } = await import("html-to-image");
     const node = document.getElementById("card-canvas-container");
     if (!node) return;
-    const dataUrl = type === "png" ? await toPng(node) : await toJpeg(node, { quality: 0.92 });
+    const dataUrl =
+      type === "png"
+        ? await toPng(node)
+        : await toJpeg(node, { quality: 0.92 });
     const link = document.createElement("a");
     link.download = `gunpla-card.${type}`;
     link.href = dataUrl;
@@ -85,7 +117,9 @@ export const CardBuilder: React.FC = () => {
     const saveGunplaCard = async () => {
       try {
         // Get the canvas element from StageCanvas
-        const canvasContainer = document.getElementById("card-canvas-container");
+        const canvasContainer = document.getElementById(
+          "card-canvas-container"
+        );
         if (!canvasContainer) {
           console.error("Canvas container not found");
           return;
@@ -100,9 +134,13 @@ export const CardBuilder: React.FC = () => {
 
         // Convert canvas to blob
         const blob = await new Promise<Blob>((resolve) => {
-          canvas.toBlob((blob) => {
-            if (blob) resolve(blob);
-          }, "image/png", 0.9);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) resolve(blob);
+            },
+            "image/png",
+            0.9
+          );
         });
 
         // Upload to Cloudinary
@@ -163,7 +201,7 @@ export const CardBuilder: React.FC = () => {
               size: cloudinaryResult.bytes,
               originalFilename: cloudinaryResult.original_filename,
               uploadedAt: new Date(cloudinaryResult.created_at),
-            }
+            },
           }),
         });
 
@@ -176,7 +214,6 @@ export const CardBuilder: React.FC = () => {
 
         // Show success dialog
         setShowSuccessDialog(true);
-
       } catch (error) {
         console.error("Error saving gunpla card:", error);
         alert("Failed to save gunpla card. Please try again.");
@@ -185,7 +222,9 @@ export const CardBuilder: React.FC = () => {
 
     try {
       // First, check if user already has a gunpla card for this kit
-      const checkResponse = await fetch(`/api/gunpla-card/check?kitSlug=${encodeURIComponent(kitSlug)}`);
+      const checkResponse = await fetch(
+        `/api/gunpla-card/check?kitSlug=${encodeURIComponent(kitSlug)}`
+      );
 
       if (!checkResponse.ok) {
         throw new Error("Failed to check for existing gunpla card");
@@ -201,7 +240,6 @@ export const CardBuilder: React.FC = () => {
 
       // No existing card, proceed with saving
       await saveGunplaCard();
-
     } catch (error) {
       console.error("Error checking/saving gunpla card:", error);
       alert("Failed to save gunpla card. Please try again.");
@@ -229,9 +267,13 @@ export const CardBuilder: React.FC = () => {
 
       // Convert canvas to blob
       const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((blob) => {
-          if (blob) resolve(blob);
-        }, "image/png", 0.9);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+          },
+          "image/png",
+          0.9
+        );
       });
 
       // Upload to Cloudinary
@@ -292,7 +334,7 @@ export const CardBuilder: React.FC = () => {
             size: cloudinaryResult.bytes,
             originalFilename: cloudinaryResult.original_filename,
             uploadedAt: new Date(cloudinaryResult.created_at),
-          }
+          },
         }),
       });
 
@@ -305,7 +347,6 @@ export const CardBuilder: React.FC = () => {
 
       // Show success dialog
       setShowSuccessDialog(true);
-
     } catch (error) {
       console.error("Error saving gunpla card:", error);
       alert("Failed to save gunpla card. Please try again.");
@@ -332,72 +373,94 @@ export const CardBuilder: React.FC = () => {
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, [isCropping, isPreviewMode]);
 
   // Floating dock items for different modes
   const editModeItems = [
     {
       title: "Preview Mode",
-      icon: <IconEye className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconEye className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: () => setIsPreviewMode(true)
+      onClick: () => setIsPreviewMode(true),
     },
-    ...(baseCard ? [{
-      title: "Re-crop Base Image",
-      icon: <IconCrop className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
-      onClick: handleStartCrop
-    }] : [])
+    ...(baseCard
+      ? [
+          {
+            title: "Re-crop Base Image",
+            icon: (
+              <IconCrop className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+            ),
+            href: "#",
+            onClick: handleStartCrop,
+          },
+        ]
+      : []),
   ];
 
   const previewModeItems = [
     {
       title: "Back to Edit",
-      icon: <IconArrowLeft className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconArrowLeft className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: () => setIsPreviewMode(false)
+      onClick: () => setIsPreviewMode(false),
     },
     {
       title: "Save Gunpla Card",
-      icon: <IconDeviceFloppy className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconDeviceFloppy className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: handleSaveGunplaCard
+      onClick: handleSaveGunplaCard,
     },
     {
       title: "Save as PNG",
-      icon: <IconDownload className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconDownload className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: () => handleSave("png")
+      onClick: () => handleSave("png"),
     },
     {
       title: "Save as JPG",
-      icon: <IconDownload className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconDownload className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: () => handleSave("jpeg")
-    }
+      onClick: () => handleSave("jpeg"),
+    },
   ];
 
   const cropModeItems = [
     {
       title: "Cancel",
-      icon: <IconX className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: handleCancelCrop
+      onClick: handleCancelCrop,
     },
     {
       title: "Reset Crop",
-      icon: <IconRefresh className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconRefresh className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: handleResetCrop
+      onClick: handleResetCrop,
     },
     {
       title: "Confirm Crop",
-      icon: <IconCheck className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: (
+        <IconCheck className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
       href: "#",
-      onClick: handleConfirmCrop
-    }
+      onClick: handleConfirmCrop,
+    },
   ];
 
   return (
@@ -424,23 +487,32 @@ export const CardBuilder: React.FC = () => {
         <div className="absolute top-4 left-4 right-4 z-10">
           <div>
             <h2 className="text-xl font-semibold mb-1 text-muted-foreground drop-shadow-lg">
-              {isCropping ? "Re-cropping Base Image" : isPreviewMode ? "Previewing Final Image" : !baseCard ? "Getting Started" : "Editing Gunpla Card"}
+              {isCropping
+                ? "Re-cropping Base Image"
+                : isPreviewMode
+                ? "Previewing Final Image"
+                : !baseCard
+                ? "Getting Started"
+                : "Editing Gunpla Card"}
             </h2>
             <p className="text-sm text-muted-foreground drop-shadow-lg">
               {isCropping
                 ? "Adjust the crop area for your base image"
                 : isPreviewMode
-                  ? "Review your final gunpla card design"
-                  : !baseCard
-                    ? "Select a base image to begin creating your gunpla card"
-                    : "Drag and position cutouts on your base card"
-              }
+                ? "Review your final gunpla card design"
+                : !baseCard
+                ? "Select a base image to begin creating your gunpla card"
+                : "Drag and position cutouts on your base card"}
             </p>
           </div>
         </div>
 
         {/* Main Content Area - Reserve space for floating dock when base card exists */}
-        <div className={`flex-1 flex flex-col items-center justify-center p-4 ${baseCard ? 'pb-24' : ''}`}>
+        <div
+          className={`flex-1 flex flex-col items-center justify-center p-4 ${
+            baseCard ? "pb-24" : ""
+          }`}
+        >
           {isCropping ? (
             <BaseCardPanel
               onConfirmCrop={handleExitCrop}
@@ -455,23 +527,44 @@ export const CardBuilder: React.FC = () => {
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="text-center max-w-md">
                     <div className="w-24 h-24 mx-auto mb-6 bg-muted/50 rounded-full flex items-center justify-center">
-                      <svg className="w-12 h-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <svg
+                        className="w-12 h-12 text-muted-foreground"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">No Base Image Selected</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      No Base Image Selected
+                    </h3>
                     <p className="text-muted-foreground mb-4">
-                      Select a base image from the images sidebar to start building your gunpla card.
+                      Select a base image from the images sidebar to start
+                      building your gunpla card.
                     </p>
                     <div className="space-y-2 text-sm text-muted-foreground">
                       <p>• Upload images using the drag & drop area</p>
-                      <p>• Click &quot;Set as Base&quot; on any uploaded image</p>
-                      <p>• List of images related to the kit are also available for you to select as base kit</p>
+                      <p>
+                        • Click &quot;Set as Base&quot; on any uploaded image
+                      </p>
+                      <p>
+                        • List of images related to the kit are also available
+                        for you to select as base kit
+                      </p>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div ref={canvasContainerRef} className="w-full h-full flex items-center justify-center">
+                <div
+                  ref={canvasContainerRef}
+                  className="w-full h-full flex items-center justify-center"
+                >
                   {canvasDimensions && (
                     <StageCanvas
                       maxWidth={canvasDimensions.width}
@@ -492,8 +585,8 @@ export const CardBuilder: React.FC = () => {
                 isCropping
                   ? cropModeItems
                   : isPreviewMode
-                    ? previewModeItems
-                    : editModeItems
+                  ? previewModeItems
+                  : editModeItems
               }
               desktopClassName="translate-y-0"
             />
@@ -501,13 +594,17 @@ export const CardBuilder: React.FC = () => {
         )}
 
         {/* Overwrite Confirmation Dialog */}
-        <Dialog open={showOverwriteDialog} onOpenChange={setShowOverwriteDialog}>
+        <Dialog
+          open={showOverwriteDialog}
+          onOpenChange={setShowOverwriteDialog}
+        >
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Overwrite Existing Gunpla Card</DialogTitle>
               <DialogDescription>
-                You already have a gunpla card for this kit. You can only have 1 gunpla card per kit.
-                If you want to save this new card, it will delete your previous gunpla card for this kit.
+                You already have a gunpla card for this kit. You can only have 1
+                gunpla card per kit. If you want to save this new card, it will
+                delete your previous gunpla card for this kit.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -517,10 +614,7 @@ export const CardBuilder: React.FC = () => {
               >
                 Cancel
               </Button>
-              <Button
-                variant="destructive"
-                onClick={handleOverwriteConfirm}
-              >
+              <Button variant="destructive" onClick={handleOverwriteConfirm}>
                 Overwrite Previous Card
               </Button>
             </DialogFooter>
@@ -533,13 +627,12 @@ export const CardBuilder: React.FC = () => {
             <DialogHeader>
               <DialogTitle>Gunpla Card Saved Successfully!</DialogTitle>
               <DialogDescription>
-                Your gunpla card has been saved successfully. You can find it in your profile or create another one for a different kit.
+                Your gunpla card has been saved successfully. You can find it in
+                your profile or create another one for a different kit.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <Button onClick={() => setShowSuccessDialog(false)}>
-                Close
-              </Button>
+              <Button onClick={() => setShowSuccessDialog(false)}>Close</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -555,5 +648,3 @@ export const CardBuilder: React.FC = () => {
     </div>
   );
 };
-
-

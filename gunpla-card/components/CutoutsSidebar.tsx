@@ -12,21 +12,32 @@ export const CutoutsSidebar: React.FC = () => {
       {/* Existing Cutouts Section */}
       {cutouts.length > 0 ? (
         <div>
-          <div className="font-medium text-sm mb-2">Created Cutouts ({cutouts.length})</div>
+          <div className="font-medium text-sm mb-2">
+            Created Cutouts ({cutouts.length})
+          </div>
           <div className="space-y-2">
-            {cutouts.map(cutout => (
+            {cutouts.map((cutout) => (
               <div
                 key={cutout.id}
                 className={`border rounded p-2 cursor-pointer transition-colors hover:bg-muted/50 ${
-                  selectedCutoutId === cutout.id ? 'ring-2 ring-primary bg-primary/10' : ''
+                  selectedCutoutId === cutout.id
+                    ? "ring-2 ring-primary bg-primary/10"
+                    : ""
                 }`}
                 onClick={() => setSelectedCutout(cutout.id)}
               >
                 <div className="relative w-full h-20">
-                  <Image src={cutout.url} alt="cutout" fill className="object-cover rounded" sizes="(max-width: 768px) 40vw, 20vw" />
+                  <Image
+                    src={cutout.url}
+                    alt="cutout"
+                    fill
+                    className="object-cover rounded"
+                    sizes="(max-width: 768px) 40vw, 20vw"
+                  />
                 </div>
                 <div className="mt-1 text-xs text-muted-foreground">
-                  Scale: {Math.round(cutout.scale * 100)}% | Rot: {Math.round(cutout.rotation)}°
+                  Scale: {Math.round(cutout.scale * 100)}% | Rot:{" "}
+                  {Math.round(cutout.rotation)}°
                 </div>
               </div>
             ))}
