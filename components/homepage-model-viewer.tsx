@@ -35,7 +35,7 @@ function HomepageModel({
 
   return (
     <group>
-      <primitive object={scene} scale={1.2} position={[0, -1, 0]} />
+      <primitive object={scene} scale={1.2} position={[0, -1.5, 0]} />
     </group>
   );
 }
@@ -88,10 +88,10 @@ export function HomepageModelViewer({
 
           {/* Controls with auto-rotation */}
           <OrbitControls
-            enablePan={false}
+            enablePan={true}
             enableZoom={true}
             enableRotate={true}
-            minDistance={3}
+            minDistance={5}
             maxDistance={8}
             autoRotate={true}
             autoRotateSpeed={0.8}
