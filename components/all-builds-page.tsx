@@ -185,6 +185,11 @@ export function AllBuildsPage() {
     { id: "posts" as const, label: "Posts", icon: FileText },
   ];
 
+  // Filter builds for gallery tab - only show builds with featured images
+  const galleryBuilds = useMemo(() => {
+    return allBuilds.filter((build) => build.featuredImage?.url);
+  }, [allBuilds]);
+
   // Memoize tab content to prevent unnecessary re-renders
   const galleryContent = useMemo(() => {
     if (isLoading && !allBuilds.length) {
@@ -219,7 +224,7 @@ export function AllBuildsPage() {
       );
     }
 
-    if (allBuilds.length > 0) {
+    if (galleryBuilds.length > 0) {
       return (
         <div className="space-y-4">
           <ResponsiveMasonry
@@ -227,7 +232,7 @@ export function AllBuildsPage() {
             gutterBreakPoints={{ 350: "8px", 750: "12px" }}
           >
             <Masonry>
-              {allBuilds.map((build) => {
+              {galleryBuilds.map((build) => {
                 // Get first image from featured image or kit box art
                 const firstImage =
                   build.featuredImage?.url || build.kit?.boxArt;
@@ -347,15 +352,15 @@ export function AllBuildsPage() {
       );
     }
 
-    if (isFetched && allBuilds.length === 0) {
+    if (isFetched && galleryBuilds.length === 0) {
       return (
         <div className="col-span-full text-center py-12">
           <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            No builds yet
+            No builds with featured images yet
           </h3>
           <p className="text-gray-600 mb-4">
-            Be the first to share your build with the community!
+            Be the first to share your build with a featured image!
           </p>
           <Button asChild>
             <Link href="/builds/new">Start Your First Build</Link>
@@ -366,7 +371,7 @@ export function AllBuildsPage() {
 
     return null;
   }, [
-    allBuilds,
+    galleryBuilds,
     isLoading,
     isFetching,
     error,

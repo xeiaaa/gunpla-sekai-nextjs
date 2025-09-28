@@ -249,6 +249,11 @@ export function UserProfilePage({
     { id: "posts" as const, label: "Posts", icon: FileText },
   ];
 
+  // Filter builds for gallery tab - only show builds with featured images
+  const galleryBuilds = useMemo(() => {
+    return allBuilds.filter((build) => build.featuredImage?.url);
+  }, [allBuilds]);
+
   // Memoize tab content to prevent unnecessary re-renders
   const galleryContent = useMemo(() => {
     if (isLoading && !allBuilds.length) {
@@ -283,7 +288,7 @@ export function UserProfilePage({
       );
     }
 
-    if (allBuilds.length > 0) {
+    if (galleryBuilds.length > 0) {
       return (
         <div className="space-y-4">
           <ResponsiveMasonry
@@ -291,7 +296,7 @@ export function UserProfilePage({
             gutterBreakPoints={{ 350: "8px", 750: "12px" }}
           >
             <Masonry>
-              {allBuilds.map((build) => {
+              {galleryBuilds.map((build) => {
                 // Get first image from featured image or kit box art
                 const firstImage =
                   build.featuredImage?.url || build.kit?.boxArt;
@@ -398,15 +403,15 @@ export function UserProfilePage({
       );
     }
 
-    if (isFetched && allBuilds.length === 0) {
+    if (isFetched && galleryBuilds.length === 0) {
       return (
         <div className="col-span-full text-center py-12">
           <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            No builds yet
+            No builds with featured images yet
           </h3>
           <p className="text-gray-600 mb-4">
-            Start building to share your progress with the community!
+            Start building and add featured images to share your progress!
           </p>
           {isOwnProfile && (
             <Button asChild>
@@ -419,7 +424,7 @@ export function UserProfilePage({
 
     return null;
   }, [
-    allBuilds,
+    galleryBuilds,
     isLoading,
     isFetching,
     error,
