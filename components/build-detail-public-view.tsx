@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Calendar,
   User,
-  Package,
   Clock,
   CheckCircle,
   Edit,
@@ -22,6 +21,7 @@ import { LikeButton } from "./like-button";
 import { CommentsSection } from "./comments-section";
 import { ShareButton } from "./share-button";
 import { pipeThroughCloudinary } from "@/lib/cloudinary-client";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 interface BuildDetailPublicViewProps {
   build: {
@@ -90,36 +90,6 @@ interface BuildDetailPublicViewProps {
       }>;
     }>;
   };
-}
-
-function getStatusColor(status: string) {
-  switch (status) {
-    case "PLANNING":
-      return "bg-blue-100 text-blue-800";
-    case "IN_PROGRESS":
-      return "bg-yellow-100 text-yellow-800";
-    case "COMPLETED":
-      return "bg-green-100 text-green-800";
-    case "ON_HOLD":
-      return "bg-gray-100 text-gray-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-}
-
-function getStatusIcon(status: string) {
-  switch (status) {
-    case "PLANNING":
-      return <Package className="h-3 w-3" />;
-    case "IN_PROGRESS":
-      return <Clock className="h-3 w-3" />;
-    case "COMPLETED":
-      return <CheckCircle className="h-3 w-3" />;
-    case "ON_HOLD":
-      return <Clock className="h-3 w-3" />;
-    default:
-      return <Package className="h-3 w-3" />;
-  }
 }
 
 export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
@@ -342,22 +312,31 @@ export function BuildDetailPublicView({ build }: BuildDetailPublicViewProps) {
                       </p>
                     </div>
                   ) : (
-                    <div className="columns-2 lg:columns-3 gap-2 space-y-2">
-                      {build.uploads.map((upload) => (
-                        <div
-                          key={upload.id}
-                          className="relative rounded-lg overflow-hidden bg-gray-100 break-inside-avoid"
-                        >
-                          <Image
-                            src={upload.upload.eagerUrl || upload.upload.url}
-                            alt="Build photo"
-                            width={400}
-                            height={300}
-                            className="w-full h-auto object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
+                    <ResponsiveMasonry
+                      columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+                      gutterBreakPoints={{
+                        350: "8px",
+                        750: "12px",
+                        900: "16px",
+                      }}
+                    >
+                      <Masonry>
+                        {build.uploads.map((upload) => (
+                          <div
+                            key={upload.id}
+                            className="relative rounded-lg overflow-hidden bg-gray-100"
+                          >
+                            <Image
+                              src={upload.upload.eagerUrl || upload.upload.url}
+                              alt="Build photo"
+                              width={400}
+                              height={300}
+                              className="w-full h-auto object-cover"
+                            />
+                          </div>
+                        ))}
+                      </Masonry>
+                    </ResponsiveMasonry>
                   )
                 ) : (
                   <CommentsSection buildId={build.id} />

@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -41,6 +40,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useUserBuildsInfinite } from "@/hooks/use-builds";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 interface BuildData {
   id: string;
@@ -85,13 +85,6 @@ interface BuildData {
     comments: number;
   };
 }
-
-const STATUS_COLORS = {
-  PLANNING: "bg-gray-100 text-gray-800",
-  IN_PROGRESS: "bg-blue-100 text-blue-800",
-  COMPLETED: "bg-green-100 text-green-800",
-  ON_HOLD: "bg-yellow-100 text-yellow-800",
-};
 
 interface UserProfilePageProps {
   user: UserProfileData;
@@ -260,14 +253,19 @@ export function UserProfilePage({
   const galleryContent = useMemo(() => {
     if (isLoading && !allBuilds.length) {
       return (
-        <div className="columns-2 gap-2 space-y-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-48 bg-gray-200 rounded-lg animate-pulse break-inside-avoid"
-            />
-          ))}
-        </div>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{ 350: 1, 750: 2 }}
+          gutterBreakPoints={{ 350: "4px", 750: "8px" }}
+        >
+          <Masonry>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-48 bg-gray-200 rounded-lg animate-pulse"
+              />
+            ))}
+          </Masonry>
+        </ResponsiveMasonry>
       );
     }
 
@@ -288,89 +286,95 @@ export function UserProfilePage({
     if (allBuilds.length > 0) {
       return (
         <div className="space-y-4">
-          <div className="columns-2 gap-2 space-y-2">
-            {allBuilds.map((build) => {
-              // Get first image from featured image or kit box art
-              const firstImage = build.featuredImage?.url || build.kit?.boxArt;
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 350: 1, 750: 2 }}
+            gutterBreakPoints={{ 350: "8px", 750: "12px" }}
+          >
+            <Masonry>
+              {allBuilds.map((build) => {
+                // Get first image from featured image or kit box art
+                const firstImage =
+                  build.featuredImage?.url || build.kit?.boxArt;
 
-              // Get upload count for photo badge
-              const uploadCount =
-                build.milestones?.reduce(
-                  (total, milestone) =>
-                    total + (milestone.uploads?.length || 0),
-                  0
-                ) || 0;
+                // Get upload count for photo badge
+                const uploadCount =
+                  build.milestones?.reduce(
+                    (total, milestone) =>
+                      total + (milestone.uploads?.length || 0),
+                    0
+                  ) || 0;
 
-              return (
-                <Link
-                  key={build.id}
-                  href={`/builds/${build.id}`}
-                  className="relative group rounded-lg overflow-hidden bg-gray-100 break-inside-avoid block hover:shadow-md transition-shadow"
-                >
-                  {firstImage ? (
-                    <Image
-                      src={firstImage}
-                      alt={build.title}
-                      width={400}
-                      height={300}
-                      className="w-full h-auto object-cover transition-transform group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-48 flex items-center justify-center">
-                      <Package className="w-8 h-8 text-gray-400" />
-                    </div>
-                  )}
+                return (
+                  <Link
+                    key={build.id}
+                    href={`/builds/${build.id}`}
+                    className="relative group rounded-lg overflow-hidden bg-gray-100 block hover:shadow-md transition-shadow"
+                  >
+                    {firstImage ? (
+                      <Image
+                        src={firstImage}
+                        alt={build.title}
+                        width={400}
+                        height={300}
+                        className="w-full h-auto object-cover transition-transform group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-48 flex items-center justify-center">
+                        <Package className="w-8 h-8 text-gray-400" />
+                      </div>
+                    )}
 
-                  {/* Photo count badge */}
-                  {uploadCount > 0 && (
-                    <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
-                      <Camera className="w-3 h-3" />
-                      {uploadCount}
-                    </div>
-                  )}
+                    {/* Photo count badge */}
+                    {uploadCount > 0 && (
+                      <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                        <Camera className="w-3 h-3" />
+                        {uploadCount}
+                      </div>
+                    )}
 
-                  {/* Hover overlay with build info */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                    <div className="p-3 w-full">
-                      <h3 className="font-semibold text-sm text-white mb-1 line-clamp-2">
-                        {build.title}
-                      </h3>
-                      <div className="flex items-center justify-between text-xs text-gray-200">
-                        <div className="flex items-center">
-                          {user.imageUrl || user.avatarUrl ? (
-                            <div className="w-3 h-3 rounded-full mr-1 overflow-hidden">
-                              <Image
-                                src={user.imageUrl || user.avatarUrl || ""}
-                                alt={getUserDisplayName(user)}
-                                width={12}
-                                height={12}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ) : (
-                            <User className="w-3 h-3 mr-1" />
-                          )}
-                          <span className="truncate">
-                            {getUserDisplayName(user)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
+                    {/* Hover overlay with build info */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                      <div className="p-3 w-full">
+                        <h3 className="font-semibold text-sm text-white mb-1 line-clamp-2">
+                          {build.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-xs text-gray-200">
                           <div className="flex items-center">
-                            <Heart className="w-3 h-3 mr-1" />
-                            <span>{build._count.likes}</span>
+                            {user.imageUrl || user.avatarUrl ? (
+                              <div className="w-3 h-3 rounded-full mr-1 overflow-hidden">
+                                <Image
+                                  src={user.imageUrl || user.avatarUrl || ""}
+                                  alt={getUserDisplayName(user)}
+                                  width={12}
+                                  height={12}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            ) : (
+                              <User className="w-3 h-3 mr-1" />
+                            )}
+                            <span className="truncate">
+                              {getUserDisplayName(user)}
+                            </span>
                           </div>
-                          <div className="flex items-center">
-                            <MessageSquare className="w-3 h-3 mr-1" />
-                            <span>{build._count.comments}</span>
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center">
+                              <Heart className="w-3 h-3 mr-1" />
+                              <span>{build._count.likes}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <MessageSquare className="w-3 h-3 mr-1" />
+                              <span>{build._count.comments}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                  </Link>
+                );
+              })}
+            </Masonry>
+          </ResponsiveMasonry>
           {/* Load more trigger */}
           {hasNextPage && (
             <div ref={galleryLoadMoreRef} className="flex justify-center py-4">
