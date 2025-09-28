@@ -193,7 +193,7 @@ export function AllBuildsPage() {
 
   // Memoize tab content to prevent unnecessary re-renders
   const galleryContent = useMemo(() => {
-    if (isLoading && !allBuilds.length) {
+    if ((isLoading && !allBuilds.length) || isTabChanging) {
       return (
         <ResponsiveMasonry
           columnsCountBreakPoints={{ 350: 1, 750: 2 }}
@@ -203,7 +203,7 @@ export function AllBuildsPage() {
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="h-48 bg-gray-200 rounded-lg animate-pulse"
+                className="h-48 w-full bg-gray-200 rounded-lg animate-pulse"
               />
             ))}
           </Masonry>
@@ -239,12 +239,7 @@ export function AllBuildsPage() {
                   build.featuredImage?.url || build.kit?.boxArt;
 
                 // Get upload count for photo badge
-                const uploadCount =
-                  build.milestones?.reduce(
-                    (total, milestone) =>
-                      total + (milestone.uploads?.length || 0),
-                    0
-                  ) || 0;
+                const uploadCount = build._count.uploads;
 
                 return (
                   <Link
@@ -276,10 +271,10 @@ export function AllBuildsPage() {
                     </Badge> */}
 
                     {/* Photo count badge */}
-                    {build._count.uploads > 0 && (
+                    {uploadCount > 0 && (
                       <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
                         <Camera className="w-3 h-3" />
-                        {build._count.uploads}
+                        {uploadCount}
                       </div>
                     )}
 
@@ -373,6 +368,7 @@ export function AllBuildsPage() {
     return null;
   }, [
     galleryBuilds,
+    allBuilds,
     isLoading,
     isFetching,
     error,
@@ -380,10 +376,11 @@ export function AllBuildsPage() {
     isFetchingNextPage,
     galleryLoadMoreRef,
     isFetched,
+    isTabChanging,
   ]);
 
   const postsContent = useMemo(() => {
-    if (isLoading && !allBuilds.length) {
+    if ((isLoading && !allBuilds.length) || isTabChanging) {
       return (
         <div className="space-y-6">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -481,6 +478,7 @@ export function AllBuildsPage() {
     isFetchingNextPage,
     postsLoadMoreRef,
     isFetched,
+    isTabChanging,
   ]);
 
   const renderTabContent = () => {

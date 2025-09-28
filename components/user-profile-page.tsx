@@ -257,7 +257,7 @@ export function UserProfilePage({
 
   // Memoize tab content to prevent unnecessary re-renders
   const galleryContent = useMemo(() => {
-    if (isLoading && !allBuilds.length) {
+    if ((isLoading && !allBuilds.length) || isTabChanging) {
       return (
         <ResponsiveMasonry
           columnsCountBreakPoints={{ 350: 1, 750: 2 }}
@@ -267,7 +267,7 @@ export function UserProfilePage({
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="h-48 bg-gray-200 rounded-lg animate-pulse"
+                className="h-48 w-full bg-gray-200 rounded-lg animate-pulse"
               />
             ))}
           </Masonry>
@@ -421,6 +421,7 @@ export function UserProfilePage({
     return null;
   }, [
     galleryBuilds,
+    allBuilds,
     isLoading,
     isFetching,
     error,
@@ -430,10 +431,11 @@ export function UserProfilePage({
     galleryLoadMoreRef,
     isFetched,
     user,
+    isTabChanging,
   ]);
 
   const postsContent = useMemo(() => {
-    if (isLoading && !allBuilds.length) {
+    if ((isLoading && !allBuilds.length) || isTabChanging) {
       return (
         <div className="space-y-6">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -558,6 +560,7 @@ export function UserProfilePage({
     isOwnProfile,
     postsLoadMoreRef,
     isFetched,
+    isTabChanging,
   ]);
 
   const renderTabContent = () => {
