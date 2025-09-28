@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,9 +17,10 @@ import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { KitImage } from "@/components/kit-image";
-import { Loader2, Plus, Search, X, Tag, Calendar } from "lucide-react";
+import { Loader2, Plus, Search, X, Calendar } from "lucide-react";
 import { createBuild } from "@/lib/actions/builds";
 import { useKits } from "@/hooks/use-kits";
+import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 
 interface Kit {
   id: string;
@@ -157,6 +159,8 @@ function KitSearchResults({
 function NewBuildPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
+  const { invalidateKitQueries } = useInvalidateKitQueries();
 
   // Build form state
   const [buildTitle, setBuildTitle] = useState("");
@@ -232,6 +236,14 @@ function NewBuildPageContent() {
       });
 
       console.log("Build created successfully:", build);
+
+      // Invalidate React Query cache for kit collection and related queries
+      invalidateKitQueries(selectedKit.id, selectedKit.slug);
+
+      // Also invalidate general kits queries in case collection status affects listings
+      queryClient.invalidateQueries({
+        queryKey: ["kits"],
+      });
 
       // Redirect to build edit page
       router.push(`/builds/${build.id}/edit`);

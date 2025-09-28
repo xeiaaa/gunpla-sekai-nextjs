@@ -65,8 +65,38 @@ export async function createBuild(data: CreateBuildData) {
       },
     });
 
-    revalidatePath("/kits");
+    // Automatically add/update kit in user's collection with BUILT status
+    await prisma.userKitCollection.upsert({
+      where: {
+        userId_kitId: {
+          userId,
+          kitId: data.kitId,
+        },
+      },
+      update: {
+        status: "BUILT",
+        updatedAt: new Date(),
+      },
+      create: {
+        userId,
+        kitId: data.kitId,
+        status: "BUILT",
+      },
+    });
+
+    // Get user's username for proper cache invalidation
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { username: true },
+    });
+
     revalidatePath(`/kits/${build.kit.slug}`);
+    revalidatePath(`/users/${userId}`);
+
+    // Revalidate username-based collection path if username exists
+    if (user?.username) {
+      revalidatePath(`/users/${user.username}/collections`);
+    }
     return build;
   } catch (error) {
     console.error("Error creating build:", error);

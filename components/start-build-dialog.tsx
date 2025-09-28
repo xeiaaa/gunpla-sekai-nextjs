@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +25,7 @@ import {
 } from "@/components/ui/dialog";
 import { Loader2, Plus, ExternalLink } from "lucide-react";
 import { createBuild } from "@/lib/actions/builds";
+import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 
 interface StartBuildDialogProps {
   kit: {
@@ -42,6 +44,8 @@ interface StartBuildDialogProps {
 
 export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { invalidateKitQueries } = useInvalidateKitQueries();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -68,6 +72,14 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
       });
 
       console.log("Build created successfully:", build);
+
+      // Invalidate React Query cache for kit collection and related queries
+      invalidateKitQueries(kit.id, kit.slug || "");
+
+      // Also invalidate general kits queries in case collection status affects listings
+      queryClient.invalidateQueries({
+        queryKey: ["kits"],
+      });
 
       // Close dialog and redirect to build page
       setOpen(false);
