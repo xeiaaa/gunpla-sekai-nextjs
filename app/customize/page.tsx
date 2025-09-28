@@ -6,10 +6,12 @@ import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { CustomizeProvider, useCustomize } from "./context";
 import { CustomizationPanel } from "./components/customization-panel";
 import { OrbitControlsDrawer } from "./components/orbit-controls-drawer";
+import { SettingsDrawer } from "./components/settings-drawer";
 import { useState, useRef, useEffect } from "react";
 import { FINISH_TYPE } from "./types";
 import { Download } from "lucide-react";
 import * as THREE from "three";
+import { Button } from "@/components/ui/button";
 
 function CustomizePageContent() {
   const {
@@ -33,6 +35,109 @@ function CustomizePageContent() {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
+
+  // Settings state with localStorage persistence
+  const [backgroundColor, setBackgroundColor] = useState("transparent");
+  const [environmentPreset, setEnvironmentPreset] = useState<
+    | "apartment"
+    | "city"
+    | "dawn"
+    | "forest"
+    | "lobby"
+    | "night"
+    | "park"
+    | "studio"
+    | "sunset"
+    | "warehouse"
+  >("city");
+  const [showFinishTooltips, setShowFinishTooltips] = useState(true);
+
+  // Load settings from localStorage on component mount
+  useEffect(() => {
+    const savedBackgroundColor = localStorage.getItem(
+      "gunpla-customize-background-color"
+    );
+    const savedEnvironmentPreset = localStorage.getItem(
+      "gunpla-customize-environment-preset"
+    );
+    const savedShowFinishTooltips = localStorage.getItem(
+      "gunpla-customize-show-finish-tooltips"
+    );
+
+    if (savedBackgroundColor) {
+      setBackgroundColor(savedBackgroundColor);
+    }
+
+    if (savedEnvironmentPreset) {
+      const validPresets: Array<
+        | "apartment"
+        | "city"
+        | "dawn"
+        | "forest"
+        | "lobby"
+        | "night"
+        | "park"
+        | "studio"
+        | "sunset"
+        | "warehouse"
+      > = [
+        "apartment",
+        "city",
+        "dawn",
+        "forest",
+        "lobby",
+        "night",
+        "park",
+        "studio",
+        "sunset",
+        "warehouse",
+      ];
+      if (
+        validPresets.includes(
+          savedEnvironmentPreset as (typeof validPresets)[number]
+        )
+      ) {
+        setEnvironmentPreset(
+          savedEnvironmentPreset as (typeof validPresets)[number]
+        );
+      }
+    }
+
+    if (savedShowFinishTooltips !== null) {
+      setShowFinishTooltips(savedShowFinishTooltips === "true");
+    }
+  }, []);
+
+  // Save settings to localStorage when they change
+  const handleBackgroundColorChange = (color: string) => {
+    setBackgroundColor(color);
+    localStorage.setItem("gunpla-customize-background-color", color);
+  };
+
+  const handleEnvironmentPresetChange = (
+    preset:
+      | "apartment"
+      | "city"
+      | "dawn"
+      | "forest"
+      | "lobby"
+      | "night"
+      | "park"
+      | "studio"
+      | "sunset"
+      | "warehouse"
+  ) => {
+    setEnvironmentPreset(preset);
+    localStorage.setItem("gunpla-customize-environment-preset", preset);
+  };
+
+  const handleShowFinishTooltipsChange = (show: boolean) => {
+    setShowFinishTooltips(show);
+    localStorage.setItem(
+      "gunpla-customize-show-finish-tooltips",
+      show.toString()
+    );
+  };
 
   // Check if welcome dialog should be shown
   useEffect(() => {
@@ -676,6 +781,7 @@ function CustomizePageContent() {
               onClearOuterArmors={handleClearOuterArmors}
               onPaintTypeChange={handlePaintTypeChange}
               materialStates={materialStates}
+              showFinishTooltips={showFinishTooltips}
             />
           ) : (
             <div className="p-4">
@@ -733,6 +839,8 @@ function CustomizePageContent() {
                     clearArmorMaterials={clearArmorMaterials}
                     clearAlpha={clearAlpha}
                     paintType={paintType}
+                    background={backgroundColor}
+                    environmentPreset={environmentPreset}
                     onRendererReady={(renderer) => {
                       rendererRef.current = renderer;
                     }}
@@ -745,15 +853,25 @@ function CustomizePageContent() {
 
                 {/* Floating Control Buttons */}
                 <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
-                  <button
+                  <Button
+                    variant="outline"
                     onClick={handleDownloadImage}
-                    className="bg-background/95 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-colors w-9 h-9 flex items-center justify-center rounded-md"
+                    className="bg-background/95 backdrop-blur-sm border border-border shadow-lg transition-colors w-9"
                     title="Download current model as image"
                   >
-                    <Download className="w-5 h-5 text-foreground" />
-                  </button>
+                    <Download className="w-5 h-5" />
+                  </Button>
 
                   <OrbitControlsDrawer />
+
+                  <SettingsDrawer
+                    backgroundColor={backgroundColor}
+                    onBackgroundColorChange={handleBackgroundColorChange}
+                    environmentPreset={environmentPreset}
+                    onEnvironmentPresetChange={handleEnvironmentPresetChange}
+                    showFinishTooltips={showFinishTooltips}
+                    onShowFinishTooltipsChange={handleShowFinishTooltipsChange}
+                  />
                 </div>
 
                 {/* Floating Customization Panel (when item is selected) */}

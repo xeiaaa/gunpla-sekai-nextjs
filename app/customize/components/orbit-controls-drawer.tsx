@@ -18,7 +18,7 @@ export function OrbitControlsDrawer() {
         <Button
           variant="outline"
           size="icon"
-          className="bg-background/95 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-colors"
+          className="bg-background/95 backdrop-blur-sm border border-border shadow-lg transition-colors"
           title="3D Model Controls Guide"
         >
           <HelpCircle className="w-5 h-5" />

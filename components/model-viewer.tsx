@@ -246,6 +246,17 @@ interface ModelViewerProps {
   clearAlpha?: number;
   paintType?: "solid" | "clear";
   background?: string;
+  environmentPreset?:
+    | "apartment"
+    | "city"
+    | "dawn"
+    | "forest"
+    | "lobby"
+    | "night"
+    | "park"
+    | "studio"
+    | "sunset"
+    | "warehouse";
   onRendererReady?: (renderer: THREE.WebGLRenderer) => void;
   onModelLoaded?: () => void;
 }
@@ -262,6 +273,7 @@ export function ModelViewer({
   clearAlpha,
   paintType,
   background = "transparent",
+  environmentPreset = "city",
   onRendererReady,
   onModelLoaded,
 }: ModelViewerProps) {
@@ -279,7 +291,7 @@ export function ModelViewer({
           <pointLight position={[-10, -10, -5]} intensity={1} />
 
           {/* Environment and shadows */}
-          <Environment preset="city" />
+          <Environment preset={environmentPreset} />
           <ContactShadows
             position={[0, -2, 0]}
             opacity={0.4}
