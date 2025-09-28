@@ -658,7 +658,7 @@ function CustomizePageContent() {
         </div>
 
         {/* Sidebar B - Customization Panel (300px) */}
-        <div className="w-[300px] border-r bg-muted/20 overflow-y-auto">
+        <div className="w-[360px] border-r bg-muted/20 overflow-y-auto">
           {selectedItem ? (
             <CustomizationPanel
               selectedItemName={getSelectedItemName()}

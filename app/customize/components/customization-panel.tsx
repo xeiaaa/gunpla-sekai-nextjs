@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Edit3 } from "lucide-react";
+import { Plus, Edit3, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { FINISH_TYPE } from "../types";
-import { sazabiMaterialsMap } from "../parts";
+import { sazabiMaterialsMap, parts } from "../parts";
 
 interface CustomizationPanelProps {
   selectedItemName?: string;
@@ -20,26 +25,107 @@ interface CustomizationPanelProps {
   onResetAll?: () => void;
   onEverythingClear?: (alpha: number) => void;
   onClearOuterArmors?: (alpha: number) => void;
-  onPaintTypeChange?: (materialId: string, paintType: "solid" | "clear") => void;
-  materialStates?: Record<string, { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }>;
+  onPaintTypeChange?: (
+    materialId: string,
+    paintType: "solid" | "clear"
+  ) => void;
+  materialStates?: Record<
+    string,
+    { color: string; finish: FINISH_TYPE; paintType?: "solid" | "clear" }
+  >;
 }
 
-export function CustomizationPanel({ selectedItemName, selectedItemId, onColorChange, onFinishChange, onRandomizeColors, onRandomizeWithColorBlocking, onRandomizeArmorWithColorBlocking, onRandomizeHSL, onResetAll, onEverythingClear, onClearOuterArmors, onPaintTypeChange, materialStates }: CustomizationPanelProps) {
+export function CustomizationPanel({
+  selectedItemName,
+  selectedItemId,
+  onColorChange,
+  onFinishChange,
+  onRandomizeColors,
+  onRandomizeWithColorBlocking,
+  onRandomizeArmorWithColorBlocking,
+  onRandomizeHSL,
+  onResetAll,
+  onEverythingClear,
+  onClearOuterArmors,
+  onPaintTypeChange,
+  materialStates,
+}: CustomizationPanelProps) {
   // TODO: Use selectedItemName for customization context
   console.log("Customizing:", selectedItemName, "ID:", selectedItemId);
-  const [activeTab, setActiveTab] = useState<"palette" | "decals" | "paints" | "fun">("palette");
+  const [activeTab, setActiveTab] = useState<
+    "palette" | "color-blocking" | "decals" | "paints" | "fun"
+  >("palette");
   const [paintType, setPaintType] = useState<"solid" | "clear">("clear");
   const [customColor, setCustomColor] = useState("#ffffff");
   const [selectedBrand, setSelectedBrand] = useState("Tamiya Spray");
   const [clearAlpha, setClearAlpha] = useState(0.2);
+  const [editingColor, setEditingColor] = useState<string | null>(null);
+  const [editingColorValue, setEditingColorValue] = useState("#ffffff");
+  const [expandedColors, setExpandedColors] = useState<Set<string>>(new Set());
 
   // Get unique colors from sazabiMaterialsMap
   const getUniqueColors = () => {
-    const colors = Object.values(sazabiMaterialsMap).map(material => material.color);
+    const colors = Object.values(sazabiMaterialsMap).map(
+      (material) => material.color
+    );
     return [...new Set(colors)]; // Remove duplicates
   };
 
-  const [paletteColors, setPaletteColors] = useState<string[]>(getUniqueColors());
+  const [paletteColors, setPaletteColors] = useState<string[]>(
+    getUniqueColors()
+  );
+
+  // Get all unique colors currently used in the model (including custom ones)
+  const getAllCurrentColors = () => {
+    const materialColors = materialStates
+      ? Object.values(materialStates).map((state) => state.color)
+      : Object.values(sazabiMaterialsMap).map((material) => material.color);
+
+    const allColors = [...new Set([...materialColors, ...paletteColors])];
+    return allColors;
+  };
+
+  const currentColors = getAllCurrentColors();
+
+  // Get parts that use a specific color
+  const getPartsUsingColor = (color: string) => {
+    const partsUsingColor: Array<{
+      partName: string;
+      materialName: string;
+      materialId: string;
+    }> = [];
+
+    // Find which parts contain materials with this color
+    parts.forEach((part) => {
+      part.materials.forEach(([materialId, materialName]) => {
+        const currentState = materialStates?.[materialId];
+        const defaultColor = sazabiMaterialsMap[materialId]?.color;
+        const currentColor = currentState?.color || defaultColor;
+
+        if (currentColor === color) {
+          partsUsingColor.push({
+            partName: part.label,
+            materialName: materialName,
+            materialId: materialId,
+          });
+        }
+      });
+    });
+
+    return partsUsingColor;
+  };
+
+  const handleColorToggle = (color: string) => {
+    setExpandedColors((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(color)) {
+        newSet.delete(color);
+      } else {
+        newSet.add(color);
+      }
+      return newSet;
+    });
+  };
 
   // Get current material state or default values
   const getCurrentMaterialState = () => {
@@ -51,13 +137,15 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
       return {
         color: sazabiMaterialsMap[selectedItemId].color,
         finish: sazabiMaterialsMap[selectedItemId].finish,
-        paintType: sazabiMaterialsMap[selectedItemId].isClear ? "clear" : "solid"
+        paintType: sazabiMaterialsMap[selectedItemId].isClear
+          ? "clear"
+          : "solid",
       };
     }
     return {
       color: "#ffffff",
       finish: FINISH_TYPE.DEFAULT,
-      paintType: "solid" as "solid" | "clear"
+      paintType: "solid" as "solid" | "clear",
     };
   };
 
@@ -68,79 +156,159 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
       value: FINISH_TYPE.MATTE,
       label: "M",
       name: "Matte",
-      description: "Flat, non-reflective surface with a smooth subdued look."
+      description: "Flat, non-reflective surface with a smooth subdued look.",
     },
     {
       value: FINISH_TYPE.GLOSS,
       label: "G",
       name: "Gloss",
-      description: "Shiny reflective surface, makes colors pop and appear vibrant."
+      description:
+        "Shiny reflective surface, makes colors pop and appear vibrant.",
     },
     {
       value: FINISH_TYPE.SEMIGLOSS,
       label: "SG",
       name: "Semi-Gloss",
-      description: "Balanced sheen between matte and gloss, subtle shine."
+      description: "Balanced sheen between matte and gloss, subtle shine.",
     },
     {
       value: FINISH_TYPE.PEARL,
       label: "P",
       name: "Pearl",
-      description: "Soft shimmering finish with iridescent highlights."
+      description: "Soft shimmering finish with iridescent highlights.",
     },
     {
       value: FINISH_TYPE.CANDY,
       label: "C",
       name: "Candy",
-      description: "Transparent glossy layer over metallic base, deep rich color."
+      description:
+        "Transparent glossy layer over metallic base, deep rich color.",
     },
     {
       value: FINISH_TYPE.METALLIC,
       label: "F",
       name: "Metallic",
-      description: "Shiny reflective finish with metallic flakes for a realistic metal effect."
+      description:
+        "Shiny reflective finish with metallic flakes for a realistic metal effect.",
     },
     {
       value: FINISH_TYPE.DEFAULT,
       label: "X",
       name: "Default",
-      description: "Standard plastic look, unpainted or straight out of box."
+      description: "Standard plastic look, unpainted or straight out of box.",
     },
   ];
 
-
   const randomizeOptions = [
-    "Randomize Color", "Randomize with Color Blocking", "Randomize Armor with Color Blocking", "Randomize HSL"
+    "Randomize Color",
+    "Randomize with Color Blocking",
+    "Randomize Armor with Color Blocking",
+    "Randomize HSL",
   ];
 
   const finishOptions = [
-    "Matte", "Gloss", "Semi Gloss", "Metallic", "Candy", "Pearl"
+    "Matte",
+    "Gloss",
+    "Semi Gloss",
+    "Metallic",
+    "Candy",
+    "Pearl",
   ];
 
-  const clearOptions = [
-    "Clear Outer Armors", "Everything Clear"
-  ];
+  const clearOptions = ["Clear Outer Armors", "Everything Clear"];
 
   // TODO: Implement brand selection with paintBrands array
   // const paintBrands = ["Tamiya Spray", "Mr. Color", "Vallejo", "Citadel", "Testors"];
 
   const paintColors = [
-    "#8B4513", "#2F4F2F", "#556B2F", "#696969", "#2F4F4F", "#8B0000", "#006400", "#4B0082",
-    "#000080", "#008B8B", "#B8860B", "#A9A9A9", "#006400", "#8B4513", "#2F4F2F", "#696969",
-    "#FF0000", "#FF8C00", "#FFD700", "#008000", "#00FFFF", "#0000FF", "#8A2BE2", "#FF1493",
-    "#000000", "#FFFFFF", "#808080", "#800080", "#00FF00", "#FFFF00", "#FF00FF", "#00FFFF",
-    "#8B4513", "#2F4F2F", "#556B2F", "#696969", "#2F4F4F", "#8B0000", "#006400", "#4B0082",
-    "#000080", "#008B8B", "#B8860B", "#A9A9A9", "#006400", "#8B4513", "#2F4F2F", "#696969",
-    "#FF0000", "#FF8C00", "#FFD700", "#008000", "#00FFFF", "#0000FF", "#8A2BE2", "#FF1493",
-    "#000000", "#FFFFFF", "#808080", "#800080", "#00FF00", "#FFFF00", "#FF00FF", "#00FFFF",
-    "#8B4513", "#2F4F2F", "#556B2F", "#696969", "#2F4F4F", "#8B0000", "#006400", "#4B0082",
-    "#000080", "#008B8B", "#B8860B", "#A9A9A9", "#006400", "#8B4513", "#2F4F2F", "#696969",
-    "#FF0000", "#FF8C00", "#FFD700"
+    "#8B4513",
+    "#2F4F2F",
+    "#556B2F",
+    "#696969",
+    "#2F4F4F",
+    "#8B0000",
+    "#006400",
+    "#4B0082",
+    "#000080",
+    "#008B8B",
+    "#B8860B",
+    "#A9A9A9",
+    "#006400",
+    "#8B4513",
+    "#2F4F2F",
+    "#696969",
+    "#FF0000",
+    "#FF8C00",
+    "#FFD700",
+    "#008000",
+    "#00FFFF",
+    "#0000FF",
+    "#8A2BE2",
+    "#FF1493",
+    "#000000",
+    "#FFFFFF",
+    "#808080",
+    "#800080",
+    "#00FF00",
+    "#FFFF00",
+    "#FF00FF",
+    "#00FFFF",
+    "#8B4513",
+    "#2F4F2F",
+    "#556B2F",
+    "#696969",
+    "#2F4F4F",
+    "#8B0000",
+    "#006400",
+    "#4B0082",
+    "#000080",
+    "#008B8B",
+    "#B8860B",
+    "#A9A9A9",
+    "#006400",
+    "#8B4513",
+    "#2F4F2F",
+    "#696969",
+    "#FF0000",
+    "#FF8C00",
+    "#FFD700",
+    "#008000",
+    "#00FFFF",
+    "#0000FF",
+    "#8A2BE2",
+    "#FF1493",
+    "#000000",
+    "#FFFFFF",
+    "#808080",
+    "#800080",
+    "#00FF00",
+    "#FFFF00",
+    "#FF00FF",
+    "#00FFFF",
+    "#8B4513",
+    "#2F4F2F",
+    "#556B2F",
+    "#696969",
+    "#2F4F4F",
+    "#8B0000",
+    "#006400",
+    "#4B0082",
+    "#000080",
+    "#008B8B",
+    "#B8860B",
+    "#A9A9A9",
+    "#006400",
+    "#8B4513",
+    "#2F4F2F",
+    "#696969",
+    "#FF0000",
+    "#FF8C00",
+    "#FFD700",
   ];
 
   const handleAddColor = () => {
     if (!paletteColors.includes(customColor)) {
-      setPaletteColors(prev => [...prev, customColor]);
+      setPaletteColors((prev) => [...prev, customColor]);
     }
   };
 
@@ -150,6 +318,47 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
       onColorChange(selectedItemId, color);
     }
     console.log("Selected color:", color, "for material:", selectedItemId);
+  };
+
+  const handleColorBlockingSelect = (color: string) => {
+    setEditingColor(color);
+    setEditingColorValue(color);
+  };
+
+  const handleColorBlockingUpdate = () => {
+    if (editingColor && editingColorValue && onColorChange) {
+      // Find all materials that have the current color and update them
+      const materialsToUpdate = Object.keys(
+        materialStates || sazabiMaterialsMap
+      ).filter((materialId) => {
+        const state = materialStates?.[materialId];
+        const defaultColor = sazabiMaterialsMap[materialId]?.color;
+        return (state?.color || defaultColor) === editingColor;
+      });
+
+      // Update all materials with the old color to the new color
+      materialsToUpdate.forEach((materialId) => {
+        onColorChange(materialId, editingColorValue);
+      });
+
+      console.log(
+        `Updated ${materialsToUpdate.length} materials from ${editingColor} to ${editingColorValue}`
+      );
+
+      // Update palette colors
+      setPaletteColors((prev) => {
+        const updated = prev.map((c) =>
+          c === editingColor ? editingColorValue : c
+        );
+        return [...new Set(updated)]; // Remove duplicates
+      });
+    }
+    setEditingColor(null);
+  };
+
+  const handleColorBlockingCancel = () => {
+    setEditingColor(null);
+    setEditingColorValue("#ffffff");
   };
 
   const handleFinishSelect = (finish: FINISH_TYPE) => {
@@ -173,9 +382,15 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
   const handleFunOption = (option: string) => {
     if (option === "Randomize Color" && onRandomizeColors) {
       onRandomizeColors();
-    } else if (option === "Randomize with Color Blocking" && onRandomizeWithColorBlocking) {
+    } else if (
+      option === "Randomize with Color Blocking" &&
+      onRandomizeWithColorBlocking
+    ) {
       onRandomizeWithColorBlocking();
-    } else if (option === "Randomize Armor with Color Blocking" && onRandomizeArmorWithColorBlocking) {
+    } else if (
+      option === "Randomize Armor with Color Blocking" &&
+      onRandomizeArmorWithColorBlocking
+    ) {
       onRandomizeArmorWithColorBlocking();
     } else if (option === "Randomize HSL" && onRandomizeHSL) {
       onRandomizeHSL();
@@ -224,30 +439,40 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
       <div className="p-4 space-y-6">
         <h3 className="font-semibold text-sm mb-4">Customization Panel</h3>
 
-      {/* Tabs */}
-      <div className="border-b border-border mb-6">
-        <nav className="flex space-x-8">
-          <button
-            onClick={() => setActiveTab("palette")}
-            className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === "palette"
-                ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-            }`}
-          >
-            My Palette
-          </button>
-          <button
-            onClick={() => setActiveTab("decals")}
-            className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === "decals"
-                ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-            }`}
-          >
-            Decals
-          </button>
-          {/* <button
+        {/* Tabs */}
+        <div className="border-b border-border mb-6">
+          <nav className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab("palette")}
+              className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === "palette"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+              }`}
+            >
+              My Palette
+            </button>
+            <button
+              onClick={() => setActiveTab("color-blocking")}
+              className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === "color-blocking"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+              }`}
+            >
+              Color Blocking
+            </button>
+            <button
+              onClick={() => setActiveTab("decals")}
+              className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === "decals"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+              }`}
+            >
+              Decals
+            </button>
+            {/* <button
             onClick={() => setActiveTab("paints")}
             className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
               activeTab === "paints"
@@ -257,157 +482,272 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
           >
             Paints
           </button> */}
-          <button
-            onClick={() => setActiveTab("fun")}
-            className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-              activeTab === "fun"
-                ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-            }`}
-          >
-            Fun
-          </button>
-        </nav>
-      </div>
+            <button
+              onClick={() => setActiveTab("fun")}
+              className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                activeTab === "fun"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+              }`}
+            >
+              Fun
+            </button>
+          </nav>
+        </div>
 
-      {/* Tab Content */}
-      {activeTab === "palette" && (
-        <>
-          {/* Type Section */}
-          <div>
-            <h4 className="font-medium text-sm mb-3">Opacity</h4>
-            <div className="flex gap-2">
-              <button
-                onClick={() => {
-                  if (selectedItemId && onPaintTypeChange) {
-                    onPaintTypeChange(selectedItemId, "solid");
-                  }
-                }}
-                className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
-                  currentMaterialState.paintType === "solid"
-                    ? "bg-background border-border shadow-sm"
-                    : "border-transparent hover:bg-muted/50"
-                }`}
-              >
-                <span>Solid</span>
-              </button>
-              <button
-                onClick={() => {
-                  if (selectedItemId && onPaintTypeChange) {
-                    onPaintTypeChange(selectedItemId, "clear");
-                  }
-                }}
-                className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
-                  currentMaterialState.paintType === "clear"
-                    ? "bg-background border-border shadow-sm"
-                    : "border-transparent hover:bg-muted/50"
-                }`}
-              >
-                <span>Clear</span>
-              </button>
-            </div>
-          </div>
-
-      {/* Finish Section */}
-      <div>
-        <h4 className="font-medium text-sm mb-3">Finish</h4>
-        <div className="grid grid-cols-2 gap-2">
-          {finishes.map((finish) => (
-            <Tooltip key={finish.value}>
-              <TooltipTrigger asChild>
+        {/* Tab Content */}
+        {activeTab === "palette" && (
+          <>
+            {/* Type Section */}
+            <div>
+              <h4 className="font-medium text-sm mb-3">Opacity</h4>
+              <div className="flex gap-2">
                 <button
-                  onClick={() => handleFinishSelect(finish.value)}
-                  className={`flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
-                    currentMaterialState.finish === finish.value
+                  onClick={() => {
+                    if (selectedItemId && onPaintTypeChange) {
+                      onPaintTypeChange(selectedItemId, "solid");
+                    }
+                  }}
+                  className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
+                    currentMaterialState.paintType === "solid"
                       ? "bg-background border-border shadow-sm"
                       : "border-transparent hover:bg-muted/50"
                   }`}
                 >
-                  <span>{finish.name}</span>
+                  <span>Solid</span>
                 </button>
-              </TooltipTrigger>
-              <TooltipContent className="bg-white text-black border border-gray-300">
-                <div className="text-center">
-                  <div className="font-medium text-black">{finish.name}</div>
-                  <div className="text-xs text-gray-600 mt-1 max-w-xs">
-                    {finish.description}
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          ))}
-        </div>
-      </div>
-
-      {/* Add Color to Palette */}
-      <div>
-        <h4 className="font-medium text-sm mb-3">Add Color to Palette</h4>
-        <div className="flex gap-3 items-center">
-          <div className="relative">
-            <div
-              className="w-12 h-12 rounded-full border-2 border-border cursor-pointer shadow-sm hover:shadow-md transition-shadow"
-              style={{ backgroundColor: customColor }}
-            />
-            <Input
-              type="color"
-              value={customColor}
-              onChange={(e) => setCustomColor(e.target.value)}
-              className="absolute inset-0 opacity-0 cursor-pointer w-12 h-12 rounded-full"
-            />
-          </div>
-          <div className="flex-1">
-            <div className="text-sm font-mono text-muted-foreground mb-1">{customColor}</div>
-            <Button
-              onClick={handleAddColor}
-              size="sm"
-              className="w-full"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add to Palette
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Palette */}
-      <div>
-        <h4 className="font-medium text-sm mb-3">Palette</h4>
-        <div className="grid grid-cols-8 gap-2">
-          {paletteColors.map((color, index) => (
-            <button
-              key={index}
-              onClick={() => handleColorSelect(color)}
-              className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${
-                currentMaterialState.color === color
-                  ? "border-primary ring-2 ring-primary/20"
-                  : "border-border hover:border-primary/50"
-              }`}
-              style={{ backgroundColor: color }}
-            >
-              {currentMaterialState.color === color && (
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full shadow-sm" />
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-        </>
-      )}
-
-      {activeTab === "decals" && (
-        <>
-          <div>
-            <h4 className="font-medium text-sm mb-3">Decals</h4>
-            <div className="text-sm text-muted-foreground">
-              Decal functionality coming soon...
+                <button
+                  onClick={() => {
+                    if (selectedItemId && onPaintTypeChange) {
+                      onPaintTypeChange(selectedItemId, "clear");
+                    }
+                  }}
+                  className={`flex-1 flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
+                    currentMaterialState.paintType === "clear"
+                      ? "bg-background border-border shadow-sm"
+                      : "border-transparent hover:bg-muted/50"
+                  }`}
+                >
+                  <span>Clear</span>
+                </button>
+              </div>
             </div>
-          </div>
-        </>
-      )}
 
-      {/* {activeTab === "paints" && (
+            {/* Finish Section */}
+            <div>
+              <h4 className="font-medium text-sm mb-3">Finish</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {finishes.map((finish) => (
+                  <Tooltip key={finish.value}>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={() => handleFinishSelect(finish.value)}
+                        className={`flex flex-col items-center gap-1 py-2 px-3 text-xs rounded-md border transition-all ${
+                          currentMaterialState.finish === finish.value
+                            ? "bg-background border-border shadow-sm"
+                            : "border-transparent hover:bg-muted/50"
+                        }`}
+                      >
+                        <span>{finish.name}</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-white text-black border border-gray-300">
+                      <div className="text-center">
+                        <div className="font-medium text-black">
+                          {finish.name}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1 max-w-xs">
+                          {finish.description}
+                        </div>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
+
+            {/* Add Color to Palette */}
+            <div>
+              <h4 className="font-medium text-sm mb-3">Add Color to Palette</h4>
+              <div className="flex gap-3 items-center">
+                <div className="relative">
+                  <div
+                    className="w-12 h-12 rounded-full border-2 border-border cursor-pointer shadow-sm hover:shadow-md transition-shadow"
+                    style={{ backgroundColor: customColor }}
+                  />
+                  <Input
+                    type="color"
+                    value={customColor}
+                    onChange={(e) => setCustomColor(e.target.value)}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-12 h-12 rounded-full"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-mono text-muted-foreground mb-1">
+                    {customColor}
+                  </div>
+                  <Button onClick={handleAddColor} size="sm" className="w-full">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add to Palette
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Palette */}
+            <div>
+              <h4 className="font-medium text-sm mb-3">Palette</h4>
+              <div className="grid grid-cols-8 gap-2">
+                {paletteColors.map((color, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleColorSelect(color)}
+                    className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${
+                      currentMaterialState.color === color
+                        ? "border-primary ring-2 ring-primary/20"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    style={{ backgroundColor: color }}
+                  >
+                    {currentMaterialState.color === color && (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full shadow-sm" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === "color-blocking" && (
+          <>
+            <div>
+              <h4 className="font-medium text-sm mb-3">Color Blocking</h4>
+              <div className="text-sm text-muted-foreground mb-4">
+                Click a color to change it globally across all materials
+              </div>
+
+              {/* Color List */}
+              <div className="space-y-2">
+                {currentColors.map((color, index) => {
+                  const partsUsingColor = getPartsUsingColor(color);
+                  const isExpanded = expandedColors.has(color);
+
+                  return (
+                    <div
+                      key={index}
+                      className="border border-border rounded-md"
+                    >
+                      {/* Color Header */}
+                      <div className="flex items-center gap-3 p-3">
+                        <div className="relative">
+                          <div
+                            className="w-8 h-8 rounded-full border-2 border-border cursor-pointer shadow-sm hover:shadow-md transition-shadow"
+                            style={{ backgroundColor: color }}
+                            onClick={() => handleColorBlockingSelect(color)}
+                          />
+                          <Input
+                            type="color"
+                            value={color}
+                            onChange={(e) => {
+                              setEditingColorValue(e.target.value);
+                              // Update the color immediately as user picks
+                              if (onColorChange) {
+                                // Find all materials that have the current color and update them
+                                const materialsToUpdate = Object.keys(
+                                  materialStates || sazabiMaterialsMap
+                                ).filter((materialId) => {
+                                  const state = materialStates?.[materialId];
+                                  const defaultColor =
+                                    sazabiMaterialsMap[materialId]?.color;
+                                  return (
+                                    (state?.color || defaultColor) === color
+                                  );
+                                });
+
+                                // Update all materials with the old color to the new color
+                                materialsToUpdate.forEach((materialId) => {
+                                  onColorChange(materialId, e.target.value);
+                                });
+                              }
+                            }}
+                            className="absolute inset-0 opacity-0 cursor-pointer w-8 h-8 rounded-full"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-mono text-muted-foreground">
+                            {color}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {partsUsingColor.length} part
+                            {partsUsingColor.length !== 1 ? "s" : ""} using this
+                            color
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleColorToggle(color)}
+                          className="p-1 hover:bg-muted rounded transition-colors"
+                        >
+                          {isExpanded ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Expanded Content */}
+                      {isExpanded && (
+                        <div className="border-t border-border p-3 bg-muted/20">
+                          <div className="space-y-2">
+                            {partsUsingColor.map((part, partIndex) => (
+                              <div
+                                key={partIndex}
+                                className="flex items-center justify-between text-sm"
+                              >
+                                <div>
+                                  <span className="font-medium">
+                                    {part.partName}
+                                  </span>
+                                  <span className="text-muted-foreground ml-2">
+                                    - {part.materialName}
+                                  </span>
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  {part.materialId}
+                                </div>
+                              </div>
+                            ))}
+                            {partsUsingColor.length === 0 && (
+                              <div className="text-sm text-muted-foreground italic">
+                                No parts currently using this color
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === "decals" && (
+          <>
+            <div>
+              <h4 className="font-medium text-sm mb-3">Decals</h4>
+              <div className="text-sm text-muted-foreground">
+                Decal functionality coming soon...
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* {activeTab === "paints" && (
         <>
           <div>
             <h4 className="font-medium text-sm mb-3">Paint Colors</h4>
@@ -424,74 +764,79 @@ export function CustomizationPanel({ selectedItemName, selectedItemId, onColorCh
         </>
       )} */}
 
-      {activeTab === "fun" && (
-        <>
-          {/* Fun Section */}
-          <div>
-            {/* Randomize Colors Group */}
-            <div className="mb-4">
-              <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">Randomize Colors</h5>
-              <div className="grid grid-cols-1 gap-1">
-                {randomizeOptions.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleFunOption(option)}
-                    className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
-                  >
-                    {option}
-                  </button>
-                ))}
+        {activeTab === "fun" && (
+          <>
+            {/* Fun Section */}
+            <div>
+              {/* Randomize Colors Group */}
+              <div className="mb-4">
+                <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+                  Randomize Colors
+                </h5>
+                <div className="grid grid-cols-1 gap-1">
+                  {randomizeOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFunOption(option)}
+                      className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Finish Group */}
+              <div className="mb-4">
+                <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+                  Finish
+                </h5>
+                <div className="grid grid-cols-2 gap-1">
+                  {finishOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFunOption(option)}
+                      className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Clear Group */}
+              <div className="mb-4">
+                <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+                  Clear
+                </h5>
+                <div className="grid grid-cols-1 gap-1">
+                  {clearOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFunOption(option)}
+                      className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Separator */}
+              <div className="border-t border-border my-4"></div>
+
+              {/* Reset Button */}
+              <div className="mb-4">
+                <button
+                  onClick={() => onResetAll && onResetAll()}
+                  className="text-left text-sm text-red-500 hover:text-red-600 transition-colors py-1"
+                >
+                  Reset All
+                </button>
               </div>
             </div>
-
-            {/* Finish Group */}
-            <div className="mb-4">
-              <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">Finish</h5>
-              <div className="grid grid-cols-2 gap-1">
-                {finishOptions.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleFunOption(option)}
-                    className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Clear Group */}
-            <div className="mb-4">
-              <h5 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">Clear</h5>
-              <div className="grid grid-cols-1 gap-1">
-                {clearOptions.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleFunOption(option)}
-                    className="text-left text-sm text-primary hover:text-primary/80 transition-colors py-1"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Separator */}
-            <div className="border-t border-border my-4"></div>
-
-            {/* Reset Button */}
-            <div className="mb-4">
-              <button
-                onClick={() => onResetAll && onResetAll()}
-                className="text-left text-sm text-red-500 hover:text-red-600 transition-colors py-1"
-              >
-                Reset All
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
+          </>
+        )}
       </div>
     </TooltipProvider>
   );
