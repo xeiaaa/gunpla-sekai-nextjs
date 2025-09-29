@@ -1175,7 +1175,11 @@ export async function getAllBuildsOptimized(
 ) {
   try {
     // Build where clause - no userId filter for global feed
-    const where: Prisma.BuildWhereInput = {};
+    const where: Prisma.BuildWhereInput = {
+      featuredImage: {
+        isNot: null,
+      },
+    };
     if (status) {
       where.status = status as BuildStatus;
     }

@@ -29,7 +29,14 @@ export async function GET(request: NextRequest) {
     const builds = await getAllBuildsOptimized(limit, offset, status, sort);
 
     // Determine if there are more builds to load
-    const whereCondition = status ? { status: status as BuildStatus } : {};
+    const whereCondition: any = {
+      featuredImage: {
+        isNot: null,
+      },
+    };
+    if (status) {
+      whereCondition.status = status as BuildStatus;
+    }
     const totalBuilds = await prisma.build.count({
       where: whereCondition,
     });
