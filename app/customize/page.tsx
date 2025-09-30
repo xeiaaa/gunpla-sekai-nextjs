@@ -7,6 +7,7 @@ import { CustomizeProvider, useCustomize } from "./context";
 import { CustomizationPanel } from "./components/customization-panel";
 import { OrbitControlsDrawer } from "./components/orbit-controls-drawer";
 import { SettingsDrawer } from "./components/settings-drawer";
+import { HelpDrawer } from "./components/help-drawer";
 import { useState, useRef, useEffect } from "react";
 import { FINISH_TYPE } from "./types";
 import { Download } from "lucide-react";
@@ -872,6 +873,8 @@ function CustomizePageContent() {
                     showFinishTooltips={showFinishTooltips}
                     onShowFinishTooltipsChange={handleShowFinishTooltipsChange}
                   />
+
+                  <HelpDrawer />
                 </div>
 
                 {/* Floating Customization Panel (when item is selected) */}
