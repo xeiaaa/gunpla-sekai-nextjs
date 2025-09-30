@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -101,6 +101,38 @@ export function StartBuildDialog({ kit, children }: StartBuildDialogProps) {
       setBuildStatus("PLANNING");
     }
   };
+
+  // Cleanup effect to ensure body scroll is unlocked when component unmounts
+  useEffect(() => {
+    return () => {
+      // Remove any scroll lock classes that might be stuck
+      document.body.classList.remove("dg-scroll-lock");
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+      document.body.style.overscrollBehavior = "";
+    };
+  }, []);
+
+  // Additional cleanup when dialog closes
+  useEffect(() => {
+    if (!open) {
+      // Ensure scroll is unlocked when dialog closes
+      document.body.classList.remove("dg-scroll-lock");
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+      document.body.style.overscrollBehavior = "";
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
