@@ -270,6 +270,89 @@ async function configureIndexes() {
       "releaseDate:desc", // newer kits first (when no explicit sort is given)
       "isExpansion:asc",
     ],
+    synonyms: {
+      // ν ↔ nu
+      ν: ["nu"],
+      nu: ["ν"],
+
+      // ∞ ↔ infinite
+      "∞": ["infinite"],
+      infinite: ["∞"],
+
+      // ∀ ↔ turn a
+      "∀": ["turn a"],
+      "turn a": ["∀"],
+
+      // kämpfer ↔ kampfer, kaempfer
+      kämpfer: ["kampfer", "kaempfer"],
+      kampfer: ["kämpfer", "kaempfer"],
+      kaempfer: ["kämpfer", "kampfer"],
+
+      // döven ↔ doven
+      döven: ["doven"],
+      doven: ["döven"],
+
+      // hi-ν ↔ hi-nu, hi nu
+      "hi-ν": ["hi-nu", "hi nu"],
+      "hi-nu": ["hi-ν", "hi nu"],
+      "hi nu": ["hi-ν", "hi-nu"],
+
+      // ver ka ↔ variations
+      "ver ka": ["ver.ka", "version ka", "katoki", "version katoki"],
+      "ver.ka": ["ver ka", "version ka", "katoki", "version katoki"],
+      "version ka": ["ver ka", "ver.ka", "katoki", "version katoki"],
+      katoki: ["ver ka", "ver.ka", "version ka", "version katoki"],
+      "version katoki": ["ver ka", "ver.ka", "version ka", "katoki"],
+
+      // Greek letters bidirectional
+      Ξ: ["xi"],
+      xi: ["Ξ"],
+      β: ["beta"],
+      beta: ["β"],
+      Ω: ["omega"],
+      omega: ["Ω"],
+      σ: ["sigma"],
+      sigma: ["σ"],
+      ζ: ["zeta"],
+      zeta: ["ζ"],
+      Ψ: ["psi"],
+      psi: ["Ψ"],
+      Θ: ["theta"],
+      theta: ["Θ", "θ"], // both uppercase and lowercase
+      Φ: ["phi"],
+      phi: ["Φ", "φ"],
+      α: ["alpha"],
+      alpha: ["α"],
+      γ: ["gamma"],
+      gamma: ["γ"],
+      δ: ["delta"],
+      delta: ["δ"],
+      ε: ["epsilon"],
+      epsilon: ["ε"],
+      η: ["eta"],
+      eta: ["η"],
+      θ: ["theta"], // already mapped above
+      ι: ["iota"],
+      iota: ["ι"],
+      κ: ["kappa"],
+      kappa: ["κ"],
+      λ: ["lambda"],
+      lambda: ["λ"],
+      μ: ["mu"],
+      mu: ["μ"],
+      ξ: ["xi"], // already mapped above with Ξ
+      π: ["pi"],
+      pi: ["π"],
+      ρ: ["rho"],
+      rho: ["ρ"],
+      τ: ["tau"],
+      tau: ["τ"],
+      υ: ["upsilon"],
+      upsilon: ["υ"],
+      χ: ["chi"],
+      chi: ["χ"],
+      ω: ["omega"], // already mapped above
+    },
   });
 
   // Configure mobile suits index

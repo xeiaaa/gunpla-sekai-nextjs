@@ -22,7 +22,8 @@
     "check:database-base-kits": "tsx scripts/check-database-base-kits.ts",
     "test:specific-base-kits": "tsx scripts/test-specific-base-kits.ts",
     "debug:meilisearch-base-kit": "tsx scripts/debug-meilisearch-base-kit.ts",
-    "test:kits-page-meilisearch": "tsx scripts/test-kits-page-meilisearch.ts"
+    "test:kits-page-meilisearch": "tsx scripts/test-kits-page-meilisearch.ts",
+    "fill:kit-boxart": "tsx scripts/fill-missing-kit-boxart.ts"
   },
   "dependencies": {
     "@bprogress/next": "^3.2.12",
