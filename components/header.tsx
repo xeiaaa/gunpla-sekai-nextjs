@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Menu, X, Search, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   SignInButton,
   SignUpButton,
@@ -25,6 +25,25 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState<"kits" | "mobile-suits">("kits");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  // Sync search query with URL params
+  useEffect(() => {
+    const searchFromUrl = searchParams.get("search");
+    if (searchFromUrl) {
+      setSearchQuery(searchFromUrl);
+      // Determine search type based on current path
+      if (pathname === "/mobile-suits") {
+        setSearchType("mobile-suits");
+      } else if (pathname === "/kits") {
+        setSearchType("kits");
+      }
+    } else {
+      // Clear search query if no search param in URL
+      setSearchQuery("");
+    }
+  }, [searchParams, pathname]);
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -35,29 +54,46 @@ export function Header() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      const query = searchQuery.trim();
-      if (searchType === "kits") {
-        // Preserve existing URL params for kits page
-        const currentPath = window.location.pathname;
-        const currentSearch = window.location.search;
+    const query = searchQuery.trim();
 
-        if (currentPath === "/kits" && currentSearch) {
-          // We're on kits page with existing filters - preserve them
-          const urlParams = new URLSearchParams(currentSearch);
+    if (searchType === "kits") {
+      // Preserve existing URL params for kits page
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+
+      if (currentPath === "/kits" && currentSearch) {
+        // We're on kits page with existing filters - preserve them
+        const urlParams = new URLSearchParams(currentSearch);
+
+        if (query) {
+          // Set search query
           urlParams.set("search", query);
-          router.push(`/kits?${urlParams.toString()}`);
         } else {
-          // No existing filters or not on kits page
+          // Remove search query but keep other filters
+          urlParams.delete("search");
+        }
+
+        router.push(`/kits?${urlParams.toString()}`);
+      } else {
+        // No existing filters or not on kits page
+        if (query) {
           const urlParams = new URLSearchParams();
           urlParams.set("search", query);
           router.push(`/kits?${urlParams.toString()}`);
+        } else {
+          // Empty search, just go to kits page
+          router.push(`/kits`);
         }
-      } else {
-        // Mobile suits - clear all params except search
+      }
+    } else {
+      // Mobile suits
+      if (query) {
         const urlParams = new URLSearchParams();
         urlParams.set("search", query);
         router.push(`/mobile-suits?${urlParams.toString()}`);
+      } else {
+        // Empty search, just go to mobile suits page
+        router.push(`/mobile-suits`);
       }
     }
   };

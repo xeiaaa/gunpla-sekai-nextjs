@@ -1,8 +1,5 @@
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import {
-  getFilteredKitsWithMeilisearch,
-  getFilterDataWithMeilisearch,
-} from "@/lib/actions/meilisearch-kits";
+import { getFilteredKitsWithMeilisearch } from "@/lib/actions/meilisearch-kits";
 
 interface UseKitsParams {
   gradeIds: string[];
@@ -31,7 +28,7 @@ async function getFilterDataFromAPI() {
         `${apiUrl}/product-lines?select=id,slug,name&limit=100&sort=name:asc`
       ),
       fetch(`${apiUrl}/grades?select=id,slug,name&limit=100&sort=name:asc`),
-      fetch(`${apiUrl}/series?select=id,slug,name&limit=100&sort=name:asc`),
+      fetch(`${apiUrl}/series?select=id,slug,name&limit=200&sort=name:asc`),
       fetch(
         `${apiUrl}/release-types?select=id,slug,name&limit=100&sort=name:asc`
       ),
@@ -134,8 +131,10 @@ export function useKitsInfinite(
       }
       return undefined;
     },
-    staleTime: 60 * 60 * 1000, // 1 hour - consistent with provider default
-    gcTime: 24 * 60 * 60 * 1000, // 24 hours - consistent with provider default
+    staleTime: 5 * 60 * 1000, // 5 minutes - shorter for better UX during filtering
+    gcTime: 30 * 60 * 1000, // 30 minutes - shorter to prevent memory issues
     initialPageParam: 0,
+    // Keep previous data while loading new data to prevent flickering
+    // placeholderData: (previousData) => previousData,
   });
 }

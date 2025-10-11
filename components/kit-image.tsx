@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect, useMemo } from "react";
 import { pipeThroughCloudinary } from "@/lib/cloudinary-client";
 
 interface KitImageProps {
@@ -10,6 +9,7 @@ interface KitImageProps {
   className?: string;
   isContain?: boolean;
   width?: number; // Width for Cloudinary optimization
+  priority?: boolean; // Allow overriding priority
 }
 
 export function KitImage({
@@ -18,13 +18,14 @@ export function KitImage({
   className = "",
   isContain = false,
   width = 600,
+  priority = false,
 }: KitImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
 
-  // Handle Cloudinary URL processing
-  const getProcessedSrc = (src: string) => {
-    if (!src) return src;
+  // Handle Cloudinary URL processing - memoized to prevent unnecessary recalculation
+  const processedSrc = useMemo(() => {
+    if (!src) return "";
 
     // If it's already a Cloudinary URL, add width parameter before q_auto
     if (src.startsWith("https://res.cloudinary.com/")) {
@@ -33,9 +34,7 @@ export function KitImage({
 
     // Otherwise, use pipeThroughCloudinary with the specified width
     return pipeThroughCloudinary(src, `w_${width},q_auto,f_auto`);
-  };
-
-  const processedSrc = getProcessedSrc(src || "");
+  }, [src, width]);
 
   const handleImageError = () => {
     console.error("Image failed to load:", processedSrc);
@@ -49,9 +48,9 @@ export function KitImage({
   };
 
   useEffect(() => {
-    if (processedSrc) {
-      setIsPortrait(null); // Reset when src changes
-    }
+    // Reset error state when src changes
+    setImageError(false);
+    // Don't reset isPortrait to prevent flickering
   }, [processedSrc]);
 
   if (!processedSrc || imageError) {
@@ -66,29 +65,22 @@ export function KitImage({
   }
 
   // Determine object position based on orientation (only for cover mode)
-  const objectPosition =
-    isPortrait === null
-      ? "center" // Default while loading
-      : isPortrait
-      ? "center 10%" // Portrait: 10% from top
-      : "center"; // Landscape: center
+  // Use a stable default to prevent layout shifts during loading
+  const objectPosition = isPortrait ? "center 10%" : "center";
 
   return (
     <div className={`relative ${className} bg-muted`}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={processedSrc}
         alt={alt}
-        fill
-        className={isContain ? "object-contain" : "object-cover"}
+        className={`absolute inset-0 w-full h-full ${
+          isContain ? "object-contain" : "object-cover"
+        }`}
         style={isContain ? undefined : { objectPosition }}
         onError={handleImageError}
         onLoad={handleImageLoad}
-        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-        priority={false}
-        loading="lazy"
-        quality={75}
-        placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
+        loading={priority ? "eager" : "lazy"}
       />
     </div>
   );

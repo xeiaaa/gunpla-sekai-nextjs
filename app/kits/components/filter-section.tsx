@@ -15,12 +15,14 @@ interface FilterPopoverProps {
   onClose: () => void;
   searchTerm: string;
   onSearchChange: (searchTerm: string) => void;
+  onApplyFilters: () => void;
 }
 
 interface YearRangePopoverProps {
   onClose: () => void;
   yearRange: { min: number; max: number };
   onRangeChange: (range: { min: number; max: number }) => void;
+  onApplyFilters: () => void;
 }
 
 interface FilterState {
@@ -95,7 +97,10 @@ function FilterPopover({
   onClose,
   searchTerm,
   onSearchChange,
+  onApplyFilters,
 }: FilterPopoverProps) {
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
   const filteredOptions = useMemo(() => {
     if (!searchTerm) return options;
     return options.filter((option) =>
@@ -116,6 +121,14 @@ function FilterPopover({
     onSelectionChange([]);
   };
 
+  const handleSearchToggle = () => {
+    setIsSearchVisible(!isSearchVisible);
+    if (isSearchVisible && searchTerm) {
+      // Clear search when hiding
+      onSearchChange("");
+    }
+  };
+
   return (
     <div
       className="absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
@@ -125,7 +138,11 @@ function FilterPopover({
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         <button
-          onClick={onClose}
+          onClick={() => {
+            // Apply pending changes before closing
+            onApplyFilters();
+            onClose();
+          }}
           className="p-1 hover:bg-gray-100 rounded-full"
         >
           <X className="w-4 h-4 text-gray-500" />
@@ -133,23 +150,31 @@ function FilterPopover({
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <button
-          onClick={handleReset}
-          className="text-sm text-gray-500 hover:text-gray-700"
-        >
-          Reset
-        </button>
-        <div className="flex items-center">
-          <Search className="w-4 h-4 text-gray-400 mr-2" />
+      <div className="p-4 border-b border-gray-200 space-y-3">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={handleReset}
+            className="text-sm text-gray-500 hover:text-gray-700"
+          >
+            Reset
+          </button>
+          <button
+            onClick={handleSearchToggle}
+            className="p-1 hover:bg-gray-100 rounded-full"
+          >
+            <Search className="w-4 h-4 text-gray-400" />
+          </button>
+        </div>
+        {isSearchVisible && (
           <input
             type="text"
             placeholder={`Search ${title.toLowerCase()}...`}
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="text-sm border-none outline-none placeholder-gray-400"
+            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+            autoFocus
           />
-        </div>
+        )}
       </div>
 
       {/* Options List */}
@@ -179,17 +204,49 @@ function FilterPopover({
           </div>
         )}
       </div>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <button
-          onClick={onClose}
-          className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium"
-        >
-          Close
-        </button>
-      </div>
     </div>
+  );
+}
+
+// Reusable Filter Button Component
+interface FilterButtonProps {
+  label: string;
+  selectedCount: number;
+  onOpen: () => void;
+}
+
+function FilterButton({ label, selectedCount, onOpen }: FilterButtonProps) {
+  return (
+    <button
+      onClick={onOpen}
+      className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
+        selectedCount > 0
+          ? "border-primary bg-primary/5 text-primary font-medium"
+          : ""
+      }`}
+    >
+      <span className="truncate">{label}</span>
+      <div className="flex items-center gap-2">
+        {selectedCount > 0 && (
+          <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+            {selectedCount}
+          </span>
+        )}
+        <svg
+          className="w-4 h-4 text-gray-400 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </button>
   );
 }
 
@@ -197,6 +254,7 @@ function YearRangePopover({
   onClose,
   yearRange,
   onRangeChange,
+  onApplyFilters,
 }: YearRangePopoverProps) {
   const [localRange, setLocalRange] = useState(yearRange);
 
@@ -262,7 +320,11 @@ function YearRangePopover({
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Year</h3>
         <button
-          onClick={onClose}
+          onClick={() => {
+            // Apply pending changes before closing
+            onApplyFilters();
+            onClose();
+          }}
           className="p-1 hover:bg-gray-100 rounded-full"
         >
           <X className="w-4 h-4 text-gray-500" />
@@ -497,16 +559,6 @@ function YearRangePopover({
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <button
-          onClick={onClose}
-          className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium"
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 }
@@ -518,6 +570,7 @@ interface MobileSuitFilterPopoverProps {
   onSelectionChange: (values: string[]) => void;
   searchTerm: string;
   onSearchChange: (searchTerm: string) => void;
+  onApplyFilters: () => void;
 }
 
 function MobileSuitFilterPopover({
@@ -526,9 +579,11 @@ function MobileSuitFilterPopover({
   onSelectionChange,
   searchTerm,
   onSearchChange,
+  onApplyFilters,
 }: MobileSuitFilterPopoverProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   // Debounce search term
   useEffect(() => {
@@ -605,6 +660,14 @@ function MobileSuitFilterPopover({
     onSelectionChange([]);
   };
 
+  const handleSearchToggle = () => {
+    setIsSearchVisible(!isSearchVisible);
+    if (isSearchVisible && searchTerm) {
+      // Clear search when hiding
+      onSearchChange("");
+    }
+  };
+
   return (
     <div
       className="absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
@@ -614,7 +677,11 @@ function MobileSuitFilterPopover({
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Mobile Suit</h3>
         <button
-          onClick={onClose}
+          onClick={() => {
+            // Apply pending changes before closing
+            onApplyFilters();
+            onClose();
+          }}
           className="p-1 hover:bg-gray-100 rounded-full"
         >
           <X className="w-4 h-4 text-gray-500" />
@@ -622,23 +689,31 @@ function MobileSuitFilterPopover({
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <button
-          onClick={handleReset}
-          className="text-sm text-gray-500 hover:text-gray-700"
-        >
-          Reset
-        </button>
-        <div className="flex items-center">
-          <Search className="w-4 h-4 text-gray-400 mr-2" />
+      <div className="p-4 border-b border-gray-200 space-y-3">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={handleReset}
+            className="text-sm text-gray-500 hover:text-gray-700"
+          >
+            Reset
+          </button>
+          <button
+            onClick={handleSearchToggle}
+            className="p-1 hover:bg-gray-100 rounded-full"
+          >
+            <Search className="w-4 h-4 text-gray-400" />
+          </button>
+        </div>
+        {isSearchVisible && (
           <input
             type="text"
             placeholder="Search mobile suits..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="text-sm border-none outline-none placeholder-gray-400"
+            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+            autoFocus
           />
-        </div>
+        )}
       </div>
 
       {/* Options List with Infinite Scroll */}
@@ -679,16 +754,6 @@ function MobileSuitFilterPopover({
           </>
         )}
       </div>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <button
-          onClick={onClose}
-          className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium"
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 }
@@ -713,6 +778,42 @@ export default function FilterSection({
   onClearAllFilters,
   onApplyFilters,
 }: FilterSectionProps) {
+  // Close popover on ESC key press and apply changes
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && state.ui.activePopover) {
+        // Apply pending changes before closing
+        onApplyFilters();
+        onPopoverClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [state.ui.activePopover, onPopoverClose, onApplyFilters]);
+
+  // Close popover when clicking outside and apply changes
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (state.ui.activePopover) {
+        const target = event.target as HTMLElement;
+        // Check if click is outside any popover
+        if (!target.closest("[data-popover]")) {
+          // Apply pending changes before closing
+          onApplyFilters();
+          onPopoverClose();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [state.ui.activePopover, onPopoverClose, onApplyFilters]);
+
   return (
     <div className="mb-6 bg-card border rounded-lg shadow-sm">
       <div className="p-4 space-y-4">
@@ -724,36 +825,15 @@ export default function FilterSection({
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {/* Vendor */}
             <div className="relative" data-popover>
-              <button
-                onClick={() => onPopoverOpen("vendors")}
-                className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                  state.pending.vendors.length > 0
-                    ? "border-primary bg-primary/5 text-primary font-medium"
-                    : ""
-                }`}
-              >
-                <span className="truncate">Vendors</span>
-                <div className="flex items-center gap-2">
-                  {state.pending.vendors.length > 0 && (
-                    <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                      {state.pending.vendors.length}
-                    </span>
-                  )}
-                  <svg
-                    className="w-4 h-4 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              <FilterButton
+                label="Vendors"
+                selectedCount={state.pending.vendors.length}
+                onOpen={() =>
+                  state.ui.activePopover === "vendors"
+                    ? (onApplyFilters(), onPopoverClose())
+                    : onPopoverOpen("vendors")
+                }
+              />
               {state.ui.activePopover === "vendors" && (
                 <FilterPopover
                   title="Vendors"
@@ -768,42 +848,22 @@ export default function FilterSection({
                   onSearchChange={(term) =>
                     onPopoverSearchChange("vendors", term)
                   }
+                  onApplyFilters={onApplyFilters}
                 />
               )}
             </div>
 
             {/* Product Lines */}
             <div className="relative" data-popover>
-              <button
-                onClick={() => onPopoverOpen("productLines")}
-                className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                  state.pending.productLines.length > 0
-                    ? "border-primary bg-primary/5 text-primary font-medium"
-                    : ""
-                }`}
-              >
-                <span className="truncate">Product Lines</span>
-                <div className="flex items-center gap-2">
-                  {state.pending.productLines.length > 0 && (
-                    <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                      {state.pending.productLines.length}
-                    </span>
-                  )}
-                  <svg
-                    className="w-4 h-4 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              <FilterButton
+                label="Product Lines"
+                selectedCount={state.pending.productLines.length}
+                onOpen={() =>
+                  state.ui.activePopover === "productLines"
+                    ? (onApplyFilters(), onPopoverClose())
+                    : onPopoverOpen("productLines")
+                }
+              />
               {state.ui.activePopover === "productLines" && (
                 <FilterPopover
                   title="Product Lines"
@@ -818,42 +878,22 @@ export default function FilterSection({
                   onSearchChange={(term) =>
                     onPopoverSearchChange("productLines", term)
                   }
+                  onApplyFilters={onApplyFilters}
                 />
               )}
             </div>
 
             {/* Grades */}
             <div className="relative" data-popover>
-              <button
-                onClick={() => onPopoverOpen("grades")}
-                className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                  state.pending.grades.length > 0
-                    ? "border-primary bg-primary/5 text-primary font-medium"
-                    : ""
-                }`}
-              >
-                <span className="truncate">Grades</span>
-                <div className="flex items-center gap-2">
-                  {state.pending.grades.length > 0 && (
-                    <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                      {state.pending.grades.length}
-                    </span>
-                  )}
-                  <svg
-                    className="w-4 h-4 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              <FilterButton
+                label="Grades"
+                selectedCount={state.pending.grades.length}
+                onOpen={() =>
+                  state.ui.activePopover === "grades"
+                    ? (onApplyFilters(), onPopoverClose())
+                    : onPopoverOpen("grades")
+                }
+              />
               {state.ui.activePopover === "grades" && (
                 <FilterPopover
                   title="Grades"
@@ -868,46 +908,26 @@ export default function FilterSection({
                   onSearchChange={(term) =>
                     onPopoverSearchChange("grades", term)
                   }
+                  onApplyFilters={onApplyFilters}
                 />
               )}
             </div>
 
             {/* Series */}
             <div className="relative" data-popover>
-              <button
-                onClick={() => onPopoverOpen("series")}
-                className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                  state.pending.series.length > 0
-                    ? "border-primary bg-primary/5 text-primary font-medium"
-                    : ""
-                }`}
-              >
-                <span className="truncate">Series</span>
-                <div className="flex items-center gap-2">
-                  {state.pending.series.length > 0 && (
-                    <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                      {state.pending.series.length}
-                    </span>
-                  )}
-                  <svg
-                    className="w-4 h-4 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              <FilterButton
+                label="Series"
+                selectedCount={state.pending.series.length}
+                onOpen={() =>
+                  state.ui.activePopover === "series"
+                    ? (onApplyFilters(), onPopoverClose())
+                    : onPopoverOpen("series")
+                }
+              />
               {state.ui.activePopover === "series" && (
                 <FilterPopover
                   title="Series"
-                  options={filterData.series.map((series) => ({
+                  options={filterData.series.slice(0, 200).map((series) => ({
                     ...series,
                     count: undefined,
                   }))}
@@ -918,42 +938,22 @@ export default function FilterSection({
                   onSearchChange={(term) =>
                     onPopoverSearchChange("series", term)
                   }
+                  onApplyFilters={onApplyFilters}
                 />
               )}
             </div>
 
             {/* Mobile Suit */}
             <div className="relative" data-popover>
-              <button
-                onClick={() => onPopoverOpen("mobileSuits")}
-                className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                  state.pending.mobileSuits.length > 0
-                    ? "border-primary bg-primary/5 text-primary font-medium"
-                    : ""
-                }`}
-              >
-                <span className="truncate">Mobile Suit</span>
-                <div className="flex items-center gap-2">
-                  {state.pending.mobileSuits.length > 0 && (
-                    <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                      {state.pending.mobileSuits.length}
-                    </span>
-                  )}
-                  <svg
-                    className="w-4 h-4 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              <FilterButton
+                label="Mobile Suit"
+                selectedCount={state.pending.mobileSuits.length}
+                onOpen={() =>
+                  state.ui.activePopover === "mobileSuits"
+                    ? (onApplyFilters(), onPopoverClose())
+                    : onPopoverOpen("mobileSuits")
+                }
+              />
               {state.ui.activePopover === "mobileSuits" && (
                 <MobileSuitFilterPopover
                   selectedValues={state.pending.mobileSuits}
@@ -963,6 +963,7 @@ export default function FilterSection({
                   onSearchChange={(term) =>
                     onPopoverSearchChange("mobileSuits", term)
                   }
+                  onApplyFilters={onApplyFilters}
                 />
               )}
             </div>
@@ -978,36 +979,15 @@ export default function FilterSection({
             <div className="flex flex-wrap items-center gap-3">
               {/* Release Type */}
               <div className="relative w-40" data-popover>
-                <button
-                  onClick={() => onPopoverOpen("releaseTypes")}
-                  className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
-                    state.pending.releaseTypes.length > 0
-                      ? "border-primary bg-primary/5 text-primary font-medium"
-                      : ""
-                  }`}
-                >
-                  <span className="truncate">Release Type</span>
-                  <div className="flex items-center gap-2">
-                    {state.pending.releaseTypes.length > 0 && (
-                      <span className="px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
-                        {state.pending.releaseTypes.length}
-                      </span>
-                    )}
-                    <svg
-                      className="w-4 h-4 text-gray-400 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                </button>
+                <FilterButton
+                  label="Release Type"
+                  selectedCount={state.pending.releaseTypes.length}
+                  onOpen={() =>
+                    state.ui.activePopover === "releaseTypes"
+                      ? (onApplyFilters(), onPopoverClose())
+                      : onPopoverOpen("releaseTypes")
+                  }
+                />
                 {state.ui.activePopover === "releaseTypes" && (
                   <FilterPopover
                     title="Release Type"
@@ -1022,6 +1002,7 @@ export default function FilterSection({
                     onSearchChange={(term) =>
                       onPopoverSearchChange("releaseTypes", term)
                     }
+                    onApplyFilters={onApplyFilters}
                   />
                 )}
               </div>
@@ -1029,7 +1010,11 @@ export default function FilterSection({
               {/* Year Range */}
               <div className="relative w-40" data-popover>
                 <button
-                  onClick={() => onPopoverOpen("year")}
+                  onClick={() =>
+                    state.ui.activePopover === "year"
+                      ? (onApplyFilters(), onPopoverClose())
+                      : onPopoverOpen("year")
+                  }
                   className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:border-primary/50 flex items-center justify-between transition-colors ${
                     state.pending.yearRange.min !== 1980 ||
                     state.pending.yearRange.max !== new Date().getFullYear()
@@ -1065,6 +1050,7 @@ export default function FilterSection({
                     onClose={onPopoverClose}
                     yearRange={state.pending.yearRange}
                     onRangeChange={onPendingYearRangeChange}
+                    onApplyFilters={onApplyFilters}
                   />
                 )}
               </div>
@@ -1079,9 +1065,12 @@ export default function FilterSection({
             <div className="flex flex-wrap items-center gap-2">
               {/* Include Variants - Chip Style */}
               <button
-                onClick={() =>
-                  onPendingIncludeVariantsChange(!state.pending.includeVariants)
-                }
+                onClick={() => {
+                  onPendingIncludeVariantsChange(
+                    !state.pending.includeVariants
+                  );
+                  onApplyFilters();
+                }}
                 className={`px-3 py-1.5 text-sm font-medium rounded-full border transition-all ${
                   state.pending.includeVariants
                     ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
@@ -1096,11 +1085,12 @@ export default function FilterSection({
 
               {/* Include Expansions - Chip Style */}
               <button
-                onClick={() =>
+                onClick={() => {
                   onPendingIncludeExpansionsChange(
                     !state.pending.includeExpansions
-                  )
-                }
+                  );
+                  onApplyFilters();
+                }}
                 className={`px-3 py-1.5 text-sm font-medium rounded-full border transition-all ${
                   state.pending.includeExpansions
                     ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
@@ -1128,7 +1118,10 @@ export default function FilterSection({
                 <div className="relative">
                   <select
                     value={state.pending.sortBy}
-                    onChange={(e) => onPendingSortByChange(e.target.value)}
+                    onChange={(e) => {
+                      onPendingSortByChange(e.target.value);
+                      onApplyFilters();
+                    }}
                     className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[140px]"
                   >
                     <option value="relevance">Relevance</option>
@@ -1182,11 +1175,12 @@ export default function FilterSection({
                 <div className="relative">
                   <select
                     value={state.pending.sortDirection}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       onPendingSortDirectionChange(
                         e.target.value as "asc" | "desc"
-                      )
-                    }
+                      );
+                      onApplyFilters();
+                    }}
                     className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[120px]"
                   >
                     <option value="desc">Descending</option>
@@ -1212,43 +1206,6 @@ export default function FilterSection({
             </div>
           </div>
 
-          {/* Active Filters Count (optional) */}
-          {(state.pending.grades.length > 0 ||
-            state.pending.productLines.length > 0 ||
-            state.pending.series.length > 0 ||
-            state.pending.releaseTypes.length > 0 ||
-            state.pending.vendors.length > 0 ||
-            state.pending.mobileSuits.length > 0 ||
-            state.pending.yearRange.min !== 1980 ||
-            state.pending.yearRange.max !== new Date().getFullYear()) && (
-            <div className="text-xs text-gray-500">
-              {state.pending.grades.length +
-                state.pending.productLines.length +
-                state.pending.series.length +
-                state.pending.releaseTypes.length +
-                state.pending.vendors.length +
-                state.pending.mobileSuits.length +
-                (state.pending.yearRange.min !== 1980 ||
-                state.pending.yearRange.max !== new Date().getFullYear()
-                  ? 1
-                  : 0)}{" "}
-              {state.pending.grades.length +
-                state.pending.productLines.length +
-                state.pending.series.length +
-                state.pending.releaseTypes.length +
-                state.pending.vendors.length +
-                state.pending.mobileSuits.length +
-                (state.pending.yearRange.min !== 1980 ||
-                state.pending.yearRange.max !== new Date().getFullYear()
-                  ? 1
-                  : 0) ===
-              1
-                ? "filter"
-                : "filters"}{" "}
-              selected
-            </div>
-          )}
-
           {/* Right: Action Buttons */}
           <div className="flex flex-wrap items-center gap-2">
             <Button
@@ -1259,9 +1216,6 @@ export default function FilterSection({
             >
               <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
               Clear All
-            </Button>
-            <Button onClick={onApplyFilters} size="sm" className="h-9">
-              Apply Filters
             </Button>
           </div>
         </div>

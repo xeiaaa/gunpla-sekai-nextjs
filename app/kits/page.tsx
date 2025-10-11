@@ -647,10 +647,6 @@ function KitsPageContent() {
     [filterData, router]
   );
 
-  const clearAllFilters = useCallback(() => {
-    dispatch({ type: "CLEAR_PENDING_FILTERS" });
-  }, []);
-
   const applyFilters = useCallback(() => {
     isApplyingFilters.current = true;
     dispatch({ type: "APPLY_PENDING_FILTERS" });
@@ -673,6 +669,14 @@ function KitsPageContent() {
       });
     });
   }, [state.pending, updateUrlParams, startTransition]);
+
+  const clearAllFilters = useCallback(() => {
+    dispatch({ type: "CLEAR_PENDING_FILTERS" });
+    // Auto-apply after clearing
+    setTimeout(() => {
+      applyFilters();
+    }, 0);
+  }, [applyFilters]);
 
   // Memoized filter change handlers
   const handlePendingGradesChange = useCallback((grades: string[]) => {
@@ -759,20 +763,7 @@ function KitsPageContent() {
     []
   );
 
-  // Close popover when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (state.ui.activePopover) {
-        const target = event.target as Element;
-        if (!target.closest("[data-popover]")) {
-          handlePopoverClose();
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [state.ui.activePopover, handlePopoverClose]);
+  // Click-outside handling is now done in FilterSection component with auto-apply
 
   return (
     <div className="min-h-screen bg-background">
