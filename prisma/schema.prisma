@@ -155,8 +155,8 @@ model Kit {
   listings    MarketplaceListing[]
 
   // Kit expansion relationships (many-to-many)
-  expansions KitRelation[] @relation("KitExpansions")
-  expandedBy KitRelation[] @relation("KitExpandedBy")
+  expansions KitRelation[] @relation("KitExpansions") // Expansions
+  expandedBy KitRelation[] @relation("KitExpandedBy") // Compatible with
 
   // Gunpla cards created for this kit
   gunplaCards GunplaCard[]
@@ -373,15 +373,19 @@ model User {
   emailNotifications Boolean @default(true) // Email notification preferences
 
   // Relations
-  collections    UserKitCollection[]
-  builds         Build[]
-  reviews        Review[]
-  store          UserStore?
-  uploads        Upload[]            @relation("UploadedBy")
-  buildLikes     BuildLike[]
-  buildComments  BuildComment[]
-  reviewFeedback ReviewFeedback[]
-  gunplaCards    GunplaCard[]
+  collections             UserKitCollection[]
+  builds                  Build[]
+  reviews                 Review[]
+  store                   UserStore?
+  uploads                 Upload[]                @relation("UploadedBy")
+  buildLikes              BuildLike[]
+  buildComments           BuildComment[]
+  reviewFeedback          ReviewFeedback[]
+  gunplaCards             GunplaCard[]
+  wikiSubmissions         WikiSubmission[]        @relation("UserSubmissions")
+  reviewedWikiSubmissions WikiSubmission[]        @relation("ReviewedBy")
+  wikiSubmissionComments  WikiSubmissionComment[]
+  wikiSubmissionLikes     WikiSubmissionLike[]
 
   @@map("users")
 }
@@ -397,13 +401,15 @@ enum CollectionStatus {
 
 // User kit collections (wishlist, backlog, built)
 model UserKitCollection {
-  id        String           @id @default(cuid())
-  userId    String
-  kitId     String
-  status    CollectionStatus
-  notes     String?
-  addedAt   DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id         String           @id @default(cuid())
+  userId     String
+  kitId      String
+  status     CollectionStatus
+  notes      String?
+  price      Int?             @default(0)
+  acquiredAt DateTime?
+  addedAt    DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -414,6 +420,7 @@ model UserKitCollection {
   @@index([kitId])
   @@index([status])
   @@index([userId, status])
+  @@index([price])
   @@map("user_kit_collections")
 }
 
@@ -631,4 +638,79 @@ model MarketplaceListing {
   @@index([price])
   @@index([createdAt])
   @@map("marketplace_listings")
+}
+
+// Wiki submission system
+model WikiSubmission {
+  id         String             @id @default(cuid())
+  userId     String
+  type       WikiSubmissionType
+  entityId   String?
+  data       Json
+  notes      String?
+  status     SubmissionStatus   @default(PENDING)
+  reviewedBy String?
+  reviewedAt DateTime?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  likesCount Int @default(0)
+
+  user     User                    @relation("UserSubmissions", fields: [userId], references: [id], onDelete: Cascade)
+  reviewer User?                   @relation("ReviewedBy", fields: [reviewedBy], references: [id], onDelete: SetNull)
+  comments WikiSubmissionComment[]
+  likes    WikiSubmissionLike[]
+
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@index([entityId])
+  @@index([createdAt])
+  @@map("wiki_submissions")
+}
+
+model WikiSubmissionComment {
+  id           String   @id @default(cuid())
+  submissionId String
+  userId       String
+  content      String
+  createdAt    DateTime @default(now())
+
+  submission WikiSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([submissionId])
+  @@index([userId])
+  @@map("wiki_submission_comments")
+}
+
+model WikiSubmissionLike {
+  id           String   @id @default(cuid())
+  submissionId String
+  userId       String
+  createdAt    DateTime @default(now())
+
+  submission WikiSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([submissionId, userId])
+  @@index([submissionId])
+  @@index([userId])
+  @@map("wiki_submission_likes")
+}
+
+enum WikiSubmissionType {
+  KIT
+  SERIES
+  MOBILE_SUIT
+  PRODUCT_LINE
+  GRADE
+  RELEASE_TYPE
+  TIMELINE
+}
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }

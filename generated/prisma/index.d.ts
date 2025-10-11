@@ -143,6 +143,21 @@ export type UserStore = $Result.DefaultSelection<Prisma.$UserStorePayload>
  * 
  */
 export type MarketplaceListing = $Result.DefaultSelection<Prisma.$MarketplaceListingPayload>
+/**
+ * Model WikiSubmission
+ * 
+ */
+export type WikiSubmission = $Result.DefaultSelection<Prisma.$WikiSubmissionPayload>
+/**
+ * Model WikiSubmissionComment
+ * 
+ */
+export type WikiSubmissionComment = $Result.DefaultSelection<Prisma.$WikiSubmissionCommentPayload>
+/**
+ * Model WikiSubmissionLike
+ * 
+ */
+export type WikiSubmissionLike = $Result.DefaultSelection<Prisma.$WikiSubmissionLikePayload>
 
 /**
  * Enums
@@ -221,6 +236,28 @@ export const MilestoneType: {
 
 export type MilestoneType = (typeof MilestoneType)[keyof typeof MilestoneType]
 
+
+export const WikiSubmissionType: {
+  KIT: 'KIT',
+  SERIES: 'SERIES',
+  MOBILE_SUIT: 'MOBILE_SUIT',
+  PRODUCT_LINE: 'PRODUCT_LINE',
+  GRADE: 'GRADE',
+  RELEASE_TYPE: 'RELEASE_TYPE',
+  TIMELINE: 'TIMELINE'
+};
+
+export type WikiSubmissionType = (typeof WikiSubmissionType)[keyof typeof WikiSubmissionType]
+
+
+export const SubmissionStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
+
 }
 
 export type KitExpansionType = $Enums.KitExpansionType
@@ -246,6 +283,14 @@ export const BuildStatus: typeof $Enums.BuildStatus
 export type MilestoneType = $Enums.MilestoneType
 
 export const MilestoneType: typeof $Enums.MilestoneType
+
+export type WikiSubmissionType = $Enums.WikiSubmissionType
+
+export const WikiSubmissionType: typeof $Enums.WikiSubmissionType
+
+export type SubmissionStatus = $Enums.SubmissionStatus
+
+export const SubmissionStatus: typeof $Enums.SubmissionStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -624,6 +669,36 @@ export class PrismaClient<
     * ```
     */
   get marketplaceListing(): Prisma.MarketplaceListingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wikiSubmission`: Exposes CRUD operations for the **WikiSubmission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WikiSubmissions
+    * const wikiSubmissions = await prisma.wikiSubmission.findMany()
+    * ```
+    */
+  get wikiSubmission(): Prisma.WikiSubmissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wikiSubmissionComment`: Exposes CRUD operations for the **WikiSubmissionComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WikiSubmissionComments
+    * const wikiSubmissionComments = await prisma.wikiSubmissionComment.findMany()
+    * ```
+    */
+  get wikiSubmissionComment(): Prisma.WikiSubmissionCommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wikiSubmissionLike`: Exposes CRUD operations for the **WikiSubmissionLike** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WikiSubmissionLikes
+    * const wikiSubmissionLikes = await prisma.wikiSubmissionLike.findMany()
+    * ```
+    */
+  get wikiSubmissionLike(): Prisma.WikiSubmissionLikeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1089,7 +1164,10 @@ export namespace Prisma {
     BuildLike: 'BuildLike',
     BuildComment: 'BuildComment',
     UserStore: 'UserStore',
-    MarketplaceListing: 'MarketplaceListing'
+    MarketplaceListing: 'MarketplaceListing',
+    WikiSubmission: 'WikiSubmission',
+    WikiSubmissionComment: 'WikiSubmissionComment',
+    WikiSubmissionLike: 'WikiSubmissionLike'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1108,7 +1186,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing" | "wikiSubmission" | "wikiSubmissionComment" | "wikiSubmissionLike"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3036,6 +3114,228 @@ export namespace Prisma {
           }
         }
       }
+      WikiSubmission: {
+        payload: Prisma.$WikiSubmissionPayload<ExtArgs>
+        fields: Prisma.WikiSubmissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WikiSubmissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WikiSubmissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          findFirst: {
+            args: Prisma.WikiSubmissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WikiSubmissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          findMany: {
+            args: Prisma.WikiSubmissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>[]
+          }
+          create: {
+            args: Prisma.WikiSubmissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          createMany: {
+            args: Prisma.WikiSubmissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WikiSubmissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>[]
+          }
+          delete: {
+            args: Prisma.WikiSubmissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          update: {
+            args: Prisma.WikiSubmissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.WikiSubmissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WikiSubmissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WikiSubmissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.WikiSubmissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionPayload>
+          }
+          aggregate: {
+            args: Prisma.WikiSubmissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWikiSubmission>
+          }
+          groupBy: {
+            args: Prisma.WikiSubmissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WikiSubmissionCountArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      WikiSubmissionComment: {
+        payload: Prisma.$WikiSubmissionCommentPayload<ExtArgs>
+        fields: Prisma.WikiSubmissionCommentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WikiSubmissionCommentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WikiSubmissionCommentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          findFirst: {
+            args: Prisma.WikiSubmissionCommentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WikiSubmissionCommentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          findMany: {
+            args: Prisma.WikiSubmissionCommentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>[]
+          }
+          create: {
+            args: Prisma.WikiSubmissionCommentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          createMany: {
+            args: Prisma.WikiSubmissionCommentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WikiSubmissionCommentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>[]
+          }
+          delete: {
+            args: Prisma.WikiSubmissionCommentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          update: {
+            args: Prisma.WikiSubmissionCommentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          deleteMany: {
+            args: Prisma.WikiSubmissionCommentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WikiSubmissionCommentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WikiSubmissionCommentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>[]
+          }
+          upsert: {
+            args: Prisma.WikiSubmissionCommentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionCommentPayload>
+          }
+          aggregate: {
+            args: Prisma.WikiSubmissionCommentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWikiSubmissionComment>
+          }
+          groupBy: {
+            args: Prisma.WikiSubmissionCommentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionCommentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WikiSubmissionCommentCountArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionCommentCountAggregateOutputType> | number
+          }
+        }
+      }
+      WikiSubmissionLike: {
+        payload: Prisma.$WikiSubmissionLikePayload<ExtArgs>
+        fields: Prisma.WikiSubmissionLikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WikiSubmissionLikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WikiSubmissionLikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          findFirst: {
+            args: Prisma.WikiSubmissionLikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WikiSubmissionLikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          findMany: {
+            args: Prisma.WikiSubmissionLikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>[]
+          }
+          create: {
+            args: Prisma.WikiSubmissionLikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          createMany: {
+            args: Prisma.WikiSubmissionLikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WikiSubmissionLikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>[]
+          }
+          delete: {
+            args: Prisma.WikiSubmissionLikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          update: {
+            args: Prisma.WikiSubmissionLikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          deleteMany: {
+            args: Prisma.WikiSubmissionLikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WikiSubmissionLikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WikiSubmissionLikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>[]
+          }
+          upsert: {
+            args: Prisma.WikiSubmissionLikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WikiSubmissionLikePayload>
+          }
+          aggregate: {
+            args: Prisma.WikiSubmissionLikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWikiSubmissionLike>
+          }
+          groupBy: {
+            args: Prisma.WikiSubmissionLikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionLikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WikiSubmissionLikeCountArgs<ExtArgs>
+            result: $Utils.Optional<WikiSubmissionLikeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3158,6 +3458,9 @@ export namespace Prisma {
     buildComment?: BuildCommentOmit
     userStore?: UserStoreOmit
     marketplaceListing?: MarketplaceListingOmit
+    wikiSubmission?: WikiSubmissionOmit
+    wikiSubmissionComment?: WikiSubmissionCommentOmit
+    wikiSubmissionLike?: WikiSubmissionLikeOmit
   }
 
   /* Types for Logging */
@@ -3647,6 +3950,10 @@ export namespace Prisma {
     buildComments: number
     reviewFeedback: number
     gunplaCards: number
+    wikiSubmissions: number
+    reviewedWikiSubmissions: number
+    wikiSubmissionComments: number
+    wikiSubmissionLikes: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3658,6 +3965,10 @@ export namespace Prisma {
     buildComments?: boolean | UserCountOutputTypeCountBuildCommentsArgs
     reviewFeedback?: boolean | UserCountOutputTypeCountReviewFeedbackArgs
     gunplaCards?: boolean | UserCountOutputTypeCountGunplaCardsArgs
+    wikiSubmissions?: boolean | UserCountOutputTypeCountWikiSubmissionsArgs
+    reviewedWikiSubmissions?: boolean | UserCountOutputTypeCountReviewedWikiSubmissionsArgs
+    wikiSubmissionComments?: boolean | UserCountOutputTypeCountWikiSubmissionCommentsArgs
+    wikiSubmissionLikes?: boolean | UserCountOutputTypeCountWikiSubmissionLikesArgs
   }
 
   // Custom InputTypes
@@ -3725,6 +4036,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountGunplaCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GunplaCardWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWikiSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewedWikiSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWikiSubmissionCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionCommentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWikiSubmissionLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionLikeWhereInput
   }
 
 
@@ -3885,6 +4224,46 @@ export namespace Prisma {
    */
   export type UserStoreCountOutputTypeCountListingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MarketplaceListingWhereInput
+  }
+
+
+  /**
+   * Count Type WikiSubmissionCountOutputType
+   */
+
+  export type WikiSubmissionCountOutputType = {
+    comments: number
+    likes: number
+  }
+
+  export type WikiSubmissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    comments?: boolean | WikiSubmissionCountOutputTypeCountCommentsArgs
+    likes?: boolean | WikiSubmissionCountOutputTypeCountLikesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WikiSubmissionCountOutputType without action
+   */
+  export type WikiSubmissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionCountOutputType
+     */
+    select?: WikiSubmissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmissionCountOutputType without action
+   */
+  export type WikiSubmissionCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionCommentWhereInput
+  }
+
+  /**
+   * WikiSubmissionCountOutputType without action
+   */
+  export type WikiSubmissionCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionLikeWhereInput
   }
 
 
@@ -21773,6 +22152,10 @@ export namespace Prisma {
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
     gunplaCards?: boolean | User$gunplaCardsArgs<ExtArgs>
+    wikiSubmissions?: boolean | User$wikiSubmissionsArgs<ExtArgs>
+    reviewedWikiSubmissions?: boolean | User$reviewedWikiSubmissionsArgs<ExtArgs>
+    wikiSubmissionComments?: boolean | User$wikiSubmissionCommentsArgs<ExtArgs>
+    wikiSubmissionLikes?: boolean | User$wikiSubmissionLikesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -21865,6 +22248,10 @@ export namespace Prisma {
     buildComments?: boolean | User$buildCommentsArgs<ExtArgs>
     reviewFeedback?: boolean | User$reviewFeedbackArgs<ExtArgs>
     gunplaCards?: boolean | User$gunplaCardsArgs<ExtArgs>
+    wikiSubmissions?: boolean | User$wikiSubmissionsArgs<ExtArgs>
+    reviewedWikiSubmissions?: boolean | User$reviewedWikiSubmissionsArgs<ExtArgs>
+    wikiSubmissionComments?: boolean | User$wikiSubmissionCommentsArgs<ExtArgs>
+    wikiSubmissionLikes?: boolean | User$wikiSubmissionLikesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -21882,6 +22269,10 @@ export namespace Prisma {
       buildComments: Prisma.$BuildCommentPayload<ExtArgs>[]
       reviewFeedback: Prisma.$ReviewFeedbackPayload<ExtArgs>[]
       gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
+      wikiSubmissions: Prisma.$WikiSubmissionPayload<ExtArgs>[]
+      reviewedWikiSubmissions: Prisma.$WikiSubmissionPayload<ExtArgs>[]
+      wikiSubmissionComments: Prisma.$WikiSubmissionCommentPayload<ExtArgs>[]
+      wikiSubmissionLikes: Prisma.$WikiSubmissionLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22310,6 +22701,10 @@ export namespace Prisma {
     buildComments<T extends User$buildCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$buildCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewFeedback<T extends User$reviewFeedbackArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewFeedbackArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     gunplaCards<T extends User$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, User$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wikiSubmissions<T extends User$wikiSubmissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$wikiSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviewedWikiSubmissions<T extends User$reviewedWikiSubmissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedWikiSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wikiSubmissionComments<T extends User$wikiSubmissionCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$wikiSubmissionCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wikiSubmissionLikes<T extends User$wikiSubmissionLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$wikiSubmissionLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22961,6 +23356,102 @@ export namespace Prisma {
   }
 
   /**
+   * User.wikiSubmissions
+   */
+  export type User$wikiSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    where?: WikiSubmissionWhereInput
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    cursor?: WikiSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionScalarFieldEnum | WikiSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviewedWikiSubmissions
+   */
+  export type User$reviewedWikiSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    where?: WikiSubmissionWhereInput
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    cursor?: WikiSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionScalarFieldEnum | WikiSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.wikiSubmissionComments
+   */
+  export type User$wikiSubmissionCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    where?: WikiSubmissionCommentWhereInput
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionCommentScalarFieldEnum | WikiSubmissionCommentScalarFieldEnum[]
+  }
+
+  /**
+   * User.wikiSubmissionLikes
+   */
+  export type User$wikiSubmissionLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    where?: WikiSubmissionLikeWhereInput
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionLikeScalarFieldEnum | WikiSubmissionLikeScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22985,8 +23476,18 @@ export namespace Prisma {
 
   export type AggregateUserKitCollection = {
     _count: UserKitCollectionCountAggregateOutputType | null
+    _avg: UserKitCollectionAvgAggregateOutputType | null
+    _sum: UserKitCollectionSumAggregateOutputType | null
     _min: UserKitCollectionMinAggregateOutputType | null
     _max: UserKitCollectionMaxAggregateOutputType | null
+  }
+
+  export type UserKitCollectionAvgAggregateOutputType = {
+    price: number | null
+  }
+
+  export type UserKitCollectionSumAggregateOutputType = {
+    price: number | null
   }
 
   export type UserKitCollectionMinAggregateOutputType = {
@@ -22995,6 +23496,8 @@ export namespace Prisma {
     kitId: string | null
     status: $Enums.CollectionStatus | null
     notes: string | null
+    price: number | null
+    acquiredAt: Date | null
     addedAt: Date | null
     updatedAt: Date | null
   }
@@ -23005,6 +23508,8 @@ export namespace Prisma {
     kitId: string | null
     status: $Enums.CollectionStatus | null
     notes: string | null
+    price: number | null
+    acquiredAt: Date | null
     addedAt: Date | null
     updatedAt: Date | null
   }
@@ -23015,11 +23520,21 @@ export namespace Prisma {
     kitId: number
     status: number
     notes: number
+    price: number
+    acquiredAt: number
     addedAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type UserKitCollectionAvgAggregateInputType = {
+    price?: true
+  }
+
+  export type UserKitCollectionSumAggregateInputType = {
+    price?: true
+  }
 
   export type UserKitCollectionMinAggregateInputType = {
     id?: true
@@ -23027,6 +23542,8 @@ export namespace Prisma {
     kitId?: true
     status?: true
     notes?: true
+    price?: true
+    acquiredAt?: true
     addedAt?: true
     updatedAt?: true
   }
@@ -23037,6 +23554,8 @@ export namespace Prisma {
     kitId?: true
     status?: true
     notes?: true
+    price?: true
+    acquiredAt?: true
     addedAt?: true
     updatedAt?: true
   }
@@ -23047,6 +23566,8 @@ export namespace Prisma {
     kitId?: true
     status?: true
     notes?: true
+    price?: true
+    acquiredAt?: true
     addedAt?: true
     updatedAt?: true
     _all?: true
@@ -23090,6 +23611,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserKitCollectionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserKitCollectionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserKitCollectionMinAggregateInputType
@@ -23120,6 +23653,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserKitCollectionCountAggregateInputType | true
+    _avg?: UserKitCollectionAvgAggregateInputType
+    _sum?: UserKitCollectionSumAggregateInputType
     _min?: UserKitCollectionMinAggregateInputType
     _max?: UserKitCollectionMaxAggregateInputType
   }
@@ -23130,9 +23665,13 @@ export namespace Prisma {
     kitId: string
     status: $Enums.CollectionStatus
     notes: string | null
+    price: number | null
+    acquiredAt: Date | null
     addedAt: Date
     updatedAt: Date
     _count: UserKitCollectionCountAggregateOutputType | null
+    _avg: UserKitCollectionAvgAggregateOutputType | null
+    _sum: UserKitCollectionSumAggregateOutputType | null
     _min: UserKitCollectionMinAggregateOutputType | null
     _max: UserKitCollectionMaxAggregateOutputType | null
   }
@@ -23157,6 +23696,8 @@ export namespace Prisma {
     kitId?: boolean
     status?: boolean
     notes?: boolean
+    price?: boolean
+    acquiredAt?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -23169,6 +23710,8 @@ export namespace Prisma {
     kitId?: boolean
     status?: boolean
     notes?: boolean
+    price?: boolean
+    acquiredAt?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -23181,6 +23724,8 @@ export namespace Prisma {
     kitId?: boolean
     status?: boolean
     notes?: boolean
+    price?: boolean
+    acquiredAt?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -23193,11 +23738,13 @@ export namespace Prisma {
     kitId?: boolean
     status?: boolean
     notes?: boolean
+    price?: boolean
+    acquiredAt?: boolean
     addedAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserKitCollectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "status" | "notes" | "addedAt" | "updatedAt", ExtArgs["result"]["userKitCollection"]>
+  export type UserKitCollectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "status" | "notes" | "price" | "acquiredAt" | "addedAt" | "updatedAt", ExtArgs["result"]["userKitCollection"]>
   export type UserKitCollectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
@@ -23223,6 +23770,8 @@ export namespace Prisma {
       kitId: string
       status: $Enums.CollectionStatus
       notes: string | null
+      price: number | null
+      acquiredAt: Date | null
       addedAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userKitCollection"]>
@@ -23655,6 +24204,8 @@ export namespace Prisma {
     readonly kitId: FieldRef<"UserKitCollection", 'String'>
     readonly status: FieldRef<"UserKitCollection", 'CollectionStatus'>
     readonly notes: FieldRef<"UserKitCollection", 'String'>
+    readonly price: FieldRef<"UserKitCollection", 'Int'>
+    readonly acquiredAt: FieldRef<"UserKitCollection", 'DateTime'>
     readonly addedAt: FieldRef<"UserKitCollection", 'DateTime'>
     readonly updatedAt: FieldRef<"UserKitCollection", 'DateTime'>
   }
@@ -34315,6 +34866,3389 @@ export namespace Prisma {
 
 
   /**
+   * Model WikiSubmission
+   */
+
+  export type AggregateWikiSubmission = {
+    _count: WikiSubmissionCountAggregateOutputType | null
+    _avg: WikiSubmissionAvgAggregateOutputType | null
+    _sum: WikiSubmissionSumAggregateOutputType | null
+    _min: WikiSubmissionMinAggregateOutputType | null
+    _max: WikiSubmissionMaxAggregateOutputType | null
+  }
+
+  export type WikiSubmissionAvgAggregateOutputType = {
+    likesCount: number | null
+  }
+
+  export type WikiSubmissionSumAggregateOutputType = {
+    likesCount: number | null
+  }
+
+  export type WikiSubmissionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    type: $Enums.WikiSubmissionType | null
+    entityId: string | null
+    notes: string | null
+    status: $Enums.SubmissionStatus | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    likesCount: number | null
+  }
+
+  export type WikiSubmissionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    type: $Enums.WikiSubmissionType | null
+    entityId: string | null
+    notes: string | null
+    status: $Enums.SubmissionStatus | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    likesCount: number | null
+  }
+
+  export type WikiSubmissionCountAggregateOutputType = {
+    id: number
+    userId: number
+    type: number
+    entityId: number
+    data: number
+    notes: number
+    status: number
+    reviewedBy: number
+    reviewedAt: number
+    createdAt: number
+    updatedAt: number
+    likesCount: number
+    _all: number
+  }
+
+
+  export type WikiSubmissionAvgAggregateInputType = {
+    likesCount?: true
+  }
+
+  export type WikiSubmissionSumAggregateInputType = {
+    likesCount?: true
+  }
+
+  export type WikiSubmissionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    type?: true
+    entityId?: true
+    notes?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    likesCount?: true
+  }
+
+  export type WikiSubmissionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    type?: true
+    entityId?: true
+    notes?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    likesCount?: true
+  }
+
+  export type WikiSubmissionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    type?: true
+    entityId?: true
+    data?: true
+    notes?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    likesCount?: true
+    _all?: true
+  }
+
+  export type WikiSubmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmission to aggregate.
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissions to fetch.
+     */
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WikiSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WikiSubmissions
+    **/
+    _count?: true | WikiSubmissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WikiSubmissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WikiSubmissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WikiSubmissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WikiSubmissionMaxAggregateInputType
+  }
+
+  export type GetWikiSubmissionAggregateType<T extends WikiSubmissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateWikiSubmission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWikiSubmission[P]>
+      : GetScalarType<T[P], AggregateWikiSubmission[P]>
+  }
+
+
+
+
+  export type WikiSubmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionWhereInput
+    orderBy?: WikiSubmissionOrderByWithAggregationInput | WikiSubmissionOrderByWithAggregationInput[]
+    by: WikiSubmissionScalarFieldEnum[] | WikiSubmissionScalarFieldEnum
+    having?: WikiSubmissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WikiSubmissionCountAggregateInputType | true
+    _avg?: WikiSubmissionAvgAggregateInputType
+    _sum?: WikiSubmissionSumAggregateInputType
+    _min?: WikiSubmissionMinAggregateInputType
+    _max?: WikiSubmissionMaxAggregateInputType
+  }
+
+  export type WikiSubmissionGroupByOutputType = {
+    id: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId: string | null
+    data: JsonValue
+    notes: string | null
+    status: $Enums.SubmissionStatus
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    likesCount: number
+    _count: WikiSubmissionCountAggregateOutputType | null
+    _avg: WikiSubmissionAvgAggregateOutputType | null
+    _sum: WikiSubmissionSumAggregateOutputType | null
+    _min: WikiSubmissionMinAggregateOutputType | null
+    _max: WikiSubmissionMaxAggregateOutputType | null
+  }
+
+  type GetWikiSubmissionGroupByPayload<T extends WikiSubmissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WikiSubmissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WikiSubmissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WikiSubmissionGroupByOutputType[P]>
+            : GetScalarType<T[P], WikiSubmissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WikiSubmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    type?: boolean
+    entityId?: boolean
+    data?: boolean
+    notes?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likesCount?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+    comments?: boolean | WikiSubmission$commentsArgs<ExtArgs>
+    likes?: boolean | WikiSubmission$likesArgs<ExtArgs>
+    _count?: boolean | WikiSubmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmission"]>
+
+  export type WikiSubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    type?: boolean
+    entityId?: boolean
+    data?: boolean
+    notes?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likesCount?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmission"]>
+
+  export type WikiSubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    type?: boolean
+    entityId?: boolean
+    data?: boolean
+    notes?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likesCount?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmission"]>
+
+  export type WikiSubmissionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    type?: boolean
+    entityId?: boolean
+    data?: boolean
+    notes?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likesCount?: boolean
+  }
+
+  export type WikiSubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "entityId" | "data" | "notes" | "status" | "reviewedBy" | "reviewedAt" | "createdAt" | "updatedAt" | "likesCount", ExtArgs["result"]["wikiSubmission"]>
+  export type WikiSubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+    comments?: boolean | WikiSubmission$commentsArgs<ExtArgs>
+    likes?: boolean | WikiSubmission$likesArgs<ExtArgs>
+    _count?: boolean | WikiSubmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type WikiSubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+  }
+  export type WikiSubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | WikiSubmission$reviewerArgs<ExtArgs>
+  }
+
+  export type $WikiSubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WikiSubmission"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      reviewer: Prisma.$UserPayload<ExtArgs> | null
+      comments: Prisma.$WikiSubmissionCommentPayload<ExtArgs>[]
+      likes: Prisma.$WikiSubmissionLikePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      type: $Enums.WikiSubmissionType
+      entityId: string | null
+      data: Prisma.JsonValue
+      notes: string | null
+      status: $Enums.SubmissionStatus
+      reviewedBy: string | null
+      reviewedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+      likesCount: number
+    }, ExtArgs["result"]["wikiSubmission"]>
+    composites: {}
+  }
+
+  type WikiSubmissionGetPayload<S extends boolean | null | undefined | WikiSubmissionDefaultArgs> = $Result.GetResult<Prisma.$WikiSubmissionPayload, S>
+
+  type WikiSubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WikiSubmissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WikiSubmissionCountAggregateInputType | true
+    }
+
+  export interface WikiSubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WikiSubmission'], meta: { name: 'WikiSubmission' } }
+    /**
+     * Find zero or one WikiSubmission that matches the filter.
+     * @param {WikiSubmissionFindUniqueArgs} args - Arguments to find a WikiSubmission
+     * @example
+     * // Get one WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WikiSubmissionFindUniqueArgs>(args: SelectSubset<T, WikiSubmissionFindUniqueArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WikiSubmission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WikiSubmissionFindUniqueOrThrowArgs} args - Arguments to find a WikiSubmission
+     * @example
+     * // Get one WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WikiSubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, WikiSubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionFindFirstArgs} args - Arguments to find a WikiSubmission
+     * @example
+     * // Get one WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WikiSubmissionFindFirstArgs>(args?: SelectSubset<T, WikiSubmissionFindFirstArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionFindFirstOrThrowArgs} args - Arguments to find a WikiSubmission
+     * @example
+     * // Get one WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WikiSubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, WikiSubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WikiSubmissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WikiSubmissions
+     * const wikiSubmissions = await prisma.wikiSubmission.findMany()
+     * 
+     * // Get first 10 WikiSubmissions
+     * const wikiSubmissions = await prisma.wikiSubmission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wikiSubmissionWithIdOnly = await prisma.wikiSubmission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WikiSubmissionFindManyArgs>(args?: SelectSubset<T, WikiSubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WikiSubmission.
+     * @param {WikiSubmissionCreateArgs} args - Arguments to create a WikiSubmission.
+     * @example
+     * // Create one WikiSubmission
+     * const WikiSubmission = await prisma.wikiSubmission.create({
+     *   data: {
+     *     // ... data to create a WikiSubmission
+     *   }
+     * })
+     * 
+     */
+    create<T extends WikiSubmissionCreateArgs>(args: SelectSubset<T, WikiSubmissionCreateArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WikiSubmissions.
+     * @param {WikiSubmissionCreateManyArgs} args - Arguments to create many WikiSubmissions.
+     * @example
+     * // Create many WikiSubmissions
+     * const wikiSubmission = await prisma.wikiSubmission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WikiSubmissionCreateManyArgs>(args?: SelectSubset<T, WikiSubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WikiSubmissions and returns the data saved in the database.
+     * @param {WikiSubmissionCreateManyAndReturnArgs} args - Arguments to create many WikiSubmissions.
+     * @example
+     * // Create many WikiSubmissions
+     * const wikiSubmission = await prisma.wikiSubmission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WikiSubmissions and only return the `id`
+     * const wikiSubmissionWithIdOnly = await prisma.wikiSubmission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WikiSubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, WikiSubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WikiSubmission.
+     * @param {WikiSubmissionDeleteArgs} args - Arguments to delete one WikiSubmission.
+     * @example
+     * // Delete one WikiSubmission
+     * const WikiSubmission = await prisma.wikiSubmission.delete({
+     *   where: {
+     *     // ... filter to delete one WikiSubmission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WikiSubmissionDeleteArgs>(args: SelectSubset<T, WikiSubmissionDeleteArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WikiSubmission.
+     * @param {WikiSubmissionUpdateArgs} args - Arguments to update one WikiSubmission.
+     * @example
+     * // Update one WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WikiSubmissionUpdateArgs>(args: SelectSubset<T, WikiSubmissionUpdateArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WikiSubmissions.
+     * @param {WikiSubmissionDeleteManyArgs} args - Arguments to filter WikiSubmissions to delete.
+     * @example
+     * // Delete a few WikiSubmissions
+     * const { count } = await prisma.wikiSubmission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WikiSubmissionDeleteManyArgs>(args?: SelectSubset<T, WikiSubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WikiSubmissions
+     * const wikiSubmission = await prisma.wikiSubmission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WikiSubmissionUpdateManyArgs>(args: SelectSubset<T, WikiSubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissions and returns the data updated in the database.
+     * @param {WikiSubmissionUpdateManyAndReturnArgs} args - Arguments to update many WikiSubmissions.
+     * @example
+     * // Update many WikiSubmissions
+     * const wikiSubmission = await prisma.wikiSubmission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WikiSubmissions and only return the `id`
+     * const wikiSubmissionWithIdOnly = await prisma.wikiSubmission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WikiSubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, WikiSubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WikiSubmission.
+     * @param {WikiSubmissionUpsertArgs} args - Arguments to update or create a WikiSubmission.
+     * @example
+     * // Update or create a WikiSubmission
+     * const wikiSubmission = await prisma.wikiSubmission.upsert({
+     *   create: {
+     *     // ... data to create a WikiSubmission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WikiSubmission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WikiSubmissionUpsertArgs>(args: SelectSubset<T, WikiSubmissionUpsertArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WikiSubmissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCountArgs} args - Arguments to filter WikiSubmissions to count.
+     * @example
+     * // Count the number of WikiSubmissions
+     * const count = await prisma.wikiSubmission.count({
+     *   where: {
+     *     // ... the filter for the WikiSubmissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends WikiSubmissionCountArgs>(
+      args?: Subset<T, WikiSubmissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WikiSubmissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WikiSubmission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WikiSubmissionAggregateArgs>(args: Subset<T, WikiSubmissionAggregateArgs>): Prisma.PrismaPromise<GetWikiSubmissionAggregateType<T>>
+
+    /**
+     * Group by WikiSubmission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WikiSubmissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WikiSubmissionGroupByArgs['orderBy'] }
+        : { orderBy?: WikiSubmissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WikiSubmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWikiSubmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WikiSubmission model
+   */
+  readonly fields: WikiSubmissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WikiSubmission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WikiSubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    reviewer<T extends WikiSubmission$reviewerArgs<ExtArgs> = {}>(args?: Subset<T, WikiSubmission$reviewerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comments<T extends WikiSubmission$commentsArgs<ExtArgs> = {}>(args?: Subset<T, WikiSubmission$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    likes<T extends WikiSubmission$likesArgs<ExtArgs> = {}>(args?: Subset<T, WikiSubmission$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WikiSubmission model
+   */
+  interface WikiSubmissionFieldRefs {
+    readonly id: FieldRef<"WikiSubmission", 'String'>
+    readonly userId: FieldRef<"WikiSubmission", 'String'>
+    readonly type: FieldRef<"WikiSubmission", 'WikiSubmissionType'>
+    readonly entityId: FieldRef<"WikiSubmission", 'String'>
+    readonly data: FieldRef<"WikiSubmission", 'Json'>
+    readonly notes: FieldRef<"WikiSubmission", 'String'>
+    readonly status: FieldRef<"WikiSubmission", 'SubmissionStatus'>
+    readonly reviewedBy: FieldRef<"WikiSubmission", 'String'>
+    readonly reviewedAt: FieldRef<"WikiSubmission", 'DateTime'>
+    readonly createdAt: FieldRef<"WikiSubmission", 'DateTime'>
+    readonly updatedAt: FieldRef<"WikiSubmission", 'DateTime'>
+    readonly likesCount: FieldRef<"WikiSubmission", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WikiSubmission findUnique
+   */
+  export type WikiSubmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmission to fetch.
+     */
+    where: WikiSubmissionWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmission findUniqueOrThrow
+   */
+  export type WikiSubmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmission to fetch.
+     */
+    where: WikiSubmissionWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmission findFirst
+   */
+  export type WikiSubmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmission to fetch.
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissions to fetch.
+     */
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissions.
+     */
+    cursor?: WikiSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissions.
+     */
+    distinct?: WikiSubmissionScalarFieldEnum | WikiSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmission findFirstOrThrow
+   */
+  export type WikiSubmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmission to fetch.
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissions to fetch.
+     */
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissions.
+     */
+    cursor?: WikiSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissions.
+     */
+    distinct?: WikiSubmissionScalarFieldEnum | WikiSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmission findMany
+   */
+  export type WikiSubmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissions to fetch.
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissions to fetch.
+     */
+    orderBy?: WikiSubmissionOrderByWithRelationInput | WikiSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WikiSubmissions.
+     */
+    cursor?: WikiSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissions.
+     */
+    skip?: number
+    distinct?: WikiSubmissionScalarFieldEnum | WikiSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmission create
+   */
+  export type WikiSubmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WikiSubmission.
+     */
+    data: XOR<WikiSubmissionCreateInput, WikiSubmissionUncheckedCreateInput>
+  }
+
+  /**
+   * WikiSubmission createMany
+   */
+  export type WikiSubmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WikiSubmissions.
+     */
+    data: WikiSubmissionCreateManyInput | WikiSubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WikiSubmission createManyAndReturn
+   */
+  export type WikiSubmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many WikiSubmissions.
+     */
+    data: WikiSubmissionCreateManyInput | WikiSubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmission update
+   */
+  export type WikiSubmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WikiSubmission.
+     */
+    data: XOR<WikiSubmissionUpdateInput, WikiSubmissionUncheckedUpdateInput>
+    /**
+     * Choose, which WikiSubmission to update.
+     */
+    where: WikiSubmissionWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmission updateMany
+   */
+  export type WikiSubmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WikiSubmissions.
+     */
+    data: XOR<WikiSubmissionUpdateManyMutationInput, WikiSubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissions to update
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * Limit how many WikiSubmissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmission updateManyAndReturn
+   */
+  export type WikiSubmissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to update WikiSubmissions.
+     */
+    data: XOR<WikiSubmissionUpdateManyMutationInput, WikiSubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissions to update
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * Limit how many WikiSubmissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmission upsert
+   */
+  export type WikiSubmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WikiSubmission to update in case it exists.
+     */
+    where: WikiSubmissionWhereUniqueInput
+    /**
+     * In case the WikiSubmission found by the `where` argument doesn't exist, create a new WikiSubmission with this data.
+     */
+    create: XOR<WikiSubmissionCreateInput, WikiSubmissionUncheckedCreateInput>
+    /**
+     * In case the WikiSubmission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WikiSubmissionUpdateInput, WikiSubmissionUncheckedUpdateInput>
+  }
+
+  /**
+   * WikiSubmission delete
+   */
+  export type WikiSubmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter which WikiSubmission to delete.
+     */
+    where: WikiSubmissionWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmission deleteMany
+   */
+  export type WikiSubmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmissions to delete
+     */
+    where?: WikiSubmissionWhereInput
+    /**
+     * Limit how many WikiSubmissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmission.reviewer
+   */
+  export type WikiSubmission$reviewerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * WikiSubmission.comments
+   */
+  export type WikiSubmission$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    where?: WikiSubmissionCommentWhereInput
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionCommentScalarFieldEnum | WikiSubmissionCommentScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmission.likes
+   */
+  export type WikiSubmission$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    where?: WikiSubmissionLikeWhereInput
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WikiSubmissionLikeScalarFieldEnum | WikiSubmissionLikeScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmission without action
+   */
+  export type WikiSubmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmission
+     */
+    select?: WikiSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmission
+     */
+    omit?: WikiSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WikiSubmissionComment
+   */
+
+  export type AggregateWikiSubmissionComment = {
+    _count: WikiSubmissionCommentCountAggregateOutputType | null
+    _min: WikiSubmissionCommentMinAggregateOutputType | null
+    _max: WikiSubmissionCommentMaxAggregateOutputType | null
+  }
+
+  export type WikiSubmissionCommentMinAggregateOutputType = {
+    id: string | null
+    submissionId: string | null
+    userId: string | null
+    content: string | null
+    createdAt: Date | null
+  }
+
+  export type WikiSubmissionCommentMaxAggregateOutputType = {
+    id: string | null
+    submissionId: string | null
+    userId: string | null
+    content: string | null
+    createdAt: Date | null
+  }
+
+  export type WikiSubmissionCommentCountAggregateOutputType = {
+    id: number
+    submissionId: number
+    userId: number
+    content: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type WikiSubmissionCommentMinAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    content?: true
+    createdAt?: true
+  }
+
+  export type WikiSubmissionCommentMaxAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    content?: true
+    createdAt?: true
+  }
+
+  export type WikiSubmissionCommentCountAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    content?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type WikiSubmissionCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmissionComment to aggregate.
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionComments to fetch.
+     */
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WikiSubmissionComments
+    **/
+    _count?: true | WikiSubmissionCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WikiSubmissionCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WikiSubmissionCommentMaxAggregateInputType
+  }
+
+  export type GetWikiSubmissionCommentAggregateType<T extends WikiSubmissionCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateWikiSubmissionComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWikiSubmissionComment[P]>
+      : GetScalarType<T[P], AggregateWikiSubmissionComment[P]>
+  }
+
+
+
+
+  export type WikiSubmissionCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionCommentWhereInput
+    orderBy?: WikiSubmissionCommentOrderByWithAggregationInput | WikiSubmissionCommentOrderByWithAggregationInput[]
+    by: WikiSubmissionCommentScalarFieldEnum[] | WikiSubmissionCommentScalarFieldEnum
+    having?: WikiSubmissionCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WikiSubmissionCommentCountAggregateInputType | true
+    _min?: WikiSubmissionCommentMinAggregateInputType
+    _max?: WikiSubmissionCommentMaxAggregateInputType
+  }
+
+  export type WikiSubmissionCommentGroupByOutputType = {
+    id: string
+    submissionId: string
+    userId: string
+    content: string
+    createdAt: Date
+    _count: WikiSubmissionCommentCountAggregateOutputType | null
+    _min: WikiSubmissionCommentMinAggregateOutputType | null
+    _max: WikiSubmissionCommentMaxAggregateOutputType | null
+  }
+
+  type GetWikiSubmissionCommentGroupByPayload<T extends WikiSubmissionCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WikiSubmissionCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WikiSubmissionCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WikiSubmissionCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], WikiSubmissionCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WikiSubmissionCommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    content?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionComment"]>
+
+  export type WikiSubmissionCommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    content?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionComment"]>
+
+  export type WikiSubmissionCommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    content?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionComment"]>
+
+  export type WikiSubmissionCommentSelectScalar = {
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    content?: boolean
+    createdAt?: boolean
+  }
+
+  export type WikiSubmissionCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "userId" | "content" | "createdAt", ExtArgs["result"]["wikiSubmissionComment"]>
+  export type WikiSubmissionCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WikiSubmissionCommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WikiSubmissionCommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $WikiSubmissionCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WikiSubmissionComment"
+    objects: {
+      submission: Prisma.$WikiSubmissionPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      submissionId: string
+      userId: string
+      content: string
+      createdAt: Date
+    }, ExtArgs["result"]["wikiSubmissionComment"]>
+    composites: {}
+  }
+
+  type WikiSubmissionCommentGetPayload<S extends boolean | null | undefined | WikiSubmissionCommentDefaultArgs> = $Result.GetResult<Prisma.$WikiSubmissionCommentPayload, S>
+
+  type WikiSubmissionCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WikiSubmissionCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WikiSubmissionCommentCountAggregateInputType | true
+    }
+
+  export interface WikiSubmissionCommentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WikiSubmissionComment'], meta: { name: 'WikiSubmissionComment' } }
+    /**
+     * Find zero or one WikiSubmissionComment that matches the filter.
+     * @param {WikiSubmissionCommentFindUniqueArgs} args - Arguments to find a WikiSubmissionComment
+     * @example
+     * // Get one WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WikiSubmissionCommentFindUniqueArgs>(args: SelectSubset<T, WikiSubmissionCommentFindUniqueArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WikiSubmissionComment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WikiSubmissionCommentFindUniqueOrThrowArgs} args - Arguments to find a WikiSubmissionComment
+     * @example
+     * // Get one WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WikiSubmissionCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, WikiSubmissionCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmissionComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentFindFirstArgs} args - Arguments to find a WikiSubmissionComment
+     * @example
+     * // Get one WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WikiSubmissionCommentFindFirstArgs>(args?: SelectSubset<T, WikiSubmissionCommentFindFirstArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmissionComment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentFindFirstOrThrowArgs} args - Arguments to find a WikiSubmissionComment
+     * @example
+     * // Get one WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WikiSubmissionCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, WikiSubmissionCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WikiSubmissionComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WikiSubmissionComments
+     * const wikiSubmissionComments = await prisma.wikiSubmissionComment.findMany()
+     * 
+     * // Get first 10 WikiSubmissionComments
+     * const wikiSubmissionComments = await prisma.wikiSubmissionComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wikiSubmissionCommentWithIdOnly = await prisma.wikiSubmissionComment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WikiSubmissionCommentFindManyArgs>(args?: SelectSubset<T, WikiSubmissionCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WikiSubmissionComment.
+     * @param {WikiSubmissionCommentCreateArgs} args - Arguments to create a WikiSubmissionComment.
+     * @example
+     * // Create one WikiSubmissionComment
+     * const WikiSubmissionComment = await prisma.wikiSubmissionComment.create({
+     *   data: {
+     *     // ... data to create a WikiSubmissionComment
+     *   }
+     * })
+     * 
+     */
+    create<T extends WikiSubmissionCommentCreateArgs>(args: SelectSubset<T, WikiSubmissionCommentCreateArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WikiSubmissionComments.
+     * @param {WikiSubmissionCommentCreateManyArgs} args - Arguments to create many WikiSubmissionComments.
+     * @example
+     * // Create many WikiSubmissionComments
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WikiSubmissionCommentCreateManyArgs>(args?: SelectSubset<T, WikiSubmissionCommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WikiSubmissionComments and returns the data saved in the database.
+     * @param {WikiSubmissionCommentCreateManyAndReturnArgs} args - Arguments to create many WikiSubmissionComments.
+     * @example
+     * // Create many WikiSubmissionComments
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WikiSubmissionComments and only return the `id`
+     * const wikiSubmissionCommentWithIdOnly = await prisma.wikiSubmissionComment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WikiSubmissionCommentCreateManyAndReturnArgs>(args?: SelectSubset<T, WikiSubmissionCommentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WikiSubmissionComment.
+     * @param {WikiSubmissionCommentDeleteArgs} args - Arguments to delete one WikiSubmissionComment.
+     * @example
+     * // Delete one WikiSubmissionComment
+     * const WikiSubmissionComment = await prisma.wikiSubmissionComment.delete({
+     *   where: {
+     *     // ... filter to delete one WikiSubmissionComment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WikiSubmissionCommentDeleteArgs>(args: SelectSubset<T, WikiSubmissionCommentDeleteArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WikiSubmissionComment.
+     * @param {WikiSubmissionCommentUpdateArgs} args - Arguments to update one WikiSubmissionComment.
+     * @example
+     * // Update one WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WikiSubmissionCommentUpdateArgs>(args: SelectSubset<T, WikiSubmissionCommentUpdateArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WikiSubmissionComments.
+     * @param {WikiSubmissionCommentDeleteManyArgs} args - Arguments to filter WikiSubmissionComments to delete.
+     * @example
+     * // Delete a few WikiSubmissionComments
+     * const { count } = await prisma.wikiSubmissionComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WikiSubmissionCommentDeleteManyArgs>(args?: SelectSubset<T, WikiSubmissionCommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissionComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WikiSubmissionComments
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WikiSubmissionCommentUpdateManyArgs>(args: SelectSubset<T, WikiSubmissionCommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissionComments and returns the data updated in the database.
+     * @param {WikiSubmissionCommentUpdateManyAndReturnArgs} args - Arguments to update many WikiSubmissionComments.
+     * @example
+     * // Update many WikiSubmissionComments
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WikiSubmissionComments and only return the `id`
+     * const wikiSubmissionCommentWithIdOnly = await prisma.wikiSubmissionComment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WikiSubmissionCommentUpdateManyAndReturnArgs>(args: SelectSubset<T, WikiSubmissionCommentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WikiSubmissionComment.
+     * @param {WikiSubmissionCommentUpsertArgs} args - Arguments to update or create a WikiSubmissionComment.
+     * @example
+     * // Update or create a WikiSubmissionComment
+     * const wikiSubmissionComment = await prisma.wikiSubmissionComment.upsert({
+     *   create: {
+     *     // ... data to create a WikiSubmissionComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WikiSubmissionComment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WikiSubmissionCommentUpsertArgs>(args: SelectSubset<T, WikiSubmissionCommentUpsertArgs<ExtArgs>>): Prisma__WikiSubmissionCommentClient<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WikiSubmissionComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentCountArgs} args - Arguments to filter WikiSubmissionComments to count.
+     * @example
+     * // Count the number of WikiSubmissionComments
+     * const count = await prisma.wikiSubmissionComment.count({
+     *   where: {
+     *     // ... the filter for the WikiSubmissionComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends WikiSubmissionCommentCountArgs>(
+      args?: Subset<T, WikiSubmissionCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WikiSubmissionCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WikiSubmissionComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WikiSubmissionCommentAggregateArgs>(args: Subset<T, WikiSubmissionCommentAggregateArgs>): Prisma.PrismaPromise<GetWikiSubmissionCommentAggregateType<T>>
+
+    /**
+     * Group by WikiSubmissionComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WikiSubmissionCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WikiSubmissionCommentGroupByArgs['orderBy'] }
+        : { orderBy?: WikiSubmissionCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WikiSubmissionCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWikiSubmissionCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WikiSubmissionComment model
+   */
+  readonly fields: WikiSubmissionCommentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WikiSubmissionComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WikiSubmissionCommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submission<T extends WikiSubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WikiSubmissionDefaultArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WikiSubmissionComment model
+   */
+  interface WikiSubmissionCommentFieldRefs {
+    readonly id: FieldRef<"WikiSubmissionComment", 'String'>
+    readonly submissionId: FieldRef<"WikiSubmissionComment", 'String'>
+    readonly userId: FieldRef<"WikiSubmissionComment", 'String'>
+    readonly content: FieldRef<"WikiSubmissionComment", 'String'>
+    readonly createdAt: FieldRef<"WikiSubmissionComment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WikiSubmissionComment findUnique
+   */
+  export type WikiSubmissionCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionComment to fetch.
+     */
+    where: WikiSubmissionCommentWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionComment findUniqueOrThrow
+   */
+  export type WikiSubmissionCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionComment to fetch.
+     */
+    where: WikiSubmissionCommentWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionComment findFirst
+   */
+  export type WikiSubmissionCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionComment to fetch.
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionComments to fetch.
+     */
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissionComments.
+     */
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissionComments.
+     */
+    distinct?: WikiSubmissionCommentScalarFieldEnum | WikiSubmissionCommentScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionComment findFirstOrThrow
+   */
+  export type WikiSubmissionCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionComment to fetch.
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionComments to fetch.
+     */
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissionComments.
+     */
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissionComments.
+     */
+    distinct?: WikiSubmissionCommentScalarFieldEnum | WikiSubmissionCommentScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionComment findMany
+   */
+  export type WikiSubmissionCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionComments to fetch.
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionComments to fetch.
+     */
+    orderBy?: WikiSubmissionCommentOrderByWithRelationInput | WikiSubmissionCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WikiSubmissionComments.
+     */
+    cursor?: WikiSubmissionCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionComments.
+     */
+    skip?: number
+    distinct?: WikiSubmissionCommentScalarFieldEnum | WikiSubmissionCommentScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionComment create
+   */
+  export type WikiSubmissionCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WikiSubmissionComment.
+     */
+    data: XOR<WikiSubmissionCommentCreateInput, WikiSubmissionCommentUncheckedCreateInput>
+  }
+
+  /**
+   * WikiSubmissionComment createMany
+   */
+  export type WikiSubmissionCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WikiSubmissionComments.
+     */
+    data: WikiSubmissionCommentCreateManyInput | WikiSubmissionCommentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WikiSubmissionComment createManyAndReturn
+   */
+  export type WikiSubmissionCommentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * The data used to create many WikiSubmissionComments.
+     */
+    data: WikiSubmissionCommentCreateManyInput | WikiSubmissionCommentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmissionComment update
+   */
+  export type WikiSubmissionCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WikiSubmissionComment.
+     */
+    data: XOR<WikiSubmissionCommentUpdateInput, WikiSubmissionCommentUncheckedUpdateInput>
+    /**
+     * Choose, which WikiSubmissionComment to update.
+     */
+    where: WikiSubmissionCommentWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionComment updateMany
+   */
+  export type WikiSubmissionCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WikiSubmissionComments.
+     */
+    data: XOR<WikiSubmissionCommentUpdateManyMutationInput, WikiSubmissionCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissionComments to update
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * Limit how many WikiSubmissionComments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmissionComment updateManyAndReturn
+   */
+  export type WikiSubmissionCommentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * The data used to update WikiSubmissionComments.
+     */
+    data: XOR<WikiSubmissionCommentUpdateManyMutationInput, WikiSubmissionCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissionComments to update
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * Limit how many WikiSubmissionComments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmissionComment upsert
+   */
+  export type WikiSubmissionCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WikiSubmissionComment to update in case it exists.
+     */
+    where: WikiSubmissionCommentWhereUniqueInput
+    /**
+     * In case the WikiSubmissionComment found by the `where` argument doesn't exist, create a new WikiSubmissionComment with this data.
+     */
+    create: XOR<WikiSubmissionCommentCreateInput, WikiSubmissionCommentUncheckedCreateInput>
+    /**
+     * In case the WikiSubmissionComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WikiSubmissionCommentUpdateInput, WikiSubmissionCommentUncheckedUpdateInput>
+  }
+
+  /**
+   * WikiSubmissionComment delete
+   */
+  export type WikiSubmissionCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+    /**
+     * Filter which WikiSubmissionComment to delete.
+     */
+    where: WikiSubmissionCommentWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionComment deleteMany
+   */
+  export type WikiSubmissionCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmissionComments to delete
+     */
+    where?: WikiSubmissionCommentWhereInput
+    /**
+     * Limit how many WikiSubmissionComments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmissionComment without action
+   */
+  export type WikiSubmissionCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionComment
+     */
+    select?: WikiSubmissionCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionComment
+     */
+    omit?: WikiSubmissionCommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionCommentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WikiSubmissionLike
+   */
+
+  export type AggregateWikiSubmissionLike = {
+    _count: WikiSubmissionLikeCountAggregateOutputType | null
+    _min: WikiSubmissionLikeMinAggregateOutputType | null
+    _max: WikiSubmissionLikeMaxAggregateOutputType | null
+  }
+
+  export type WikiSubmissionLikeMinAggregateOutputType = {
+    id: string | null
+    submissionId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type WikiSubmissionLikeMaxAggregateOutputType = {
+    id: string | null
+    submissionId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type WikiSubmissionLikeCountAggregateOutputType = {
+    id: number
+    submissionId: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type WikiSubmissionLikeMinAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type WikiSubmissionLikeMaxAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type WikiSubmissionLikeCountAggregateInputType = {
+    id?: true
+    submissionId?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type WikiSubmissionLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmissionLike to aggregate.
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionLikes to fetch.
+     */
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WikiSubmissionLikes
+    **/
+    _count?: true | WikiSubmissionLikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WikiSubmissionLikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WikiSubmissionLikeMaxAggregateInputType
+  }
+
+  export type GetWikiSubmissionLikeAggregateType<T extends WikiSubmissionLikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateWikiSubmissionLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWikiSubmissionLike[P]>
+      : GetScalarType<T[P], AggregateWikiSubmissionLike[P]>
+  }
+
+
+
+
+  export type WikiSubmissionLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WikiSubmissionLikeWhereInput
+    orderBy?: WikiSubmissionLikeOrderByWithAggregationInput | WikiSubmissionLikeOrderByWithAggregationInput[]
+    by: WikiSubmissionLikeScalarFieldEnum[] | WikiSubmissionLikeScalarFieldEnum
+    having?: WikiSubmissionLikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WikiSubmissionLikeCountAggregateInputType | true
+    _min?: WikiSubmissionLikeMinAggregateInputType
+    _max?: WikiSubmissionLikeMaxAggregateInputType
+  }
+
+  export type WikiSubmissionLikeGroupByOutputType = {
+    id: string
+    submissionId: string
+    userId: string
+    createdAt: Date
+    _count: WikiSubmissionLikeCountAggregateOutputType | null
+    _min: WikiSubmissionLikeMinAggregateOutputType | null
+    _max: WikiSubmissionLikeMaxAggregateOutputType | null
+  }
+
+  type GetWikiSubmissionLikeGroupByPayload<T extends WikiSubmissionLikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WikiSubmissionLikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WikiSubmissionLikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WikiSubmissionLikeGroupByOutputType[P]>
+            : GetScalarType<T[P], WikiSubmissionLikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WikiSubmissionLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionLike"]>
+
+  export type WikiSubmissionLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionLike"]>
+
+  export type WikiSubmissionLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wikiSubmissionLike"]>
+
+  export type WikiSubmissionLikeSelectScalar = {
+    id?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type WikiSubmissionLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "userId" | "createdAt", ExtArgs["result"]["wikiSubmissionLike"]>
+  export type WikiSubmissionLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WikiSubmissionLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WikiSubmissionLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | WikiSubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $WikiSubmissionLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WikiSubmissionLike"
+    objects: {
+      submission: Prisma.$WikiSubmissionPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      submissionId: string
+      userId: string
+      createdAt: Date
+    }, ExtArgs["result"]["wikiSubmissionLike"]>
+    composites: {}
+  }
+
+  type WikiSubmissionLikeGetPayload<S extends boolean | null | undefined | WikiSubmissionLikeDefaultArgs> = $Result.GetResult<Prisma.$WikiSubmissionLikePayload, S>
+
+  type WikiSubmissionLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WikiSubmissionLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WikiSubmissionLikeCountAggregateInputType | true
+    }
+
+  export interface WikiSubmissionLikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WikiSubmissionLike'], meta: { name: 'WikiSubmissionLike' } }
+    /**
+     * Find zero or one WikiSubmissionLike that matches the filter.
+     * @param {WikiSubmissionLikeFindUniqueArgs} args - Arguments to find a WikiSubmissionLike
+     * @example
+     * // Get one WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WikiSubmissionLikeFindUniqueArgs>(args: SelectSubset<T, WikiSubmissionLikeFindUniqueArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WikiSubmissionLike that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WikiSubmissionLikeFindUniqueOrThrowArgs} args - Arguments to find a WikiSubmissionLike
+     * @example
+     * // Get one WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WikiSubmissionLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, WikiSubmissionLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmissionLike that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeFindFirstArgs} args - Arguments to find a WikiSubmissionLike
+     * @example
+     * // Get one WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WikiSubmissionLikeFindFirstArgs>(args?: SelectSubset<T, WikiSubmissionLikeFindFirstArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WikiSubmissionLike that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeFindFirstOrThrowArgs} args - Arguments to find a WikiSubmissionLike
+     * @example
+     * // Get one WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WikiSubmissionLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, WikiSubmissionLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WikiSubmissionLikes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WikiSubmissionLikes
+     * const wikiSubmissionLikes = await prisma.wikiSubmissionLike.findMany()
+     * 
+     * // Get first 10 WikiSubmissionLikes
+     * const wikiSubmissionLikes = await prisma.wikiSubmissionLike.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wikiSubmissionLikeWithIdOnly = await prisma.wikiSubmissionLike.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WikiSubmissionLikeFindManyArgs>(args?: SelectSubset<T, WikiSubmissionLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WikiSubmissionLike.
+     * @param {WikiSubmissionLikeCreateArgs} args - Arguments to create a WikiSubmissionLike.
+     * @example
+     * // Create one WikiSubmissionLike
+     * const WikiSubmissionLike = await prisma.wikiSubmissionLike.create({
+     *   data: {
+     *     // ... data to create a WikiSubmissionLike
+     *   }
+     * })
+     * 
+     */
+    create<T extends WikiSubmissionLikeCreateArgs>(args: SelectSubset<T, WikiSubmissionLikeCreateArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WikiSubmissionLikes.
+     * @param {WikiSubmissionLikeCreateManyArgs} args - Arguments to create many WikiSubmissionLikes.
+     * @example
+     * // Create many WikiSubmissionLikes
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WikiSubmissionLikeCreateManyArgs>(args?: SelectSubset<T, WikiSubmissionLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WikiSubmissionLikes and returns the data saved in the database.
+     * @param {WikiSubmissionLikeCreateManyAndReturnArgs} args - Arguments to create many WikiSubmissionLikes.
+     * @example
+     * // Create many WikiSubmissionLikes
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WikiSubmissionLikes and only return the `id`
+     * const wikiSubmissionLikeWithIdOnly = await prisma.wikiSubmissionLike.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WikiSubmissionLikeCreateManyAndReturnArgs>(args?: SelectSubset<T, WikiSubmissionLikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WikiSubmissionLike.
+     * @param {WikiSubmissionLikeDeleteArgs} args - Arguments to delete one WikiSubmissionLike.
+     * @example
+     * // Delete one WikiSubmissionLike
+     * const WikiSubmissionLike = await prisma.wikiSubmissionLike.delete({
+     *   where: {
+     *     // ... filter to delete one WikiSubmissionLike
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WikiSubmissionLikeDeleteArgs>(args: SelectSubset<T, WikiSubmissionLikeDeleteArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WikiSubmissionLike.
+     * @param {WikiSubmissionLikeUpdateArgs} args - Arguments to update one WikiSubmissionLike.
+     * @example
+     * // Update one WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WikiSubmissionLikeUpdateArgs>(args: SelectSubset<T, WikiSubmissionLikeUpdateArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WikiSubmissionLikes.
+     * @param {WikiSubmissionLikeDeleteManyArgs} args - Arguments to filter WikiSubmissionLikes to delete.
+     * @example
+     * // Delete a few WikiSubmissionLikes
+     * const { count } = await prisma.wikiSubmissionLike.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WikiSubmissionLikeDeleteManyArgs>(args?: SelectSubset<T, WikiSubmissionLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissionLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WikiSubmissionLikes
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WikiSubmissionLikeUpdateManyArgs>(args: SelectSubset<T, WikiSubmissionLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WikiSubmissionLikes and returns the data updated in the database.
+     * @param {WikiSubmissionLikeUpdateManyAndReturnArgs} args - Arguments to update many WikiSubmissionLikes.
+     * @example
+     * // Update many WikiSubmissionLikes
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WikiSubmissionLikes and only return the `id`
+     * const wikiSubmissionLikeWithIdOnly = await prisma.wikiSubmissionLike.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WikiSubmissionLikeUpdateManyAndReturnArgs>(args: SelectSubset<T, WikiSubmissionLikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WikiSubmissionLike.
+     * @param {WikiSubmissionLikeUpsertArgs} args - Arguments to update or create a WikiSubmissionLike.
+     * @example
+     * // Update or create a WikiSubmissionLike
+     * const wikiSubmissionLike = await prisma.wikiSubmissionLike.upsert({
+     *   create: {
+     *     // ... data to create a WikiSubmissionLike
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WikiSubmissionLike we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WikiSubmissionLikeUpsertArgs>(args: SelectSubset<T, WikiSubmissionLikeUpsertArgs<ExtArgs>>): Prisma__WikiSubmissionLikeClient<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WikiSubmissionLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeCountArgs} args - Arguments to filter WikiSubmissionLikes to count.
+     * @example
+     * // Count the number of WikiSubmissionLikes
+     * const count = await prisma.wikiSubmissionLike.count({
+     *   where: {
+     *     // ... the filter for the WikiSubmissionLikes we want to count
+     *   }
+     * })
+    **/
+    count<T extends WikiSubmissionLikeCountArgs>(
+      args?: Subset<T, WikiSubmissionLikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WikiSubmissionLikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WikiSubmissionLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WikiSubmissionLikeAggregateArgs>(args: Subset<T, WikiSubmissionLikeAggregateArgs>): Prisma.PrismaPromise<GetWikiSubmissionLikeAggregateType<T>>
+
+    /**
+     * Group by WikiSubmissionLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WikiSubmissionLikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WikiSubmissionLikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WikiSubmissionLikeGroupByArgs['orderBy'] }
+        : { orderBy?: WikiSubmissionLikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WikiSubmissionLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWikiSubmissionLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WikiSubmissionLike model
+   */
+  readonly fields: WikiSubmissionLikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WikiSubmissionLike.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WikiSubmissionLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submission<T extends WikiSubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WikiSubmissionDefaultArgs<ExtArgs>>): Prisma__WikiSubmissionClient<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WikiSubmissionLike model
+   */
+  interface WikiSubmissionLikeFieldRefs {
+    readonly id: FieldRef<"WikiSubmissionLike", 'String'>
+    readonly submissionId: FieldRef<"WikiSubmissionLike", 'String'>
+    readonly userId: FieldRef<"WikiSubmissionLike", 'String'>
+    readonly createdAt: FieldRef<"WikiSubmissionLike", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WikiSubmissionLike findUnique
+   */
+  export type WikiSubmissionLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionLike to fetch.
+     */
+    where: WikiSubmissionLikeWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionLike findUniqueOrThrow
+   */
+  export type WikiSubmissionLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionLike to fetch.
+     */
+    where: WikiSubmissionLikeWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionLike findFirst
+   */
+  export type WikiSubmissionLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionLike to fetch.
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionLikes to fetch.
+     */
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissionLikes.
+     */
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissionLikes.
+     */
+    distinct?: WikiSubmissionLikeScalarFieldEnum | WikiSubmissionLikeScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionLike findFirstOrThrow
+   */
+  export type WikiSubmissionLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionLike to fetch.
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionLikes to fetch.
+     */
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WikiSubmissionLikes.
+     */
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WikiSubmissionLikes.
+     */
+    distinct?: WikiSubmissionLikeScalarFieldEnum | WikiSubmissionLikeScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionLike findMany
+   */
+  export type WikiSubmissionLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which WikiSubmissionLikes to fetch.
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WikiSubmissionLikes to fetch.
+     */
+    orderBy?: WikiSubmissionLikeOrderByWithRelationInput | WikiSubmissionLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WikiSubmissionLikes.
+     */
+    cursor?: WikiSubmissionLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WikiSubmissionLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WikiSubmissionLikes.
+     */
+    skip?: number
+    distinct?: WikiSubmissionLikeScalarFieldEnum | WikiSubmissionLikeScalarFieldEnum[]
+  }
+
+  /**
+   * WikiSubmissionLike create
+   */
+  export type WikiSubmissionLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WikiSubmissionLike.
+     */
+    data: XOR<WikiSubmissionLikeCreateInput, WikiSubmissionLikeUncheckedCreateInput>
+  }
+
+  /**
+   * WikiSubmissionLike createMany
+   */
+  export type WikiSubmissionLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WikiSubmissionLikes.
+     */
+    data: WikiSubmissionLikeCreateManyInput | WikiSubmissionLikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WikiSubmissionLike createManyAndReturn
+   */
+  export type WikiSubmissionLikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many WikiSubmissionLikes.
+     */
+    data: WikiSubmissionLikeCreateManyInput | WikiSubmissionLikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmissionLike update
+   */
+  export type WikiSubmissionLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WikiSubmissionLike.
+     */
+    data: XOR<WikiSubmissionLikeUpdateInput, WikiSubmissionLikeUncheckedUpdateInput>
+    /**
+     * Choose, which WikiSubmissionLike to update.
+     */
+    where: WikiSubmissionLikeWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionLike updateMany
+   */
+  export type WikiSubmissionLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WikiSubmissionLikes.
+     */
+    data: XOR<WikiSubmissionLikeUpdateManyMutationInput, WikiSubmissionLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissionLikes to update
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * Limit how many WikiSubmissionLikes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmissionLike updateManyAndReturn
+   */
+  export type WikiSubmissionLikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * The data used to update WikiSubmissionLikes.
+     */
+    data: XOR<WikiSubmissionLikeUpdateManyMutationInput, WikiSubmissionLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which WikiSubmissionLikes to update
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * Limit how many WikiSubmissionLikes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WikiSubmissionLike upsert
+   */
+  export type WikiSubmissionLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WikiSubmissionLike to update in case it exists.
+     */
+    where: WikiSubmissionLikeWhereUniqueInput
+    /**
+     * In case the WikiSubmissionLike found by the `where` argument doesn't exist, create a new WikiSubmissionLike with this data.
+     */
+    create: XOR<WikiSubmissionLikeCreateInput, WikiSubmissionLikeUncheckedCreateInput>
+    /**
+     * In case the WikiSubmissionLike was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WikiSubmissionLikeUpdateInput, WikiSubmissionLikeUncheckedUpdateInput>
+  }
+
+  /**
+   * WikiSubmissionLike delete
+   */
+  export type WikiSubmissionLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+    /**
+     * Filter which WikiSubmissionLike to delete.
+     */
+    where: WikiSubmissionLikeWhereUniqueInput
+  }
+
+  /**
+   * WikiSubmissionLike deleteMany
+   */
+  export type WikiSubmissionLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WikiSubmissionLikes to delete
+     */
+    where?: WikiSubmissionLikeWhereInput
+    /**
+     * Limit how many WikiSubmissionLikes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WikiSubmissionLike without action
+   */
+  export type WikiSubmissionLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WikiSubmissionLike
+     */
+    select?: WikiSubmissionLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WikiSubmissionLike
+     */
+    omit?: WikiSubmissionLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WikiSubmissionLikeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -34575,6 +38509,8 @@ export namespace Prisma {
     kitId: 'kitId',
     status: 'status',
     notes: 'notes',
+    price: 'price',
+    acquiredAt: 'acquiredAt',
     addedAt: 'addedAt',
     updatedAt: 'updatedAt'
   };
@@ -34703,12 +38639,58 @@ export namespace Prisma {
   export type MarketplaceListingScalarFieldEnum = (typeof MarketplaceListingScalarFieldEnum)[keyof typeof MarketplaceListingScalarFieldEnum]
 
 
+  export const WikiSubmissionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    type: 'type',
+    entityId: 'entityId',
+    data: 'data',
+    notes: 'notes',
+    status: 'status',
+    reviewedBy: 'reviewedBy',
+    reviewedAt: 'reviewedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    likesCount: 'likesCount'
+  };
+
+  export type WikiSubmissionScalarFieldEnum = (typeof WikiSubmissionScalarFieldEnum)[keyof typeof WikiSubmissionScalarFieldEnum]
+
+
+  export const WikiSubmissionCommentScalarFieldEnum: {
+    id: 'id',
+    submissionId: 'submissionId',
+    userId: 'userId',
+    content: 'content',
+    createdAt: 'createdAt'
+  };
+
+  export type WikiSubmissionCommentScalarFieldEnum = (typeof WikiSubmissionCommentScalarFieldEnum)[keyof typeof WikiSubmissionCommentScalarFieldEnum]
+
+
+  export const WikiSubmissionLikeScalarFieldEnum: {
+    id: 'id',
+    submissionId: 'submissionId',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type WikiSubmissionLikeScalarFieldEnum = (typeof WikiSubmissionLikeScalarFieldEnum)[keyof typeof WikiSubmissionLikeScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -34725,6 +38707,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -34876,6 +38867,48 @@ export namespace Prisma {
    * Reference to a field of type 'MilestoneType[]'
    */
   export type ListEnumMilestoneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MilestoneType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WikiSubmissionType'
+   */
+  export type EnumWikiSubmissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WikiSubmissionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'WikiSubmissionType[]'
+   */
+  export type ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WikiSubmissionType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubmissionStatus'
+   */
+  export type EnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubmissionStatus[]'
+   */
+  export type ListEnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus[]'>
     
   /**
    * Deep Input Types
@@ -36099,6 +40132,10 @@ export namespace Prisma {
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    wikiSubmissions?: WikiSubmissionListRelationFilter
+    reviewedWikiSubmissions?: WikiSubmissionListRelationFilter
+    wikiSubmissionComments?: WikiSubmissionCommentListRelationFilter
+    wikiSubmissionLikes?: WikiSubmissionLikeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -36134,6 +40171,10 @@ export namespace Prisma {
     buildComments?: BuildCommentOrderByRelationAggregateInput
     reviewFeedback?: ReviewFeedbackOrderByRelationAggregateInput
     gunplaCards?: GunplaCardOrderByRelationAggregateInput
+    wikiSubmissions?: WikiSubmissionOrderByRelationAggregateInput
+    reviewedWikiSubmissions?: WikiSubmissionOrderByRelationAggregateInput
+    wikiSubmissionComments?: WikiSubmissionCommentOrderByRelationAggregateInput
+    wikiSubmissionLikes?: WikiSubmissionLikeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -36172,6 +40213,10 @@ export namespace Prisma {
     buildComments?: BuildCommentListRelationFilter
     reviewFeedback?: ReviewFeedbackListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    wikiSubmissions?: WikiSubmissionListRelationFilter
+    reviewedWikiSubmissions?: WikiSubmissionListRelationFilter
+    wikiSubmissionComments?: WikiSubmissionCommentListRelationFilter
+    wikiSubmissionLikes?: WikiSubmissionLikeListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -36241,6 +40286,8 @@ export namespace Prisma {
     kitId?: StringFilter<"UserKitCollection"> | string
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
     notes?: StringNullableFilter<"UserKitCollection"> | string | null
+    price?: IntNullableFilter<"UserKitCollection"> | number | null
+    acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36253,6 +40300,8 @@ export namespace Prisma {
     kitId?: SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    price?: SortOrderInput | SortOrder
+    acquiredAt?: SortOrderInput | SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -36269,6 +40318,8 @@ export namespace Prisma {
     kitId?: StringFilter<"UserKitCollection"> | string
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
     notes?: StringNullableFilter<"UserKitCollection"> | string | null
+    price?: IntNullableFilter<"UserKitCollection"> | number | null
+    acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36281,11 +40332,15 @@ export namespace Prisma {
     kitId?: SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    price?: SortOrderInput | SortOrder
+    acquiredAt?: SortOrderInput | SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserKitCollectionCountOrderByAggregateInput
+    _avg?: UserKitCollectionAvgOrderByAggregateInput
     _max?: UserKitCollectionMaxOrderByAggregateInput
     _min?: UserKitCollectionMinOrderByAggregateInput
+    _sum?: UserKitCollectionSumOrderByAggregateInput
   }
 
   export type UserKitCollectionScalarWhereWithAggregatesInput = {
@@ -36297,6 +40352,8 @@ export namespace Prisma {
     kitId?: StringWithAggregatesFilter<"UserKitCollection"> | string
     status?: EnumCollectionStatusWithAggregatesFilter<"UserKitCollection"> | $Enums.CollectionStatus
     notes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    price?: IntNullableWithAggregatesFilter<"UserKitCollection"> | number | null
+    acquiredAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
     addedAt?: DateTimeWithAggregatesFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserKitCollection"> | Date | string
   }
@@ -36961,6 +41018,219 @@ export namespace Prisma {
     available?: BoolWithAggregatesFilter<"MarketplaceListing"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"MarketplaceListing"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MarketplaceListing"> | Date | string
+  }
+
+  export type WikiSubmissionWhereInput = {
+    AND?: WikiSubmissionWhereInput | WikiSubmissionWhereInput[]
+    OR?: WikiSubmissionWhereInput[]
+    NOT?: WikiSubmissionWhereInput | WikiSubmissionWhereInput[]
+    id?: StringFilter<"WikiSubmission"> | string
+    userId?: StringFilter<"WikiSubmission"> | string
+    type?: EnumWikiSubmissionTypeFilter<"WikiSubmission"> | $Enums.WikiSubmissionType
+    entityId?: StringNullableFilter<"WikiSubmission"> | string | null
+    data?: JsonFilter<"WikiSubmission">
+    notes?: StringNullableFilter<"WikiSubmission"> | string | null
+    status?: EnumSubmissionStatusFilter<"WikiSubmission"> | $Enums.SubmissionStatus
+    reviewedBy?: StringNullableFilter<"WikiSubmission"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"WikiSubmission"> | Date | string | null
+    createdAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    likesCount?: IntFilter<"WikiSubmission"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    comments?: WikiSubmissionCommentListRelationFilter
+    likes?: WikiSubmissionLikeListRelationFilter
+  }
+
+  export type WikiSubmissionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    entityId?: SortOrderInput | SortOrder
+    data?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likesCount?: SortOrder
+    user?: UserOrderByWithRelationInput
+    reviewer?: UserOrderByWithRelationInput
+    comments?: WikiSubmissionCommentOrderByRelationAggregateInput
+    likes?: WikiSubmissionLikeOrderByRelationAggregateInput
+  }
+
+  export type WikiSubmissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: WikiSubmissionWhereInput | WikiSubmissionWhereInput[]
+    OR?: WikiSubmissionWhereInput[]
+    NOT?: WikiSubmissionWhereInput | WikiSubmissionWhereInput[]
+    userId?: StringFilter<"WikiSubmission"> | string
+    type?: EnumWikiSubmissionTypeFilter<"WikiSubmission"> | $Enums.WikiSubmissionType
+    entityId?: StringNullableFilter<"WikiSubmission"> | string | null
+    data?: JsonFilter<"WikiSubmission">
+    notes?: StringNullableFilter<"WikiSubmission"> | string | null
+    status?: EnumSubmissionStatusFilter<"WikiSubmission"> | $Enums.SubmissionStatus
+    reviewedBy?: StringNullableFilter<"WikiSubmission"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"WikiSubmission"> | Date | string | null
+    createdAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    likesCount?: IntFilter<"WikiSubmission"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    comments?: WikiSubmissionCommentListRelationFilter
+    likes?: WikiSubmissionLikeListRelationFilter
+  }, "id">
+
+  export type WikiSubmissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    entityId?: SortOrderInput | SortOrder
+    data?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likesCount?: SortOrder
+    _count?: WikiSubmissionCountOrderByAggregateInput
+    _avg?: WikiSubmissionAvgOrderByAggregateInput
+    _max?: WikiSubmissionMaxOrderByAggregateInput
+    _min?: WikiSubmissionMinOrderByAggregateInput
+    _sum?: WikiSubmissionSumOrderByAggregateInput
+  }
+
+  export type WikiSubmissionScalarWhereWithAggregatesInput = {
+    AND?: WikiSubmissionScalarWhereWithAggregatesInput | WikiSubmissionScalarWhereWithAggregatesInput[]
+    OR?: WikiSubmissionScalarWhereWithAggregatesInput[]
+    NOT?: WikiSubmissionScalarWhereWithAggregatesInput | WikiSubmissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WikiSubmission"> | string
+    userId?: StringWithAggregatesFilter<"WikiSubmission"> | string
+    type?: EnumWikiSubmissionTypeWithAggregatesFilter<"WikiSubmission"> | $Enums.WikiSubmissionType
+    entityId?: StringNullableWithAggregatesFilter<"WikiSubmission"> | string | null
+    data?: JsonWithAggregatesFilter<"WikiSubmission">
+    notes?: StringNullableWithAggregatesFilter<"WikiSubmission"> | string | null
+    status?: EnumSubmissionStatusWithAggregatesFilter<"WikiSubmission"> | $Enums.SubmissionStatus
+    reviewedBy?: StringNullableWithAggregatesFilter<"WikiSubmission"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"WikiSubmission"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"WikiSubmission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WikiSubmission"> | Date | string
+    likesCount?: IntWithAggregatesFilter<"WikiSubmission"> | number
+  }
+
+  export type WikiSubmissionCommentWhereInput = {
+    AND?: WikiSubmissionCommentWhereInput | WikiSubmissionCommentWhereInput[]
+    OR?: WikiSubmissionCommentWhereInput[]
+    NOT?: WikiSubmissionCommentWhereInput | WikiSubmissionCommentWhereInput[]
+    id?: StringFilter<"WikiSubmissionComment"> | string
+    submissionId?: StringFilter<"WikiSubmissionComment"> | string
+    userId?: StringFilter<"WikiSubmissionComment"> | string
+    content?: StringFilter<"WikiSubmissionComment"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionComment"> | Date | string
+    submission?: XOR<WikiSubmissionScalarRelationFilter, WikiSubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type WikiSubmissionCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    submission?: WikiSubmissionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type WikiSubmissionCommentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: WikiSubmissionCommentWhereInput | WikiSubmissionCommentWhereInput[]
+    OR?: WikiSubmissionCommentWhereInput[]
+    NOT?: WikiSubmissionCommentWhereInput | WikiSubmissionCommentWhereInput[]
+    submissionId?: StringFilter<"WikiSubmissionComment"> | string
+    userId?: StringFilter<"WikiSubmissionComment"> | string
+    content?: StringFilter<"WikiSubmissionComment"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionComment"> | Date | string
+    submission?: XOR<WikiSubmissionScalarRelationFilter, WikiSubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type WikiSubmissionCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    _count?: WikiSubmissionCommentCountOrderByAggregateInput
+    _max?: WikiSubmissionCommentMaxOrderByAggregateInput
+    _min?: WikiSubmissionCommentMinOrderByAggregateInput
+  }
+
+  export type WikiSubmissionCommentScalarWhereWithAggregatesInput = {
+    AND?: WikiSubmissionCommentScalarWhereWithAggregatesInput | WikiSubmissionCommentScalarWhereWithAggregatesInput[]
+    OR?: WikiSubmissionCommentScalarWhereWithAggregatesInput[]
+    NOT?: WikiSubmissionCommentScalarWhereWithAggregatesInput | WikiSubmissionCommentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WikiSubmissionComment"> | string
+    submissionId?: StringWithAggregatesFilter<"WikiSubmissionComment"> | string
+    userId?: StringWithAggregatesFilter<"WikiSubmissionComment"> | string
+    content?: StringWithAggregatesFilter<"WikiSubmissionComment"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"WikiSubmissionComment"> | Date | string
+  }
+
+  export type WikiSubmissionLikeWhereInput = {
+    AND?: WikiSubmissionLikeWhereInput | WikiSubmissionLikeWhereInput[]
+    OR?: WikiSubmissionLikeWhereInput[]
+    NOT?: WikiSubmissionLikeWhereInput | WikiSubmissionLikeWhereInput[]
+    id?: StringFilter<"WikiSubmissionLike"> | string
+    submissionId?: StringFilter<"WikiSubmissionLike"> | string
+    userId?: StringFilter<"WikiSubmissionLike"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionLike"> | Date | string
+    submission?: XOR<WikiSubmissionScalarRelationFilter, WikiSubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type WikiSubmissionLikeOrderByWithRelationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    submission?: WikiSubmissionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type WikiSubmissionLikeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    submissionId_userId?: WikiSubmissionLikeSubmissionIdUserIdCompoundUniqueInput
+    AND?: WikiSubmissionLikeWhereInput | WikiSubmissionLikeWhereInput[]
+    OR?: WikiSubmissionLikeWhereInput[]
+    NOT?: WikiSubmissionLikeWhereInput | WikiSubmissionLikeWhereInput[]
+    submissionId?: StringFilter<"WikiSubmissionLike"> | string
+    userId?: StringFilter<"WikiSubmissionLike"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionLike"> | Date | string
+    submission?: XOR<WikiSubmissionScalarRelationFilter, WikiSubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "submissionId_userId">
+
+  export type WikiSubmissionLikeOrderByWithAggregationInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: WikiSubmissionLikeCountOrderByAggregateInput
+    _max?: WikiSubmissionLikeMaxOrderByAggregateInput
+    _min?: WikiSubmissionLikeMinOrderByAggregateInput
+  }
+
+  export type WikiSubmissionLikeScalarWhereWithAggregatesInput = {
+    AND?: WikiSubmissionLikeScalarWhereWithAggregatesInput | WikiSubmissionLikeScalarWhereWithAggregatesInput[]
+    OR?: WikiSubmissionLikeScalarWhereWithAggregatesInput[]
+    NOT?: WikiSubmissionLikeScalarWhereWithAggregatesInput | WikiSubmissionLikeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WikiSubmissionLike"> | string
+    submissionId?: StringWithAggregatesFilter<"WikiSubmissionLike"> | string
+    userId?: StringWithAggregatesFilter<"WikiSubmissionLike"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"WikiSubmissionLike"> | Date | string
   }
 
   export type TimelineCreateInput = {
@@ -38241,6 +42511,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -38276,6 +42550,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -38311,6 +42589,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -38346,6 +42628,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -38430,6 +42716,8 @@ export namespace Prisma {
     id?: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCollectionsInput
@@ -38442,6 +42730,8 @@ export namespace Prisma {
     kitId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38450,6 +42740,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
@@ -38462,6 +42754,8 @@ export namespace Prisma {
     kitId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38472,6 +42766,8 @@ export namespace Prisma {
     kitId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38480,6 +42776,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38490,6 +42788,8 @@ export namespace Prisma {
     kitId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39166,6 +43466,218 @@ export namespace Prisma {
     available?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCreateInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    user: UserCreateNestedOneWithoutWikiSubmissionsInput
+    reviewer?: UserCreateNestedOneWithoutReviewedWikiSubmissionsInput
+    comments?: WikiSubmissionCommentCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    comments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionsNestedInput
+    reviewer?: UserUpdateOneWithoutReviewedWikiSubmissionsNestedInput
+    comments?: WikiSubmissionCommentUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    comments?: WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionCreateManyInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+  }
+
+  export type WikiSubmissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WikiSubmissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WikiSubmissionCommentCreateInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    submission: WikiSubmissionCreateNestedOneWithoutCommentsInput
+    user: UserCreateNestedOneWithoutWikiSubmissionCommentsInput
+  }
+
+  export type WikiSubmissionCommentUncheckedCreateInput = {
+    id?: string
+    submissionId: string
+    userId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionCommentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: WikiSubmissionUpdateOneRequiredWithoutCommentsNestedInput
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionCommentsNestedInput
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCommentCreateManyInput = {
+    id?: string
+    submissionId: string
+    userId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionCommentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    submission: WikiSubmissionCreateNestedOneWithoutLikesInput
+    user: UserCreateNestedOneWithoutWikiSubmissionLikesInput
+  }
+
+  export type WikiSubmissionLikeUncheckedCreateInput = {
+    id?: string
+    submissionId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: WikiSubmissionUpdateOneRequiredWithoutLikesNestedInput
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionLikesNestedInput
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeCreateManyInput = {
+    id?: string
+    submissionId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -40212,6 +44724,24 @@ export namespace Prisma {
     none?: ReviewFeedbackWhereInput
   }
 
+  export type WikiSubmissionListRelationFilter = {
+    every?: WikiSubmissionWhereInput
+    some?: WikiSubmissionWhereInput
+    none?: WikiSubmissionWhereInput
+  }
+
+  export type WikiSubmissionCommentListRelationFilter = {
+    every?: WikiSubmissionCommentWhereInput
+    some?: WikiSubmissionCommentWhereInput
+    none?: WikiSubmissionCommentWhereInput
+  }
+
+  export type WikiSubmissionLikeListRelationFilter = {
+    every?: WikiSubmissionLikeWhereInput
+    some?: WikiSubmissionLikeWhereInput
+    none?: WikiSubmissionLikeWhereInput
+  }
+
   export type UploadOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -40225,6 +44755,18 @@ export namespace Prisma {
   }
 
   export type ReviewFeedbackOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WikiSubmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WikiSubmissionCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WikiSubmissionLikeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40332,8 +44874,14 @@ export namespace Prisma {
     kitId?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    price?: SortOrder
+    acquiredAt?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserKitCollectionAvgOrderByAggregateInput = {
+    price?: SortOrder
   }
 
   export type UserKitCollectionMaxOrderByAggregateInput = {
@@ -40342,6 +44890,8 @@ export namespace Prisma {
     kitId?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    price?: SortOrder
+    acquiredAt?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -40352,8 +44902,14 @@ export namespace Prisma {
     kitId?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    price?: SortOrder
+    acquiredAt?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserKitCollectionSumOrderByAggregateInput = {
+    price?: SortOrder
   }
 
   export type EnumCollectionStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -40802,6 +45358,200 @@ export namespace Prisma {
 
   export type MarketplaceListingSumOrderByAggregateInput = {
     price?: SortOrder
+  }
+
+  export type EnumWikiSubmissionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WikiSubmissionType | EnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel> | $Enums.WikiSubmissionType
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type EnumSubmissionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmissionStatus | EnumSubmissionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmissionStatusFilter<$PrismaModel> | $Enums.SubmissionStatus
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type WikiSubmissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    entityId?: SortOrder
+    data?: SortOrder
+    notes?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likesCount?: SortOrder
+  }
+
+  export type WikiSubmissionAvgOrderByAggregateInput = {
+    likesCount?: SortOrder
+  }
+
+  export type WikiSubmissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    entityId?: SortOrder
+    notes?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likesCount?: SortOrder
+  }
+
+  export type WikiSubmissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    entityId?: SortOrder
+    notes?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likesCount?: SortOrder
+  }
+
+  export type WikiSubmissionSumOrderByAggregateInput = {
+    likesCount?: SortOrder
+  }
+
+  export type EnumWikiSubmissionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WikiSubmissionType | EnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWikiSubmissionTypeWithAggregatesFilter<$PrismaModel> | $Enums.WikiSubmissionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel>
+    _max?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type EnumSubmissionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmissionStatus | EnumSubmissionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmissionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubmissionStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubmissionStatusFilter<$PrismaModel>
+  }
+
+  export type WikiSubmissionScalarRelationFilter = {
+    is?: WikiSubmissionWhereInput
+    isNot?: WikiSubmissionWhereInput
+  }
+
+  export type WikiSubmissionCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WikiSubmissionCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WikiSubmissionCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WikiSubmissionLikeSubmissionIdUserIdCompoundUniqueInput = {
+    submissionId: string
+    userId: string
+  }
+
+  export type WikiSubmissionLikeCountOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WikiSubmissionLikeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WikiSubmissionLikeMinOrderByAggregateInput = {
+    id?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type SeriesCreateNestedManyWithoutTimelineInput = {
@@ -42342,6 +47092,34 @@ export namespace Prisma {
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
   }
 
+  export type WikiSubmissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput> | WikiSubmissionCreateWithoutUserInput[] | WikiSubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutUserInput | WikiSubmissionCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionCreateManyUserInputEnvelope
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionCreateNestedManyWithoutReviewerInput = {
+    create?: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput> | WikiSubmissionCreateWithoutReviewerInput[] | WikiSubmissionUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutReviewerInput | WikiSubmissionCreateOrConnectWithoutReviewerInput[]
+    createMany?: WikiSubmissionCreateManyReviewerInputEnvelope
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionCommentCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput> | WikiSubmissionCommentCreateWithoutUserInput[] | WikiSubmissionCommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutUserInput | WikiSubmissionCommentCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionCommentCreateManyUserInputEnvelope
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionLikeCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput> | WikiSubmissionLikeCreateWithoutUserInput[] | WikiSubmissionLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutUserInput | WikiSubmissionLikeCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionLikeCreateManyUserInputEnvelope
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+  }
+
   export type UserKitCollectionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -42402,6 +47180,34 @@ export namespace Prisma {
     connectOrCreate?: GunplaCardCreateOrConnectWithoutUserInput | GunplaCardCreateOrConnectWithoutUserInput[]
     createMany?: GunplaCardCreateManyUserInputEnvelope
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput> | WikiSubmissionCreateWithoutUserInput[] | WikiSubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutUserInput | WikiSubmissionCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionCreateManyUserInputEnvelope
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput = {
+    create?: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput> | WikiSubmissionCreateWithoutReviewerInput[] | WikiSubmissionUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutReviewerInput | WikiSubmissionCreateOrConnectWithoutReviewerInput[]
+    createMany?: WikiSubmissionCreateManyReviewerInputEnvelope
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput> | WikiSubmissionCommentCreateWithoutUserInput[] | WikiSubmissionCommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutUserInput | WikiSubmissionCommentCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionCommentCreateManyUserInputEnvelope
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput> | WikiSubmissionLikeCreateWithoutUserInput[] | WikiSubmissionLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutUserInput | WikiSubmissionLikeCreateOrConnectWithoutUserInput[]
+    createMany?: WikiSubmissionLikeCreateManyUserInputEnvelope
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -42530,6 +47336,62 @@ export namespace Prisma {
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
   }
 
+  export type WikiSubmissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput> | WikiSubmissionCreateWithoutUserInput[] | WikiSubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutUserInput | WikiSubmissionCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionCreateManyUserInputEnvelope
+    set?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    disconnect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    delete?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    update?: WikiSubmissionUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionUpdateManyWithWhereWithoutUserInput | WikiSubmissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+  }
+
+  export type WikiSubmissionUpdateManyWithoutReviewerNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput> | WikiSubmissionCreateWithoutReviewerInput[] | WikiSubmissionUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutReviewerInput | WikiSubmissionCreateOrConnectWithoutReviewerInput[]
+    upsert?: WikiSubmissionUpsertWithWhereUniqueWithoutReviewerInput | WikiSubmissionUpsertWithWhereUniqueWithoutReviewerInput[]
+    createMany?: WikiSubmissionCreateManyReviewerInputEnvelope
+    set?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    disconnect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    delete?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    update?: WikiSubmissionUpdateWithWhereUniqueWithoutReviewerInput | WikiSubmissionUpdateWithWhereUniqueWithoutReviewerInput[]
+    updateMany?: WikiSubmissionUpdateManyWithWhereWithoutReviewerInput | WikiSubmissionUpdateManyWithWhereWithoutReviewerInput[]
+    deleteMany?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+  }
+
+  export type WikiSubmissionCommentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput> | WikiSubmissionCommentCreateWithoutUserInput[] | WikiSubmissionCommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutUserInput | WikiSubmissionCommentCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionCommentUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionCommentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionCommentCreateManyUserInputEnvelope
+    set?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    disconnect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    delete?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    update?: WikiSubmissionCommentUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionCommentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionCommentUpdateManyWithWhereWithoutUserInput | WikiSubmissionCommentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+  }
+
+  export type WikiSubmissionLikeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput> | WikiSubmissionLikeCreateWithoutUserInput[] | WikiSubmissionLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutUserInput | WikiSubmissionLikeCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionLikeUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionLikeCreateManyUserInputEnvelope
+    set?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    disconnect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    delete?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    update?: WikiSubmissionLikeUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionLikeUpdateManyWithWhereWithoutUserInput | WikiSubmissionLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
+  }
+
   export type UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -42650,6 +47512,62 @@ export namespace Prisma {
     update?: GunplaCardUpdateWithWhereUniqueWithoutUserInput | GunplaCardUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: GunplaCardUpdateManyWithWhereWithoutUserInput | GunplaCardUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
+  export type WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput> | WikiSubmissionCreateWithoutUserInput[] | WikiSubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutUserInput | WikiSubmissionCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionCreateManyUserInputEnvelope
+    set?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    disconnect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    delete?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    update?: WikiSubmissionUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionUpdateManyWithWhereWithoutUserInput | WikiSubmissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+  }
+
+  export type WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput> | WikiSubmissionCreateWithoutReviewerInput[] | WikiSubmissionUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutReviewerInput | WikiSubmissionCreateOrConnectWithoutReviewerInput[]
+    upsert?: WikiSubmissionUpsertWithWhereUniqueWithoutReviewerInput | WikiSubmissionUpsertWithWhereUniqueWithoutReviewerInput[]
+    createMany?: WikiSubmissionCreateManyReviewerInputEnvelope
+    set?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    disconnect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    delete?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    connect?: WikiSubmissionWhereUniqueInput | WikiSubmissionWhereUniqueInput[]
+    update?: WikiSubmissionUpdateWithWhereUniqueWithoutReviewerInput | WikiSubmissionUpdateWithWhereUniqueWithoutReviewerInput[]
+    updateMany?: WikiSubmissionUpdateManyWithWhereWithoutReviewerInput | WikiSubmissionUpdateManyWithWhereWithoutReviewerInput[]
+    deleteMany?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput> | WikiSubmissionCommentCreateWithoutUserInput[] | WikiSubmissionCommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutUserInput | WikiSubmissionCommentCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionCommentUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionCommentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionCommentCreateManyUserInputEnvelope
+    set?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    disconnect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    delete?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    update?: WikiSubmissionCommentUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionCommentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionCommentUpdateManyWithWhereWithoutUserInput | WikiSubmissionCommentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput> | WikiSubmissionLikeCreateWithoutUserInput[] | WikiSubmissionLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutUserInput | WikiSubmissionLikeCreateOrConnectWithoutUserInput[]
+    upsert?: WikiSubmissionLikeUpsertWithWhereUniqueWithoutUserInput | WikiSubmissionLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WikiSubmissionLikeCreateManyUserInputEnvelope
+    set?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    disconnect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    delete?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    update?: WikiSubmissionLikeUpdateWithWhereUniqueWithoutUserInput | WikiSubmissionLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WikiSubmissionLikeUpdateManyWithWhereWithoutUserInput | WikiSubmissionLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCollectionsInput = {
@@ -43284,6 +48202,184 @@ export namespace Prisma {
     update?: XOR<XOR<KitUpdateToOneWithWhereWithoutListingsInput, KitUpdateWithoutListingsInput>, KitUncheckedUpdateWithoutListingsInput>
   }
 
+  export type UserCreateNestedOneWithoutWikiSubmissionsInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionsInput, UserUncheckedCreateWithoutWikiSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReviewedWikiSubmissionsInput = {
+    create?: XOR<UserCreateWithoutReviewedWikiSubmissionsInput, UserUncheckedCreateWithoutReviewedWikiSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedWikiSubmissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WikiSubmissionCommentCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput> | WikiSubmissionCommentCreateWithoutSubmissionInput[] | WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput | WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput[]
+    createMany?: WikiSubmissionCommentCreateManySubmissionInputEnvelope
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionLikeCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput> | WikiSubmissionLikeCreateWithoutSubmissionInput[] | WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput | WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput[]
+    createMany?: WikiSubmissionLikeCreateManySubmissionInputEnvelope
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionCommentUncheckedCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput> | WikiSubmissionCommentCreateWithoutSubmissionInput[] | WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput | WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput[]
+    createMany?: WikiSubmissionCommentCreateManySubmissionInputEnvelope
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+  }
+
+  export type WikiSubmissionLikeUncheckedCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput> | WikiSubmissionLikeCreateWithoutSubmissionInput[] | WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput | WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput[]
+    createMany?: WikiSubmissionLikeCreateManySubmissionInputEnvelope
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+  }
+
+  export type EnumWikiSubmissionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.WikiSubmissionType
+  }
+
+  export type EnumSubmissionStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SubmissionStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutWikiSubmissionsNestedInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionsInput, UserUncheckedCreateWithoutWikiSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionsInput
+    upsert?: UserUpsertWithoutWikiSubmissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWikiSubmissionsInput, UserUpdateWithoutWikiSubmissionsInput>, UserUncheckedUpdateWithoutWikiSubmissionsInput>
+  }
+
+  export type UserUpdateOneWithoutReviewedWikiSubmissionsNestedInput = {
+    create?: XOR<UserCreateWithoutReviewedWikiSubmissionsInput, UserUncheckedCreateWithoutReviewedWikiSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedWikiSubmissionsInput
+    upsert?: UserUpsertWithoutReviewedWikiSubmissionsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewedWikiSubmissionsInput, UserUpdateWithoutReviewedWikiSubmissionsInput>, UserUncheckedUpdateWithoutReviewedWikiSubmissionsInput>
+  }
+
+  export type WikiSubmissionCommentUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput> | WikiSubmissionCommentCreateWithoutSubmissionInput[] | WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput | WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput[]
+    upsert?: WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput | WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: WikiSubmissionCommentCreateManySubmissionInputEnvelope
+    set?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    disconnect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    delete?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    update?: WikiSubmissionCommentUpdateWithWhereUniqueWithoutSubmissionInput | WikiSubmissionCommentUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: WikiSubmissionCommentUpdateManyWithWhereWithoutSubmissionInput | WikiSubmissionCommentUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+  }
+
+  export type WikiSubmissionLikeUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput> | WikiSubmissionLikeCreateWithoutSubmissionInput[] | WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput | WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput[]
+    upsert?: WikiSubmissionLikeUpsertWithWhereUniqueWithoutSubmissionInput | WikiSubmissionLikeUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: WikiSubmissionLikeCreateManySubmissionInputEnvelope
+    set?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    disconnect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    delete?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    update?: WikiSubmissionLikeUpdateWithWhereUniqueWithoutSubmissionInput | WikiSubmissionLikeUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: WikiSubmissionLikeUpdateManyWithWhereWithoutSubmissionInput | WikiSubmissionLikeUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput> | WikiSubmissionCommentCreateWithoutSubmissionInput[] | WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput | WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput[]
+    upsert?: WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput | WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: WikiSubmissionCommentCreateManySubmissionInputEnvelope
+    set?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    disconnect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    delete?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    connect?: WikiSubmissionCommentWhereUniqueInput | WikiSubmissionCommentWhereUniqueInput[]
+    update?: WikiSubmissionCommentUpdateWithWhereUniqueWithoutSubmissionInput | WikiSubmissionCommentUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: WikiSubmissionCommentUpdateManyWithWhereWithoutSubmissionInput | WikiSubmissionCommentUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput> | WikiSubmissionLikeCreateWithoutSubmissionInput[] | WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput | WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput[]
+    upsert?: WikiSubmissionLikeUpsertWithWhereUniqueWithoutSubmissionInput | WikiSubmissionLikeUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: WikiSubmissionLikeCreateManySubmissionInputEnvelope
+    set?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    disconnect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    delete?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+    update?: WikiSubmissionLikeUpdateWithWhereUniqueWithoutSubmissionInput | WikiSubmissionLikeUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: WikiSubmissionLikeUpdateManyWithWhereWithoutSubmissionInput | WikiSubmissionLikeUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
+  }
+
+  export type WikiSubmissionCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<WikiSubmissionCreateWithoutCommentsInput, WikiSubmissionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutCommentsInput
+    connect?: WikiSubmissionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutWikiSubmissionCommentsInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionCommentsInput, UserUncheckedCreateWithoutWikiSubmissionCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionCommentsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WikiSubmissionUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutCommentsInput, WikiSubmissionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutCommentsInput
+    upsert?: WikiSubmissionUpsertWithoutCommentsInput
+    connect?: WikiSubmissionWhereUniqueInput
+    update?: XOR<XOR<WikiSubmissionUpdateToOneWithWhereWithoutCommentsInput, WikiSubmissionUpdateWithoutCommentsInput>, WikiSubmissionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutWikiSubmissionCommentsNestedInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionCommentsInput, UserUncheckedCreateWithoutWikiSubmissionCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionCommentsInput
+    upsert?: UserUpsertWithoutWikiSubmissionCommentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWikiSubmissionCommentsInput, UserUpdateWithoutWikiSubmissionCommentsInput>, UserUncheckedUpdateWithoutWikiSubmissionCommentsInput>
+  }
+
+  export type WikiSubmissionCreateNestedOneWithoutLikesInput = {
+    create?: XOR<WikiSubmissionCreateWithoutLikesInput, WikiSubmissionUncheckedCreateWithoutLikesInput>
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutLikesInput
+    connect?: WikiSubmissionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutWikiSubmissionLikesInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionLikesInput, UserUncheckedCreateWithoutWikiSubmissionLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionLikesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WikiSubmissionUpdateOneRequiredWithoutLikesNestedInput = {
+    create?: XOR<WikiSubmissionCreateWithoutLikesInput, WikiSubmissionUncheckedCreateWithoutLikesInput>
+    connectOrCreate?: WikiSubmissionCreateOrConnectWithoutLikesInput
+    upsert?: WikiSubmissionUpsertWithoutLikesInput
+    connect?: WikiSubmissionWhereUniqueInput
+    update?: XOR<XOR<WikiSubmissionUpdateToOneWithWhereWithoutLikesInput, WikiSubmissionUpdateWithoutLikesInput>, WikiSubmissionUncheckedUpdateWithoutLikesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutWikiSubmissionLikesNestedInput = {
+    create?: XOR<UserCreateWithoutWikiSubmissionLikesInput, UserUncheckedCreateWithoutWikiSubmissionLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWikiSubmissionLikesInput
+    upsert?: UserUpsertWithoutWikiSubmissionLikesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWikiSubmissionLikesInput, UserUpdateWithoutWikiSubmissionLikesInput>, UserUncheckedUpdateWithoutWikiSubmissionLikesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -43601,6 +48697,63 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMilestoneTypeFilter<$PrismaModel>
     _max?: NestedEnumMilestoneTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWikiSubmissionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WikiSubmissionType | EnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel> | $Enums.WikiSubmissionType
+  }
+
+  export type NestedEnumSubmissionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmissionStatus | EnumSubmissionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmissionStatusFilter<$PrismaModel> | $Enums.SubmissionStatus
+  }
+
+  export type NestedEnumWikiSubmissionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WikiSubmissionType | EnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WikiSubmissionType[] | ListEnumWikiSubmissionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWikiSubmissionTypeWithAggregatesFilter<$PrismaModel> | $Enums.WikiSubmissionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel>
+    _max?: NestedEnumWikiSubmissionTypeFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmissionStatus | EnumSubmissionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmissionStatus[] | ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmissionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubmissionStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubmissionStatusFilter<$PrismaModel>
   }
 
   export type SeriesCreateWithoutTimelineInput = {
@@ -44745,6 +49898,8 @@ export namespace Prisma {
     id?: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCollectionsInput
@@ -44755,6 +49910,8 @@ export namespace Prisma {
     userId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -45222,6 +50379,8 @@ export namespace Prisma {
     kitId?: StringFilter<"UserKitCollection"> | string
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
     notes?: StringNullableFilter<"UserKitCollection"> | string | null
+    price?: IntNullableFilter<"UserKitCollection"> | number | null
+    acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
   }
@@ -45478,6 +50637,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGunplaCardsInput = {
@@ -45512,6 +50675,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGunplaCardsInput = {
@@ -45686,6 +50853,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGunplaCardsInput = {
@@ -45720,6 +50891,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutGunplaCardsInput = {
@@ -46311,6 +51486,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadsInput = {
@@ -46345,6 +51524,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadsInput = {
@@ -46613,6 +51796,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadsInput = {
@@ -46647,6 +51834,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUploadUpsertWithWhereUniqueWithoutUploadInput = {
@@ -47579,6 +52770,8 @@ export namespace Prisma {
     id?: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     kit: KitCreateNestedOneWithoutCollectionsInput
@@ -47589,6 +52782,8 @@ export namespace Prisma {
     kitId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47860,6 +53055,136 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type WikiSubmissionCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    reviewer?: UserCreateNestedOneWithoutReviewedWikiSubmissionsInput
+    comments?: WikiSubmissionCommentCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUncheckedCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    comments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionCreateOrConnectWithoutUserInput = {
+    where: WikiSubmissionWhereUniqueInput
+    create: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionCreateManyUserInputEnvelope = {
+    data: WikiSubmissionCreateManyUserInput | WikiSubmissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WikiSubmissionCreateWithoutReviewerInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    user: UserCreateNestedOneWithoutWikiSubmissionsInput
+    comments?: WikiSubmissionCommentCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUncheckedCreateWithoutReviewerInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    comments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutSubmissionInput
+    likes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionCreateOrConnectWithoutReviewerInput = {
+    where: WikiSubmissionWhereUniqueInput
+    create: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput>
+  }
+
+  export type WikiSubmissionCreateManyReviewerInputEnvelope = {
+    data: WikiSubmissionCreateManyReviewerInput | WikiSubmissionCreateManyReviewerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WikiSubmissionCommentCreateWithoutUserInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    submission: WikiSubmissionCreateNestedOneWithoutCommentsInput
+  }
+
+  export type WikiSubmissionCommentUncheckedCreateWithoutUserInput = {
+    id?: string
+    submissionId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionCommentCreateOrConnectWithoutUserInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    create: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionCommentCreateManyUserInputEnvelope = {
+    data: WikiSubmissionCommentCreateManyUserInput | WikiSubmissionCommentCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WikiSubmissionLikeCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    submission: WikiSubmissionCreateNestedOneWithoutLikesInput
+  }
+
+  export type WikiSubmissionLikeUncheckedCreateWithoutUserInput = {
+    id?: string
+    submissionId: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeCreateOrConnectWithoutUserInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    create: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionLikeCreateManyUserInputEnvelope = {
+    data: WikiSubmissionLikeCreateManyUserInput | WikiSubmissionLikeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserKitCollectionUpsertWithWhereUniqueWithoutUserInput = {
     where: UserKitCollectionWhereUniqueInput
     update: XOR<UserKitCollectionUpdateWithoutUserInput, UserKitCollectionUncheckedUpdateWithoutUserInput>
@@ -48072,6 +53397,109 @@ export namespace Prisma {
     data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type WikiSubmissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionWhereUniqueInput
+    update: XOR<WikiSubmissionUpdateWithoutUserInput, WikiSubmissionUncheckedUpdateWithoutUserInput>
+    create: XOR<WikiSubmissionCreateWithoutUserInput, WikiSubmissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionWhereUniqueInput
+    data: XOR<WikiSubmissionUpdateWithoutUserInput, WikiSubmissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WikiSubmissionUpdateManyWithWhereWithoutUserInput = {
+    where: WikiSubmissionScalarWhereInput
+    data: XOR<WikiSubmissionUpdateManyMutationInput, WikiSubmissionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WikiSubmissionScalarWhereInput = {
+    AND?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+    OR?: WikiSubmissionScalarWhereInput[]
+    NOT?: WikiSubmissionScalarWhereInput | WikiSubmissionScalarWhereInput[]
+    id?: StringFilter<"WikiSubmission"> | string
+    userId?: StringFilter<"WikiSubmission"> | string
+    type?: EnumWikiSubmissionTypeFilter<"WikiSubmission"> | $Enums.WikiSubmissionType
+    entityId?: StringNullableFilter<"WikiSubmission"> | string | null
+    data?: JsonFilter<"WikiSubmission">
+    notes?: StringNullableFilter<"WikiSubmission"> | string | null
+    status?: EnumSubmissionStatusFilter<"WikiSubmission"> | $Enums.SubmissionStatus
+    reviewedBy?: StringNullableFilter<"WikiSubmission"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"WikiSubmission"> | Date | string | null
+    createdAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    updatedAt?: DateTimeFilter<"WikiSubmission"> | Date | string
+    likesCount?: IntFilter<"WikiSubmission"> | number
+  }
+
+  export type WikiSubmissionUpsertWithWhereUniqueWithoutReviewerInput = {
+    where: WikiSubmissionWhereUniqueInput
+    update: XOR<WikiSubmissionUpdateWithoutReviewerInput, WikiSubmissionUncheckedUpdateWithoutReviewerInput>
+    create: XOR<WikiSubmissionCreateWithoutReviewerInput, WikiSubmissionUncheckedCreateWithoutReviewerInput>
+  }
+
+  export type WikiSubmissionUpdateWithWhereUniqueWithoutReviewerInput = {
+    where: WikiSubmissionWhereUniqueInput
+    data: XOR<WikiSubmissionUpdateWithoutReviewerInput, WikiSubmissionUncheckedUpdateWithoutReviewerInput>
+  }
+
+  export type WikiSubmissionUpdateManyWithWhereWithoutReviewerInput = {
+    where: WikiSubmissionScalarWhereInput
+    data: XOR<WikiSubmissionUpdateManyMutationInput, WikiSubmissionUncheckedUpdateManyWithoutReviewerInput>
+  }
+
+  export type WikiSubmissionCommentUpsertWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    update: XOR<WikiSubmissionCommentUpdateWithoutUserInput, WikiSubmissionCommentUncheckedUpdateWithoutUserInput>
+    create: XOR<WikiSubmissionCommentCreateWithoutUserInput, WikiSubmissionCommentUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionCommentUpdateWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    data: XOR<WikiSubmissionCommentUpdateWithoutUserInput, WikiSubmissionCommentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WikiSubmissionCommentUpdateManyWithWhereWithoutUserInput = {
+    where: WikiSubmissionCommentScalarWhereInput
+    data: XOR<WikiSubmissionCommentUpdateManyMutationInput, WikiSubmissionCommentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WikiSubmissionCommentScalarWhereInput = {
+    AND?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+    OR?: WikiSubmissionCommentScalarWhereInput[]
+    NOT?: WikiSubmissionCommentScalarWhereInput | WikiSubmissionCommentScalarWhereInput[]
+    id?: StringFilter<"WikiSubmissionComment"> | string
+    submissionId?: StringFilter<"WikiSubmissionComment"> | string
+    userId?: StringFilter<"WikiSubmissionComment"> | string
+    content?: StringFilter<"WikiSubmissionComment"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionComment"> | Date | string
+  }
+
+  export type WikiSubmissionLikeUpsertWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    update: XOR<WikiSubmissionLikeUpdateWithoutUserInput, WikiSubmissionLikeUncheckedUpdateWithoutUserInput>
+    create: XOR<WikiSubmissionLikeCreateWithoutUserInput, WikiSubmissionLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type WikiSubmissionLikeUpdateWithWhereUniqueWithoutUserInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    data: XOR<WikiSubmissionLikeUpdateWithoutUserInput, WikiSubmissionLikeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WikiSubmissionLikeUpdateManyWithWhereWithoutUserInput = {
+    where: WikiSubmissionLikeScalarWhereInput
+    data: XOR<WikiSubmissionLikeUpdateManyMutationInput, WikiSubmissionLikeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WikiSubmissionLikeScalarWhereInput = {
+    AND?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
+    OR?: WikiSubmissionLikeScalarWhereInput[]
+    NOT?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
+    id?: StringFilter<"WikiSubmissionLike"> | string
+    submissionId?: StringFilter<"WikiSubmissionLike"> | string
+    userId?: StringFilter<"WikiSubmissionLike"> | string
+    createdAt?: DateTimeFilter<"WikiSubmissionLike"> | Date | string
+  }
+
   export type UserCreateWithoutCollectionsInput = {
     id: string
     email: string
@@ -48104,6 +53532,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCollectionsInput = {
@@ -48138,6 +53570,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCollectionsInput = {
@@ -48255,6 +53691,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCollectionsInput = {
@@ -48289,6 +53729,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutCollectionsInput = {
@@ -48396,6 +53840,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -48430,6 +53878,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -48595,6 +54047,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -48629,6 +54085,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutReviewsInput = {
@@ -48872,6 +54332,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewFeedbackInput = {
@@ -48906,6 +54370,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewFeedbackInput = {
@@ -48991,6 +54459,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewFeedbackInput = {
@@ -49025,6 +54497,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBuildsInput = {
@@ -49059,6 +54535,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildsInput = {
@@ -49093,6 +54573,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildsInput = {
@@ -49373,6 +54857,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildsInput = {
@@ -49407,6 +54895,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutBuildsInput = {
@@ -49818,6 +55310,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildLikesInput = {
@@ -49852,6 +55348,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildLikesInput = {
@@ -49947,6 +55447,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildLikesInput = {
@@ -49981,6 +55485,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BuildCreateWithoutCommentsInput = {
@@ -50054,6 +55562,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildCommentsInput = {
@@ -50088,6 +55600,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildCommentsInput = {
@@ -50183,6 +55699,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildCommentsInput = {
@@ -50217,6 +55737,10 @@ export namespace Prisma {
     buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStoreInput = {
@@ -50251,6 +55775,10 @@ export namespace Prisma {
     buildComments?: BuildCommentCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoreInput = {
@@ -50285,6 +55813,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
     reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoreInput = {
@@ -50371,6 +55903,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoreInput = {
@@ -50405,6 +55941,10 @@ export namespace Prisma {
     buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
     reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MarketplaceListingUpsertWithWhereUniqueWithoutStoreInput = {
@@ -50617,6 +56157,916 @@ export namespace Prisma {
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type UserCreateWithoutWikiSubmissionsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWikiSubmissionsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWikiSubmissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWikiSubmissionsInput, UserUncheckedCreateWithoutWikiSubmissionsInput>
+  }
+
+  export type UserCreateWithoutReviewedWikiSubmissionsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewedWikiSubmissionsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewedWikiSubmissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewedWikiSubmissionsInput, UserUncheckedCreateWithoutReviewedWikiSubmissionsInput>
+  }
+
+  export type WikiSubmissionCommentCreateWithoutSubmissionInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutWikiSubmissionCommentsInput
+  }
+
+  export type WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput = {
+    id?: string
+    userId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionCommentCreateOrConnectWithoutSubmissionInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    create: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionCommentCreateManySubmissionInputEnvelope = {
+    data: WikiSubmissionCommentCreateManySubmissionInput | WikiSubmissionCommentCreateManySubmissionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WikiSubmissionLikeCreateWithoutSubmissionInput = {
+    id?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutWikiSubmissionLikesInput
+  }
+
+  export type WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeCreateOrConnectWithoutSubmissionInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    create: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionLikeCreateManySubmissionInputEnvelope = {
+    data: WikiSubmissionLikeCreateManySubmissionInput | WikiSubmissionLikeCreateManySubmissionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutWikiSubmissionsInput = {
+    update: XOR<UserUpdateWithoutWikiSubmissionsInput, UserUncheckedUpdateWithoutWikiSubmissionsInput>
+    create: XOR<UserCreateWithoutWikiSubmissionsInput, UserUncheckedCreateWithoutWikiSubmissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWikiSubmissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWikiSubmissionsInput, UserUncheckedUpdateWithoutWikiSubmissionsInput>
+  }
+
+  export type UserUpdateWithoutWikiSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWikiSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutReviewedWikiSubmissionsInput = {
+    update: XOR<UserUpdateWithoutReviewedWikiSubmissionsInput, UserUncheckedUpdateWithoutReviewedWikiSubmissionsInput>
+    create: XOR<UserCreateWithoutReviewedWikiSubmissionsInput, UserUncheckedCreateWithoutReviewedWikiSubmissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewedWikiSubmissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewedWikiSubmissionsInput, UserUncheckedUpdateWithoutReviewedWikiSubmissionsInput>
+  }
+
+  export type UserUpdateWithoutReviewedWikiSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewedWikiSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    update: XOR<WikiSubmissionCommentUpdateWithoutSubmissionInput, WikiSubmissionCommentUncheckedUpdateWithoutSubmissionInput>
+    create: XOR<WikiSubmissionCommentCreateWithoutSubmissionInput, WikiSubmissionCommentUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionCommentUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: WikiSubmissionCommentWhereUniqueInput
+    data: XOR<WikiSubmissionCommentUpdateWithoutSubmissionInput, WikiSubmissionCommentUncheckedUpdateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionCommentUpdateManyWithWhereWithoutSubmissionInput = {
+    where: WikiSubmissionCommentScalarWhereInput
+    data: XOR<WikiSubmissionCommentUpdateManyMutationInput, WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionLikeUpsertWithWhereUniqueWithoutSubmissionInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    update: XOR<WikiSubmissionLikeUpdateWithoutSubmissionInput, WikiSubmissionLikeUncheckedUpdateWithoutSubmissionInput>
+    create: XOR<WikiSubmissionLikeCreateWithoutSubmissionInput, WikiSubmissionLikeUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionLikeUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: WikiSubmissionLikeWhereUniqueInput
+    data: XOR<WikiSubmissionLikeUpdateWithoutSubmissionInput, WikiSubmissionLikeUncheckedUpdateWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionLikeUpdateManyWithWhereWithoutSubmissionInput = {
+    where: WikiSubmissionLikeScalarWhereInput
+    data: XOR<WikiSubmissionLikeUpdateManyMutationInput, WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionInput>
+  }
+
+  export type WikiSubmissionCreateWithoutCommentsInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    user: UserCreateNestedOneWithoutWikiSubmissionsInput
+    reviewer?: UserCreateNestedOneWithoutReviewedWikiSubmissionsInput
+    likes?: WikiSubmissionLikeCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    likes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionCreateOrConnectWithoutCommentsInput = {
+    where: WikiSubmissionWhereUniqueInput
+    create: XOR<WikiSubmissionCreateWithoutCommentsInput, WikiSubmissionUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type UserCreateWithoutWikiSubmissionCommentsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWikiSubmissionCommentsInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWikiSubmissionCommentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWikiSubmissionCommentsInput, UserUncheckedCreateWithoutWikiSubmissionCommentsInput>
+  }
+
+  export type WikiSubmissionUpsertWithoutCommentsInput = {
+    update: XOR<WikiSubmissionUpdateWithoutCommentsInput, WikiSubmissionUncheckedUpdateWithoutCommentsInput>
+    create: XOR<WikiSubmissionCreateWithoutCommentsInput, WikiSubmissionUncheckedCreateWithoutCommentsInput>
+    where?: WikiSubmissionWhereInput
+  }
+
+  export type WikiSubmissionUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: WikiSubmissionWhereInput
+    data: XOR<WikiSubmissionUpdateWithoutCommentsInput, WikiSubmissionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type WikiSubmissionUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionsNestedInput
+    reviewer?: UserUpdateOneWithoutReviewedWikiSubmissionsNestedInput
+    likes?: WikiSubmissionLikeUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    likes?: WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type UserUpsertWithoutWikiSubmissionCommentsInput = {
+    update: XOR<UserUpdateWithoutWikiSubmissionCommentsInput, UserUncheckedUpdateWithoutWikiSubmissionCommentsInput>
+    create: XOR<UserCreateWithoutWikiSubmissionCommentsInput, UserUncheckedCreateWithoutWikiSubmissionCommentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWikiSubmissionCommentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWikiSubmissionCommentsInput, UserUncheckedUpdateWithoutWikiSubmissionCommentsInput>
+  }
+
+  export type UserUpdateWithoutWikiSubmissionCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWikiSubmissionCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WikiSubmissionCreateWithoutLikesInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    user: UserCreateNestedOneWithoutWikiSubmissionsInput
+    reviewer?: UserCreateNestedOneWithoutReviewedWikiSubmissionsInput
+    comments?: WikiSubmissionCommentCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionUncheckedCreateWithoutLikesInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+    comments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type WikiSubmissionCreateOrConnectWithoutLikesInput = {
+    where: WikiSubmissionWhereUniqueInput
+    create: XOR<WikiSubmissionCreateWithoutLikesInput, WikiSubmissionUncheckedCreateWithoutLikesInput>
+  }
+
+  export type UserCreateWithoutWikiSubmissionLikesInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWikiSubmissionLikesInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWikiSubmissionLikesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWikiSubmissionLikesInput, UserUncheckedCreateWithoutWikiSubmissionLikesInput>
+  }
+
+  export type WikiSubmissionUpsertWithoutLikesInput = {
+    update: XOR<WikiSubmissionUpdateWithoutLikesInput, WikiSubmissionUncheckedUpdateWithoutLikesInput>
+    create: XOR<WikiSubmissionCreateWithoutLikesInput, WikiSubmissionUncheckedCreateWithoutLikesInput>
+    where?: WikiSubmissionWhereInput
+  }
+
+  export type WikiSubmissionUpdateToOneWithWhereWithoutLikesInput = {
+    where?: WikiSubmissionWhereInput
+    data: XOR<WikiSubmissionUpdateWithoutLikesInput, WikiSubmissionUncheckedUpdateWithoutLikesInput>
+  }
+
+  export type WikiSubmissionUpdateWithoutLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionsNestedInput
+    reviewer?: UserUpdateOneWithoutReviewedWikiSubmissionsNestedInput
+    comments?: WikiSubmissionCommentUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateWithoutLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    comments?: WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type UserUpsertWithoutWikiSubmissionLikesInput = {
+    update: XOR<UserUpdateWithoutWikiSubmissionLikesInput, UserUncheckedUpdateWithoutWikiSubmissionLikesInput>
+    create: XOR<UserCreateWithoutWikiSubmissionLikesInput, UserUncheckedCreateWithoutWikiSubmissionLikesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWikiSubmissionLikesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWikiSubmissionLikesInput, UserUncheckedUpdateWithoutWikiSubmissionLikesInput>
+  }
+
+  export type UserUpdateWithoutWikiSubmissionLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWikiSubmissionLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SeriesCreateManyTimelineInput = {
@@ -51172,6 +57622,8 @@ export namespace Prisma {
     userId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -51376,6 +57828,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
@@ -51386,6 +57840,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51395,6 +57851,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51888,6 +58346,8 @@ export namespace Prisma {
     kitId: string
     status: $Enums.CollectionStatus
     notes?: string | null
+    price?: number | null
+    acquiredAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -51960,10 +58420,53 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type WikiSubmissionCreateManyUserInput = {
+    id?: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+  }
+
+  export type WikiSubmissionCreateManyReviewerInput = {
+    id?: string
+    userId: string
+    type: $Enums.WikiSubmissionType
+    entityId?: string | null
+    data: JsonNullValueInput | InputJsonValue
+    notes?: string | null
+    status?: $Enums.SubmissionStatus
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likesCount?: number
+  }
+
+  export type WikiSubmissionCommentCreateManyUserInput = {
+    id?: string
+    submissionId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeCreateManyUserInput = {
+    id?: string
+    submissionId: string
+    createdAt?: Date | string
+  }
+
   export type UserKitCollectionUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
@@ -51974,6 +58477,8 @@ export namespace Prisma {
     kitId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51983,6 +58488,8 @@ export namespace Prisma {
     kitId?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52215,6 +58722,137 @@ export namespace Prisma {
     kitId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    reviewer?: UserUpdateOneWithoutReviewedWikiSubmissionsNestedInput
+    comments?: WikiSubmissionCommentUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    comments?: WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WikiSubmissionUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionsNestedInput
+    comments?: WikiSubmissionCommentUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    comments?: WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionNestedInput
+    likes?: WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type WikiSubmissionUncheckedUpdateManyWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumWikiSubmissionTypeFieldUpdateOperationsInput | $Enums.WikiSubmissionType
+    entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WikiSubmissionCommentUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: WikiSubmissionUpdateOneRequiredWithoutCommentsNestedInput
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: WikiSubmissionUpdateOneRequiredWithoutLikesNestedInput
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewScoreCreateManyReviewInput = {
@@ -52501,6 +59139,58 @@ export namespace Prisma {
     available?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCommentCreateManySubmissionInput = {
+    id?: string
+    userId: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionLikeCreateManySubmissionInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type WikiSubmissionCommentUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionCommentsNestedInput
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionCommentUncheckedUpdateManyWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWikiSubmissionLikesNestedInput
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WikiSubmissionLikeUncheckedUpdateManyWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

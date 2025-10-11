@@ -319,6 +319,8 @@ exports.Prisma.UserKitCollectionScalarFieldEnum = {
   kitId: 'kitId',
   status: 'status',
   notes: 'notes',
+  price: 'price',
+  acquiredAt: 'acquiredAt',
   addedAt: 'addedAt',
   updatedAt: 'updatedAt'
 };
@@ -417,9 +419,43 @@ exports.Prisma.MarketplaceListingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.WikiSubmissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  entityId: 'entityId',
+  data: 'data',
+  notes: 'notes',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  likesCount: 'likesCount'
+};
+
+exports.Prisma.WikiSubmissionCommentScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WikiSubmissionLikeScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -430,6 +466,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.KitExpansionType = exports.$Enums.KitExpansionType = {
   EFFECT_PARTS: 'EFFECT_PARTS',
@@ -487,6 +529,22 @@ exports.MilestoneType = exports.$Enums.MilestoneType = {
   COMPLETION: 'COMPLETION'
 };
 
+exports.WikiSubmissionType = exports.$Enums.WikiSubmissionType = {
+  KIT: 'KIT',
+  SERIES: 'SERIES',
+  MOBILE_SUIT: 'MOBILE_SUIT',
+  PRODUCT_LINE: 'PRODUCT_LINE',
+  GRADE: 'GRADE',
+  RELEASE_TYPE: 'RELEASE_TYPE',
+  TIMELINE: 'TIMELINE'
+};
+
+exports.SubmissionStatus = exports.$Enums.SubmissionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   Timeline: 'Timeline',
   Series: 'Series',
@@ -513,7 +571,10 @@ exports.Prisma.ModelName = {
   BuildLike: 'BuildLike',
   BuildComment: 'BuildComment',
   UserStore: 'UserStore',
-  MarketplaceListing: 'MarketplaceListing'
+  MarketplaceListing: 'MarketplaceListing',
+  WikiSubmission: 'WikiSubmission',
+  WikiSubmissionComment: 'WikiSubmissionComment',
+  WikiSubmissionLike: 'WikiSubmissionLike'
 };
 
 /**
