@@ -20,11 +20,56 @@ interface UseKitsParams {
   yearRange?: { min: number; max: number };
 }
 
+// Function to fetch filter data from individual API endpoints
+async function getFilterDataFromAPI() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
+
+  const [vendorsRes, productLinesRes, gradesRes, seriesRes, releaseTypesRes] =
+    await Promise.all([
+      fetch(`${apiUrl}/vendors?select=id,slug,name&limit=100&sort=name:asc`),
+      fetch(
+        `${apiUrl}/product-lines?select=id,slug,name&limit=100&sort=name:asc`
+      ),
+      fetch(`${apiUrl}/grades?select=id,slug,name&limit=100&sort=name:asc`),
+      fetch(`${apiUrl}/series?select=id,slug,name&limit=100&sort=name:asc`),
+      fetch(
+        `${apiUrl}/release-types?select=id,slug,name&limit=100&sort=name:asc`
+      ),
+    ]);
+
+  if (
+    !vendorsRes.ok ||
+    !productLinesRes.ok ||
+    !gradesRes.ok ||
+    !seriesRes.ok ||
+    !releaseTypesRes.ok
+  ) {
+    throw new Error("Failed to fetch filter data");
+  }
+
+  const [vendors, productLines, grades, series, releaseTypes] =
+    await Promise.all([
+      vendorsRes.json(),
+      productLinesRes.json(),
+      gradesRes.json(),
+      seriesRes.json(),
+      releaseTypesRes.json(),
+    ]);
+
+  return {
+    vendors: vendors.items || [],
+    productLines: productLines.items || [],
+    grades: grades.items || [],
+    series: series.items || [],
+    releaseTypes: releaseTypes.items || [],
+  };
+}
+
 // Hook for filter data
 export function useFilterData() {
   return useQuery({
     queryKey: ["filterData"],
-    queryFn: getFilterDataWithMeilisearch,
+    queryFn: getFilterDataFromAPI,
     staleTime: 60 * 60 * 1000, // 1 hour - consistent with provider default
     gcTime: 24 * 60 * 60 * 1000, // 24 hours - consistent with provider default
   });

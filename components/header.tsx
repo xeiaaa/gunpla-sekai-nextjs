@@ -36,7 +36,7 @@ export function Header() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      const query = encodeURIComponent(searchQuery.trim());
+      const query = searchQuery.trim();
       if (searchType === "kits") {
         // Preserve existing URL params for kits page
         const currentPath = window.location.pathname;
@@ -49,11 +49,15 @@ export function Header() {
           router.push(`/kits?${urlParams.toString()}`);
         } else {
           // No existing filters or not on kits page
-          router.push(`/kits?search=${query}`);
+          const urlParams = new URLSearchParams();
+          urlParams.set("search", query);
+          router.push(`/kits?${urlParams.toString()}`);
         }
       } else {
         // Mobile suits - clear all params except search
-        router.push(`/mobile-suits?search=${query}`);
+        const urlParams = new URLSearchParams();
+        urlParams.set("search", query);
+        router.push(`/mobile-suits?${urlParams.toString()}`);
       }
     }
   };
