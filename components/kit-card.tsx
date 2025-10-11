@@ -54,6 +54,10 @@ const KitCard = memo(function KitCard({
         "bg-card border-border",
         className
       )}
+      style={{
+        contain: "layout style paint",
+        contentVisibility: "auto",
+      }}
     >
       {/* Kit Image */}
       <div className="relative overflow-hidden">

@@ -17,6 +17,7 @@ interface UseKitsParams {
   offset?: number;
   includeExpansions?: boolean;
   includeVariants?: boolean;
+  yearRange?: { min: number; max: number };
 }
 
 // Hook for filter data
@@ -73,6 +74,7 @@ export function useKitsInfinite(
       params.order,
       params.includeExpansions,
       params.includeVariants,
+      params.yearRange,
     ],
     queryFn: ({ pageParam = 0 }) =>
       getFilteredKitsWithMeilisearch({

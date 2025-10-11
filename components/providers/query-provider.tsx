@@ -57,7 +57,7 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       client={queryClient}
       persistOptions={{
         persister,
-        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        maxAge: 0, // 24 hours
         dehydrateOptions: {
           shouldDehydrateQuery: (query) => {
             try {

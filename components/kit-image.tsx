@@ -84,6 +84,11 @@ export function KitImage({
         onError={handleImageError}
         onLoad={handleImageLoad}
         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        priority={false}
+        loading="lazy"
+        quality={75}
+        placeholder="blur"
+        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjwvc3ZnPg=="
       />
     </div>
   );

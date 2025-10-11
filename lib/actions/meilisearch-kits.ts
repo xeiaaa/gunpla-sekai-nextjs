@@ -34,6 +34,7 @@ interface KitFilters {
   offset?: number;
   includeExpansions?: boolean;
   includeVariants?: boolean;
+  yearRange?: { min: number; max: number };
 }
 
 interface MeilisearchKit {
@@ -82,6 +83,7 @@ export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
       includeExpansions = false, // Default to false
       sortBy = "relevance",
       order = "most-relevant",
+      yearRange,
     } = filters;
 
     // Decode the search term in case it's URL encoded
@@ -143,6 +145,15 @@ export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
 
     if (!includeExpansions) {
       meilisearchFilters.push("isExpansion = false");
+    }
+
+    // Handle year range filtering
+    if (yearRange) {
+      const minDate = new Date(yearRange.min, 0, 1).toISOString();
+      const maxDate = new Date(yearRange.max, 11, 31).toISOString();
+      meilisearchFilters.push(
+        `releaseDate >= "${minDate}" AND releaseDate <= "${maxDate}"`
+      );
     }
 
     // Build sort options
@@ -223,6 +234,20 @@ export async function getFilteredKitsWithMeilisearch(filters: KitFilters) {
         mobileSuits: typedKit.mobileSuits?.map((ms) => ms.name) || [],
       };
     });
+
+    // Debug: Log release date info
+    const kitsWithDates = transformedKits.filter((kit) => kit.releaseDate);
+    console.log("🔍 Meilisearch Debug - Release date analysis:");
+    console.log("Total kits returned:", transformedKits.length);
+    console.log("Kits with release dates:", kitsWithDates.length);
+    console.log(
+      "Sample release dates:",
+      kitsWithDates.slice(0, 10).map((kit) => ({
+        name: kit.name,
+        releaseDate: kit.releaseDate,
+        year: kit.releaseDate?.getFullYear(),
+      }))
+    );
 
     return {
       kits: transformedKits,
