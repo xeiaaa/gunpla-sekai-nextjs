@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
 import { X, Search } from "lucide-react";
-import { useState, useMemo, useCallback, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 
 // Types
 interface FilterPopoverProps {
@@ -511,6 +511,188 @@ function YearRangePopover({
   );
 }
 
+// Mobile Suits Filter Popover with API and Infinite Scroll
+interface MobileSuitFilterPopoverProps {
+  onClose: () => void;
+  selectedValues: string[];
+  onSelectionChange: (values: string[]) => void;
+  searchTerm: string;
+  onSearchChange: (searchTerm: string) => void;
+}
+
+function MobileSuitFilterPopover({
+  onClose,
+  selectedValues,
+  onSelectionChange,
+  searchTerm,
+  onSearchChange,
+}: MobileSuitFilterPopoverProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Fetch mobile suits using infinite query
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["mobile-suits-filter", debouncedSearchTerm],
+      queryFn: async ({ pageParam }) => {
+        const params = new URLSearchParams();
+        if (pageParam) {
+          params.set("cursor", pageParam);
+        }
+        if (debouncedSearchTerm) {
+          params.set("query", debouncedSearchTerm);
+        }
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
+        const response = await fetch(
+          `${apiUrl}/mobile-suits/meilisearch?${params.toString()}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch mobile suits");
+        }
+        return response.json();
+      },
+      initialPageParam: null,
+      getNextPageParam: (lastPage) => {
+        return lastPage.meta.hasNextPage ? lastPage.meta.nextCursor : undefined;
+      },
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+
+  const mobileSuits = useMemo(
+    () => data?.pages.flatMap((page) => page.items) || [],
+    [data]
+  );
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+      if (
+        scrollHeight - scrollTop <= clientHeight * 1.5 &&
+        hasNextPage &&
+        !isFetchingNextPage
+      ) {
+        fetchNextPage();
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const handleToggleOption = (optionId: string) => {
+    const isSelected = selectedValues.includes(optionId);
+    if (isSelected) {
+      onSelectionChange(selectedValues.filter((id) => id !== optionId));
+    } else {
+      onSelectionChange([...selectedValues, optionId]);
+    }
+  };
+
+  const handleReset = () => {
+    onSelectionChange([]);
+  };
+
+  return (
+    <div
+      className="absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+      data-popover
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900">Mobile Suit</h3>
+        <button
+          onClick={onClose}
+          className="p-1 hover:bg-gray-100 rounded-full"
+        >
+          <X className="w-4 h-4 text-gray-500" />
+        </button>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <button
+          onClick={handleReset}
+          className="text-sm text-gray-500 hover:text-gray-700"
+        >
+          Reset
+        </button>
+        <div className="flex items-center">
+          <Search className="w-4 h-4 text-gray-400 mr-2" />
+          <input
+            type="text"
+            placeholder="Search mobile suits..."
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="text-sm border-none outline-none placeholder-gray-400"
+          />
+        </div>
+      </div>
+
+      {/* Options List with Infinite Scroll */}
+      <div ref={scrollContainerRef} className="max-h-80 overflow-y-auto">
+        {isLoading && mobileSuits.length === 0 ? (
+          <div className="p-4 text-center text-sm text-gray-500">
+            Loading mobile suits...
+          </div>
+        ) : mobileSuits.length === 0 ? (
+          <div className="p-4 text-center text-sm text-gray-500">
+            No mobile suits found
+          </div>
+        ) : (
+          <>
+            {mobileSuits.map((mobileSuit: { id: string; name: string }) => (
+              <label
+                key={mobileSuit.id}
+                className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selectedValues.includes(mobileSuit.id)}
+                    onChange={() => handleToggleOption(mobileSuit.id)}
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="ml-3 text-sm text-gray-900">
+                    {mobileSuit.name}
+                  </span>
+                </div>
+              </label>
+            ))}
+            {isFetchingNextPage && (
+              <div className="p-4 text-center text-sm text-gray-500">
+                Loading more...
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="p-4 border-t border-gray-200">
+        <button
+          onClick={onClose}
+          className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function FilterSection({
   state,
   filterData,
@@ -773,20 +955,7 @@ export default function FilterSection({
                 </div>
               </button>
               {state.ui.activePopover === "mobileSuits" && (
-                <FilterPopover
-                  title="Mobile Suit"
-                  options={[
-                    { id: "rx-78-2", name: "RX-78-2 Gundam", count: 45 },
-                    { id: "zaku-ii", name: "Zaku II", count: 38 },
-                    { id: "gundam-mk-ii", name: "Gundam Mk-II", count: 25 },
-                    { id: "z-gundam", name: "Z Gundam", count: 32 },
-                    { id: "nu-gundam", name: "Nu Gundam", count: 18 },
-                    {
-                      id: "unicorn-gundam",
-                      name: "Unicorn Gundam",
-                      count: 42,
-                    },
-                  ]}
+                <MobileSuitFilterPopover
                   selectedValues={state.pending.mobileSuits}
                   onSelectionChange={onPendingMobileSuitsChange}
                   onClose={onPopoverClose}
