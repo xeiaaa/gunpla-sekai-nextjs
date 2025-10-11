@@ -1199,440 +1199,568 @@ function KitsPageContent() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         {/* Horizontal Filter Bar */}
-        <div className="mb-6 bg-card border rounded-lg p-4 shadow-sm">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 mb-4">
-            {/* Filter Buttons */}
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("vendors")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Vendors</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "vendors" && (
-                <FilterPopover
-                  title="Vendors"
-                  options={[
-                    { id: "bandai", name: "Bandai", count: 1250 },
-                    { id: "kotobukiya", name: "Kotobukiya", count: 85 },
-                    { id: "good-smile", name: "Good Smile Company", count: 45 },
-                  ]}
-                  selectedValues={state.pending.vendors}
-                  onSelectionChange={handlePendingVendorsChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.vendors || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("vendors", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("productLines")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Product Lines</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "productLines" && (
-                <FilterPopover
-                  title="Product Lines"
-                  options={filterData.productLines.map((line) => ({
-                    ...line,
-                    count: undefined,
-                  }))}
-                  selectedValues={state.pending.productLines}
-                  onSelectionChange={handlePendingProductLinesChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.productLines || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("productLines", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("grades")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Grades</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "grades" && (
-                <FilterPopover
-                  title="Grades"
-                  options={filterData.grades.map((grade) => ({
-                    ...grade,
-                    count: undefined,
-                  }))}
-                  selectedValues={state.pending.grades}
-                  onSelectionChange={handlePendingGradesChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.grades || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("grades", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("series")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Series</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "series" && (
-                <FilterPopover
-                  title="Series"
-                  options={filterData.series.map((series) => ({
-                    ...series,
-                    count: undefined,
-                  }))}
-                  selectedValues={state.pending.series}
-                  onSelectionChange={handlePendingSeriesChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.series || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("series", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("releaseTypes")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Release Type</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "releaseTypes" && (
-                <FilterPopover
-                  title="Release Type"
-                  options={filterData.releaseTypes.map((type) => ({
-                    ...type,
-                    count: undefined,
-                  }))}
-                  selectedValues={state.pending.releaseTypes}
-                  onSelectionChange={handlePendingReleaseTypesChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.releaseTypes || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("releaseTypes", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("mobileSuits")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Mobile Suit</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "mobileSuits" && (
-                <FilterPopover
-                  title="Mobile Suit"
-                  options={[
-                    { id: "rx-78-2", name: "RX-78-2 Gundam", count: 45 },
-                    { id: "zaku-ii", name: "Zaku II", count: 38 },
-                    { id: "gundam-mk-ii", name: "Gundam Mk-II", count: 25 },
-                    { id: "z-gundam", name: "Z Gundam", count: 32 },
-                    { id: "nu-gundam", name: "Nu Gundam", count: 18 },
-                    { id: "unicorn-gundam", name: "Unicorn Gundam", count: 42 },
-                  ]}
-                  selectedValues={state.pending.mobileSuits}
-                  onSelectionChange={handlePendingMobileSuitsChange}
-                  onClose={handlePopoverClose}
-                  searchTerm={state.ui.popoverSearchTerms.mobileSuits || ""}
-                  onSearchChange={(term) =>
-                    handlePopoverSearchChange("mobileSuits", term)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="relative" data-popover>
-              <button
-                onClick={() => handlePopoverOpen("year")}
-                className="w-full p-2 text-sm border rounded-md bg-background hover:bg-gray-50 flex items-center justify-between"
-              >
-                <span>Year</span>
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {state.ui.activePopover === "year" && (
-                <YearRangePopover
-                  onClose={handlePopoverClose}
-                  yearRange={state.pending.yearRange}
-                  onRangeChange={handlePendingYearRangeChange}
-                />
-              )}
-            </div>
-          </div>
-
-          {/* Filter Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-            <Button onClick={applyFilters} className="flex-1 sm:flex-none">
-              Apply Filters
-            </Button>
-            <Button
-              variant="outline"
-              onClick={clearAllFilters}
-              className="flex-1 sm:flex-none flex items-center gap-2"
-            >
-              <RotateCcw className="h-4 w-4" />
-              Clear All
-            </Button>
-          </div>
-
-          {/* Include Options */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={state.pending.includeVariants}
-                  onChange={(e) =>
-                    handlePendingIncludeVariantsChange(e.target.checked)
-                  }
-                  className="rounded border-gray-300"
-                />
-                <span className="text-sm font-medium">Include Variants</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={state.pending.includeExpansions}
-                  onChange={(e) =>
-                    handlePendingIncludeExpansionsChange(e.target.checked)
-                  }
-                  className="rounded border-gray-300"
-                />
-                <span className="text-sm font-medium">Include Expansions</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Sort and Display Options */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Sort by:
-                </label>
-                <select
-                  value={state.pending.sortBy}
-                  onChange={(e) => handlePendingSortByChange(e.target.value)}
-                  className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[140px]"
-                >
-                  <option value="relevance">Relevance</option>
-                  <option value="name">Name</option>
-                  <option value="releaseDate">Release Date</option>
-                  <option value="totalBuilds">Total Builds</option>
-                  <option value="totalReviews">Total Reviews</option>
-                  <option value="reviews.BUILD_QUALITY_ENGINEERING">
-                    Build Quality
-                  </option>
-                  <option value="reviews.ARTICULATION_POSEABILITY">
-                    Articulation
-                  </option>
-                  <option value="reviews.DETAIL_ACCURACY">
-                    Detail Accuracy
-                  </option>
-                  <option value="reviews.AESTHETICS_PROPORTIONS">
-                    Aesthetics
-                  </option>
-                  <option value="reviews.ACCESSORIES_GIMMICKS">
-                    Accessories
-                  </option>
-                  <option value="reviews.VALUE_EXPERIENCE">Value</option>
-                  <option value="reviews.OVERALL">Overall Rating</option>
-                  <option value="collection.OWNED">Owned</option>
-                  <option value="collection.PREORDER">Preorder</option>
-                  <option value="collection.BACKLOG">Backlog</option>
-                  <option value="collection.IN_PROGRESS">In Progress</option>
-                  <option value="collection.BUILT">Built</option>
-                  <option value="collection.WISHLIST">Wishlist</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none top-6">
-                  <svg
-                    className="w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+        <div className="mb-6 bg-card border rounded-lg shadow-sm">
+          <div className="p-4 space-y-4">
+            {/* Row 1: Primary Filters (Entity-level) */}
+            <div>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                Primary Filters
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {/* Vendor */}
+                <div className="relative" data-popover>
+                  <button
+                    onClick={() => handlePopoverOpen("vendors")}
+                    className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                      state.pending.vendors.length > 0
+                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        : ""
+                    }`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
+                    <span className="truncate">Vendors</span>
+                    {state.pending.vendors.length > 0 && (
+                      <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                        {state.pending.vendors.length}
+                      </span>
+                    )}
+                    <svg
+                      className="w-4 h-4 text-gray-400 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {state.ui.activePopover === "vendors" && (
+                    <FilterPopover
+                      title="Vendors"
+                      options={[
+                        { id: "bandai", name: "Bandai", count: 1250 },
+                        { id: "kotobukiya", name: "Kotobukiya", count: 85 },
+                        {
+                          id: "good-smile",
+                          name: "Good Smile Company",
+                          count: 45,
+                        },
+                      ]}
+                      selectedValues={state.pending.vendors}
+                      onSelectionChange={handlePendingVendorsChange}
+                      onClose={handlePopoverClose}
+                      searchTerm={state.ui.popoverSearchTerms.vendors || ""}
+                      onSearchChange={(term) =>
+                        handlePopoverSearchChange("vendors", term)
+                      }
                     />
-                  </svg>
+                  )}
                 </div>
-              </div>
 
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Order:
-                </label>
-                <select
-                  value={state.pending.sortDirection}
-                  onChange={(e) =>
-                    handlePendingSortDirectionChange(
-                      e.target.value as "asc" | "desc"
-                    )
-                  }
-                  className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[120px]"
-                >
-                  <option value="desc">Descending</option>
-                  <option value="asc">Ascending</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none top-6">
-                  <svg
-                    className="w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <div className="relative" data-popover>
+                  <button
+                    onClick={() => handlePopoverOpen("productLines")}
+                    className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                      state.pending.productLines.length > 0
+                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        : ""
+                    }`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
+                    <span className="truncate">Product Lines</span>
+                    {state.pending.productLines.length > 0 && (
+                      <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                        {state.pending.productLines.length}
+                      </span>
+                    )}
+                    <svg
+                      className="w-4 h-4 text-gray-400 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {state.ui.activePopover === "productLines" && (
+                    <FilterPopover
+                      title="Product Lines"
+                      options={filterData.productLines.map((line) => ({
+                        ...line,
+                        count: undefined,
+                      }))}
+                      selectedValues={state.pending.productLines}
+                      onSelectionChange={handlePendingProductLinesChange}
+                      onClose={handlePopoverClose}
+                      searchTerm={
+                        state.ui.popoverSearchTerms.productLines || ""
+                      }
+                      onSearchChange={(term) =>
+                        handlePopoverSearchChange("productLines", term)
+                      }
                     />
-                  </svg>
+                  )}
+                </div>
+
+                <div className="relative" data-popover>
+                  <button
+                    onClick={() => handlePopoverOpen("grades")}
+                    className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                      state.pending.grades.length > 0
+                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        : ""
+                    }`}
+                  >
+                    <span className="truncate">Grades</span>
+                    {state.pending.grades.length > 0 && (
+                      <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                        {state.pending.grades.length}
+                      </span>
+                    )}
+                    <svg
+                      className="w-4 h-4 text-gray-400 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {state.ui.activePopover === "grades" && (
+                    <FilterPopover
+                      title="Grades"
+                      options={filterData.grades.map((grade) => ({
+                        ...grade,
+                        count: undefined,
+                      }))}
+                      selectedValues={state.pending.grades}
+                      onSelectionChange={handlePendingGradesChange}
+                      onClose={handlePopoverClose}
+                      searchTerm={state.ui.popoverSearchTerms.grades || ""}
+                      onSearchChange={(term) =>
+                        handlePopoverSearchChange("grades", term)
+                      }
+                    />
+                  )}
+                </div>
+
+                <div className="relative" data-popover>
+                  <button
+                    onClick={() => handlePopoverOpen("series")}
+                    className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                      state.pending.series.length > 0
+                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        : ""
+                    }`}
+                  >
+                    <span className="truncate">Series</span>
+                    {state.pending.series.length > 0 && (
+                      <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                        {state.pending.series.length}
+                      </span>
+                    )}
+                    <svg
+                      className="w-4 h-4 text-gray-400 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {state.ui.activePopover === "series" && (
+                    <FilterPopover
+                      title="Series"
+                      options={filterData.series.map((series) => ({
+                        ...series,
+                        count: undefined,
+                      }))}
+                      selectedValues={state.pending.series}
+                      onSelectionChange={handlePendingSeriesChange}
+                      onClose={handlePopoverClose}
+                      searchTerm={state.ui.popoverSearchTerms.series || ""}
+                      onSearchChange={(term) =>
+                        handlePopoverSearchChange("series", term)
+                      }
+                    />
+                  )}
+                </div>
+
+                <div className="relative" data-popover>
+                  <button
+                    onClick={() => handlePopoverOpen("mobileSuits")}
+                    className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                      state.pending.mobileSuits.length > 0
+                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        : ""
+                    }`}
+                  >
+                    <span className="truncate">Mobile Suit</span>
+                    {state.pending.mobileSuits.length > 0 && (
+                      <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                        {state.pending.mobileSuits.length}
+                      </span>
+                    )}
+                    <svg
+                      className="w-4 h-4 text-gray-400 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {state.ui.activePopover === "mobileSuits" && (
+                    <FilterPopover
+                      title="Mobile Suit"
+                      options={[
+                        { id: "rx-78-2", name: "RX-78-2 Gundam", count: 45 },
+                        { id: "zaku-ii", name: "Zaku II", count: 38 },
+                        { id: "gundam-mk-ii", name: "Gundam Mk-II", count: 25 },
+                        { id: "z-gundam", name: "Z Gundam", count: 32 },
+                        { id: "nu-gundam", name: "Nu Gundam", count: 18 },
+                        {
+                          id: "unicorn-gundam",
+                          name: "Unicorn Gundam",
+                          count: 42,
+                        },
+                      ]}
+                      selectedValues={state.pending.mobileSuits}
+                      onSelectionChange={handlePendingMobileSuitsChange}
+                      onClose={handlePopoverClose}
+                      searchTerm={state.ui.popoverSearchTerms.mobileSuits || ""}
+                      onSearchChange={(term) =>
+                        handlePopoverSearchChange("mobileSuits", term)
+                      }
+                    />
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Display Options */}
-            <div className="flex items-center gap-2">
-              <button className="p-2 border rounded-md hover:bg-gray-50">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {/* Row 2: Release & Metadata Filters */}
+            <div className="flex flex-row items-start gap-8">
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  Release & Metadata
+                </h3>
+                <div className="flex flex-wrap items-center gap-3">
+                  {/* Release Type */}
+                  <div className="relative w-40" data-popover>
+                    <button
+                      onClick={() => handlePopoverOpen("releaseTypes")}
+                      className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                        state.pending.releaseTypes.length > 0
+                          ? "border-primary bg-primary/5 text-primary font-medium"
+                          : ""
+                      }`}
+                    >
+                      <span className="truncate">Release Type</span>
+                      {state.pending.releaseTypes.length > 0 && (
+                        <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full">
+                          {state.pending.releaseTypes.length}
+                        </span>
+                      )}
+                      <svg
+                        className="w-4 h-4 text-gray-400 ml-2 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {state.ui.activePopover === "releaseTypes" && (
+                      <FilterPopover
+                        title="Release Type"
+                        options={filterData.releaseTypes.map((type) => ({
+                          ...type,
+                          count: undefined,
+                        }))}
+                        selectedValues={state.pending.releaseTypes}
+                        onSelectionChange={handlePendingReleaseTypesChange}
+                        onClose={handlePopoverClose}
+                        searchTerm={
+                          state.ui.popoverSearchTerms.releaseTypes || ""
+                        }
+                        onSearchChange={(term) =>
+                          handlePopoverSearchChange("releaseTypes", term)
+                        }
+                      />
+                    )}
+                  </div>
+
+                  {/* Year Range */}
+                  <div className="relative w-40" data-popover>
+                    <button
+                      onClick={() => handlePopoverOpen("year")}
+                      className={`w-full px-3 py-2 text-sm border rounded-lg bg-background hover:bg-accent hover:border-primary/50 flex items-center justify-between transition-colors ${
+                        state.pending.yearRange.min !== 1980 ||
+                        state.pending.yearRange.max !== new Date().getFullYear()
+                          ? "border-primary bg-primary/5 text-primary font-medium"
+                          : ""
+                      }`}
+                    >
+                      <span className="truncate">Year</span>
+                      {(state.pending.yearRange.min !== 1980 ||
+                        state.pending.yearRange.max !==
+                          new Date().getFullYear()) && (
+                        <span className="ml-2 px-1.5 py-0.5 text-xs bg-primary text-primary-foreground rounded-full whitespace-nowrap">
+                          {state.pending.yearRange.min}-
+                          {state.pending.yearRange.max}
+                        </span>
+                      )}
+                      <svg
+                        className="w-4 h-4 text-gray-400 ml-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {state.ui.activePopover === "year" && (
+                      <YearRangePopover
+                        onClose={handlePopoverClose}
+                        yearRange={state.pending.yearRange}
+                        onRangeChange={handlePendingYearRangeChange}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Include Options Section */}
+              <div className="flex flex-col gap-2">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  Include Options
+                </h3>
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Include Variants - Chip Style */}
+                  <button
+                    onClick={() =>
+                      handlePendingIncludeVariantsChange(
+                        !state.pending.includeVariants
+                      )
+                    }
+                    className={`px-3 py-1.5 text-sm font-medium rounded-full border transition-all ${
+                      state.pending.includeVariants
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background text-gray-700 border-gray-300 hover:border-primary/50 hover:bg-gray-50"
+                    }`}
+                  >
+                    {state.pending.includeVariants && (
+                      <span className="mr-1.5">✓</span>
+                    )}
+                    Variants
+                  </button>
+
+                  {/* Include Expansions - Chip Style */}
+                  <button
+                    onClick={() =>
+                      handlePendingIncludeExpansionsChange(
+                        !state.pending.includeExpansions
+                      )
+                    }
+                    className={`px-3 py-1.5 text-sm font-medium rounded-full border transition-all ${
+                      state.pending.includeExpansions
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background text-gray-700 border-gray-300 hover:border-primary/50 hover:bg-gray-50"
+                    }`}
+                  >
+                    {state.pending.includeExpansions && (
+                      <span className="mr-1.5">✓</span>
+                    )}
+                    Expansions
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Row 3: Sorting & Actions */}
+            <div className="border-t flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-4">
+              {/* Left: Sort Controls */}
+              <div className="flex flex-col gap-2">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  Sorting
+                </h3>
+                <div className="flex flex-wrap items-end gap-3">
+                  <div className="relative">
+                    <div className="relative">
+                      <select
+                        value={state.pending.sortBy}
+                        onChange={(e) =>
+                          handlePendingSortByChange(e.target.value)
+                        }
+                        className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[140px]"
+                      >
+                        <option value="relevance">Relevance</option>
+                        <option value="name">Name</option>
+                        <option value="releaseDate">Release Date</option>
+                        <option value="totalBuilds">Total Builds</option>
+                        <option value="totalReviews">Total Reviews</option>
+                        <option value="reviews.BUILD_QUALITY_ENGINEERING">
+                          Build Quality
+                        </option>
+                        <option value="reviews.ARTICULATION_POSEABILITY">
+                          Articulation
+                        </option>
+                        <option value="reviews.DETAIL_ACCURACY">
+                          Detail Accuracy
+                        </option>
+                        <option value="reviews.AESTHETICS_PROPORTIONS">
+                          Aesthetics
+                        </option>
+                        <option value="reviews.ACCESSORIES_GIMMICKS">
+                          Accessories
+                        </option>
+                        <option value="reviews.VALUE_EXPERIENCE">Value</option>
+                        <option value="reviews.OVERALL">Overall Rating</option>
+                        <option value="collection.OWNED">Owned</option>
+                        <option value="collection.PREORDER">Preorder</option>
+                        <option value="collection.BACKLOG">Backlog</option>
+                        <option value="collection.IN_PROGRESS">
+                          In Progress
+                        </option>
+                        <option value="collection.BUILT">Built</option>
+                        <option value="collection.WISHLIST">Wishlist</option>
+                      </select>
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <svg
+                          className="w-4 h-4 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <div className="relative">
+                      <select
+                        value={state.pending.sortDirection}
+                        onChange={(e) =>
+                          handlePendingSortDirectionChange(
+                            e.target.value as "asc" | "desc"
+                          )
+                        }
+                        className="p-2 text-sm border rounded-md bg-background appearance-none pr-8 min-w-[120px]"
+                      >
+                        <option value="desc">Descending</option>
+                        <option value="asc">Ascending</option>
+                      </select>
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <svg
+                          className="w-4 h-4 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Filters Count (optional) */}
+              {(state.pending.grades.length > 0 ||
+                state.pending.productLines.length > 0 ||
+                state.pending.series.length > 0 ||
+                state.pending.releaseTypes.length > 0 ||
+                state.pending.vendors.length > 0 ||
+                state.pending.mobileSuits.length > 0 ||
+                state.pending.yearRange.min !== 1980 ||
+                state.pending.yearRange.max !== new Date().getFullYear()) && (
+                <div className="text-xs text-gray-500">
+                  {state.pending.grades.length +
+                    state.pending.productLines.length +
+                    state.pending.series.length +
+                    state.pending.releaseTypes.length +
+                    state.pending.vendors.length +
+                    state.pending.mobileSuits.length +
+                    (state.pending.yearRange.min !== 1980 ||
+                    state.pending.yearRange.max !== new Date().getFullYear()
+                      ? 1
+                      : 0)}{" "}
+                  {state.pending.grades.length +
+                    state.pending.productLines.length +
+                    state.pending.series.length +
+                    state.pending.releaseTypes.length +
+                    state.pending.vendors.length +
+                    state.pending.mobileSuits.length +
+                    (state.pending.yearRange.min !== 1980 ||
+                    state.pending.yearRange.max !== new Date().getFullYear()
+                      ? 1
+                      : 0) ===
+                  1
+                    ? "filter"
+                    : "filters"}{" "}
+                  selected
+                </div>
+              )}
+
+              {/* Right: Action Buttons */}
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={clearAllFilters}
+                  size="sm"
+                  className="h-9"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                  />
-                </svg>
-              </button>
-              <button className="p-2 border rounded-md hover:bg-gray-50">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 10h16M4 14h16M4 18h16"
-                  />
-                </svg>
-              </button>
+                  <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+                  Clear All
+                </Button>
+                <Button onClick={applyFilters} size="sm" className="h-9">
+                  Apply Filters
+                </Button>
+              </div>
             </div>
           </div>
         </div>
