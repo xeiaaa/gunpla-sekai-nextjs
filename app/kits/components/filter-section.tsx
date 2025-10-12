@@ -281,7 +281,7 @@ function YearRangePopover({
     ...processedHistogramData.map((d: { count: number }) => d.count)
   );
   const minYear = 1980;
-  const maxYear = new Date().getFullYear();
+  const maxYear = new Date().getFullYear() + 1;
 
   const handleSliderChange = (type: "min" | "max", value: number) => {
     const newRange = { ...localRange };
@@ -332,7 +332,7 @@ function YearRangePopover({
       </div>
 
       {/* Reset Button */}
-      <div className="px-4 pt-3">
+      <div className="px-4 pt-3 pb-3 border-b border-gray-200">
         <button
           onClick={handleReset}
           className="text-sm text-gray-500 hover:text-gray-700"
@@ -342,7 +342,7 @@ function YearRangePopover({
       </div>
 
       {/* Histogram and Range Slider */}
-      <div className="px-4 pb-4 pl-12">
+      <div className="px-4 pb-4 pl-12 pt-4">
         {/* Histogram */}
         <div className="relative h-20 mb-8 mt-2">
           {/* Y-axis labels (kit count) */}
@@ -532,10 +532,10 @@ function YearRangePopover({
           </div>
         </div>
 
-        {/* Min/Max Input Fields */}
+        {/* From/To Input Fields */}
         <div className="flex items-center gap-2">
           <div className="flex-1">
-            <label className="block text-xs text-gray-500 mb-1">Min</label>
+            <label className="block text-xs text-gray-500 mb-1">From</label>
             <input
               type="number"
               value={localRange.min}
@@ -547,7 +547,7 @@ function YearRangePopover({
           </div>
           <div className="text-gray-400 mt-6">-</div>
           <div className="flex-1">
-            <label className="block text-xs text-gray-500 mb-1">Max</label>
+            <label className="block text-xs text-gray-500 mb-1">To</label>
             <input
               type="number"
               value={localRange.max}
