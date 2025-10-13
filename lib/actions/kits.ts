@@ -569,6 +569,47 @@ export async function getAllProductLines() {
   }
 }
 
+// lib/db/productLine.ts
+// lib/actions/product-line.ts
+
+export async function getProductLines({
+  search = "",
+  skip = 0,
+  take = 20,
+}: {
+  search?: string;
+  skip?: number;
+  take?: number;
+}) {
+  try {
+    const productLines = await prisma.productLine.findMany({
+      where: {
+        name: { contains: search, mode: "insensitive" },
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        grade: {
+          select: { name: true },
+        },
+      },
+      orderBy: { name: "asc" },
+      skip,
+      take,
+    });
+
+    const totalCount = await prisma.productLine.count({
+      where: { name: { contains: search, mode: "insensitive" } },
+    });
+
+    return { productLines, totalCount };
+  } catch (error) {
+    console.error("Error fetching product lines:", error);
+    return { productLines: [], totalCount: 0 };
+  }
+}
+
 export async function getAllSeries() {
   try {
     const series = await prisma.series.findMany({
@@ -586,6 +627,41 @@ export async function getAllSeries() {
   } catch (error) {
     console.error("Error fetching series:", error);
     return [];
+  }
+}
+
+export async function getSeries({
+  search = "",
+  skip = 0,
+  take = 20,
+}: {
+  search?: string;
+  skip?: number;
+  take?: number;
+}) {
+  try {
+    const series = await prisma.series.findMany({
+      where: {
+        name: { contains: search },
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+      orderBy: { name: "asc" },
+      skip,
+      take,
+    });
+
+    const totalCount = await prisma.series.count({
+      where: { name: { contains: search } },
+    });
+
+    return { series, totalCount };
+  } catch (error) {
+    console.error("Error fetching series:", error);
+    return { series: [], totalCount: 0 };
   }
 }
 
@@ -831,9 +907,9 @@ export async function getKitBySlug(slug: string) {
       grade: kit.productLine?.grade.name || null,
       productLine: kit.productLine
         ? {
-            name: kit.productLine.name,
-            logo: kit.productLine.logo?.url || null,
-          }
+          name: kit.productLine.name,
+          logo: kit.productLine.logo?.url || null,
+        }
         : null,
       series: kit.series?.name,
       seriesSlug: kit.series?.slug,
@@ -841,14 +917,14 @@ export async function getKitBySlug(slug: string) {
       releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit
         ? {
-            id: kit.baseKit.id,
-            name: kit.baseKit.name,
-            slug: kit.baseKit.slug,
-            number: kit.baseKit.number,
-            variant: kit.baseKit.variant,
-            boxArt: kit.baseKit.boxArt,
-            grade: kit.baseKit.productLine?.grade.name || null,
-          }
+          id: kit.baseKit.id,
+          name: kit.baseKit.name,
+          slug: kit.baseKit.slug,
+          number: kit.baseKit.number,
+          variant: kit.baseKit.variant,
+          boxArt: kit.baseKit.boxArt,
+          grade: kit.baseKit.productLine?.grade.name || null,
+        }
         : null,
       variants: kit.variants.map((variant) => ({
         ...variant,

@@ -559,7 +559,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/dia/dev/projects/gunpla-sekai/generated/prisma",
+      "value": "/Users/dia/dev/gunpla/gunpla-sekai-nextjs/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -577,7 +577,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/dia/dev/projects/gunpla-sekai/prisma/schema.prisma",
+    "sourceFilePath": "/Users/dia/dev/gunpla/gunpla-sekai-nextjs/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -591,7 +591,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {

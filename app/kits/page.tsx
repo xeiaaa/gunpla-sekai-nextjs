@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { KitCard } from "@/components/kit-card";
 import { useFilterData } from "@/hooks/use-kits";
 import { FilterSection } from "./components";
+import { SignedIn } from "@clerk/nextjs";
+import Link from "next/link";
 
 // Types
 interface Kit {
@@ -795,13 +797,24 @@ function KitsPageContent() {
         {/* Main Content - Kits Grid */}
         <main className="min-w-0">
           {/* Results Summary */}
-          {kitsData && kits.length > 0 && (
-            <div className="mb-6">
-              <p className="text-muted-foreground">
-                Showing {kits.length} of {totalKits} kits
-              </p>
-            </div>
-          )}
+          <div className="mb-4 flex w-full justify-between">
+            {kitsData && kits.length > 0 && (
+              <div className="mb-6">
+                <p className="text-muted-foreground">
+                  Showing {kits.length} of {totalKits} kits
+                </p>
+              </div>
+            )}
+
+            <SignedIn>
+              <div className="flex items-center gap-2">
+                {"The kit you're looking for isn't here?"}
+                <Button asChild>
+                  <Link href={`/kits/new`}>Add Kit</Link>
+                </Button>
+              </div>
+            </SignedIn>
+          </div>
 
           {/* Kits Grid */}
           {loading ? (
