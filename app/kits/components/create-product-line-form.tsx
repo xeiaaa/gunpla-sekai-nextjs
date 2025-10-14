@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { nanoid } from "nanoid";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductLine } from "./product-line-filter";
-
-type Grade = { id: string; name: string };
-type Vendor = { id: string; name: string };
+import VendorFilter, { Vendor } from "./vendor-filter";
+import GradeFilter, { Grade } from "./grade-filter";
 
 interface CreateProductLineFormProps {
   onSuccess?: (productLine: ProductLine) => void;
@@ -17,9 +16,9 @@ interface CreateProductLineFormProps {
 export default function CreateProductLineForm({
   onSuccess,
 }: CreateProductLineFormProps) {
-  const [grades, setGrades] = useState<Grade[]>([]);
-  const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+  const [selectedGrade, setSelectedGrade] = useState<Vendor | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -29,24 +28,6 @@ export default function CreateProductLineForm({
     logoId: "",
     scrapedImage: "",
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
-
-      const [gradesRes, vendorsRes] = await Promise.all([
-        fetch(
-          `${apiUrl}/grades?select=id,slug,name&limit=100&sort=name:asc`
-        ).then((r) => r.json()),
-        fetch(
-          `${apiUrl}/vendors?select=id,slug,name&limit=100&sort=name:asc`
-        ).then((r) => r.json()),
-      ]);
-      if (gradesRes?.items) setGrades(gradesRes.items);
-      if (vendorsRes?.items) setVendors(vendorsRes.items);
-    };
-    fetchData();
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -65,7 +46,6 @@ export default function CreateProductLineForm({
 
     // Validate required fields
     if (!formData.name.trim()) {
-      alert("Please enter a product line name");
       return;
     }
 
@@ -73,15 +53,13 @@ export default function CreateProductLineForm({
 
     try {
       // Find the selected grade to get its name
-      const selectedGrade = grades.find((g) => g.id === formData.gradeId);
 
       // Create the new product line matching the ProductLine type
       const newProductLine: ProductLine = {
         name: formData.name,
         id: nanoid(),
-        grade: {
-          name: selectedGrade?.name || "",
-        },
+        grade: selectedGrade,
+        vendor: selectedVendor,
       };
 
       // Reset form
@@ -138,21 +116,12 @@ export default function CreateProductLineForm({
       {/* Grade */}
       <div>
         <label className="block text-sm font-medium text-gray-700">Grade</label>
-        <select
-          name="gradeId"
-          onChange={handleChange}
-          value={formData.gradeId}
-          className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-        >
-          <option value="">Select Grade</option>
-          {Array.isArray(grades)
-            ? grades.map((grade) => (
-                <option key={grade.id} value={grade.id}>
-                  {grade.name}
-                </option>
-              ))
-            : null}
-        </select>
+        <GradeFilter
+          selectedValue={selectedGrade}
+          onChange={function (value: Grade | null): void {
+            setSelectedGrade(value);
+          }}
+        />
       </div>
 
       {/* Vendor */}
@@ -160,21 +129,13 @@ export default function CreateProductLineForm({
         <label className="block text-sm font-medium text-gray-700">
           Vendor
         </label>
-        <select
-          name="vendorId"
-          onChange={handleChange}
-          value={formData.vendorId}
-          className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-        >
-          <option value="">Select Vendor</option>
-          {Array.isArray(vendors)
-            ? vendors.map((vendor) => (
-                <option key={vendor.id} value={vendor.id}>
-                  {vendor.name}
-                </option>
-              ))
-            : null}
-        </select>
+
+        <VendorFilter
+          selectedValue={selectedVendor}
+          onChange={function (value: Vendor | null): void {
+            setSelectedVendor(value);
+          }}
+        />
       </div>
 
       <button

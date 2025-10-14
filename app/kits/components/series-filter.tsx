@@ -17,13 +17,12 @@ import { Plus, Search } from "lucide-react";
 import SeriesForm from "./series-form";
 
 interface Series {
-  id: string;
   name: string;
   slug: string | null;
 }
 
 interface SeriesFilterProps {
-  currentSeriesId?: string | null;
+  currentSeriesSlug?: string | null;
   currentSeriesName?: string | null;
   onSeriesSelect: (seriesId: string | null, seriesName: string | null) => void;
 }
@@ -31,7 +30,7 @@ interface SeriesFilterProps {
 const LOCAL_STORAGE_KEY = "cachedSeries";
 
 export function SeriesFilter({
-  currentSeriesId,
+  currentSeriesSlug,
   currentSeriesName,
   onSeriesSelect,
 }: SeriesFilterProps) {
@@ -39,8 +38,8 @@ export function SeriesFilter({
   const [openForm, setOpenForm] = useState(false);
   const [series, setSeries] = useState<Series[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSeriesId, setSelectedSeriesId] = useState<string | null>(
-    currentSeriesId || null
+  const [selectedSeriesSlug, setSelectedSeriesSlug] = useState<string | null>(
+    currentSeriesSlug || null
   );
   const [selectedSeriesName, setSelectedSeriesName] = useState<string | null>(
     currentSeriesName || null
@@ -96,7 +95,7 @@ export function SeriesFilter({
 
       // Merge, avoiding duplicates by id
       const merged = [...matchingLocal, ...serverSeries].filter(
-        (s, index, self) => index === self.findIndex((x) => x.id === s.id)
+        (s, index, self) => index === self.findIndex((x) => x.slug === s.slug)
       );
 
       setSeries(merged);
@@ -121,10 +120,10 @@ export function SeriesFilter({
         });
 
         setSeries((prev) => {
-          const existingIds = new Set(prev.map((s) => s.id));
+          const existingIds = new Set(prev.map((s) => s.slug));
           const merged = [
             ...prev,
-            ...newSeries.filter((s) => !existingIds.has(s.id)),
+            ...newSeries.filter((s) => !existingIds.has(s.slug)),
           ];
           return merged.sort((a, b) => a.name.localeCompare(b.name));
         });
@@ -140,20 +139,20 @@ export function SeriesFilter({
   }, [skip, hasMore, isLoading, searchTerm]);
 
   const handleSubmit = () => {
-    const selected = series.find((s) => s.id === selectedSeriesId);
-    onSeriesSelect(selected?.id || null, selected?.name || null);
+    const selected = series.find((s) => s.slug === selectedSeriesSlug);
+    onSeriesSelect(selected?.slug || null, selected?.name || null);
     setOpen(false);
   };
 
   const handleClear = () => {
-    setSelectedSeriesId(null);
+    setSelectedSeriesSlug(null);
     setSelectedSeriesName(null);
     onSeriesSelect(null, null);
     setOpen(false);
   };
 
   const handleCancel = () => {
-    setSelectedSeriesId(currentSeriesId || null);
+    setSelectedSeriesSlug(currentSeriesSlug || null);
     setSelectedSeriesName(currentSeriesName || null);
     setSearchTerm("");
     setOpen(false);
@@ -167,7 +166,7 @@ export function SeriesFilter({
 
     // Update UI immediately
     setSeries((prev) => [newSeries, ...prev]);
-    setSelectedSeriesId(newSeries.id);
+    setSelectedSeriesSlug(newSeries.slug);
     setSelectedSeriesName(newSeries.name);
     setOpenForm(false);
   };
@@ -234,13 +233,13 @@ export function SeriesFilter({
           ) : (
             series.map((s) => (
               <button
-                key={s.id}
+                key={s.slug}
                 onClick={() => {
-                  setSelectedSeriesId(s.id);
+                  setSelectedSeriesSlug(s.slug);
                   setSelectedSeriesName(s.name);
                 }}
                 className={`w-full p-3 text-left hover:bg-muted/50 transition-colors ${
-                  selectedSeriesId === s.id ? "bg-muted" : ""
+                  selectedSeriesSlug === s.slug ? "bg-muted" : ""
                 }`}
               >
                 <div className="font-medium">{s.name}</div>

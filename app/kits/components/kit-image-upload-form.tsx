@@ -53,7 +53,7 @@ import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import { createUpload } from "@/lib/actions/uploads";
 import { KitImageType } from "@/generated/prisma";
 
-interface ImageItem {
+export interface ImageItem {
   id: string;
   url: string;
   eagerUrl?: string | null;
@@ -121,7 +121,7 @@ function SortableImageItem({
       >
         <NextImage
           src={imageItem.eagerUrl || imageItem.url}
-          alt={imageItem.caption || imageItem.originalFilename}
+          alt={imageItem.caption || imageItem.originalFilename || imageItem.url}
           fill
           className="transition-transform group-hover:scale-105 object-cover"
         />

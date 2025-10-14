@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { X, Plus } from "lucide-react";
-
 import { getProductLines } from "@/lib/actions/kits";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,23 +11,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import CreateProductLineForm from "./product-line-form";
+import CreateProductLineForm from "./create-product-line-form";
 
 export type ProductLine = {
   id?: string;
   name: string;
   slug?: string;
-  grade: { name: string };
+  grade?: { name: string };
+  logo?: string;
+  vendor?: { name: string };
 };
 
 export default function ProductLineFilter({
-  selectedValues,
+  selectedValue,
   onChange,
   searchTerm,
   onSearchChange,
 }: {
-  selectedValues: ProductLine[];
-  onChange: (values: ProductLine[]) => void;
+  selectedValue: ProductLine | null;
+  onChange: (value: ProductLine | null) => void;
   searchTerm: string;
   onSearchChange: (term: string) => void;
 }) {
@@ -44,20 +45,19 @@ export default function ProductLineFilter({
   const TAKE = 20;
   const PRODUCT_LINE_LOCAL_STORAGE_KEY = "productLines";
 
-  // 🧠 Load cached product lines first
+  // Load cached product lines first
   useEffect(() => {
     const cached = localStorage.getItem(PRODUCT_LINE_LOCAL_STORAGE_KEY);
     if (cached) {
       try {
-        const parsed = JSON.parse(cached);
-        setProductLines(parsed);
+        setProductLines(JSON.parse(cached));
       } catch (err) {
         console.warn("Failed to parse cached product lines", err);
       }
     }
   }, []);
 
-  // 🧠 Fetch + merge local and server product lines
+  // Fetch initial product lines
   useEffect(() => {
     const fetchInitial = async () => {
       setIsLoading(true);
@@ -71,7 +71,7 @@ export default function ProductLineFilter({
         localStorage.getItem(PRODUCT_LINE_LOCAL_STORAGE_KEY) || "[]"
       );
 
-      const matchingLocal = cached.filter((s) =>
+      const matchingLocal = cached.filter((s: ProductLine) =>
         s.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
@@ -88,7 +88,7 @@ export default function ProductLineFilter({
     fetchInitial();
   }, [searchTerm]);
 
-  // ♾ Infinite scroll observer
+  // Infinite scroll observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       async (entries) => {
@@ -122,33 +122,27 @@ export default function ProductLineFilter({
     return () => observer.disconnect();
   }, [skip, hasMore, isLoading, searchTerm]);
 
-  // ✅ Handle selection toggles
-  const handleToggleOption = (option: ProductLine) => {
-    const isSelected = selectedValues.some((item) => item.id === option.id);
-    onChange(
-      isSelected
-        ? selectedValues.filter((item) => item.id !== option.id)
-        : [...selectedValues, option]
-    );
+  // Handle single selection
+  const handleSelect = (option: ProductLine) => {
+    onChange(selectedValue && selectedValue.id === option.id ? null : option);
+    setIsOpen(false); // close dropdown after selecting
   };
 
   return (
     <div className="relative" data-popover>
-      <button
+      <div
         onClick={() => setIsOpen(!isOpen)}
         className="text-sm bg-background border border-slate-300 rounded-lg px-4 py-3 w-full flex justify-between items-center"
       >
-        <span>Product Lines</span>
-        <span>{selectedValues.length > 0 ? selectedValues.length : ""}</span>
-      </button>
+        <span>
+          {selectedValue ? selectedValue.name : "Select Product Line"}
+        </span>
+      </div>
 
       {isOpen && (
         <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
           {/* Header */}
-          <div className="p-3 border-b flex justify-between items-center">
-            <Button variant="ghost" onClick={() => onChange([])}>
-              Reset
-            </Button>
+          <div className="p-3 border-b flex justify-end items-center">
             <button
               onClick={() => setIsOpen(false)}
               className="p-1 hover:bg-gray-100 rounded-full"
@@ -183,19 +177,13 @@ export default function ProductLineFilter({
                 </DialogHeader>
                 <CreateProductLineForm
                   onSuccess={(newProductLine: ProductLine) => {
-                    // Mark as local so it won't be removed on future fetches
                     const localLine = { ...newProductLine, isLocal: true };
-
-                    // Add to list and persist
                     setProductLines((prev) => [localLine, ...prev]);
                     localStorage.setItem(
-                      "productLines",
+                      PRODUCT_LINE_LOCAL_STORAGE_KEY,
                       JSON.stringify([localLine, ...productLines])
                     );
-
-                    // Auto-select
-                    onChange([...selectedValues, localLine]);
-
+                    onChange(localLine);
                     setOpenAddProductLine(false);
                   }}
                 />
@@ -212,16 +200,17 @@ export default function ProductLineFilter({
             productLines.map((option) => (
               <label
                 key={option.id}
-                className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleSelect(option)}
+                className={`flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50 ${
+                  selectedValue?.id === option.id ? "bg-blue-50" : ""
+                }`}
               >
                 <div className="flex items-center">
                   <input
-                    type="checkbox"
-                    checked={selectedValues.some(
-                      (item) => item.id === option.id
-                    )}
-                    onChange={() => handleToggleOption(option)}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded"
+                    type="radio"
+                    checked={selectedValue?.id === option.id}
+                    onChange={() => handleSelect(option)}
+                    className="w-4 h-4 text-blue-600 border-gray-300"
                   />
                   <span className="ml-3 text-sm text-gray-900">
                     {option.name}

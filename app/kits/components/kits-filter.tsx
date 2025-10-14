@@ -53,8 +53,6 @@ export function KitsFilter({ currentKit, onKitSelect }: KitsFilterProps) {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const TAKE = 20;
 
-  console.info(selectedKit);
-
   // 🕐 Debounced search term
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -292,9 +290,11 @@ export function KitsFilter({ currentKit, onKitSelect }: KitsFilterProps) {
                           <span>
                             Released Date:
                             <span className="ml-1">
-                              {new Date(selectedKit.releaseDate)
-                                .toISOString()
-                                .split("T")[0] || "N/A"}
+                              {selectedKit.releaseDate
+                                ? new Date(
+                                    selectedKit.releaseDate
+                                  ).toLocaleDateString()
+                                : "N/A"}{" "}
                             </span>
                           </span>
                           <span>

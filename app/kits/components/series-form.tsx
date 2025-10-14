@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { nanoid } from "nanoid";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function SeriesForm({
   onSuccess,
 }: {
-  onSuccess: (newSeries: {
-    id: string;
-    name: string;
-    slug: string | null;
-  }) => void;
+  onSuccess: (newSeries: { name: string; slug: string | null }) => void;
 }) {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,12 +17,16 @@ export default function SeriesForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    const slug = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
     try {
       onSuccess({
         name,
-        id: nanoid(),
-        slug: "",
+        slug,
       });
     } catch (error) {
       console.error("Error creating series:", error);
