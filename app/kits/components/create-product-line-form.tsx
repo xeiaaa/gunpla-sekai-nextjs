@@ -46,6 +46,17 @@ export default function CreateProductLineForm({
 
     // Validate required fields
     if (!formData.name.trim()) {
+      alert("Please enter a product line name.");
+      return;
+    }
+
+    if (!selectedGrade) {
+      alert("Please select a grade.");
+      return;
+    }
+
+    if (!selectedVendor) {
+      alert("Please select a vendor.");
       return;
     }
 

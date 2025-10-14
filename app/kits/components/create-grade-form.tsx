@@ -34,10 +34,10 @@ export default function CreateGradeForm({ onSuccess }: CreateGradeFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation(); // 🛑 prevents bubbling to outer forms
 
     // Validate required fields
     if (!formData.name.trim()) {
-      alert("Please enter a grade name");
       return;
     }
 
@@ -119,7 +119,7 @@ export default function CreateGradeForm({ onSuccess }: CreateGradeFormProps) {
         disabled={loading}
         className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        {loading ? "Creating..." : "Create Product Line"}
+        {loading ? "Creating..." : "Create Grade"}
       </button>
     </form>
   );

@@ -135,7 +135,9 @@ export default function ProductLineFilter({
         className="text-sm bg-background border border-slate-300 rounded-lg px-4 py-3 w-full flex justify-between items-center"
       >
         <span>
-          {selectedValue ? selectedValue.name : "Select Product Line"}
+          {selectedValue?.name !== ""
+            ? selectedValue.name
+            : "Select Product Line"}
         </span>
       </div>
 

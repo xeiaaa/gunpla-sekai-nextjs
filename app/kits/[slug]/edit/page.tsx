@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getKitBySlug } from "@/lib/actions/kits";
 import { EditKitContent } from "../../components/edit-kit-content";
+import { KitFormData } from "../../components/kit-form-base";
 
 // ISR Configuration
 export const revalidate = 604800; // 1 week
@@ -39,8 +40,8 @@ export default async function KitDetailPage({ params }: KitDetailPageProps) {
             slug: kit.seriesSlug || "",
             name: kit.series || "",
           },
-        } as any
-      } // TODO fix type
+        } as any as KitFormData
+      }
     />
   );
 }

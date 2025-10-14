@@ -116,9 +116,11 @@ export default function KitFormBase({
                       name="releaseDate"
                       id="releaseDate"
                       value={
-                        new Date(formData.releaseDate)
-                          .toISOString()
-                          .split("T")[0]
+                        formData.releaseDate
+                          ? new Date(formData.releaseDate)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
                       }
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"

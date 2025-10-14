@@ -44,12 +44,12 @@ export function BasicInfoStep({ formData, handleChange }) {
           />
         </div>
         <div className="md:col-span-2">
-          <Label htmlFor="variants">Variants</Label>
+          <Label htmlFor="variant">Variants</Label>
           <Input
             type="text"
-            name="variants"
-            id="variants"
-            value={formData.variants}
+            name="variant"
+            id="variant"
+            value={formData.variant}
             onChange={handleChange}
             placeholder="e.g., Ver. Ka, Titanium Finish"
           />
