@@ -23,10 +23,17 @@ export interface Kit {
   id: string;
   name: string;
   slug: string | null;
+  number: string;
+  variant: string | null;
+  releaseDate: Date | null;
+  priceYen: number | null;
   boxArt: string | null;
-  variant: string;
-  releaseDate: string;
-  priceYen: string;
+  baseKitId: string | null;
+  grade: string | null;
+  productLine: string | null;
+  series: string | null;
+  releaseType: string | null;
+  mobileSuits: string[];
 }
 
 interface KitsFilterProps {

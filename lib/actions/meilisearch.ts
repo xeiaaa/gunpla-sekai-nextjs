@@ -574,10 +574,17 @@ export async function getKits({
         "id",
         "name",
         "slug",
-        "boxArt",
+        "number",
         "variant",
         "releaseDate",
-        "priceYen"
+        "priceYen",
+        "boxArt",
+        "baseKitId",
+        "grade",
+        "productLine",
+        "series",
+        "releaseType",
+        "mobileSuits",
       ],
     });
 
@@ -586,10 +593,17 @@ export async function getKits({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
-      boxArt: kit.boxArt || null,
+      number: kit.number,
       variant: kit.variant,
-      releaseDate: kit.releaseDate,
+      releaseDate: kit.releaseDate ? new Date(kit.releaseDate) : null,
       priceYen: kit.priceYen,
+      boxArt: kit.boxArt,
+      baseKitId: kit.baseKitId,
+      grade: kit.productLine?.grade?.name || null,
+      productLine: kit.productLine?.name,
+      series: kit.series?.name,
+      releaseType: kit.releaseType?.name,
+      mobileSuits: kit.mobileSuits?.map((ms: any) => ms.name) || [],
     }));
 
     return {

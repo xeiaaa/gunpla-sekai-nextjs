@@ -9,6 +9,8 @@ import ProductLineFilter from "./product-line-filter";
 import { SeriesFilter } from "./series-filter";
 import { Kit, KitsFilter } from "./kits-filter";
 import { MobileSuit, MobileSuitsFilter } from "./mobile-suits-filter";
+import { KitExpansionFilter } from "./kit-expansions-filter";
+import { KitCompatibleFilter } from "./kit-compatible-fitler";
 
 export default function KitForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -335,27 +337,29 @@ export default function KitForm() {
                   </div>
 
                   <div>
-                    <Label htmlFor="expansions">Expansions </Label>
-                    <div className="w-full px-4 py-3 border border-slate-300 rounded-lg bg-slate-50 text-slate-600 cursor-pointer hover:bg-slate-100 transition">
-                      1 Expansion(s) Selected
-                    </div>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Click to manage expansions
-                    </p>
+                    <Label htmlFor="expansions">Expansions</Label>
+                    <KitExpansionFilter
+                      currentExpansions={formData.expansions}
+                      onExpansionsSelect={(expansions: Kit[]) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          expansions,
+                        }));
+                      }}
+                    />
                   </div>
 
                   <div>
                     <Label htmlFor="compatibleWith">Compatible With </Label>
-                    <select
-                      name="compatibleWith"
-                      value={formData.compatibleWith}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    >
-                      <option value="">
-                        Select Base Kits This Expansion Requires
-                      </option>
-                    </select>
+                    <KitCompatibleFilter
+                      currentExpandedBy={formData.compatibleWith}
+                      onExpandedBySelect={(expandedBy: Kit[]) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          compatibleWith: expandedBy,
+                        }));
+                      }}
+                    />
                   </div>
                 </div>
               </div>
