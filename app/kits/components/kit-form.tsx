@@ -11,6 +11,7 @@ import { Kit, KitsFilter } from "./kits-filter";
 import { MobileSuit, MobileSuitsFilter } from "./mobile-suits-filter";
 import { KitExpansionFilter } from "./kit-expansions-filter";
 import { KitCompatibleFilter } from "./kit-compatible-fitler";
+import { KitImageUploadForm } from "./kit-image-upload-form";
 
 export default function KitForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -32,6 +33,7 @@ export default function KitForm() {
     baseKit: null,
     expansions: [],
     compatibleWith: [],
+    images: [],
   });
 
   const [productLineSearch, setProductLineSearch] = useState("");
@@ -371,6 +373,18 @@ export default function KitForm() {
                 <h2 className="text-xl font-semibold text-slate-700 mb-4">
                   Uploads
                 </h2>
+
+                <KitImageUploadForm
+                  initialFiles={formData.images}
+                  maxFiles={10}
+                  maxSizeMB={5}
+                  onChange={(images) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      images,
+                    }));
+                  }}
+                />
               </div>
             )}
           </div>
