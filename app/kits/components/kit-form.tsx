@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ProductLineFilter from "./product-line-filter";
 import { SeriesFilter } from "./series-filter";
+import { Kit, KitsFilter } from "./kits-filter";
+import { MobileSuit, MobileSuitsFilter } from "./mobile-suits-filter";
 
 export default function KitForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -25,7 +27,7 @@ export default function KitForm() {
       name: "",
     },
     mobileSuits: [],
-    baseKit: "",
+    baseKit: null,
     expansions: [],
     compatibleWith: [],
   });
@@ -307,27 +309,29 @@ export default function KitForm() {
                   </div>
 
                   <div>
-                    <Label htmlFor="mobileSuits">Mobile Suits </Label>
-                    <div className="w-full px-4 py-3 border border-slate-300 rounded-lg bg-slate-50 text-slate-600 cursor-pointer hover:bg-slate-100 transition">
-                      1 Mobile Suit Selected
-                    </div>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Click to manage mobile suits
-                    </p>
+                    <Label htmlFor="mobileSuits">Mobile Suit</Label>
+                    <MobileSuitsFilter
+                      currentMobileSuits={formData.mobileSuits}
+                      onMobileSuitsSelect={(mobileSuits: MobileSuit[]) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          mobileSuits,
+                        }));
+                      }}
+                    />
                   </div>
 
                   <div>
-                    <Label htmlFor="baseKit">Base Kits </Label>
-
-                    <select
-                      name="baseKit"
-                      value={formData.baseKit}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    >
-                      <option value="">Select Base Kit</option>
-                      <option value="none">None (This is a base kit)</option>
-                    </select>
+                    <Label htmlFor="baseKit">Base Kit </Label>
+                    <KitsFilter
+                      currentKit={formData.baseKit}
+                      onKitSelect={function (baseKit: Kit): void {
+                        setFormData((prev) => ({
+                          ...prev,
+                          baseKit,
+                        }));
+                      }}
+                    />
                   </div>
 
                   <div>

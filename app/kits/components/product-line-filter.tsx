@@ -57,16 +57,6 @@ export default function ProductLineFilter({
     }
   }, []);
 
-  // // 🧠 Save to localStorage whenever productLines change
-  // useEffect(() => {
-  //   if (productLines.length > 0) {
-  //     localStorage.setItem(
-  //       PRODUCT_LINE_LOCAL_STORAGE_KEY,
-  //       JSON.stringify(productLines)
-  //     );
-  //   }
-  // }, [productLines]);
-
   // 🧠 Fetch + merge local and server product lines
   useEffect(() => {
     const fetchInitial = async () => {

@@ -555,3 +555,100 @@ export async function getFilterOptions() {
     };
   }
 }
+
+export async function getKits({
+  query = "",
+  limit = 20,
+  offset = 0,
+}: {
+  query?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  try {
+    const meilisearch = getMeilisearchClient();
+    const res = await meilisearch.index("kits").search(query, {
+      limit,
+      offset,
+      attributesToRetrieve: [
+        "id",
+        "name",
+        "slug",
+        "boxArt",
+        "variant",
+        "releaseDate",
+        "priceYen"
+      ],
+    });
+
+
+    const kits = res.hits.map((kit: any) => ({
+      id: kit.id,
+      name: kit.name,
+      slug: kit.slug,
+      boxArt: kit.boxArt || null,
+      variant: kit.variant,
+      releaseDate: kit.releaseDate,
+      priceYen: kit.priceYen,
+    }));
+
+    return {
+      kits,
+      totalCount: res.estimatedTotalHits ?? kits.length,
+    };
+  } catch (error) {
+    console.error("Error searching mobile suits:", error);
+    return { kits: [], totalCount: 0 };
+  }
+}
+
+export async function getMobileSuits({
+  query = "",
+  limit = 20,
+  offset = 0,
+}: {
+  query?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  try {
+    const meilisearch = getMeilisearchClient();
+
+    // Run search (Meilisearch handles empty queries)
+    const mobileSuitsResponse = await meilisearch.index("mobile-suits").search(query, {
+      limit,
+      offset,
+      attributesToRetrieve: [
+        "id",
+        "name",
+        "slug",
+        "description",
+        "scrapedImages",
+        "series",
+      ],
+    });
+
+    // Transform the hits to match your app's expected structure
+    const transformedMobileSuits = mobileSuitsResponse.hits.map((ms: any) => ({
+      id: ms.id,
+      name: ms.name,
+      slug: ms.slug,
+      description: ms.description,
+      series: ms.series?.name,
+      timeline: ms.series?.timeline?.name,
+      kitsCount: 0, // Meilisearch index doesn’t include this
+      scrapedImages: ms.scrapedImages || [],
+    }));
+
+    return {
+      mobileSuits: transformedMobileSuits,
+      totalCount: mobileSuitsResponse.estimatedTotalHits ?? transformedMobileSuits.length,
+      offset,
+      limit,
+    };
+  } catch (error) {
+    console.error("Error searching mobile suits with Meilisearch:", error);
+    return { mobileSuits: [], totalCount: 0, offset, limit };
+  }
+}
+
