@@ -42,10 +42,11 @@ export default function ProductLineFilter({
     useState<boolean>(false);
 
   const TAKE = 20;
+  const PRODUCT_LINE_LOCAL_STORAGE_KEY = "productLines";
 
   // 🧠 Load cached product lines first
   useEffect(() => {
-    const cached = localStorage.getItem("productLines");
+    const cached = localStorage.getItem(PRODUCT_LINE_LOCAL_STORAGE_KEY);
     if (cached) {
       try {
         const parsed = JSON.parse(cached);
@@ -56,12 +57,15 @@ export default function ProductLineFilter({
     }
   }, []);
 
-  // 🧠 Save to localStorage whenever productLines change
-  useEffect(() => {
-    if (productLines.length > 0) {
-      localStorage.setItem("productLines", JSON.stringify(productLines));
-    }
-  }, [productLines]);
+  // // 🧠 Save to localStorage whenever productLines change
+  // useEffect(() => {
+  //   if (productLines.length > 0) {
+  //     localStorage.setItem(
+  //       PRODUCT_LINE_LOCAL_STORAGE_KEY,
+  //       JSON.stringify(productLines)
+  //     );
+  //   }
+  // }, [productLines]);
 
   // 🧠 Fetch + merge local and server product lines
   useEffect(() => {
@@ -73,18 +77,22 @@ export default function ProductLineFilter({
         take: TAKE,
       });
 
-      setProductLines((prev) => {
-        const localOnly = prev.filter((p: any) => p.isLocal);
-        const merged = [
-          ...localOnly, // 🧠 Keep local ones always
-          ...lines.filter((l) => !localOnly.some((lo) => lo.id === l.id)),
-        ];
-        return merged;
-      });
+      const cached = JSON.parse(
+        localStorage.getItem(PRODUCT_LINE_LOCAL_STORAGE_KEY) || "[]"
+      );
+
+      const matchingLocal = cached.filter((s) =>
+        s.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      const merged = [...matchingLocal, ...lines].filter(
+        (s, index, self) => index === self.findIndex((x) => x.id === s.id)
+      );
 
       setSkip(lines.length);
       setHasMore(lines.length < totalCount);
       setIsLoading(false);
+      setProductLines(merged);
     };
 
     fetchInitial();
@@ -132,19 +140,6 @@ export default function ProductLineFilter({
         ? selectedValues.filter((item) => item.id !== option.id)
         : [...selectedValues, option]
     );
-  };
-
-  // ✅ Handle creation of a new product line
-  const handleNewProductLine = (newProductLine: ProductLine) => {
-    // Add to localStorage
-    const existing = JSON.parse(localStorage.getItem("productLines") || "[]");
-    const updated = [newProductLine, ...existing];
-    localStorage.setItem("productLines", JSON.stringify(updated));
-
-    // Update state + select it
-    setProductLines((prev) => [newProductLine, ...prev]);
-    onChange([...selectedValues, newProductLine]);
-    setOpenAddProductLine(false);
   };
 
   return (
