@@ -94,7 +94,9 @@ export function MobileSuitDetailPage({
             <CardContent className="p-0">
               <div className="aspect-[4/3] relative">
                 <KitImage
-                  src={allImages[selectedImageIndex] || ""}
+                  src={
+                    allImages[selectedImageIndex]?.split("/revision")[0] || ""
+                  }
                   alt={mobileSuit.name}
                   className="w-full h-full rounded-lg"
                   isContain={true}
@@ -118,7 +120,7 @@ export function MobileSuitDetailPage({
                   )}
                 >
                   <KitImage
-                    src={image || ""}
+                    src={image?.split("/revision")[0] || ""}
                     alt={`${mobileSuit.name} - Image ${index + 1}`}
                     className="w-full h-full"
                     isContain={true}

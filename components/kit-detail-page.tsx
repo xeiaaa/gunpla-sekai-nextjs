@@ -337,7 +337,7 @@ export function KitDetailPage({
                         <div className="flex gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                           <div className="w-16 h-16 flex-shrink-0">
                             <KitImage
-                              src={mobileSuit.scrapedImages[0] || ""}
+                              src={mobileSuit.scrapedImages?.[0] || ""}
                               alt={mobileSuit.name}
                               className="w-full h-full rounded-md"
                               isContain={true}
@@ -831,6 +831,8 @@ export function KitDetailPage({
 
           {/* Tab Content */}
           {renderTabContent()}
+
+          {/* <pre>{JSON.stringify(kit, null, 2)}</pre> */}
         </div>
       </div>
     </div>

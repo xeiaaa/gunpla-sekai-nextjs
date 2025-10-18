@@ -480,7 +480,10 @@ export function KitEditForm({ kit }: KitEditFormProps) {
                     <SelectItem value="none">No Product Line</SelectItem>
                     {productLines.map((productLine) => (
                       <SelectItem key={productLine.id} value={productLine.id}>
-                        {productLine.name} ({productLine.grade.name})
+                        {productLine.name}
+                        {productLine.grade
+                          ? ` (${productLine.grade.name})`
+                          : ""}
                       </SelectItem>
                     ))}
                   </SelectContent>

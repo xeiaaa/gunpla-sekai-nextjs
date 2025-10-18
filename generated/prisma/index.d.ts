@@ -34,6 +34,11 @@ export type MobileSuit = $Result.DefaultSelection<Prisma.$MobileSuitPayload>
  */
 export type Grade = $Result.DefaultSelection<Prisma.$GradePayload>
 /**
+ * Model Vendor
+ * 
+ */
+export type Vendor = $Result.DefaultSelection<Prisma.$VendorPayload>
+/**
  * Model ProductLine
  * 
  */
@@ -163,7 +168,16 @@ export type WikiSubmissionLike = $Result.DefaultSelection<Prisma.$WikiSubmission
  * Enums
  */
 export namespace $Enums {
-  export const KitExpansionType: {
+  export const VendorCategory: {
+  OFFICIAL: 'OFFICIAL',
+  THIRD_PARTY: 'THIRD_PARTY',
+  BOOTLEG: 'BOOTLEG'
+};
+
+export type VendorCategory = (typeof VendorCategory)[keyof typeof VendorCategory]
+
+
+export const KitExpansionType: {
   EFFECT_PARTS: 'EFFECT_PARTS',
   WEAPON_SET: 'WEAPON_SET',
   ARMOR_EQUIPMENT_PACK: 'ARMOR_EQUIPMENT_PACK',
@@ -259,6 +273,10 @@ export const SubmissionStatus: {
 export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
 
 }
+
+export type VendorCategory = $Enums.VendorCategory
+
+export const VendorCategory: typeof $Enums.VendorCategory
 
 export type KitExpansionType = $Enums.KitExpansionType
 
@@ -449,6 +467,16 @@ export class PrismaClient<
     * ```
     */
   get grade(): Prisma.GradeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vendor`: Exposes CRUD operations for the **Vendor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Vendors
+    * const vendors = await prisma.vendor.findMany()
+    * ```
+    */
+  get vendor(): Prisma.VendorDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.productLine`: Exposes CRUD operations for the **ProductLine** model.
@@ -1143,6 +1171,7 @@ export namespace Prisma {
     Series: 'Series',
     MobileSuit: 'MobileSuit',
     Grade: 'Grade',
+    Vendor: 'Vendor',
     ProductLine: 'ProductLine',
     ReleaseType: 'ReleaseType',
     Kit: 'Kit',
@@ -1186,7 +1215,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing" | "wikiSubmission" | "wikiSubmissionComment" | "wikiSubmissionLike"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "vendor" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing" | "wikiSubmission" | "wikiSubmissionComment" | "wikiSubmissionLike"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1483,6 +1512,80 @@ export namespace Prisma {
           count: {
             args: Prisma.GradeCountArgs<ExtArgs>
             result: $Utils.Optional<GradeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Vendor: {
+        payload: Prisma.$VendorPayload<ExtArgs>
+        fields: Prisma.VendorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VendorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VendorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          findFirst: {
+            args: Prisma.VendorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VendorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          findMany: {
+            args: Prisma.VendorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>[]
+          }
+          create: {
+            args: Prisma.VendorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          createMany: {
+            args: Prisma.VendorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VendorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>[]
+          }
+          delete: {
+            args: Prisma.VendorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          update: {
+            args: Prisma.VendorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          deleteMany: {
+            args: Prisma.VendorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VendorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VendorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>[]
+          }
+          upsert: {
+            args: Prisma.VendorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorPayload>
+          }
+          aggregate: {
+            args: Prisma.VendorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVendor>
+          }
+          groupBy: {
+            args: Prisma.VendorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VendorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VendorCountArgs<ExtArgs>
+            result: $Utils.Optional<VendorCountAggregateOutputType> | number
           }
         }
       }
@@ -3436,6 +3539,7 @@ export namespace Prisma {
     series?: SeriesOmit
     mobileSuit?: MobileSuitOmit
     grade?: GradeOmit
+    vendor?: VendorOmit
     productLine?: ProductLineOmit
     releaseType?: ReleaseTypeOmit
     kit?: KitOmit
@@ -3674,6 +3778,37 @@ export namespace Prisma {
    * GradeCountOutputType without action
    */
   export type GradeCountOutputTypeCountProductLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductLineWhereInput
+  }
+
+
+  /**
+   * Count Type VendorCountOutputType
+   */
+
+  export type VendorCountOutputType = {
+    productLines: number
+  }
+
+  export type VendorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    productLines?: boolean | VendorCountOutputTypeCountProductLinesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VendorCountOutputType without action
+   */
+  export type VendorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorCountOutputType
+     */
+    select?: VendorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VendorCountOutputType without action
+   */
+  export type VendorCountOutputTypeCountProductLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductLineWhereInput
   }
 
@@ -5370,6 +5505,8 @@ export namespace Prisma {
     slug: string | null
     description: string | null
     timelineId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5380,6 +5517,8 @@ export namespace Prisma {
     slug: string | null
     description: string | null
     timelineId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5390,6 +5529,8 @@ export namespace Prisma {
     slug: number
     description: number
     timelineId: number
+    logoUrl: number
+    bannerUrl: number
     scrapedImages: number
     createdAt: number
     updatedAt: number
@@ -5403,6 +5544,8 @@ export namespace Prisma {
     slug?: true
     description?: true
     timelineId?: true
+    logoUrl?: true
+    bannerUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5413,6 +5556,8 @@ export namespace Prisma {
     slug?: true
     description?: true
     timelineId?: true
+    logoUrl?: true
+    bannerUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5423,6 +5568,8 @@ export namespace Prisma {
     slug?: true
     description?: true
     timelineId?: true
+    logoUrl?: true
+    bannerUrl?: true
     scrapedImages?: true
     createdAt?: true
     updatedAt?: true
@@ -5507,6 +5654,8 @@ export namespace Prisma {
     slug: string | null
     description: string | null
     timelineId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     scrapedImages: string[]
     createdAt: Date
     updatedAt: Date
@@ -5535,6 +5684,8 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     timelineId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImages?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5550,6 +5701,8 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     timelineId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImages?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5562,6 +5715,8 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     timelineId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImages?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5574,12 +5729,14 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     timelineId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImages?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "timelineId" | "scrapedImages" | "createdAt" | "updatedAt", ExtArgs["result"]["series"]>
+  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "timelineId" | "logoUrl" | "bannerUrl" | "scrapedImages" | "createdAt" | "updatedAt", ExtArgs["result"]["series"]>
   export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     timeline?: boolean | Series$timelineArgs<ExtArgs>
     mobileSuits?: boolean | Series$mobileSuitsArgs<ExtArgs>
@@ -5606,6 +5763,8 @@ export namespace Prisma {
       slug: string | null
       description: string | null
       timelineId: string | null
+      logoUrl: string | null
+      bannerUrl: string | null
       scrapedImages: string[]
       createdAt: Date
       updatedAt: Date
@@ -6040,6 +6199,8 @@ export namespace Prisma {
     readonly slug: FieldRef<"Series", 'String'>
     readonly description: FieldRef<"Series", 'String'>
     readonly timelineId: FieldRef<"Series", 'String'>
+    readonly logoUrl: FieldRef<"Series", 'String'>
+    readonly bannerUrl: FieldRef<"Series", 'String'>
     readonly scrapedImages: FieldRef<"Series", 'String[]'>
     readonly createdAt: FieldRef<"Series", 'DateTime'>
     readonly updatedAt: FieldRef<"Series", 'DateTime'>
@@ -7708,6 +7869,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     slug: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7717,6 +7880,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     slug: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7726,6 +7891,8 @@ export namespace Prisma {
     id: number
     name: number
     slug: number
+    logoUrl: number
+    bannerUrl: number
     description: number
     createdAt: number
     updatedAt: number
@@ -7737,6 +7904,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     description?: true
     createdAt?: true
     updatedAt?: true
@@ -7746,6 +7915,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     description?: true
     createdAt?: true
     updatedAt?: true
@@ -7755,6 +7926,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     description?: true
     createdAt?: true
     updatedAt?: true
@@ -7837,6 +8010,8 @@ export namespace Prisma {
     id: string
     name: string
     slug: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     description: string | null
     createdAt: Date
     updatedAt: Date
@@ -7863,6 +8038,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7874,6 +8051,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7883,6 +8062,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7892,12 +8073,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type GradeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["grade"]>
+  export type GradeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "bannerUrl" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["grade"]>
   export type GradeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     productLines?: boolean | Grade$productLinesArgs<ExtArgs>
     _count?: boolean | GradeCountOutputTypeDefaultArgs<ExtArgs>
@@ -7914,6 +8097,8 @@ export namespace Prisma {
       id: string
       name: string
       slug: string | null
+      logoUrl: string | null
+      bannerUrl: string | null
       description: string | null
       createdAt: Date
       updatedAt: Date
@@ -8344,6 +8529,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Grade", 'String'>
     readonly name: FieldRef<"Grade", 'String'>
     readonly slug: FieldRef<"Grade", 'String'>
+    readonly logoUrl: FieldRef<"Grade", 'String'>
+    readonly bannerUrl: FieldRef<"Grade", 'String'>
     readonly description: FieldRef<"Grade", 'String'>
     readonly createdAt: FieldRef<"Grade", 'DateTime'>
     readonly updatedAt: FieldRef<"Grade", 'DateTime'>
@@ -8778,6 +8965,1154 @@ export namespace Prisma {
 
 
   /**
+   * Model Vendor
+   */
+
+  export type AggregateVendor = {
+    _count: VendorCountAggregateOutputType | null
+    _min: VendorMinAggregateOutputType | null
+    _max: VendorMaxAggregateOutputType | null
+  }
+
+  export type VendorMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
+    websiteUrl: string | null
+    category: $Enums.VendorCategory | null
+    producesOriginal: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VendorMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    description: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
+    websiteUrl: string | null
+    category: $Enums.VendorCategory | null
+    producesOriginal: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VendorCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    description: number
+    logoUrl: number
+    bannerUrl: number
+    websiteUrl: number
+    category: number
+    producesOriginal: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VendorMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    logoUrl?: true
+    bannerUrl?: true
+    websiteUrl?: true
+    category?: true
+    producesOriginal?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VendorMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    logoUrl?: true
+    bannerUrl?: true
+    websiteUrl?: true
+    category?: true
+    producesOriginal?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VendorCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    description?: true
+    logoUrl?: true
+    bannerUrl?: true
+    websiteUrl?: true
+    category?: true
+    producesOriginal?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VendorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vendor to aggregate.
+     */
+    where?: VendorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vendors to fetch.
+     */
+    orderBy?: VendorOrderByWithRelationInput | VendorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VendorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vendors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vendors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Vendors
+    **/
+    _count?: true | VendorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VendorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VendorMaxAggregateInputType
+  }
+
+  export type GetVendorAggregateType<T extends VendorAggregateArgs> = {
+        [P in keyof T & keyof AggregateVendor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVendor[P]>
+      : GetScalarType<T[P], AggregateVendor[P]>
+  }
+
+
+
+
+  export type VendorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorWhereInput
+    orderBy?: VendorOrderByWithAggregationInput | VendorOrderByWithAggregationInput[]
+    by: VendorScalarFieldEnum[] | VendorScalarFieldEnum
+    having?: VendorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VendorCountAggregateInputType | true
+    _min?: VendorMinAggregateInputType
+    _max?: VendorMaxAggregateInputType
+  }
+
+  export type VendorGroupByOutputType = {
+    id: string
+    name: string
+    slug: string | null
+    description: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
+    websiteUrl: string | null
+    category: $Enums.VendorCategory | null
+    producesOriginal: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: VendorCountAggregateOutputType | null
+    _min: VendorMinAggregateOutputType | null
+    _max: VendorMaxAggregateOutputType | null
+  }
+
+  type GetVendorGroupByPayload<T extends VendorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VendorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VendorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VendorGroupByOutputType[P]>
+            : GetScalarType<T[P], VendorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VendorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
+    websiteUrl?: boolean
+    category?: boolean
+    producesOriginal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    productLines?: boolean | Vendor$productLinesArgs<ExtArgs>
+    _count?: boolean | VendorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vendor"]>
+
+  export type VendorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
+    websiteUrl?: boolean
+    category?: boolean
+    producesOriginal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["vendor"]>
+
+  export type VendorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
+    websiteUrl?: boolean
+    category?: boolean
+    producesOriginal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["vendor"]>
+
+  export type VendorSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    description?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
+    websiteUrl?: boolean
+    category?: boolean
+    producesOriginal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "logoUrl" | "bannerUrl" | "websiteUrl" | "category" | "producesOriginal" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
+  export type VendorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    productLines?: boolean | Vendor$productLinesArgs<ExtArgs>
+    _count?: boolean | VendorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VendorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VendorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $VendorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vendor"
+    objects: {
+      productLines: Prisma.$ProductLinePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string | null
+      description: string | null
+      logoUrl: string | null
+      bannerUrl: string | null
+      websiteUrl: string | null
+      category: $Enums.VendorCategory | null
+      producesOriginal: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["vendor"]>
+    composites: {}
+  }
+
+  type VendorGetPayload<S extends boolean | null | undefined | VendorDefaultArgs> = $Result.GetResult<Prisma.$VendorPayload, S>
+
+  type VendorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VendorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VendorCountAggregateInputType | true
+    }
+
+  export interface VendorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vendor'], meta: { name: 'Vendor' } }
+    /**
+     * Find zero or one Vendor that matches the filter.
+     * @param {VendorFindUniqueArgs} args - Arguments to find a Vendor
+     * @example
+     * // Get one Vendor
+     * const vendor = await prisma.vendor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VendorFindUniqueArgs>(args: SelectSubset<T, VendorFindUniqueArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Vendor that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VendorFindUniqueOrThrowArgs} args - Arguments to find a Vendor
+     * @example
+     * // Get one Vendor
+     * const vendor = await prisma.vendor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VendorFindUniqueOrThrowArgs>(args: SelectSubset<T, VendorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vendor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorFindFirstArgs} args - Arguments to find a Vendor
+     * @example
+     * // Get one Vendor
+     * const vendor = await prisma.vendor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VendorFindFirstArgs>(args?: SelectSubset<T, VendorFindFirstArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vendor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorFindFirstOrThrowArgs} args - Arguments to find a Vendor
+     * @example
+     * // Get one Vendor
+     * const vendor = await prisma.vendor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VendorFindFirstOrThrowArgs>(args?: SelectSubset<T, VendorFindFirstOrThrowArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Vendors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Vendors
+     * const vendors = await prisma.vendor.findMany()
+     * 
+     * // Get first 10 Vendors
+     * const vendors = await prisma.vendor.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const vendorWithIdOnly = await prisma.vendor.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VendorFindManyArgs>(args?: SelectSubset<T, VendorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Vendor.
+     * @param {VendorCreateArgs} args - Arguments to create a Vendor.
+     * @example
+     * // Create one Vendor
+     * const Vendor = await prisma.vendor.create({
+     *   data: {
+     *     // ... data to create a Vendor
+     *   }
+     * })
+     * 
+     */
+    create<T extends VendorCreateArgs>(args: SelectSubset<T, VendorCreateArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Vendors.
+     * @param {VendorCreateManyArgs} args - Arguments to create many Vendors.
+     * @example
+     * // Create many Vendors
+     * const vendor = await prisma.vendor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VendorCreateManyArgs>(args?: SelectSubset<T, VendorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Vendors and returns the data saved in the database.
+     * @param {VendorCreateManyAndReturnArgs} args - Arguments to create many Vendors.
+     * @example
+     * // Create many Vendors
+     * const vendor = await prisma.vendor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Vendors and only return the `id`
+     * const vendorWithIdOnly = await prisma.vendor.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VendorCreateManyAndReturnArgs>(args?: SelectSubset<T, VendorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Vendor.
+     * @param {VendorDeleteArgs} args - Arguments to delete one Vendor.
+     * @example
+     * // Delete one Vendor
+     * const Vendor = await prisma.vendor.delete({
+     *   where: {
+     *     // ... filter to delete one Vendor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VendorDeleteArgs>(args: SelectSubset<T, VendorDeleteArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Vendor.
+     * @param {VendorUpdateArgs} args - Arguments to update one Vendor.
+     * @example
+     * // Update one Vendor
+     * const vendor = await prisma.vendor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VendorUpdateArgs>(args: SelectSubset<T, VendorUpdateArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Vendors.
+     * @param {VendorDeleteManyArgs} args - Arguments to filter Vendors to delete.
+     * @example
+     * // Delete a few Vendors
+     * const { count } = await prisma.vendor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VendorDeleteManyArgs>(args?: SelectSubset<T, VendorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Vendors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Vendors
+     * const vendor = await prisma.vendor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VendorUpdateManyArgs>(args: SelectSubset<T, VendorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Vendors and returns the data updated in the database.
+     * @param {VendorUpdateManyAndReturnArgs} args - Arguments to update many Vendors.
+     * @example
+     * // Update many Vendors
+     * const vendor = await prisma.vendor.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Vendors and only return the `id`
+     * const vendorWithIdOnly = await prisma.vendor.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VendorUpdateManyAndReturnArgs>(args: SelectSubset<T, VendorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Vendor.
+     * @param {VendorUpsertArgs} args - Arguments to update or create a Vendor.
+     * @example
+     * // Update or create a Vendor
+     * const vendor = await prisma.vendor.upsert({
+     *   create: {
+     *     // ... data to create a Vendor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vendor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VendorUpsertArgs>(args: SelectSubset<T, VendorUpsertArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Vendors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorCountArgs} args - Arguments to filter Vendors to count.
+     * @example
+     * // Count the number of Vendors
+     * const count = await prisma.vendor.count({
+     *   where: {
+     *     // ... the filter for the Vendors we want to count
+     *   }
+     * })
+    **/
+    count<T extends VendorCountArgs>(
+      args?: Subset<T, VendorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VendorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Vendor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VendorAggregateArgs>(args: Subset<T, VendorAggregateArgs>): Prisma.PrismaPromise<GetVendorAggregateType<T>>
+
+    /**
+     * Group by Vendor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VendorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VendorGroupByArgs['orderBy'] }
+        : { orderBy?: VendorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VendorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVendorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Vendor model
+   */
+  readonly fields: VendorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Vendor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VendorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    productLines<T extends Vendor$productLinesArgs<ExtArgs> = {}>(args?: Subset<T, Vendor$productLinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Vendor model
+   */
+  interface VendorFieldRefs {
+    readonly id: FieldRef<"Vendor", 'String'>
+    readonly name: FieldRef<"Vendor", 'String'>
+    readonly slug: FieldRef<"Vendor", 'String'>
+    readonly description: FieldRef<"Vendor", 'String'>
+    readonly logoUrl: FieldRef<"Vendor", 'String'>
+    readonly bannerUrl: FieldRef<"Vendor", 'String'>
+    readonly websiteUrl: FieldRef<"Vendor", 'String'>
+    readonly category: FieldRef<"Vendor", 'VendorCategory'>
+    readonly producesOriginal: FieldRef<"Vendor", 'Boolean'>
+    readonly createdAt: FieldRef<"Vendor", 'DateTime'>
+    readonly updatedAt: FieldRef<"Vendor", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Vendor findUnique
+   */
+  export type VendorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter, which Vendor to fetch.
+     */
+    where: VendorWhereUniqueInput
+  }
+
+  /**
+   * Vendor findUniqueOrThrow
+   */
+  export type VendorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter, which Vendor to fetch.
+     */
+    where: VendorWhereUniqueInput
+  }
+
+  /**
+   * Vendor findFirst
+   */
+  export type VendorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter, which Vendor to fetch.
+     */
+    where?: VendorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vendors to fetch.
+     */
+    orderBy?: VendorOrderByWithRelationInput | VendorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Vendors.
+     */
+    cursor?: VendorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vendors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vendors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Vendors.
+     */
+    distinct?: VendorScalarFieldEnum | VendorScalarFieldEnum[]
+  }
+
+  /**
+   * Vendor findFirstOrThrow
+   */
+  export type VendorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter, which Vendor to fetch.
+     */
+    where?: VendorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vendors to fetch.
+     */
+    orderBy?: VendorOrderByWithRelationInput | VendorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Vendors.
+     */
+    cursor?: VendorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vendors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vendors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Vendors.
+     */
+    distinct?: VendorScalarFieldEnum | VendorScalarFieldEnum[]
+  }
+
+  /**
+   * Vendor findMany
+   */
+  export type VendorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter, which Vendors to fetch.
+     */
+    where?: VendorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vendors to fetch.
+     */
+    orderBy?: VendorOrderByWithRelationInput | VendorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Vendors.
+     */
+    cursor?: VendorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vendors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vendors.
+     */
+    skip?: number
+    distinct?: VendorScalarFieldEnum | VendorScalarFieldEnum[]
+  }
+
+  /**
+   * Vendor create
+   */
+  export type VendorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Vendor.
+     */
+    data: XOR<VendorCreateInput, VendorUncheckedCreateInput>
+  }
+
+  /**
+   * Vendor createMany
+   */
+  export type VendorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Vendors.
+     */
+    data: VendorCreateManyInput | VendorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Vendor createManyAndReturn
+   */
+  export type VendorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * The data used to create many Vendors.
+     */
+    data: VendorCreateManyInput | VendorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Vendor update
+   */
+  export type VendorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Vendor.
+     */
+    data: XOR<VendorUpdateInput, VendorUncheckedUpdateInput>
+    /**
+     * Choose, which Vendor to update.
+     */
+    where: VendorWhereUniqueInput
+  }
+
+  /**
+   * Vendor updateMany
+   */
+  export type VendorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Vendors.
+     */
+    data: XOR<VendorUpdateManyMutationInput, VendorUncheckedUpdateManyInput>
+    /**
+     * Filter which Vendors to update
+     */
+    where?: VendorWhereInput
+    /**
+     * Limit how many Vendors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vendor updateManyAndReturn
+   */
+  export type VendorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * The data used to update Vendors.
+     */
+    data: XOR<VendorUpdateManyMutationInput, VendorUncheckedUpdateManyInput>
+    /**
+     * Filter which Vendors to update
+     */
+    where?: VendorWhereInput
+    /**
+     * Limit how many Vendors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vendor upsert
+   */
+  export type VendorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Vendor to update in case it exists.
+     */
+    where: VendorWhereUniqueInput
+    /**
+     * In case the Vendor found by the `where` argument doesn't exist, create a new Vendor with this data.
+     */
+    create: XOR<VendorCreateInput, VendorUncheckedCreateInput>
+    /**
+     * In case the Vendor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VendorUpdateInput, VendorUncheckedUpdateInput>
+  }
+
+  /**
+   * Vendor delete
+   */
+  export type VendorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    /**
+     * Filter which Vendor to delete.
+     */
+    where: VendorWhereUniqueInput
+  }
+
+  /**
+   * Vendor deleteMany
+   */
+  export type VendorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vendors to delete
+     */
+    where?: VendorWhereInput
+    /**
+     * Limit how many Vendors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vendor.productLines
+   */
+  export type Vendor$productLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductLine
+     */
+    select?: ProductLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductLine
+     */
+    omit?: ProductLineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductLineInclude<ExtArgs> | null
+    where?: ProductLineWhereInput
+    orderBy?: ProductLineOrderByWithRelationInput | ProductLineOrderByWithRelationInput[]
+    cursor?: ProductLineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductLineScalarFieldEnum | ProductLineScalarFieldEnum[]
+  }
+
+  /**
+   * Vendor without action
+   */
+  export type VendorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model ProductLine
    */
 
@@ -8793,7 +10128,10 @@ export namespace Prisma {
     slug: string | null
     description: string | null
     gradeId: string | null
+    vendorId: string | null
     logoId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     scrapedImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8805,7 +10143,10 @@ export namespace Prisma {
     slug: string | null
     description: string | null
     gradeId: string | null
+    vendorId: string | null
     logoId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     scrapedImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8817,7 +10158,10 @@ export namespace Prisma {
     slug: number
     description: number
     gradeId: number
+    vendorId: number
     logoId: number
+    logoUrl: number
+    bannerUrl: number
     scrapedImage: number
     createdAt: number
     updatedAt: number
@@ -8831,7 +10175,10 @@ export namespace Prisma {
     slug?: true
     description?: true
     gradeId?: true
+    vendorId?: true
     logoId?: true
+    logoUrl?: true
+    bannerUrl?: true
     scrapedImage?: true
     createdAt?: true
     updatedAt?: true
@@ -8843,7 +10190,10 @@ export namespace Prisma {
     slug?: true
     description?: true
     gradeId?: true
+    vendorId?: true
     logoId?: true
+    logoUrl?: true
+    bannerUrl?: true
     scrapedImage?: true
     createdAt?: true
     updatedAt?: true
@@ -8855,7 +10205,10 @@ export namespace Prisma {
     slug?: true
     description?: true
     gradeId?: true
+    vendorId?: true
     logoId?: true
+    logoUrl?: true
+    bannerUrl?: true
     scrapedImage?: true
     createdAt?: true
     updatedAt?: true
@@ -8939,8 +10292,11 @@ export namespace Prisma {
     name: string
     slug: string | null
     description: string | null
-    gradeId: string
+    gradeId: string | null
+    vendorId: string | null
     logoId: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     scrapedImage: string | null
     createdAt: Date
     updatedAt: Date
@@ -8969,11 +10325,15 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     gradeId?: boolean
+    vendorId?: boolean
     logoId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
     kits?: boolean | ProductLine$kitsArgs<ExtArgs>
     _count?: boolean | ProductLineCountOutputTypeDefaultArgs<ExtArgs>
@@ -8985,11 +10345,15 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     gradeId?: boolean
+    vendorId?: boolean
     logoId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
   }, ExtArgs["result"]["productLine"]>
 
@@ -8999,11 +10363,15 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     gradeId?: boolean
+    vendorId?: boolean
     logoId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
   }, ExtArgs["result"]["productLine"]>
 
@@ -9013,32 +10381,39 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     gradeId?: boolean
+    vendorId?: boolean
     logoId?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     scrapedImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "gradeId" | "logoId" | "scrapedImage" | "createdAt" | "updatedAt", ExtArgs["result"]["productLine"]>
+  export type ProductLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "gradeId" | "vendorId" | "logoId" | "logoUrl" | "bannerUrl" | "scrapedImage" | "createdAt" | "updatedAt", ExtArgs["result"]["productLine"]>
   export type ProductLineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
     kits?: boolean | ProductLine$kitsArgs<ExtArgs>
     _count?: boolean | ProductLineCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductLineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
   }
   export type ProductLineIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    grade?: boolean | GradeDefaultArgs<ExtArgs>
+    grade?: boolean | ProductLine$gradeArgs<ExtArgs>
+    vendor?: boolean | ProductLine$vendorArgs<ExtArgs>
     logo?: boolean | ProductLine$logoArgs<ExtArgs>
   }
 
   export type $ProductLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ProductLine"
     objects: {
-      grade: Prisma.$GradePayload<ExtArgs>
+      grade: Prisma.$GradePayload<ExtArgs> | null
+      vendor: Prisma.$VendorPayload<ExtArgs> | null
       logo: Prisma.$UploadPayload<ExtArgs> | null
       kits: Prisma.$KitPayload<ExtArgs>[]
     }
@@ -9047,8 +10422,11 @@ export namespace Prisma {
       name: string
       slug: string | null
       description: string | null
-      gradeId: string
+      gradeId: string | null
+      vendorId: string | null
       logoId: string | null
+      logoUrl: string | null
+      bannerUrl: string | null
       scrapedImage: string | null
       createdAt: Date
       updatedAt: Date
@@ -9446,7 +10824,8 @@ export namespace Prisma {
    */
   export interface Prisma__ProductLineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    grade<T extends GradeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GradeDefaultArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    grade<T extends ProductLine$gradeArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$gradeArgs<ExtArgs>>): Prisma__GradeClient<$Result.GetResult<Prisma.$GradePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    vendor<T extends ProductLine$vendorArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$vendorArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     logo<T extends ProductLine$logoArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$logoArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     kits<T extends ProductLine$kitsArgs<ExtArgs> = {}>(args?: Subset<T, ProductLine$kitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -9483,7 +10862,10 @@ export namespace Prisma {
     readonly slug: FieldRef<"ProductLine", 'String'>
     readonly description: FieldRef<"ProductLine", 'String'>
     readonly gradeId: FieldRef<"ProductLine", 'String'>
+    readonly vendorId: FieldRef<"ProductLine", 'String'>
     readonly logoId: FieldRef<"ProductLine", 'String'>
+    readonly logoUrl: FieldRef<"ProductLine", 'String'>
+    readonly bannerUrl: FieldRef<"ProductLine", 'String'>
     readonly scrapedImage: FieldRef<"ProductLine", 'String'>
     readonly createdAt: FieldRef<"ProductLine", 'DateTime'>
     readonly updatedAt: FieldRef<"ProductLine", 'DateTime'>
@@ -9883,6 +11265,44 @@ export namespace Prisma {
   }
 
   /**
+   * ProductLine.grade
+   */
+  export type ProductLine$gradeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Grade
+     */
+    select?: GradeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Grade
+     */
+    omit?: GradeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GradeInclude<ExtArgs> | null
+    where?: GradeWhereInput
+  }
+
+  /**
+   * ProductLine.vendor
+   */
+  export type ProductLine$vendorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    where?: VendorWhereInput
+  }
+
+  /**
    * ProductLine.logo
    */
   export type ProductLine$logoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9958,6 +11378,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     slug: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9966,6 +11388,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     slug: string | null
+    logoUrl: string | null
+    bannerUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9974,6 +11398,8 @@ export namespace Prisma {
     id: number
     name: number
     slug: number
+    logoUrl: number
+    bannerUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9984,6 +11410,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9992,6 +11420,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10000,6 +11430,8 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    logoUrl?: true
+    bannerUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10081,6 +11513,8 @@ export namespace Prisma {
     id: string
     name: string
     slug: string
+    logoUrl: string | null
+    bannerUrl: string | null
     createdAt: Date
     updatedAt: Date
     _count: ReleaseTypeCountAggregateOutputType | null
@@ -10106,6 +11540,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     kits?: boolean | ReleaseType$kitsArgs<ExtArgs>
@@ -10116,6 +11552,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["releaseType"]>
@@ -10124,6 +11562,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["releaseType"]>
@@ -10132,11 +11572,13 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    logoUrl?: boolean
+    bannerUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ReleaseTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["releaseType"]>
+  export type ReleaseTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "bannerUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["releaseType"]>
   export type ReleaseTypeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     kits?: boolean | ReleaseType$kitsArgs<ExtArgs>
     _count?: boolean | ReleaseTypeCountOutputTypeDefaultArgs<ExtArgs>
@@ -10153,6 +11595,8 @@ export namespace Prisma {
       id: string
       name: string
       slug: string
+      logoUrl: string | null
+      bannerUrl: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["releaseType"]>
@@ -10582,6 +12026,8 @@ export namespace Prisma {
     readonly id: FieldRef<"ReleaseType", 'String'>
     readonly name: FieldRef<"ReleaseType", 'String'>
     readonly slug: FieldRef<"ReleaseType", 'String'>
+    readonly logoUrl: FieldRef<"ReleaseType", 'String'>
+    readonly bannerUrl: FieldRef<"ReleaseType", 'String'>
     readonly createdAt: FieldRef<"ReleaseType", 'DateTime'>
     readonly updatedAt: FieldRef<"ReleaseType", 'DateTime'>
   }
@@ -11046,6 +12492,7 @@ export namespace Prisma {
     boxArt: string | null
     notes: string | null
     potentialBaseKit: string | null
+    isOriginalDesign: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     productLineId: string | null
@@ -11066,6 +12513,7 @@ export namespace Prisma {
     boxArt: string | null
     notes: string | null
     potentialBaseKit: string | null
+    isOriginalDesign: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     productLineId: string | null
@@ -11088,6 +12536,7 @@ export namespace Prisma {
     manualLinks: number
     scrapedImages: number
     potentialBaseKit: number
+    isOriginalDesign: number
     createdAt: number
     updatedAt: number
     productLineId: number
@@ -11118,6 +12567,7 @@ export namespace Prisma {
     boxArt?: true
     notes?: true
     potentialBaseKit?: true
+    isOriginalDesign?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -11138,6 +12588,7 @@ export namespace Prisma {
     boxArt?: true
     notes?: true
     potentialBaseKit?: true
+    isOriginalDesign?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -11160,6 +12611,7 @@ export namespace Prisma {
     manualLinks?: true
     scrapedImages?: true
     potentialBaseKit?: true
+    isOriginalDesign?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -11269,6 +12721,7 @@ export namespace Prisma {
     manualLinks: string[]
     scrapedImages: string[]
     potentialBaseKit: string | null
+    isOriginalDesign: boolean
     createdAt: Date
     updatedAt: Date
     productLineId: string | null
@@ -11310,6 +12763,7 @@ export namespace Prisma {
     manualLinks?: boolean
     scrapedImages?: boolean
     potentialBaseKit?: boolean
+    isOriginalDesign?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -11347,6 +12801,7 @@ export namespace Prisma {
     manualLinks?: boolean
     scrapedImages?: boolean
     potentialBaseKit?: boolean
+    isOriginalDesign?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -11373,6 +12828,7 @@ export namespace Prisma {
     manualLinks?: boolean
     scrapedImages?: boolean
     potentialBaseKit?: boolean
+    isOriginalDesign?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -11399,6 +12855,7 @@ export namespace Prisma {
     manualLinks?: boolean
     scrapedImages?: boolean
     potentialBaseKit?: boolean
+    isOriginalDesign?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -11407,7 +12864,7 @@ export namespace Prisma {
     baseKitId?: boolean
   }
 
-  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "createdAt" | "updatedAt" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
+  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "isOriginalDesign" | "createdAt" | "updatedAt" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
   export type KitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
@@ -11470,6 +12927,7 @@ export namespace Prisma {
       manualLinks: string[]
       scrapedImages: string[]
       potentialBaseKit: string | null
+      isOriginalDesign: boolean
       createdAt: Date
       updatedAt: Date
       productLineId: string | null
@@ -11926,6 +13384,7 @@ export namespace Prisma {
     readonly manualLinks: FieldRef<"Kit", 'String[]'>
     readonly scrapedImages: FieldRef<"Kit", 'String[]'>
     readonly potentialBaseKit: FieldRef<"Kit", 'String'>
+    readonly isOriginalDesign: FieldRef<"Kit", 'Boolean'>
     readonly createdAt: FieldRef<"Kit", 'DateTime'>
     readonly updatedAt: FieldRef<"Kit", 'DateTime'>
     readonly productLineId: FieldRef<"Kit", 'String'>
@@ -38280,6 +39739,8 @@ export namespace Prisma {
     slug: 'slug',
     description: 'description',
     timelineId: 'timelineId',
+    logoUrl: 'logoUrl',
+    bannerUrl: 'bannerUrl',
     scrapedImages: 'scrapedImages',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -38306,6 +39767,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     slug: 'slug',
+    logoUrl: 'logoUrl',
+    bannerUrl: 'bannerUrl',
     description: 'description',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -38314,13 +39777,33 @@ export namespace Prisma {
   export type GradeScalarFieldEnum = (typeof GradeScalarFieldEnum)[keyof typeof GradeScalarFieldEnum]
 
 
+  export const VendorScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    description: 'description',
+    logoUrl: 'logoUrl',
+    bannerUrl: 'bannerUrl',
+    websiteUrl: 'websiteUrl',
+    category: 'category',
+    producesOriginal: 'producesOriginal',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VendorScalarFieldEnum = (typeof VendorScalarFieldEnum)[keyof typeof VendorScalarFieldEnum]
+
+
   export const ProductLineScalarFieldEnum: {
     id: 'id',
     name: 'name',
     slug: 'slug',
     description: 'description',
     gradeId: 'gradeId',
+    vendorId: 'vendorId',
     logoId: 'logoId',
+    logoUrl: 'logoUrl',
+    bannerUrl: 'bannerUrl',
     scrapedImage: 'scrapedImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -38333,6 +39816,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     slug: 'slug',
+    logoUrl: 'logoUrl',
+    bannerUrl: 'bannerUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -38354,6 +39839,7 @@ export namespace Prisma {
     manualLinks: 'manualLinks',
     scrapedImages: 'scrapedImages',
     potentialBaseKit: 'potentialBaseKit',
+    isOriginalDesign: 'isOriginalDesign',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     productLineId: 'productLineId',
@@ -38752,6 +40238,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'VendorCategory'
+   */
+  export type EnumVendorCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VendorCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'VendorCategory[]'
+   */
+  export type ListEnumVendorCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VendorCategory[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -38790,13 +40297,6 @@ export namespace Prisma {
    * Reference to a field of type 'KitImageType[]'
    */
   export type ListEnumKitImageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitImageType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -38984,6 +40484,8 @@ export namespace Prisma {
     slug?: StringNullableFilter<"Series"> | string | null
     description?: StringNullableFilter<"Series"> | string | null
     timelineId?: StringNullableFilter<"Series"> | string | null
+    logoUrl?: StringNullableFilter<"Series"> | string | null
+    bannerUrl?: StringNullableFilter<"Series"> | string | null
     scrapedImages?: StringNullableListFilter<"Series">
     createdAt?: DateTimeFilter<"Series"> | Date | string
     updatedAt?: DateTimeFilter<"Series"> | Date | string
@@ -38998,6 +40500,8 @@ export namespace Prisma {
     slug?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     timelineId?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     scrapedImages?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39015,6 +40519,8 @@ export namespace Prisma {
     NOT?: SeriesWhereInput | SeriesWhereInput[]
     description?: StringNullableFilter<"Series"> | string | null
     timelineId?: StringNullableFilter<"Series"> | string | null
+    logoUrl?: StringNullableFilter<"Series"> | string | null
+    bannerUrl?: StringNullableFilter<"Series"> | string | null
     scrapedImages?: StringNullableListFilter<"Series">
     createdAt?: DateTimeFilter<"Series"> | Date | string
     updatedAt?: DateTimeFilter<"Series"> | Date | string
@@ -39029,6 +40535,8 @@ export namespace Prisma {
     slug?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     timelineId?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     scrapedImages?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39046,6 +40554,8 @@ export namespace Prisma {
     slug?: StringNullableWithAggregatesFilter<"Series"> | string | null
     description?: StringNullableWithAggregatesFilter<"Series"> | string | null
     timelineId?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    bannerUrl?: StringNullableWithAggregatesFilter<"Series"> | string | null
     scrapedImages?: StringNullableListFilter<"Series">
     createdAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
@@ -39134,6 +40644,8 @@ export namespace Prisma {
     id?: StringFilter<"Grade"> | string
     name?: StringFilter<"Grade"> | string
     slug?: StringNullableFilter<"Grade"> | string | null
+    logoUrl?: StringNullableFilter<"Grade"> | string | null
+    bannerUrl?: StringNullableFilter<"Grade"> | string | null
     description?: StringNullableFilter<"Grade"> | string | null
     createdAt?: DateTimeFilter<"Grade"> | Date | string
     updatedAt?: DateTimeFilter<"Grade"> | Date | string
@@ -39144,6 +40656,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39157,6 +40671,8 @@ export namespace Prisma {
     AND?: GradeWhereInput | GradeWhereInput[]
     OR?: GradeWhereInput[]
     NOT?: GradeWhereInput | GradeWhereInput[]
+    logoUrl?: StringNullableFilter<"Grade"> | string | null
+    bannerUrl?: StringNullableFilter<"Grade"> | string | null
     description?: StringNullableFilter<"Grade"> | string | null
     createdAt?: DateTimeFilter<"Grade"> | Date | string
     updatedAt?: DateTimeFilter<"Grade"> | Date | string
@@ -39167,6 +40683,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39182,9 +40700,96 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Grade"> | string
     name?: StringWithAggregatesFilter<"Grade"> | string
     slug?: StringNullableWithAggregatesFilter<"Grade"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"Grade"> | string | null
+    bannerUrl?: StringNullableWithAggregatesFilter<"Grade"> | string | null
     description?: StringNullableWithAggregatesFilter<"Grade"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Grade"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Grade"> | Date | string
+  }
+
+  export type VendorWhereInput = {
+    AND?: VendorWhereInput | VendorWhereInput[]
+    OR?: VendorWhereInput[]
+    NOT?: VendorWhereInput | VendorWhereInput[]
+    id?: StringFilter<"Vendor"> | string
+    name?: StringFilter<"Vendor"> | string
+    slug?: StringNullableFilter<"Vendor"> | string | null
+    description?: StringNullableFilter<"Vendor"> | string | null
+    logoUrl?: StringNullableFilter<"Vendor"> | string | null
+    bannerUrl?: StringNullableFilter<"Vendor"> | string | null
+    websiteUrl?: StringNullableFilter<"Vendor"> | string | null
+    category?: EnumVendorCategoryNullableFilter<"Vendor"> | $Enums.VendorCategory | null
+    producesOriginal?: BoolFilter<"Vendor"> | boolean
+    createdAt?: DateTimeFilter<"Vendor"> | Date | string
+    updatedAt?: DateTimeFilter<"Vendor"> | Date | string
+    productLines?: ProductLineListRelationFilter
+  }
+
+  export type VendorOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
+    websiteUrl?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    producesOriginal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    productLines?: ProductLineOrderByRelationAggregateInput
+  }
+
+  export type VendorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: VendorWhereInput | VendorWhereInput[]
+    OR?: VendorWhereInput[]
+    NOT?: VendorWhereInput | VendorWhereInput[]
+    description?: StringNullableFilter<"Vendor"> | string | null
+    logoUrl?: StringNullableFilter<"Vendor"> | string | null
+    bannerUrl?: StringNullableFilter<"Vendor"> | string | null
+    websiteUrl?: StringNullableFilter<"Vendor"> | string | null
+    category?: EnumVendorCategoryNullableFilter<"Vendor"> | $Enums.VendorCategory | null
+    producesOriginal?: BoolFilter<"Vendor"> | boolean
+    createdAt?: DateTimeFilter<"Vendor"> | Date | string
+    updatedAt?: DateTimeFilter<"Vendor"> | Date | string
+    productLines?: ProductLineListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type VendorOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
+    websiteUrl?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    producesOriginal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VendorCountOrderByAggregateInput
+    _max?: VendorMaxOrderByAggregateInput
+    _min?: VendorMinOrderByAggregateInput
+  }
+
+  export type VendorScalarWhereWithAggregatesInput = {
+    AND?: VendorScalarWhereWithAggregatesInput | VendorScalarWhereWithAggregatesInput[]
+    OR?: VendorScalarWhereWithAggregatesInput[]
+    NOT?: VendorScalarWhereWithAggregatesInput | VendorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Vendor"> | string
+    name?: StringWithAggregatesFilter<"Vendor"> | string
+    slug?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    bannerUrl?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    websiteUrl?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    category?: EnumVendorCategoryNullableWithAggregatesFilter<"Vendor"> | $Enums.VendorCategory | null
+    producesOriginal?: BoolWithAggregatesFilter<"Vendor"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Vendor"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Vendor"> | Date | string
   }
 
   export type ProductLineWhereInput = {
@@ -39195,12 +40800,16 @@ export namespace Prisma {
     name?: StringFilter<"ProductLine"> | string
     slug?: StringNullableFilter<"ProductLine"> | string | null
     description?: StringNullableFilter<"ProductLine"> | string | null
-    gradeId?: StringFilter<"ProductLine"> | string
+    gradeId?: StringNullableFilter<"ProductLine"> | string | null
+    vendorId?: StringNullableFilter<"ProductLine"> | string | null
     logoId?: StringNullableFilter<"ProductLine"> | string | null
+    logoUrl?: StringNullableFilter<"ProductLine"> | string | null
+    bannerUrl?: StringNullableFilter<"ProductLine"> | string | null
     scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
     createdAt?: DateTimeFilter<"ProductLine"> | Date | string
     updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
-    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    grade?: XOR<GradeNullableScalarRelationFilter, GradeWhereInput> | null
+    vendor?: XOR<VendorNullableScalarRelationFilter, VendorWhereInput> | null
     logo?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
     kits?: KitListRelationFilter
   }
@@ -39210,12 +40819,16 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    gradeId?: SortOrder
+    gradeId?: SortOrderInput | SortOrder
+    vendorId?: SortOrderInput | SortOrder
     logoId?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     scrapedImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     grade?: GradeOrderByWithRelationInput
+    vendor?: VendorOrderByWithRelationInput
     logo?: UploadOrderByWithRelationInput
     kits?: KitOrderByRelationAggregateInput
   }
@@ -39228,12 +40841,16 @@ export namespace Prisma {
     OR?: ProductLineWhereInput[]
     NOT?: ProductLineWhereInput | ProductLineWhereInput[]
     description?: StringNullableFilter<"ProductLine"> | string | null
-    gradeId?: StringFilter<"ProductLine"> | string
+    gradeId?: StringNullableFilter<"ProductLine"> | string | null
+    vendorId?: StringNullableFilter<"ProductLine"> | string | null
     logoId?: StringNullableFilter<"ProductLine"> | string | null
+    logoUrl?: StringNullableFilter<"ProductLine"> | string | null
+    bannerUrl?: StringNullableFilter<"ProductLine"> | string | null
     scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
     createdAt?: DateTimeFilter<"ProductLine"> | Date | string
     updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
-    grade?: XOR<GradeScalarRelationFilter, GradeWhereInput>
+    grade?: XOR<GradeNullableScalarRelationFilter, GradeWhereInput> | null
+    vendor?: XOR<VendorNullableScalarRelationFilter, VendorWhereInput> | null
     logo?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
     kits?: KitListRelationFilter
   }, "id" | "name" | "slug">
@@ -39243,8 +40860,11 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    gradeId?: SortOrder
+    gradeId?: SortOrderInput | SortOrder
+    vendorId?: SortOrderInput | SortOrder
     logoId?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     scrapedImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39261,8 +40881,11 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"ProductLine"> | string
     slug?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
     description?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
-    gradeId?: StringWithAggregatesFilter<"ProductLine"> | string
+    gradeId?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    vendorId?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
     logoId?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
+    bannerUrl?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
     scrapedImage?: StringNullableWithAggregatesFilter<"ProductLine"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ProductLine"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ProductLine"> | Date | string
@@ -39275,6 +40898,8 @@ export namespace Prisma {
     id?: StringFilter<"ReleaseType"> | string
     name?: StringFilter<"ReleaseType"> | string
     slug?: StringFilter<"ReleaseType"> | string
+    logoUrl?: StringNullableFilter<"ReleaseType"> | string | null
+    bannerUrl?: StringNullableFilter<"ReleaseType"> | string | null
     createdAt?: DateTimeFilter<"ReleaseType"> | Date | string
     updatedAt?: DateTimeFilter<"ReleaseType"> | Date | string
     kits?: KitListRelationFilter
@@ -39284,6 +40909,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     kits?: KitOrderByRelationAggregateInput
@@ -39296,6 +40923,8 @@ export namespace Prisma {
     AND?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
     OR?: ReleaseTypeWhereInput[]
     NOT?: ReleaseTypeWhereInput | ReleaseTypeWhereInput[]
+    logoUrl?: StringNullableFilter<"ReleaseType"> | string | null
+    bannerUrl?: StringNullableFilter<"ReleaseType"> | string | null
     createdAt?: DateTimeFilter<"ReleaseType"> | Date | string
     updatedAt?: DateTimeFilter<"ReleaseType"> | Date | string
     kits?: KitListRelationFilter
@@ -39305,6 +40934,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    bannerUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ReleaseTypeCountOrderByAggregateInput
@@ -39319,6 +40950,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ReleaseType"> | string
     name?: StringWithAggregatesFilter<"ReleaseType"> | string
     slug?: StringWithAggregatesFilter<"ReleaseType"> | string
+    logoUrl?: StringNullableWithAggregatesFilter<"ReleaseType"> | string | null
+    bannerUrl?: StringNullableWithAggregatesFilter<"ReleaseType"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ReleaseType"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ReleaseType"> | Date | string
   }
@@ -39340,6 +40973,7 @@ export namespace Prisma {
     manualLinks?: StringNullableListFilter<"Kit">
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    isOriginalDesign?: BoolFilter<"Kit"> | boolean
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -39376,6 +41010,7 @@ export namespace Prisma {
     manualLinks?: SortOrder
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrderInput | SortOrder
+    isOriginalDesign?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrderInput | SortOrder
@@ -39415,6 +41050,7 @@ export namespace Prisma {
     manualLinks?: StringNullableListFilter<"Kit">
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    isOriginalDesign?: BoolFilter<"Kit"> | boolean
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -39451,6 +41087,7 @@ export namespace Prisma {
     manualLinks?: SortOrder
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrderInput | SortOrder
+    isOriginalDesign?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrderInput | SortOrder
@@ -39481,6 +41118,7 @@ export namespace Prisma {
     manualLinks?: StringNullableListFilter<"Kit">
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableWithAggregatesFilter<"Kit"> | string | null
+    isOriginalDesign?: BoolWithAggregatesFilter<"Kit"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
     productLineId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
@@ -41305,6 +42943,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41319,6 +42959,8 @@ export namespace Prisma {
     slug?: string | null
     description?: string | null
     timelineId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41331,6 +42973,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41345,6 +42989,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41358,6 +43004,8 @@ export namespace Prisma {
     slug?: string | null
     description?: string | null
     timelineId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41368,6 +43016,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41379,6 +43029,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41472,6 +43124,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41482,6 +43136,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41492,6 +43148,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41502,6 +43160,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41512,6 +43172,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41521,6 +43183,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41530,7 +43194,111 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    websiteUrl?: string | null
+    category?: $Enums.VendorCategory | null
+    producesOriginal?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineCreateNestedManyWithoutVendorInput
+  }
+
+  export type VendorUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    websiteUrl?: string | null
+    category?: $Enums.VendorCategory | null
+    producesOriginal?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLines?: ProductLineUncheckedCreateNestedManyWithoutVendorInput
+  }
+
+  export type VendorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUpdateManyWithoutVendorNestedInput
+  }
+
+  export type VendorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLines?: ProductLineUncheckedUpdateManyWithoutVendorNestedInput
+  }
+
+  export type VendorCreateManyInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    websiteUrl?: string | null
+    category?: $Enums.VendorCategory | null
+    producesOriginal?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41540,10 +43308,13 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutProductLinesInput
+    grade?: GradeCreateNestedOneWithoutProductLinesInput
+    vendor?: VendorCreateNestedOneWithoutProductLinesInput
     logo?: UploadCreateNestedOneWithoutProductLineLogosInput
     kits?: KitCreateNestedManyWithoutProductLineInput
   }
@@ -41553,8 +43324,11 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
-    gradeId: string
+    gradeId?: string | null
+    vendorId?: string | null
     logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41566,10 +43340,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    grade?: GradeUpdateOneWithoutProductLinesNestedInput
+    vendor?: VendorUpdateOneWithoutProductLinesNestedInput
     logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
     kits?: KitUpdateManyWithoutProductLineNestedInput
   }
@@ -41579,8 +43356,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    gradeId?: StringFieldUpdateOperationsInput | string
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41592,8 +43372,11 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
-    gradeId: string
+    gradeId?: string | null
+    vendorId?: string | null
     logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41604,6 +43387,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41614,8 +43399,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    gradeId?: StringFieldUpdateOperationsInput | string
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41625,6 +43413,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug: string
+    logoUrl?: string | null
+    bannerUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     kits?: KitCreateNestedManyWithoutReleaseTypeInput
@@ -41634,6 +43424,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug: string
+    logoUrl?: string | null
+    bannerUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     kits?: KitUncheckedCreateNestedManyWithoutReleaseTypeInput
@@ -41643,6 +43435,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kits?: KitUpdateManyWithoutReleaseTypeNestedInput
@@ -41652,6 +43446,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kits?: KitUncheckedUpdateManyWithoutReleaseTypeNestedInput
@@ -41661,6 +43457,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug: string
+    logoUrl?: string | null
+    bannerUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -41669,6 +43467,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41677,6 +43477,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41695,6 +43497,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -41727,6 +43530,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -41759,6 +43563,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -41791,6 +43596,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41823,6 +43629,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -41845,6 +43652,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41863,6 +43671,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43852,6 +45661,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     timelineId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     scrapedImages?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43863,6 +45674,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     timelineId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -43873,6 +45686,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     timelineId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -43947,6 +45762,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43956,6 +45773,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43965,14 +45784,93 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type GradeScalarRelationFilter = {
-    is?: GradeWhereInput
-    isNot?: GradeWhereInput
+  export type EnumVendorCategoryNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorCategory | EnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumVendorCategoryNullableFilter<$PrismaModel> | $Enums.VendorCategory | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type VendorCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    category?: SortOrder
+    producesOriginal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    category?: SortOrder
+    producesOriginal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    category?: SortOrder
+    producesOriginal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumVendorCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorCategory | EnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumVendorCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.VendorCategory | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumVendorCategoryNullableFilter<$PrismaModel>
+    _max?: NestedEnumVendorCategoryNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type GradeNullableScalarRelationFilter = {
+    is?: GradeWhereInput | null
+    isNot?: GradeWhereInput | null
+  }
+
+  export type VendorNullableScalarRelationFilter = {
+    is?: VendorWhereInput | null
+    isNot?: VendorWhereInput | null
   }
 
   export type UploadNullableScalarRelationFilter = {
@@ -43986,7 +45884,10 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     gradeId?: SortOrder
+    vendorId?: SortOrder
     logoId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     scrapedImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43998,7 +45899,10 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     gradeId?: SortOrder
+    vendorId?: SortOrder
     logoId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     scrapedImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44010,7 +45914,10 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     gradeId?: SortOrder
+    vendorId?: SortOrder
     logoId?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     scrapedImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44020,6 +45927,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44028,6 +45937,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44036,6 +45947,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    logoUrl?: SortOrder
+    bannerUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44161,6 +46074,7 @@ export namespace Prisma {
     manualLinks?: SortOrder
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrder
+    isOriginalDesign?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -44185,6 +46099,7 @@ export namespace Prisma {
     boxArt?: SortOrder
     notes?: SortOrder
     potentialBaseKit?: SortOrder
+    isOriginalDesign?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -44205,6 +46120,7 @@ export namespace Prisma {
     boxArt?: SortOrder
     notes?: SortOrder
     potentialBaseKit?: SortOrder
+    isOriginalDesign?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -44690,11 +46606,6 @@ export namespace Prisma {
     order?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type UserStoreNullableScalarRelationFilter = {
     is?: UserStoreWhereInput | null
     isNot?: UserStoreWhereInput | null
@@ -44846,14 +46757,6 @@ export namespace Prisma {
     showActivity?: SortOrder
     showBadges?: SortOrder
     emailNotifications?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumCollectionStatusFilter<$PrismaModel = never> = {
@@ -45868,10 +47771,66 @@ export namespace Prisma {
     deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
   }
 
+  export type ProductLineCreateNestedManyWithoutVendorInput = {
+    create?: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput> | ProductLineCreateWithoutVendorInput[] | ProductLineUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutVendorInput | ProductLineCreateOrConnectWithoutVendorInput[]
+    createMany?: ProductLineCreateManyVendorInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type ProductLineUncheckedCreateNestedManyWithoutVendorInput = {
+    create?: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput> | ProductLineCreateWithoutVendorInput[] | ProductLineUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutVendorInput | ProductLineCreateOrConnectWithoutVendorInput[]
+    createMany?: ProductLineCreateManyVendorInputEnvelope
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+  }
+
+  export type NullableEnumVendorCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.VendorCategory | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type ProductLineUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput> | ProductLineCreateWithoutVendorInput[] | ProductLineUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutVendorInput | ProductLineCreateOrConnectWithoutVendorInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutVendorInput | ProductLineUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: ProductLineCreateManyVendorInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutVendorInput | ProductLineUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutVendorInput | ProductLineUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput> | ProductLineCreateWithoutVendorInput[] | ProductLineUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: ProductLineCreateOrConnectWithoutVendorInput | ProductLineCreateOrConnectWithoutVendorInput[]
+    upsert?: ProductLineUpsertWithWhereUniqueWithoutVendorInput | ProductLineUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: ProductLineCreateManyVendorInputEnvelope
+    set?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    disconnect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    delete?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    connect?: ProductLineWhereUniqueInput | ProductLineWhereUniqueInput[]
+    update?: ProductLineUpdateWithWhereUniqueWithoutVendorInput | ProductLineUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: ProductLineUpdateManyWithWhereWithoutVendorInput | ProductLineUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: ProductLineScalarWhereInput | ProductLineScalarWhereInput[]
+  }
+
   export type GradeCreateNestedOneWithoutProductLinesInput = {
     create?: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
     connectOrCreate?: GradeCreateOrConnectWithoutProductLinesInput
     connect?: GradeWhereUniqueInput
+  }
+
+  export type VendorCreateNestedOneWithoutProductLinesInput = {
+    create?: XOR<VendorCreateWithoutProductLinesInput, VendorUncheckedCreateWithoutProductLinesInput>
+    connectOrCreate?: VendorCreateOrConnectWithoutProductLinesInput
+    connect?: VendorWhereUniqueInput
   }
 
   export type UploadCreateNestedOneWithoutProductLineLogosInput = {
@@ -45894,12 +47853,24 @@ export namespace Prisma {
     connect?: KitWhereUniqueInput | KitWhereUniqueInput[]
   }
 
-  export type GradeUpdateOneRequiredWithoutProductLinesNestedInput = {
+  export type GradeUpdateOneWithoutProductLinesNestedInput = {
     create?: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
     connectOrCreate?: GradeCreateOrConnectWithoutProductLinesInput
     upsert?: GradeUpsertWithoutProductLinesInput
+    disconnect?: GradeWhereInput | boolean
+    delete?: GradeWhereInput | boolean
     connect?: GradeWhereUniqueInput
     update?: XOR<XOR<GradeUpdateToOneWithWhereWithoutProductLinesInput, GradeUpdateWithoutProductLinesInput>, GradeUncheckedUpdateWithoutProductLinesInput>
+  }
+
+  export type VendorUpdateOneWithoutProductLinesNestedInput = {
+    create?: XOR<VendorCreateWithoutProductLinesInput, VendorUncheckedCreateWithoutProductLinesInput>
+    connectOrCreate?: VendorCreateOrConnectWithoutProductLinesInput
+    upsert?: VendorUpsertWithoutProductLinesInput
+    disconnect?: VendorWhereInput | boolean
+    delete?: VendorWhereInput | boolean
+    connect?: VendorWhereUniqueInput
+    update?: XOR<XOR<VendorUpdateToOneWithWhereWithoutProductLinesInput, VendorUpdateWithoutProductLinesInput>, VendorUncheckedUpdateWithoutProductLinesInput>
   }
 
   export type UploadUpdateOneWithoutProductLineLogosNestedInput = {
@@ -47210,10 +49181,6 @@ export namespace Prisma {
     connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type UserKitCollectionUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -48489,6 +50456,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumVendorCategoryNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorCategory | EnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumVendorCategoryNullableFilter<$PrismaModel> | $Enums.VendorCategory | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumVendorCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorCategory | EnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.VendorCategory[] | ListEnumVendorCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumVendorCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.VendorCategory | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumVendorCategoryNullableFilter<$PrismaModel>
+    _max?: NestedEnumVendorCategoryNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -48600,19 +50597,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumKitImageTypeFilter<$PrismaModel>
     _max?: NestedEnumKitImageTypeFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumCollectionStatusFilter<$PrismaModel = never> = {
@@ -48761,6 +50745,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48773,6 +50759,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48815,6 +50803,8 @@ export namespace Prisma {
     slug?: StringNullableFilter<"Series"> | string | null
     description?: StringNullableFilter<"Series"> | string | null
     timelineId?: StringNullableFilter<"Series"> | string | null
+    logoUrl?: StringNullableFilter<"Series"> | string | null
+    bannerUrl?: StringNullableFilter<"Series"> | string | null
     scrapedImages?: StringNullableListFilter<"Series">
     createdAt?: DateTimeFilter<"Series"> | Date | string
     updatedAt?: DateTimeFilter<"Series"> | Date | string
@@ -48891,6 +50881,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -48922,6 +50913,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -49041,6 +51033,7 @@ export namespace Prisma {
     manualLinks?: StringNullableListFilter<"Kit">
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
+    isOriginalDesign?: BoolFilter<"Kit"> | boolean
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -49054,6 +51047,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49067,6 +51062,8 @@ export namespace Prisma {
     slug?: string | null
     description?: string | null
     timelineId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49146,6 +51143,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49159,6 +51158,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49226,9 +51227,12 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    vendor?: VendorCreateNestedOneWithoutProductLinesInput
     logo?: UploadCreateNestedOneWithoutProductLineLogosInput
     kits?: KitCreateNestedManyWithoutProductLineInput
   }
@@ -49238,7 +51242,10 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    vendorId?: string | null
     logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49279,17 +51286,78 @@ export namespace Prisma {
     name?: StringFilter<"ProductLine"> | string
     slug?: StringNullableFilter<"ProductLine"> | string | null
     description?: StringNullableFilter<"ProductLine"> | string | null
-    gradeId?: StringFilter<"ProductLine"> | string
+    gradeId?: StringNullableFilter<"ProductLine"> | string | null
+    vendorId?: StringNullableFilter<"ProductLine"> | string | null
     logoId?: StringNullableFilter<"ProductLine"> | string | null
+    logoUrl?: StringNullableFilter<"ProductLine"> | string | null
+    bannerUrl?: StringNullableFilter<"ProductLine"> | string | null
     scrapedImage?: StringNullableFilter<"ProductLine"> | string | null
     createdAt?: DateTimeFilter<"ProductLine"> | Date | string
     updatedAt?: DateTimeFilter<"ProductLine"> | Date | string
+  }
+
+  export type ProductLineCreateWithoutVendorInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grade?: GradeCreateNestedOneWithoutProductLinesInput
+    logo?: UploadCreateNestedOneWithoutProductLineLogosInput
+    kits?: KitCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineUncheckedCreateWithoutVendorInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId?: string | null
+    logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kits?: KitUncheckedCreateNestedManyWithoutProductLineInput
+  }
+
+  export type ProductLineCreateOrConnectWithoutVendorInput = {
+    where: ProductLineWhereUniqueInput
+    create: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput>
+  }
+
+  export type ProductLineCreateManyVendorInputEnvelope = {
+    data: ProductLineCreateManyVendorInput | ProductLineCreateManyVendorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductLineUpsertWithWhereUniqueWithoutVendorInput = {
+    where: ProductLineWhereUniqueInput
+    update: XOR<ProductLineUpdateWithoutVendorInput, ProductLineUncheckedUpdateWithoutVendorInput>
+    create: XOR<ProductLineCreateWithoutVendorInput, ProductLineUncheckedCreateWithoutVendorInput>
+  }
+
+  export type ProductLineUpdateWithWhereUniqueWithoutVendorInput = {
+    where: ProductLineWhereUniqueInput
+    data: XOR<ProductLineUpdateWithoutVendorInput, ProductLineUncheckedUpdateWithoutVendorInput>
+  }
+
+  export type ProductLineUpdateManyWithWhereWithoutVendorInput = {
+    where: ProductLineScalarWhereInput
+    data: XOR<ProductLineUpdateManyMutationInput, ProductLineUncheckedUpdateManyWithoutVendorInput>
   }
 
   export type GradeCreateWithoutProductLinesInput = {
     id?: string
     name: string
     slug?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49299,6 +51367,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49307,6 +51377,39 @@ export namespace Prisma {
   export type GradeCreateOrConnectWithoutProductLinesInput = {
     where: GradeWhereUniqueInput
     create: XOR<GradeCreateWithoutProductLinesInput, GradeUncheckedCreateWithoutProductLinesInput>
+  }
+
+  export type VendorCreateWithoutProductLinesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    websiteUrl?: string | null
+    category?: $Enums.VendorCategory | null
+    producesOriginal?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorUncheckedCreateWithoutProductLinesInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    websiteUrl?: string | null
+    category?: $Enums.VendorCategory | null
+    producesOriginal?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorCreateOrConnectWithoutProductLinesInput = {
+    where: VendorWhereUniqueInput
+    create: XOR<VendorCreateWithoutProductLinesInput, VendorUncheckedCreateWithoutProductLinesInput>
   }
 
   export type UploadCreateWithoutProductLineLogosInput = {
@@ -49374,6 +51477,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     series?: SeriesCreateNestedOneWithoutKitsInput
@@ -49405,6 +51509,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     seriesId?: string | null
@@ -49447,6 +51552,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49456,7 +51563,48 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorUpsertWithoutProductLinesInput = {
+    update: XOR<VendorUpdateWithoutProductLinesInput, VendorUncheckedUpdateWithoutProductLinesInput>
+    create: XOR<VendorCreateWithoutProductLinesInput, VendorUncheckedCreateWithoutProductLinesInput>
+    where?: VendorWhereInput
+  }
+
+  export type VendorUpdateToOneWithWhereWithoutProductLinesInput = {
+    where?: VendorWhereInput
+    data: XOR<VendorUpdateWithoutProductLinesInput, VendorUncheckedUpdateWithoutProductLinesInput>
+  }
+
+  export type VendorUpdateWithoutProductLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorUncheckedUpdateWithoutProductLinesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableEnumVendorCategoryFieldUpdateOperationsInput | $Enums.VendorCategory | null
+    producesOriginal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49548,6 +51696,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -49579,6 +51728,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -49627,10 +51777,13 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutProductLinesInput
+    grade?: GradeCreateNestedOneWithoutProductLinesInput
+    vendor?: VendorCreateNestedOneWithoutProductLinesInput
     logo?: UploadCreateNestedOneWithoutProductLineLogosInput
   }
 
@@ -49639,8 +51792,11 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
-    gradeId: string
+    gradeId?: string | null
+    vendorId?: string | null
     logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49656,6 +51812,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49669,6 +51827,8 @@ export namespace Prisma {
     slug?: string | null
     description?: string | null
     timelineId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49684,6 +51844,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug: string
+    logoUrl?: string | null
+    bannerUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49692,6 +51854,8 @@ export namespace Prisma {
     id?: string
     name: string
     slug: string
+    logoUrl?: string | null
+    bannerUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49715,6 +51879,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -49746,6 +51911,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -49782,6 +51948,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -49813,6 +51980,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -50138,10 +52306,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    grade?: GradeUpdateOneWithoutProductLinesNestedInput
+    vendor?: VendorUpdateOneWithoutProductLinesNestedInput
     logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
   }
 
@@ -50150,8 +52321,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    gradeId?: StringFieldUpdateOperationsInput | string
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50173,6 +52347,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50186,6 +52362,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     timelineId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50207,6 +52385,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50215,6 +52395,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50244,6 +52426,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -50275,6 +52458,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50700,6 +52884,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -50731,6 +52916,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -50922,6 +53108,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -50953,6 +53140,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50984,6 +53172,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51015,6 +53204,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51091,6 +53281,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -51122,6 +53313,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51188,6 +53380,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51219,6 +53412,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51255,6 +53449,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51286,6 +53481,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51333,6 +53529,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -51364,6 +53561,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51406,6 +53604,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -51437,6 +53636,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51598,10 +53798,13 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    grade: GradeCreateNestedOneWithoutProductLinesInput
+    grade?: GradeCreateNestedOneWithoutProductLinesInput
+    vendor?: VendorCreateNestedOneWithoutProductLinesInput
     kits?: KitCreateNestedManyWithoutProductLineInput
   }
 
@@ -51610,7 +53813,10 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
-    gradeId: string
+    gradeId?: string | null
+    vendorId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51992,6 +54198,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -52023,6 +54230,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -52121,6 +54329,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -52152,6 +54361,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53595,6 +55805,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -53626,6 +55837,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -53760,6 +55972,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -53791,6 +56004,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53903,6 +56117,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -53934,6 +56149,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -54116,6 +56332,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -54147,6 +56364,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54598,6 +56816,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -54629,6 +56848,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -54926,6 +57146,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -54957,6 +57178,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56002,6 +58224,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -56033,6 +58256,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -56111,6 +58335,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -56142,6 +58367,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57074,6 +59300,8 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImages?: SeriesCreatescrapedImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57084,6 +59312,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57096,6 +59326,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57108,6 +59340,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImages?: SeriesUpdatescrapedImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57137,6 +59371,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -57192,6 +59427,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -57223,6 +59459,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57254,6 +59491,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57330,7 +59568,10 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
+    vendorId?: string | null
     logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57341,9 +59582,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: VendorUpdateOneWithoutProductLinesNestedInput
     logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
     kits?: KitUpdateManyWithoutProductLineNestedInput
   }
@@ -57353,7 +59597,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57365,7 +59612,68 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductLineCreateManyVendorInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    description?: string | null
+    gradeId?: string | null
+    logoId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
+    scrapedImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductLineUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grade?: GradeUpdateOneWithoutProductLinesNestedInput
+    logo?: UploadUpdateOneWithoutProductLineLogosNestedInput
+    kits?: KitUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kits?: KitUncheckedUpdateManyWithoutProductLineNestedInput
+  }
+
+  export type ProductLineUncheckedUpdateManyWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57385,6 +59693,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     seriesId?: string | null
@@ -57406,6 +59715,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     series?: SeriesUpdateOneWithoutKitsNestedInput
@@ -57437,6 +59747,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57468,6 +59779,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57489,6 +59801,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -57510,6 +59823,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -57541,6 +59855,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57572,6 +59887,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57593,6 +59909,7 @@ export namespace Prisma {
     manualLinks?: KitCreatemanualLinksInput | string[]
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -57704,6 +60021,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -57735,6 +60053,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57766,6 +60085,7 @@ export namespace Prisma {
     manualLinks?: KitUpdatemanualLinksInput | string[]
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58079,7 +60399,10 @@ export namespace Prisma {
     name: string
     slug?: string | null
     description?: string | null
-    gradeId: string
+    gradeId?: string | null
+    vendorId?: string | null
+    logoUrl?: string | null
+    bannerUrl?: string | null
     scrapedImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58186,10 +60509,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    grade?: GradeUpdateOneRequiredWithoutProductLinesNestedInput
+    grade?: GradeUpdateOneWithoutProductLinesNestedInput
+    vendor?: VendorUpdateOneWithoutProductLinesNestedInput
     kits?: KitUpdateManyWithoutProductLineNestedInput
   }
 
@@ -58198,7 +60524,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    gradeId?: StringFieldUpdateOperationsInput | string
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58210,7 +60539,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    gradeId?: StringFieldUpdateOperationsInput | string
+    gradeId?: NullableStringFieldUpdateOperationsInput | string | null
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     scrapedImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

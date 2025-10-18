@@ -37,6 +37,8 @@ model Series {
   slug          String?  @unique
   description   String?
   timelineId    String?
+  logoUrl       String?
+  bannerUrl     String?
   scrapedImages String[] @default([])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -73,6 +75,8 @@ model Grade {
   id          String   @id @default(cuid())
   name        String   @unique
   slug        String?  @unique
+  logoUrl     String?
+  bannerUrl   String?
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -83,22 +87,52 @@ model Grade {
   @@map("grades")
 }
 
+enum VendorCategory {
+  OFFICIAL
+  THIRD_PARTY
+  BOOTLEG
+}
+
+// Vendor represents manufacturers (Bandai, Bandai Spirits, etc.)
+model Vendor {
+  id               String          @id @default(cuid())
+  name             String          @unique
+  slug             String?         @unique
+  description      String?
+  logoUrl          String?
+  bannerUrl        String?
+  websiteUrl       String?
+  category         VendorCategory?
+  producesOriginal Boolean         @default(true)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  // Relations
+  productLines ProductLine[]
+
+  @@map("vendors")
+}
+
 // ProductLine represents specific product lines within grades (HGUC, MGEX, PG Unleashed, etc.)
 model ProductLine {
   id           String   @id @default(cuid())
   name         String   @unique
   slug         String?  @unique
   description  String?
-  gradeId      String
+  gradeId      String?
+  vendorId     String?
   logoId       String?
+  logoUrl      String?
+  bannerUrl    String?
   scrapedImage String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   // Relations
-  grade Grade   @relation(fields: [gradeId], references: [id], onDelete: Cascade)
-  logo  Upload? @relation(fields: [logoId], references: [id], onDelete: SetNull)
-  kits  Kit[]
+  grade  Grade?  @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  vendor Vendor? @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  logo   Upload? @relation(fields: [logoId], references: [id], onDelete: SetNull)
+  kits   Kit[]
 
   @@map("product_lines")
 }
@@ -108,6 +142,8 @@ model ReleaseType {
   id        String   @id @default(cuid())
   name      String   @unique
   slug      String   @unique
+  logoUrl   String?
+  bannerUrl String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -132,6 +168,7 @@ model Kit {
   manualLinks      String[]  @default([])
   scrapedImages    String[]  @default([])
   potentialBaseKit String? // Potential base kit reference
+  isOriginalDesign Boolean   @default(true) // true unless known bootleg copy
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 

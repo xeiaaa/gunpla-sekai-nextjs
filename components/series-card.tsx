@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface SeriesCardProps {
   series: {
@@ -26,7 +32,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
         {imageUrl && (
           <div className="aspect-video w-full overflow-hidden rounded-t-lg relative">
             <Image
-              src={imageUrl}
+              src={imageUrl?.split("/revision")[0] || ""}
               alt={series.name}
               fill
               className="object-contain transition-transform duration-200 hover:scale-105"

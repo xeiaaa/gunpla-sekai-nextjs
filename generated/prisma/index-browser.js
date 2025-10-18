@@ -135,6 +135,8 @@ exports.Prisma.SeriesScalarFieldEnum = {
   slug: 'slug',
   description: 'description',
   timelineId: 'timelineId',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
   scrapedImages: 'scrapedImages',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -155,7 +157,23 @@ exports.Prisma.GradeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
   description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VendorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
+  websiteUrl: 'websiteUrl',
+  category: 'category',
+  producesOriginal: 'producesOriginal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -166,7 +184,10 @@ exports.Prisma.ProductLineScalarFieldEnum = {
   slug: 'slug',
   description: 'description',
   gradeId: 'gradeId',
+  vendorId: 'vendorId',
   logoId: 'logoId',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
   scrapedImage: 'scrapedImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -176,6 +197,8 @@ exports.Prisma.ReleaseTypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -194,6 +217,7 @@ exports.Prisma.KitScalarFieldEnum = {
   manualLinks: 'manualLinks',
   scrapedImages: 'scrapedImages',
   potentialBaseKit: 'potentialBaseKit',
+  isOriginalDesign: 'isOriginalDesign',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   productLineId: 'productLineId',
@@ -473,6 +497,12 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.VendorCategory = exports.$Enums.VendorCategory = {
+  OFFICIAL: 'OFFICIAL',
+  THIRD_PARTY: 'THIRD_PARTY',
+  BOOTLEG: 'BOOTLEG'
+};
+
 exports.KitExpansionType = exports.$Enums.KitExpansionType = {
   EFFECT_PARTS: 'EFFECT_PARTS',
   WEAPON_SET: 'WEAPON_SET',
@@ -550,6 +580,7 @@ exports.Prisma.ModelName = {
   Series: 'Series',
   MobileSuit: 'MobileSuit',
   Grade: 'Grade',
+  Vendor: 'Vendor',
   ProductLine: 'ProductLine',
   ReleaseType: 'ReleaseType',
   Kit: 'Kit',

@@ -27,6 +27,9 @@ export function KitImage({
   const processedSrc = useMemo(() => {
     if (!src) return "";
 
+    // // TODO: bring back the cloudinary logic
+    // return src;
+
     // If it's already a Cloudinary URL, add width parameter before q_auto
     if (src.startsWith("https://res.cloudinary.com/")) {
       return src.replace("q_auto", `w_${width},q_auto`);

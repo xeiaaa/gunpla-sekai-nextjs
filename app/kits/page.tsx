@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { KitCard } from "@/components/kit-card";
 import { useFilterData } from "@/hooks/use-kits";
 import { FilterSection } from "./components";
-import { SignedIn } from "@clerk/nextjs";
+import { SignedIn, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 
 // Types
@@ -75,6 +75,12 @@ interface Kit {
     BUILT: number;
     WISHLIST: number;
   };
+  userCollection?: {
+    status: "WISHLIST" | "PREORDER" | "BACKLOG" | "IN_PROGRESS" | "BUILT";
+    notes?: string | null;
+    price?: number | null;
+    acquiredAt?: string | null;
+  } | null;
 }
 
 interface MeilisearchResponse {
@@ -252,6 +258,7 @@ function filterReducer(state: FilterState, action: FilterAction): FilterState {
 function KitsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { getToken } = useAuth();
 
   // Consolidated state management
   const [state, dispatch] = useReducer(filterReducer, initialState);
@@ -353,9 +360,21 @@ function KitsPageContent() {
       }
 
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
-      const response = await fetch(
-        `${apiUrl}/kits/meilisearch?${params.toString()}`
-      );
+
+      // Check if user is authenticated and get token
+      const token = await getToken();
+      const endpoint = token
+        ? `${apiUrl}/kits/meilisearch/user?${params.toString()}`
+        : `${apiUrl}/kits/meilisearch?${params.toString()}`;
+
+      const headers: HeadersInit = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(endpoint, {
+        headers,
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch kits");
@@ -392,6 +411,14 @@ function KitsPageContent() {
           series: kit.series?.name || null,
           releaseType: kit.releaseType?.name || null,
           mobileSuits: kit.mobileSuits,
+          userCollection: kit.userCollection
+            ? {
+                ...kit.userCollection,
+                acquiredAt: kit.userCollection.acquiredAt
+                  ? new Date(kit.userCollection.acquiredAt)
+                  : null,
+              }
+            : null,
         }))
       ) || [],
     [kitsData]
@@ -859,13 +886,14 @@ function KitsPageContent() {
                     key={kit.id}
                     kit={kit}
                     collectionStatus={
-                      kitCollectionStatuses.get(kit.id) as
+                      kit.userCollection?.status ||
+                      (kitCollectionStatuses.get(kit.id) as
                         | "WISHLIST"
                         | "PREORDER"
                         | "BACKLOG"
                         | "IN_PROGRESS"
                         | "BUILT"
-                        | undefined
+                        | undefined)
                     }
                     className="h-full"
                   />

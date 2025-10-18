@@ -669,185 +669,56 @@ export async function getKitBySlug(slug: string) {
   try {
     // Decode URL-encoded slug
     const decodedSlug = decodeURIComponent(slug);
-    const kit = await prisma.kit.findUnique({
+
+    // First, get the kit ID from the slug using Prisma
+    const kitWithId = await prisma.kit.findUnique({
       where: { slug: decodedSlug },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        number: true,
-        variant: true,
-        releaseDate: true,
-        priceYen: true,
-        region: true,
-        boxArt: true,
-        notes: true,
-        manualLinks: true,
-        scrapedImages: true,
-        productLineId: true,
-        baseKitId: true,
-        productLine: {
-          select: {
-            name: true,
-            logo: true,
-            grade: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-        series: {
-          select: {
-            name: true,
-            slug: true,
-          },
-        },
-        releaseType: {
-          select: {
-            name: true,
-            slug: true,
-          },
-        },
-        baseKit: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            number: true,
-            variant: true,
-            boxArt: true,
-            productLine: {
-              select: {
-                grade: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        variants: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            number: true,
-            variant: true,
-            boxArt: true,
-            releaseDate: true,
-            priceYen: true,
-            productLine: {
-              select: {
-                grade: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-          orderBy: {
-            releaseDate: "asc",
-          },
-        },
-        mobileSuits: {
-          select: {
-            mobileSuit: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                description: true,
-                scrapedImages: true,
-                series: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        uploads: {
-          select: {
-            id: true,
-            type: true,
-            caption: true,
-            upload: {
-              select: {
-                url: true,
-                eagerUrl: true,
-                originalFilename: true,
-                createdAt: true,
-              },
-            },
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-        expansions: {
-          select: {
-            expansion: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                number: true,
-                variant: true,
-                boxArt: true,
-                productLine: {
-                  select: {
-                    name: true,
-                    grade: {
-                      select: {
-                        name: true,
-                      },
-                    },
-                  },
-                },
-                series: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        expandedBy: {
-          select: {
-            kit: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                number: true,
-                variant: true,
-                boxArt: true,
-                productLine: {
-                  select: {
-                    name: true,
-                    grade: {
-                      select: {
-                        name: true,
-                      },
-                    },
-                  },
-                },
-                series: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
+      select: { id: true },
     });
+
+    if (!kitWithId) {
+      return null;
+    }
+
+    // Fetch kit data from the new API
+    const apiUrl = process.env.API_URL;
+    if (!apiUrl) {
+      throw new Error("API_URL environment variable is not set");
+    }
+
+    const includeParams = [
+      "baseKit",
+      "baseKit.variants.productLine.grade",
+      "baseKit.productLine.grade",
+      "expansions.expansion.productLine.grade",
+      "expandedBy.kit.productLine.grade",
+      "variants.productLine.grade",
+      "mobileSuits.mobileSuit",
+      "productLine",
+      "productLine.grade",
+      "productLine.vendor",
+      "series",
+      "releaseType",
+      "uploads.upload",
+    ].join(",");
+
+    const response = await fetch(
+      `${apiUrl}/kits/${kitWithId.id}?include=${includeParams}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const kit = await response.json();
 
     if (!kit) {
       return null;
@@ -875,6 +746,7 @@ export async function getKitBySlug(slug: string) {
           productLine: {
             select: {
               name: true,
+              gradeId: true,
               grade: {
                 select: {
                   name: true,
@@ -904,12 +776,12 @@ export async function getKitBySlug(slug: string) {
       scrapedImages: kit.scrapedImages,
       productLineId: kit.productLineId,
       baseKitId: kit.baseKitId,
-      grade: kit.productLine?.grade.name || null,
+      grade: kit.productLine?.grade?.name || null,
       productLine: kit.productLine
         ? {
-          name: kit.productLine.name,
-          logo: kit.productLine.logo?.url || null,
-        }
+            name: kit.productLine.name,
+            logo: kit.productLine.logoUrl || null,
+          }
         : null,
       series: kit.series?.name,
       seriesSlug: kit.series?.slug,
@@ -917,58 +789,70 @@ export async function getKitBySlug(slug: string) {
       releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit
         ? {
-          id: kit.baseKit.id,
-          name: kit.baseKit.name,
-          slug: kit.baseKit.slug,
-          number: kit.baseKit.number,
-          variant: kit.baseKit.variant,
-          boxArt: kit.baseKit.boxArt,
-          grade: kit.baseKit.productLine?.grade.name || null,
-        }
+            id: kit.baseKit.id,
+            name: kit.baseKit.name,
+            slug: kit.baseKit.slug,
+            number: kit.baseKit.number,
+            variant: kit.baseKit.variant,
+            boxArt: kit.baseKit.boxArt,
+            grade: kit.baseKit.productLine?.grade.name || null,
+          }
         : null,
-      variants: kit.variants.map((variant) => ({
-        ...variant,
-        grade: variant.productLine?.grade.name || null,
-      })),
-      mobileSuits: kit.mobileSuits.map((ms) => ({
-        id: ms.mobileSuit.id,
-        name: ms.mobileSuit.name,
-        slug: ms.mobileSuit.slug,
-        description: ms.mobileSuit.description,
-        scrapedImages: ms.mobileSuit.scrapedImages,
-        series: ms.mobileSuit.series?.name,
-      })),
-      uploads: kit.uploads.map((u) => ({
-        id: u.id,
-        url: u.upload.url,
-        eagerUrl: u.upload.eagerUrl,
-        type: u.type,
-        title: u.caption || u.upload.originalFilename,
-        description: u.caption,
-        createdAt: u.upload.createdAt,
-      })),
-      expansions: kit.expansions.map((exp) => ({
-        id: exp.expansion.id,
-        name: exp.expansion.name,
-        slug: exp.expansion.slug,
-        number: exp.expansion.number,
-        variant: exp.expansion.variant,
-        boxArt: exp.expansion.boxArt,
-        grade: exp.expansion.productLine?.grade.name || null,
-        productLine: exp.expansion.productLine?.name || null,
-        series: exp.expansion.series?.name || null,
-      })),
-      expandedBy: kit.expandedBy.map((exp) => ({
-        id: exp.kit.id,
-        name: exp.kit.name,
-        slug: exp.kit.slug,
-        number: exp.kit.number,
-        variant: exp.kit.variant,
-        boxArt: exp.kit.boxArt,
-        grade: exp.kit.productLine?.grade.name || null,
-        productLine: exp.kit.productLine?.name || null,
-        series: exp.kit.series?.name || null,
-      })),
+      variants:
+        kit.variants?.map((variant: any) => ({
+          id: variant.id,
+          name: variant.name,
+          slug: variant.slug,
+          number: variant.number,
+          variant: variant.variant,
+          boxArt: variant.boxArt,
+          releaseDate: variant.releaseDate,
+          priceYen: variant.priceYen,
+          grade: variant.productLine?.grade.name || null,
+        })) || [],
+      mobileSuits:
+        kit.mobileSuits?.map((ms: any) => ({
+          id: ms.mobileSuitId,
+          name: ms.mobileSuit?.name || null,
+          slug: ms.mobileSuit?.slug || null,
+          description: ms.mobileSuit?.description || null,
+          scrapedImages: ms.mobileSuit?.scrapedImages || [],
+          series: ms.mobileSuit?.series?.name || null,
+        })) || [],
+      uploads:
+        kit.uploads?.map((u: any) => ({
+          id: u.id,
+          url: u.upload?.url || null,
+          eagerUrl: u.upload?.eagerUrl || null,
+          type: u.type,
+          title: u.caption || u.upload?.originalFilename || null,
+          description: u.caption,
+          createdAt: u.upload?.createdAt || null,
+        })) || [],
+      expansions:
+        kit.expansions?.map((exp: any) => ({
+          id: exp.expansion.id,
+          name: exp.expansion.name,
+          slug: exp.expansion.slug,
+          number: exp.expansion.number,
+          variant: exp.expansion.variant,
+          boxArt: exp.expansion.boxArt,
+          grade: exp.expansion.productLine?.grade.name || null,
+          productLine: exp.expansion.productLine?.name || null,
+          series: exp.expansion.series?.name || null,
+        })) || [],
+      expandedBy:
+        kit.expandedBy?.map((exp: any) => ({
+          id: exp.kit.id,
+          name: exp.kit.name,
+          slug: exp.kit.slug,
+          number: exp.kit.number,
+          variant: exp.kit.variant,
+          boxArt: exp.kit.boxArt,
+          grade: exp.kit.productLine?.grade.name || null,
+          productLine: exp.kit.productLine?.name || null,
+          series: exp.kit.series?.name || null,
+        })) || [],
       otherVariants: otherVariants.map((variant) => ({
         ...variant,
         grade: variant.productLine?.grade.name || null,
