@@ -776,11 +776,23 @@ export async function getKitBySlug(slug: string) {
       scrapedImages: kit.scrapedImages,
       productLineId: kit.productLineId,
       baseKitId: kit.baseKitId,
-      grade: kit.productLine?.grade?.name || null,
       productLine: kit.productLine
         ? {
             name: kit.productLine.name,
             logo: kit.productLine.logoUrl || null,
+            slug: kit.productLine.slug || null,
+            grade: kit.productLine.grade
+              ? {
+                  name: kit.productLine.grade.name,
+                  slug: kit.productLine.grade.slug || null,
+                }
+              : null,
+            vendor: kit.productLine.vendor
+              ? {
+                  name: kit.productLine.vendor.name,
+                  slug: kit.productLine.vendor.slug || null,
+                }
+              : null,
           }
         : null,
       series: kit.series?.name,

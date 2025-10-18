@@ -19,10 +19,9 @@ import StartBuildButton from "@/components/start-build-button";
 import CommunityBuilds from "@/components/community-builds";
 import {
   Calendar,
-  DollarSign,
+  JapaneseYen,
   Tag,
   ExternalLink,
-  ArrowLeft,
   Package,
   Users,
   Info,
@@ -50,10 +49,18 @@ interface KitDetailPageProps {
     notes?: string | null;
     manualLinks: string[];
     scrapedImages: string[];
-    grade: string | null;
     productLine?: {
       name: string;
       logo?: string | null;
+      slug?: string | null;
+      grade?: {
+        name: string;
+        slug?: string | null;
+      };
+      vendor?: {
+        name: string;
+        slug?: string | null;
+      } | null;
     } | null;
     series?: string | null;
     seriesSlug?: string | null;
@@ -229,7 +236,7 @@ export function KitDetailPage({
 
                   {kit.priceYen && (
                     <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      <JapaneseYen className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">
                         Price:
                       </span>
@@ -246,6 +253,68 @@ export function KitDetailPage({
                         Region:
                       </span>
                       <span className="font-medium">{kit.region}</span>
+                    </div>
+                  )}
+
+                  {kit.productLine?.grade && (
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Grade:
+                      </span>
+                      {kit.productLine.grade.slug ? (
+                        <Link
+                          href={`/grades/${kit.productLine.grade.slug}`}
+                          className="font-medium text-primary hover:underline"
+                        >
+                          {kit.productLine.grade.name}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">
+                          {kit.productLine.grade.name}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {kit.productLine && (
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Product Line:
+                      </span>
+                      {kit.productLine.slug ? (
+                        <Link
+                          href={`/product-lines/${kit.productLine.slug}`}
+                          className="font-medium text-primary hover:underline"
+                        >
+                          {kit.productLine.name}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">
+                          {kit.productLine.name}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {kit.productLine?.vendor && (
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Vendor:
+                      </span>
+                      {kit.productLine.vendor.slug ? (
+                        <Link
+                          href={`/vendors/${kit.productLine.vendor.slug}`}
+                          className="font-medium text-primary hover:underline"
+                        >
+                          {kit.productLine.vendor.name}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">
+                          {kit.productLine.vendor.name}
+                        </span>
+                      )}
                     </div>
                   )}
 
@@ -783,16 +852,6 @@ export function KitDetailPage({
         <div className="lg:col-span-2">
           {/* Kit Header */}
           <div className="mb-6">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="bg-primary text-primary-foreground px-2 py-1 rounded-md text-sm font-medium">
-                {kit.grade}
-              </span>
-              {kit.productLine && (
-                <span className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-sm font-medium border">
-                  {kit.productLine.name}
-                </span>
-              )}
-            </div>
             <h1 className="text-3xl font-bold mb-2">{kit.name}</h1>
             {kit.variant && (
               <p className="text-lg text-muted-foreground mb-2">

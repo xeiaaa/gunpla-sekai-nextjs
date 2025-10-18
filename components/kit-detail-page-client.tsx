@@ -17,10 +17,18 @@ interface KitDetailPageClientProps {
     notes?: string | null;
     manualLinks: string[];
     scrapedImages: string[];
-    grade: string | null;
     productLine?: {
       name: string;
       logo?: string | null;
+      slug?: string | null;
+      grade?: {
+        name: string;
+        slug?: string | null;
+      };
+      vendor?: {
+        name: string;
+        slug?: string | null;
+      } | null;
     } | null;
     series?: string | null;
     seriesSlug?: string | null;

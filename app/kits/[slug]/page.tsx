@@ -32,14 +32,14 @@ export async function generateMetadata({ params }: KitDetailPageProps) {
     title: `${kit.name} (${kit.number}) - Gunpla Sekai`,
     description: `View details for ${kit.name} ${
       kit.variant ? `(${kit.variant})` : ""
-    } - ${kit.grade} grade kit from ${
+    } - ${kit.productLine?.grade?.name || "Unknown"} grade kit from ${
       kit.productLine?.name || "Unknown"
     } product line.`,
     openGraph: {
       title: `${kit.name} (${kit.number})`,
       description: `View details for ${kit.name} ${
         kit.variant ? `(${kit.variant})` : ""
-      } - ${kit.grade} grade kit.`,
+      } - ${kit.productLine?.grade?.name || "Unknown"} grade kit.`,
       images: kit.boxArt ? [kit.boxArt] : [],
     },
   };
