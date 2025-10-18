@@ -44,6 +44,12 @@ interface Kit {
       name: string;
       slug: string;
     };
+    vendor: {
+      id: string;
+      name: string;
+      slug: string;
+      category: "OFFICIAL" | "THIRD_PARTY" | "BOOTLEG";
+    };
   } | null;
   series: {
     id: string;
@@ -399,7 +405,10 @@ function KitsPageContent() {
       kitsData?.pages.flatMap((page) =>
         page.items.map((kit) => ({
           id: kit.id,
-          name: kit.name,
+          name:
+            kit.productLine?.vendor?.category === "BOOTLEG"
+              ? `⚠️ ${kit.name} (Bootleg)`
+              : kit.name,
           slug: kit.slug,
           number: kit.number,
           variant: kit.variant,
@@ -411,6 +420,7 @@ function KitsPageContent() {
           series: kit.series?.name || null,
           releaseType: kit.releaseType?.name || null,
           mobileSuits: kit.mobileSuits,
+          isBootleg: kit.productLine?.vendor?.category === "BOOTLEG",
           userCollection: kit.userCollection
             ? {
                 ...kit.userCollection,

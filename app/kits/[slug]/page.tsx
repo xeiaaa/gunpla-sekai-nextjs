@@ -49,7 +49,7 @@ export default async function KitDetailPage({ params }: KitDetailPageProps) {
   // Fetch kit data on the server (ISR cached)
   const { slug } = await params;
   const kit = await getKitBySlug(slug);
-
+  // console.log(kit);
   if (!kit) {
     notFound();
   }

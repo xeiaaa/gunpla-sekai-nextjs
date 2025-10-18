@@ -60,6 +60,7 @@ interface KitDetailPageProps {
       vendor?: {
         name: string;
         slug?: string | null;
+        category?: string;
       } | null;
     } | null;
     series?: string | null;
@@ -73,6 +74,9 @@ interface KitDetailPageProps {
       number: string;
       boxArt?: string | null;
       grade: string | null;
+      productLine?: {
+        name: string;
+      } | null;
     } | null;
     variants: Array<{
       id: string;
@@ -84,6 +88,7 @@ interface KitDetailPageProps {
       releaseDate?: Date | null;
       priceYen?: number | null;
       grade: string | null;
+      isBootleg?: boolean;
     }>;
     mobileSuits: Array<{
       id: string;
@@ -112,6 +117,7 @@ interface KitDetailPageProps {
       releaseDate?: Date | null;
       priceYen?: number | null;
       grade: string | null;
+      isBootleg?: boolean;
     }>;
     expansions: Array<{
       id: string;
@@ -123,6 +129,7 @@ interface KitDetailPageProps {
       grade: string | null;
       productLine: string | null;
       series: string | null;
+      isBootleg?: boolean;
     }>;
     expandedBy: Array<{
       id: string;
@@ -134,6 +141,7 @@ interface KitDetailPageProps {
       grade: string | null;
       productLine: string | null;
       series: string | null;
+      isBootleg?: boolean;
     }>;
   };
   collectionStatus?: CollectionStatus | null;
@@ -495,7 +503,9 @@ export function KitDetailPage({
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-medium truncate">
-                              {variant.name}
+                              {variant.isBootleg
+                                ? `⚠️ ${variant.name} (Bootleg)`
+                                : variant.name}
                             </h4>
                             {variant.variant && (
                               <p className="text-sm text-muted-foreground">
@@ -548,7 +558,9 @@ export function KitDetailPage({
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-medium truncate">
-                              {otherVariant.name}
+                              {otherVariant.isBootleg
+                                ? `⚠️ ${otherVariant.name} (Bootleg)`
+                                : otherVariant.name}
                             </h4>
                             {otherVariant.variant && (
                               <p className="text-sm text-muted-foreground">
@@ -598,7 +610,9 @@ export function KitDetailPage({
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-medium truncate">
-                              {expansion.name}
+                              {expansion.isBootleg
+                                ? `⚠️ ${expansion.name} (Bootleg)`
+                                : expansion.name}
                             </h4>
                             {expansion.variant && (
                               <p className="text-sm text-muted-foreground">
@@ -660,7 +674,9 @@ export function KitDetailPage({
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-medium truncate">
-                              {expandedByKit.name}
+                              {expandedByKit.isBootleg
+                                ? `⚠️ ${expandedByKit.name} (Bootleg)`
+                                : expandedByKit.name}
                             </h4>
                             {expandedByKit.variant && (
                               <p className="text-sm text-muted-foreground">
@@ -863,6 +879,42 @@ export function KitDetailPage({
               <span className="text-lg font-medium">#{kit.number}</span>
             </div>
           </div>
+
+          {/* Bootleg Disclaimer */}
+          {kit.productLine?.vendor?.category === "BOOTLEG" && (
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-yellow-600 text-lg">⚠️</span>
+                <h3 className="font-semibold text-yellow-800">
+                  Unofficial Kits Disclaimer
+                </h3>
+              </div>
+              <div className="space-y-2 text-sm text-yellow-700">
+                {kit.baseKit && (
+                  <p>
+                    This kit is an{" "}
+                    <span className="italic">unlicensed reproduction</span> of
+                    the official{" "}
+                    <span className="font-semibold">
+                      <Link href={`/kits/${kit.baseKit.slug}`}>
+                        {kit.baseKit.productLine?.name} - {kit.baseKit.name}
+                      </Link>
+                    </span>{" "}
+                    by Bandai.
+                  </p>
+                )}
+                <p>
+                  We encourage purchasing the official release to support the
+                  engineers, designers, and modelers who dedicated their skill
+                  and passion to creating it.
+                </p>
+                <p>
+                  Every genuine purchase helps ensure more amazing kits are made
+                  in the future.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Tabs */}
           <div className="border-b border-border mb-6">

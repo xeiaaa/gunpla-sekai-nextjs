@@ -693,6 +693,11 @@ export async function getKitBySlug(slug: string) {
       "expansions.expansion.productLine.grade",
       "expandedBy.kit.productLine.grade",
       "variants.productLine.grade",
+      "baseKit.variants.productLine.vendor",
+      "baseKit.productLine.vendor",
+      "expansions.expansion.productLine.vendor",
+      "expandedBy.kit.productLine.vendor",
+      "variants.productLine.vendor",
       "mobileSuits.mobileSuit",
       "productLine",
       "productLine.grade",
@@ -791,6 +796,7 @@ export async function getKitBySlug(slug: string) {
               ? {
                   name: kit.productLine.vendor.name,
                   slug: kit.productLine.vendor.slug || null,
+                  category: kit.productLine.vendor.category || null,
                 }
               : null,
           }
@@ -807,7 +813,9 @@ export async function getKitBySlug(slug: string) {
             number: kit.baseKit.number,
             variant: kit.baseKit.variant,
             boxArt: kit.baseKit.boxArt,
-            grade: kit.baseKit.productLine?.grade.name || null,
+            grade: kit.baseKit.productLine?.grade?.name || null,
+            productLine: kit.baseKit.productLine || null,
+            isBootleg: kit.baseKit.productLine?.vendor?.category === "BOOTLEG",
           }
         : null,
       variants:
@@ -820,7 +828,8 @@ export async function getKitBySlug(slug: string) {
           boxArt: variant.boxArt,
           releaseDate: variant.releaseDate,
           priceYen: variant.priceYen,
-          grade: variant.productLine?.grade.name || null,
+          grade: variant.productLine?.grade?.name || null,
+          isBootleg: variant.productLine?.vendor?.category === "BOOTLEG",
         })) || [],
       mobileSuits:
         kit.mobileSuits?.map((ms: any) => ({
@@ -849,9 +858,10 @@ export async function getKitBySlug(slug: string) {
           number: exp.expansion.number,
           variant: exp.expansion.variant,
           boxArt: exp.expansion.boxArt,
-          grade: exp.expansion.productLine?.grade.name || null,
+          grade: exp.expansion.productLine?.grade?.name || null,
           productLine: exp.expansion.productLine?.name || null,
           series: exp.expansion.series?.name || null,
+          isBootleg: exp.expansion.productLine?.vendor?.category === "BOOTLEG",
         })) || [],
       expandedBy:
         kit.expandedBy?.map((exp: any) => ({
@@ -861,9 +871,10 @@ export async function getKitBySlug(slug: string) {
           number: exp.kit.number,
           variant: exp.kit.variant,
           boxArt: exp.kit.boxArt,
-          grade: exp.kit.productLine?.grade.name || null,
+          grade: exp.kit.productLine?.grade?.name || null,
           productLine: exp.kit.productLine?.name || null,
           series: exp.kit.series?.name || null,
+          isBootleg: exp.kit.productLine?.vendor?.category === "BOOTLEG",
         })) || [],
       otherVariants: otherVariants.map((variant) => ({
         ...variant,
