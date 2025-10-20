@@ -28,12 +28,14 @@ import {
   MessageSquare,
   Hammer,
   Palette,
+  Package2,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CollectionStatus } from "@/generated/prisma";
-import { SignedIn } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 interface KitDetailPageProps {
   kit: {
@@ -154,9 +156,9 @@ export function KitDetailPage({
   isAdmin,
 }: KitDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<"overview" | "reviews" | "builds">(
-    "overview"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "reviews" | "builds" | "my-collections"
+  >("overview");
   const [showGunplaCardDialog, setShowGunplaCardDialog] = useState(false);
   const router = useRouter();
 
@@ -205,6 +207,11 @@ export function KitDetailPage({
     { id: "overview" as const, label: "Overview", icon: Info },
     { id: "reviews" as const, label: "Reviews", icon: MessageSquare },
     { id: "builds" as const, label: "Builds", icon: Hammer },
+    {
+      id: "my-collections" as const,
+      label: "My Collections",
+      icon: Package2,
+    },
   ];
 
   const renderTabContent = () => {
@@ -767,6 +774,35 @@ export function KitDetailPage({
       case "builds":
         return <CommunityBuilds kitId={kit.id} kitSlug={kit.slug} />;
 
+      case "my-collections":
+        return (
+          <div>
+            <SignedIn>
+              <CollectionControls
+                kitId={kit.id}
+                currentStatus={collectionStatus}
+              />
+            </SignedIn>
+            <SignedOut>
+              <div className="mt-4 pt-6 pb-6 border-t flex flex-col items-center justify-center text-center space-y-3 bg-gray-50 rounded-md">
+                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500 text-lg">
+                    <Lock />
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Sign in to view and manage your kit collections.
+                </p>
+                <SignInButton mode="modal">
+                  <Button size="sm" className="px-4">
+                    Sign In
+                  </Button>
+                </SignInButton>
+              </div>
+            </SignedOut>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -817,9 +853,6 @@ export function KitDetailPage({
               ))}
             </div>
           )}
-
-          {/* Collection Controls */}
-          <CollectionControls kitId={kit.id} currentStatus={collectionStatus} />
 
           {/* Start Build Button */}
           <StartBuildButton kit={kit} />
