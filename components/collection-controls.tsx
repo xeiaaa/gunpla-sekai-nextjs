@@ -136,7 +136,7 @@ export function CollectionControls({
       {Array.isArray(kitCollection?.collections) &&
       kitCollection.collections.length > 0 ? (
         <div className="mt-4 pt-4 border-t">
-          <div className="flex flex-col gap-3 overflow-y-auto max-h-80 pt-3 pb-5">
+          <div className="flex flex-col gap-3 overflow-y-auto max-h-96 pt-3 pb-5">
             {kitCollection.collections.map((collection) => {
               return (
                 <KitCollectionCard

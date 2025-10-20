@@ -9,7 +9,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Plus, ChevronLeft, ChevronRight, Check, Edit2 } from "lucide-react";
+import {
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  Check,
+  Edit2,
+  Pencil,
+} from "lucide-react";
 import {
   Heart,
   Package,
@@ -261,19 +268,22 @@ export default function KitCollectionDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button
-          variant={isEditMode ? "secondary" : "outline"}
-          size="sm"
-          onClick={() => setOpenDialog(true)}
-        >
-          {isEditMode ? (
-            <Edit2 className="w-4 h-4 mr-1" />
-          ) : (
-            <>
-              <Plus className="w-4 h-4 mr-1" /> Add Collection
-            </>
-          )}
-        </Button>
+        {isEditMode ? (
+          <button
+            onClick={() => setOpenDialog(true)}
+            className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-blue-100 text-gray-600 hover:text-blue-600 transition-colors flex items-center justify-center"
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+        ) : (
+          <Button
+            variant={"outline"}
+            size="sm"
+            onClick={() => setOpenDialog(true)}
+          >
+            <Plus className="w-4 h-4 mr-1" /> Add Collection
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>

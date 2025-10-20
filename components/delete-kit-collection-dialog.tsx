@@ -74,14 +74,12 @@ export function DeleteKitCollectionDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button
-          variant="destructive"
-          size="sm"
-          className="flex items-center gap-1"
+        <button
+          className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 transition-colors flex items-center justify-center"
           onClick={() => setOpenDialog(true)}
         >
           <Trash2 className="w-4 h-4" />
-        </Button>
+        </button>
       </DialogTrigger>
 
       <DialogContent>

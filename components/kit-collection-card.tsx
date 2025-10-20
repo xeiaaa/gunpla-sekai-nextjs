@@ -130,50 +130,56 @@ export function KitCollectionCard({ collection }: KitCollectionCardProps) {
 
   return (
     <div
-      className={`bg-white rounded-lg border-l-4 ${styles.border} shadow-sm hover:shadow-md transition-shadow duration-200`}
+      className={`bg-white rounded-xl border border-l-4 ${styles.border} shadow-sm hover:shadow-lg transition-all duration-200 mr-4`}
     >
-      <div className="p-3">
-        <div className="flex items-start justify-between gap-3">
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-3 mb-3">
               <div
-                className={`w-8 h-8 rounded-full ${styles.iconBg} flex items-center justify-center flex-shrink-0`}
+                className={`w-10 h-10 rounded-lg ${styles.iconBg} flex items-center justify-center flex-shrink-0 shadow-sm`}
               >
-                <Icon className="w-4 h-4 text-white" />
+                <Icon className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-sm font-semibold text-gray-900">
-                {config.label}
-              </h3>
-              {collection.price && (
-                <span className="text-lg font-bold text-gray-900">
-                  {formatPrice(collection.price)}
-                </span>
-              )}
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-gray-900">
+                  {config.label}
+                </h3>
+                {collection.price && (
+                  <span className="text-xl font-bold text-gray-900">
+                    {formatPrice(collection.price)}
+                  </span>
+                )}
+              </div>
             </div>
 
             {notes && (
-              <p className="text-xs text-gray-600 my-2 line-clamp-2">{notes}</p>
+              <p className="text-sm text-gray-700 mb-3 leading-relaxed line-clamp-2">
+                {notes}
+              </p>
             )}
 
             {date && (
-              <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                <Calendar className="w-3 h-3" />
-                <span>
+              <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 rounded-lg px-3 py-2 w-fit">
+                <Calendar className="w-4 h-4" />
+                <span className="font-medium">
                   {config.dateLabel} {formatDate(date)}
                 </span>
               </div>
             )}
           </div>
 
-          <KitCollectionDialog
-            mode="edit"
-            kitId={collection.kitId}
-            initialData={collection}
-          />
-          <DeleteKitCollectionDialog
-            collectionId={collection.id}
-            kitId={collection.kitId}
-          />
+          <div className="flex gap-2 flex-shrink-0">
+            <KitCollectionDialog
+              mode="edit"
+              kitId={collection.kitId}
+              initialData={collection}
+            />
+            <DeleteKitCollectionDialog
+              collectionId={collection.id}
+              kitId={collection.kitId}
+            />
+          </div>
         </div>
       </div>
     </div>
