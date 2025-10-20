@@ -19,7 +19,7 @@ import {
   removeFromCollection,
   updateCollectionStatus,
 } from "@/lib/actions/collections";
-import KitCollectionDialog from "./kit-collection-dialog-form";
+import { KitCollectionDialog } from "./kit-collection-dialog-form";
 import { useQuery } from "@tanstack/react-query";
 import { KitCollectionCard } from "./kit-collection-card";
 
@@ -104,6 +104,7 @@ export function CollectionControls({
   const { data: kitCollection, isLoading } = useQuery({
     queryKey: ["kit-collections", kitId],
     queryFn: () => fetchKitCollection(kitId, getToken),
+    staleTime: 2 * 60 * 1000, // 2 minutes
     enabled: isSignedIn, // only fetch when authenticated
   });
 

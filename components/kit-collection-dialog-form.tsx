@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,14 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  Check,
-  Edit2,
-  Pencil,
-} from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight, Check, Pencil } from "lucide-react";
 import {
   Heart,
   Package,
@@ -55,6 +48,7 @@ interface Collection {
   addedAt: string;
   updatedAt: string;
 }
+
 interface KitCollectionDialogProps {
   kitId: string;
   mode?: "add" | "edit";
@@ -100,7 +94,24 @@ const statusConfig = {
   },
 };
 
-export default function KitCollectionDialog({
+const getDefaultFormData = (kitId: string) => ({
+  kitId,
+  status: "",
+  wishlistNotes: "",
+  preorderNotes: "",
+  backlogNotes: "",
+  inProgressNotes: "",
+  builtNotes: "",
+  price: "",
+  wishlistedAt: "",
+  preorderedAt: "",
+  acquiredAt: "",
+  startedAt: "",
+  completedAt: "",
+  id: "",
+});
+
+export function KitCollectionDialog({
   kitId,
   mode = "add",
   initialData,
@@ -108,29 +119,46 @@ export default function KitCollectionDialog({
 }: KitCollectionDialogProps) {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [warningMessage, setWarningMessage] = useState<string>("");
   const { getToken } = useAuth();
   const { showToast } = useToast();
-
   const queryClient = useQueryClient();
 
-  const [formData, setFormData] = useState({
-    kitId,
-    status: "",
-    wishlistNotes: "",
-    preorderNotes: "",
-    backlogNotes: "",
-    inProgressNotes: "",
-    builtNotes: "",
-    price: "",
-    wishlistedAt: "",
-    preorderedAt: "",
-    acquiredAt: "",
-    startedAt: "",
-    completedAt: "",
-    ...initialData,
-  });
+  const [formData, setFormData] = useState(getDefaultFormData(kitId));
 
   const isEditMode = mode === "edit";
+
+  const formatDateForInput = (dateString: string | null | undefined) => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      return date.toISOString().split("T")[0];
+    } catch {
+      return "";
+    }
+  };
+
+  // Load initial data when dialog opens in edit mode
+  useEffect(() => {
+    if (openDialog && isEditMode && initialData) {
+      setFormData({
+        kitId,
+        status: initialData.status || "",
+        wishlistNotes: initialData.wishlistNotes || "",
+        preorderNotes: initialData.preorderNotes || "",
+        backlogNotes: initialData.backlogNotes || "",
+        inProgressNotes: initialData.inProgressNotes || "",
+        builtNotes: initialData.builtNotes || "",
+        price: initialData.price?.toString() || "",
+        wishlistedAt: formatDateForInput(initialData.wishlistedAt),
+        preorderedAt: formatDateForInput(initialData.preorderedAt),
+        acquiredAt: formatDateForInput(initialData.acquiredAt),
+        startedAt: formatDateForInput(initialData.startedAt),
+        completedAt: formatDateForInput(initialData.completedAt),
+        id: initialData.id,
+      });
+    }
+  }, [openDialog, isEditMode, initialData, kitId]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -162,6 +190,7 @@ export default function KitCollectionDialog({
         },
         {} as typeof formData
       );
+
       const response = await fetch(endpoint, {
         method,
         headers: {
@@ -172,47 +201,36 @@ export default function KitCollectionDialog({
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save");
+        showToast("Failed to save!", "error");
+        return;
       }
 
+      showToast("Collection saved successfully!", "success");
       onSuccess?.();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      resetForm();
       setOpenDialog(false);
+      resetForm();
       queryClient.invalidateQueries({
         queryKey: ["kit-collections", kitId],
       });
-      showToast("Collection saved successfully!", "success");
+    } catch (error) {
+      showToast("Failed to save!", "error");
+      console.error(error);
     }
   };
 
   const resetForm = () => {
-    setFormData({
-      kitId,
-      status: "",
-      wishlistNotes: "",
-      preorderNotes: "",
-      backlogNotes: "",
-      inProgressNotes: "",
-      builtNotes: "",
-      price: "",
-      wishlistedAt: "",
-      preorderedAt: "",
-      acquiredAt: "",
-      startedAt: "",
-      completedAt: "",
-    });
+    setFormData(getDefaultFormData(kitId));
     setCurrentStep(1);
+    setWarningMessage("");
   };
 
   const handleNext = () => {
     if (currentStep === 1 && !formData.status) {
-      alert("Please select a status");
+      setWarningMessage("Please select a status");
       return;
     }
     setCurrentStep((prev) => Math.min(prev + 1, 3));
+    setWarningMessage("");
   };
 
   const handleBack = () => {
@@ -264,23 +282,18 @@ export default function KitCollectionDialog({
       open={openDialog}
       onOpenChange={(open) => {
         setOpenDialog(open);
-        if (!open) resetForm();
+        if (!open) {
+          resetForm();
+        }
       }}
     >
       <DialogTrigger asChild>
         {isEditMode ? (
-          <button
-            onClick={() => setOpenDialog(true)}
-            className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-blue-100 text-gray-600 hover:text-blue-600 transition-colors flex items-center justify-center"
-          >
+          <button className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-blue-100 text-gray-600 hover:text-blue-600 transition-colors flex items-center justify-center">
             <Pencil className="w-4 h-4" />
           </button>
         ) : (
-          <Button
-            variant={"outline"}
-            size="sm"
-            onClick={() => setOpenDialog(true)}
-          >
+          <Button variant={"outline"} size="sm">
             <Plus className="w-4 h-4 mr-1" /> Add Collection
           </Button>
         )}
@@ -342,6 +355,7 @@ export default function KitCollectionDialog({
                 <label className="block font-medium text-gray-700 mb-2">
                   Collection Status *
                 </label>
+                <span className="text-rose-600 text-sm">{warningMessage}</span>
                 <div className="grid grid-cols-5 gap-2">
                   {Object.entries(statusConfig).map(([statusKey, config]) => {
                     const Icon = config.icon;

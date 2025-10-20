@@ -6,7 +6,7 @@ import {
   Wrench,
   Calendar,
 } from "lucide-react";
-import KitCollectionDialog from "./kit-collection-dialog-form";
+import { KitCollectionDialog } from "./kit-collection-dialog-form";
 import { DeleteKitCollectionDialog } from "./delete-kit-collection-dialog";
 
 enum CollectionStatus {
@@ -174,6 +174,7 @@ export function KitCollectionCard({ collection }: KitCollectionCardProps) {
               mode="edit"
               kitId={collection.kitId}
               initialData={collection}
+              key={collection.id}
             />
             <DeleteKitCollectionDialog
               collectionId={collection.id}

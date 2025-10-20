@@ -49,12 +49,14 @@ export function DeleteKitCollectionDialog({
       });
 
       if (!response.ok) {
-        console.error("❌ Failed to delete kit");
+        showToast("Failed to delete kit!", "error");
         return;
       }
 
       if (onSuccess) onSuccess(); // refresh UI
     } catch (error) {
+      showToast("Failed to delete kit!", "error");
+
       console.error("❌ Delete error:", error);
     } finally {
       setLoading(false);
