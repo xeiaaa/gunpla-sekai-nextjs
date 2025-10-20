@@ -2,6 +2,7 @@
 
 import { KitDetailPage } from "@/components/kit-detail-page";
 import { useKitCollectionStatus, useIsAdmin } from "@/hooks/use-kit-detail";
+import { ToastProvider } from "./ui/toast";
 
 interface KitDetailPageClientProps {
   kit: {
@@ -112,10 +113,12 @@ export function KitDetailPageClient({ kit }: KitDetailPageClientProps) {
   const { data: isAdmin } = useIsAdmin();
 
   return (
-    <KitDetailPage
-      kit={kit}
-      collectionStatus={collectionStatus}
-      isAdmin={isAdmin}
-    />
+    <ToastProvider>
+      <KitDetailPage
+        kit={kit}
+        collectionStatus={collectionStatus}
+        isAdmin={isAdmin}
+      />
+    </ToastProvider>
   );
 }
