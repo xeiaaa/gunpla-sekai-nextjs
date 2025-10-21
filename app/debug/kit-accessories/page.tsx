@@ -380,7 +380,7 @@ export default function KitAccessoriesDebugPage() {
                               {kit.productLine.name}
                             </div>
                             <div className="text-muted-foreground">
-                              {kit.productLine.grade.name}
+                              {kit.productLine.grade?.name}
                             </div>
                           </div>
                         ) : (
@@ -473,10 +473,10 @@ export default function KitAccessoriesDebugPage() {
                                     Product Line:
                                   </span>{" "}
                                   {kit.productLine?.name || "No product line"}
-                                  {kit.productLine?.grade.name && (
+                                  {kit.productLine?.grade?.name && (
                                     <span className="text-muted-foreground">
                                       {" "}
-                                      ({kit.productLine.grade.name})
+                                      ({kit.productLine.grade?.name})
                                     </span>
                                   )}
                                 </div>
