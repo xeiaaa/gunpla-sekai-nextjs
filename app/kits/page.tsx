@@ -369,9 +369,7 @@ function KitsPageContent() {
 
       // Check if user is authenticated and get token
       const token = await getToken();
-      const endpoint = token
-        ? `${apiUrl}/kits/meilisearch/user?${params.toString()}`
-        : `${apiUrl}/kits/meilisearch?${params.toString()}`;
+      const endpoint = `${apiUrl}/kits/meilisearch?${params.toString()}`;
 
       const headers: HeadersInit = {};
       if (token) {
