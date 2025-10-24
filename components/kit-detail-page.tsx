@@ -233,6 +233,9 @@ export function KitDetailPage({
                     <Button asChild variant="outline" size="sm">
                       <Link href={`/kits/${kit.slug}/edit`}>Edit Kit</Link>
                     </Button>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/debug/kits/${kit.slug}`}>Admin Kit</Link>
+                    </Button>
                   </SignedIn>
                   {/* )} */}
                 </div>
@@ -453,7 +456,7 @@ export function KitDetailPage({
             )}
 
             {/* Base Kit */}
-            {/* {kit.baseKit && (
+            {kit.baseKit && (
               <Card>
                 <CardHeader>
                   <CardTitle>Base Kit</CardTitle>
@@ -486,10 +489,10 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )} */}
+            )}
 
             {/* Variants */}
-            {/* {kit.variants.length > 0 && (
+            {kit.variants.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Variants</CardTitle>
@@ -538,10 +541,10 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )} */}
+            )}
 
             {/* Other Variants */}
-            {/* {kit.otherVariants.length > 0 && (
+            {kit.otherVariants.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Other Variants</CardTitle>
@@ -593,10 +596,10 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )} */}
+            )}
 
             {/* Expansions */}
-            {/* {kit.expansions.length > 0 && (
+            {kit.expansions.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Expansions</CardTitle>
@@ -654,10 +657,10 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )} */}
+            )}
 
             {/* Expanded By */}
-            {/* {kit.expandedBy.length > 0 && (
+            {kit.expandedBy.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Compatible With</CardTitle>
@@ -718,7 +721,7 @@ export function KitDetailPage({
                   </div>
                 </CardContent>
               </Card>
-            )} */}
+            )}
 
             {/* Uploads */}
             {/* {kit.uploads.length > 0 && (

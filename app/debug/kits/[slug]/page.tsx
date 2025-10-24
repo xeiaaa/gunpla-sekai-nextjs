@@ -43,6 +43,7 @@ export default async function KitEditPage({ params }: KitEditPageProps) {
   // Transform the kit data to match the expected form structure
   const transformedKit = {
     ...kit,
+    name: kit.fullName,
     baseKit: kit.baseKit
       ? {
           id: kit.baseKit.id,

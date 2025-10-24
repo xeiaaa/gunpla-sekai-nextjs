@@ -769,6 +769,7 @@ export async function getKitBySlug(slug: string) {
     return {
       id: kit.id,
       name: kit.name,
+      fullName: kit.fullName,
       slug: kit.slug,
       number: kit.number,
       variant: kit.variant,
@@ -878,7 +879,7 @@ export async function getKitBySlug(slug: string) {
         })) || [],
       otherVariants: otherVariants.map((variant) => ({
         ...variant,
-        grade: variant.productLine?.grade.name || null,
+        grade: variant.productLine?.grade?.name || null,
       })),
     };
   } catch (error) {
