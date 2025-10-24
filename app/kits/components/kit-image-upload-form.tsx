@@ -353,7 +353,9 @@ export function KitImageUploadForm({
                   <NextImage
                     src={selectedImage.eagerUrl || selectedImage.url}
                     alt={
-                      selectedImage.caption || selectedImage.originalFilename
+                      selectedImage.caption ||
+                      selectedImage.originalFilename ||
+                      selectedImage.type
                     }
                     width={800}
                     height={600}

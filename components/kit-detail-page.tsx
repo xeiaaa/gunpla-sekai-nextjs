@@ -217,14 +217,17 @@ export function KitDetailPage({
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Kit Information</CardTitle>
-                  {/* {isAdmin ? (
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={`/debug/kits/${kit.slug}`}>Edit Kit</Link>
-                    </Button>
-                  ) : ( */}
                   <SignedIn>
                     <Button asChild variant="outline" size="sm">
-                      <Link href={`/kits/${kit.slug}/edit`}>Edit Kit</Link>
+                      <Link
+                        href={
+                          isAdmin
+                            ? `/debug/kits/${kit.slug}`
+                            : `/kits/${kit.slug}/edit`
+                        }
+                      >
+                        Edit Kit
+                      </Link>
                     </Button>
                   </SignedIn>
                   {/* )} */}

@@ -18,6 +18,7 @@ import { useFilterData } from "@/hooks/use-kits";
 import { FilterSection } from "./components";
 import { SignedIn, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { useIsAdmin } from "@/hooks/use-kit-detail";
 
 // Types
 interface Kit {
@@ -265,6 +266,7 @@ function KitsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { getToken } = useAuth();
+  const { data: isAdmin } = useIsAdmin();
 
   // Consolidated state management
   const [state, dispatch] = useReducer(filterReducer, initialState);
@@ -847,7 +849,9 @@ function KitsPageContent() {
               <div className="flex items-center gap-2">
                 {"The kit you're looking for isn't here?"}
                 <Button asChild>
-                  <Link href={`/kits/new`}>Add Kit</Link>
+                  <Link href={isAdmin ? "debug/kits/new" : "/kits/new"}>
+                    Add Kit
+                  </Link>
                 </Button>
               </div>
             </SignedIn>
