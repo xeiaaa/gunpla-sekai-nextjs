@@ -1,22 +1,27 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default clerkMiddleware(async (auth, req) => {
-  // Define public routes that don't require authentication
-  const publicRoutes = ["/", "/api/clerk"];
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  // Check if the current path is a public route
-  const isPublicRoute = publicRoutes.some(route => {
-    return req.nextUrl.pathname === route || req.nextUrl.pathname.startsWith(route + '/');
-  });
-
-  // If it's a public route, allow access without authentication
-  if (isPublicRoute) {
-    return;
+  // Allow access to maintenance page
+  if (pathname === "/maintenance") {
+    return NextResponse.next();
   }
 
-  // Protect all other routes
-  auth.protect()
-});
+  // Allow access to static assets and Next.js internals
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.includes(".") ||
+    pathname.startsWith("/favicon")
+  ) {
+    return NextResponse.next();
+  }
+
+  // Redirect everything else to maintenance page
+  return NextResponse.redirect(new URL("/maintenance", request.url));
+}
 
 export const config = {
   matcher: [
