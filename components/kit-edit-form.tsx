@@ -28,9 +28,9 @@ import {
   updateKitExpandedBy,
 } from "@/lib/actions/kits";
 import { deleteKitUpload } from "@/lib/actions/uploads";
-import { KitImageType } from "@/generated/prisma";
 import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 import { useQueryClient } from "@tanstack/react-query";
+import { BoxArtUpload } from "./box-art-upload";
 
 interface KitEditFormProps {
   kit: {
@@ -456,16 +456,6 @@ export function KitEditForm({ kit }: KitEditFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="boxArt">Box Art URL</Label>
-                <Input
-                  id="boxArt"
-                  value={formData.boxArt}
-                  onChange={(e) => handleInputChange("boxArt", e.target.value)}
-                  placeholder="https://example.com/box-art.jpg"
-                />
-              </div>
-
-              <div className="space-y-2">
                 <Label htmlFor="productLineId">Product Line</Label>
                 <Select
                   value={formData.productLineId}
@@ -545,6 +535,12 @@ export function KitEditForm({ kit }: KitEditFormProps) {
                 rows={3}
               />
             </div>
+            <BoxArtUpload
+              value={formData.boxArt}
+              onChange={(url) => handleInputChange("boxArt", url)}
+              label="Box Art"
+              id="boxArt"
+            />
           </CardContent>
         </Card>
 
