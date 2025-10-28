@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { apiClient } from "../api-client";
-import { ListResult, TimelineResponse } from "./type";
+import { ListResult, TimelineResponse } from "../types/actions";
 
 export async function getAllTimelines() {
   try {

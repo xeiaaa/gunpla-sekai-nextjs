@@ -31,7 +31,7 @@ import { getAllReleaseTypes } from "@/lib/actions/release-types";
 import { useAuth } from "@clerk/nextjs";
 import { BoxArtUpload } from "./box-art-upload";
 import { getAllProductLines } from "@/lib/actions/product-lines";
-import { ProductLine } from "@/lib/actions/type";
+import { ProductLine } from "@/lib/types/actions";
 
 export function KitAddForm() {
   const router = useRouter();

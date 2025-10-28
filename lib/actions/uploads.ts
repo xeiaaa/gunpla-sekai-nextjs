@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { apiClient } from "../api-client";
-import { KitResponse, KitUploadResponse, ListResult } from "./type";
+import { KitResponse, KitUploadResponse, ListResult } from "../types/actions";
 
 export interface CreateUploadData {
   cloudinaryAssetId: string;

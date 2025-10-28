@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { apiClient } from "../api-client";
-import { ListResult, ProductLine } from "./type";
+import { ListResult, ProductLine } from "../types/actions";
 
 export async function getAllProductLines() {
   try {

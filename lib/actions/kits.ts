@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { apiClient } from "../api-client";
-import { KitResponse, ListResult, SeriesResponse } from "./type";
+import { KitResponse, ListResult, SeriesResponse } from "../types/actions";
 
 interface KitFilters {
   gradeIds?: string[];

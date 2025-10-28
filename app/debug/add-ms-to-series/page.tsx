@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TimelineResponse } from "@/lib/actions/type";
+import { TimelineResponse } from "@/lib/types/actions";
 
 interface MobileSuit {
   id: string;

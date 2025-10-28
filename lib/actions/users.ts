@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 import { apiClient } from "../api-client";
-import { UserResponse } from "./type";
+import { UserResponse } from "../types/actions";
 
 export interface UserProfileData {
   id: string;

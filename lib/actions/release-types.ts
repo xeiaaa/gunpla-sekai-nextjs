@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { apiClient } from "../api-client";
-import { ListResult, ReleaseTypeResponse } from "./type";
+import { ListResult, ReleaseTypeResponse } from "../types/actions";
 
 export async function getAllReleaseTypes() {
   try {

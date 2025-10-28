@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { apiClient } from "../api-client";
-import { ListResult, SeriesResponse } from "./type";
+import { ListResult, SeriesResponse } from "../types/actions";
 
 export async function getSeriesBySlug(slug: string) {
   try {

@@ -6,7 +6,7 @@ import { ReviewCategory } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 import type { Prisma } from "../../generated/prisma";
 import { apiClient } from "../api-client";
-import { KitResponse } from "./type";
+import { KitResponse } from "../types/actions";
 import { CategoryScore } from "../types/reviews";
 import { getReviewFeedback } from "./review-feedback";
 

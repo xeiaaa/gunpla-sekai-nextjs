@@ -31,7 +31,7 @@ import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 import { useQueryClient } from "@tanstack/react-query";
 import { BoxArtUpload } from "./box-art-upload";
 import { getAllProductLines } from "@/lib/actions/product-lines";
-import { ProductLine } from "@/lib/actions/type";
+import { ProductLine } from "@/lib/types/actions";
 
 interface KitEditFormProps {
   kit: {
