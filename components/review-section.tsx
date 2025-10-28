@@ -17,7 +17,7 @@ import {
   useDeleteReview,
   useInvalidateReviewQueries,
 } from "@/hooks/use-reviews";
-import { ReviewWithDetails, ReviewStats } from "@/lib/types/reviews";
+import { ReviewWithDetails } from "@/lib/types/reviews";
 
 type ReviewSortOption =
   | "newest"

@@ -219,7 +219,7 @@ export async function getUserCollection(status?: CollectionStatus) {
   }
 }
 
-export async function getKitCollectionStatus(kitId: string) {
+export async function getKitCollectionStatus(kitId: string): Promise<CollectionStatus> {
   const { userId } = await auth();
 
   if (!userId) {
@@ -236,7 +236,7 @@ export async function getKitCollectionStatus(kitId: string) {
       },
     });
 
-    return collection?.status || null;
+    return collection?.status as CollectionStatus || null;
   } catch (error) {
     console.error("Error fetching kit collection status:", error);
     return null;

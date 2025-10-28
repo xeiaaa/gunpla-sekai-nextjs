@@ -6,8 +6,8 @@ import { ReviewCategory } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 import type { Prisma } from "../../generated/prisma";
 import { apiClient } from "../api-client";
-import { KitResponse } from "../types/actions";
-import { CategoryScore } from "../types/reviews";
+import { KitResponse, UserResponse } from "../types/actions";
+import { CategoryScore, ReviewStats, ReviewWithDetails } from "../types/reviews";
 import { getReviewFeedback } from "./review-feedback";
 
 // Types for review operations
@@ -42,6 +42,8 @@ export interface ReviewResponse {
   updatedAt: Date;
   categoryScores: CategoryScore;
   kit?: KitResponse
+
+  user?: UserResponse
 }
 
 // Validation constants
@@ -321,7 +323,7 @@ export async function getUserKitReview(kitId: string) {
     return null;
   }
 
-  const review = await apiClient.get<ReviewResponse>(
+  const review = await apiClient.get<ReviewWithDetails>(
     `/reviews/kit/${kitId}`,
   );
 
@@ -341,7 +343,7 @@ export async function getUserKitReview(kitId: string) {
 }
 
 // Get review statistics for a kit
-export async function getKitReviewStats(kitId: string) {
+export async function getKitReviewStats(kitId: string): Promise<ReviewStats> {
   const stats = await apiClient.get<{
     totalReviews: number;
     overallAverage: number;
@@ -354,7 +356,7 @@ export async function getKitReviewStats(kitId: string) {
     ...stats,
     averageScore: stats.overallAverage,
     categoryAverages: Object.entries(stats.categoryAverages).map(([category, averageScore]) => ({
-      category,
+      category: category as ReviewCategory,
       averageScore,
       reviewCount: stats.totalReviews,
     }))

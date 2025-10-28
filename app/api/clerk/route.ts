@@ -2,6 +2,8 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { NextRequest } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
+import { apiClient } from "@/lib/api-client";
+import { UserResponse } from "@/lib/types/actions";
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || "";
 
@@ -135,10 +137,7 @@ async function handleUserDeleted(userData: ClerkDeletedUserData) {
       console.error("User ID is missing from deletion data");
       return;
     }
-
-    const user = await prisma.user.delete({
-      where: { id: userData.id },
-    });
+    const user = await apiClient.delete<UserResponse>(`/users/${userData.id}`)
     console.log("User deleted from database:", user.id);
   } catch (error) {
     console.error("Error deleting user:", error);

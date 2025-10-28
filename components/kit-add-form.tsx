@@ -28,9 +28,10 @@ import {
   updateKitExpandedBy,
 } from "@/lib/actions/kits";
 import { getAllReleaseTypes } from "@/lib/actions/release-types";
+import { getAllProductLines } from "@/lib/actions/product-lines";
+
 import { useAuth } from "@clerk/nextjs";
 import { BoxArtUpload } from "./box-art-upload";
-import { getAllProductLines } from "@/lib/actions/product-lines";
 import { ProductLine } from "@/lib/types/actions";
 
 export function KitAddForm() {

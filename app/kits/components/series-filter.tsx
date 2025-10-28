@@ -36,7 +36,7 @@ export function SeriesFilter({
 }: SeriesFilterProps) {
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
-  const [series, setSeries] = useState<Series[]>([]);
+  const [series, setSeries] = useState<Partial<Series>[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSeriesSlug, setSelectedSeriesSlug] = useState<string | null>(
     currentSeriesSlug || null

@@ -4,18 +4,21 @@ import { useState, useEffect } from "react";
 import { getAllSeries, updateSeriesTimeline } from "@/lib/actions/series";
 import { getAllTimelines } from "@/lib/actions/timelines";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { TimelineResponse } from "@/lib/types/actions";
 
 interface Series {
   id: string;
   name: string;
   slug: string | null;
   description: string | null;
-  timeline: {
-    id: string;
-    name: string;
-    slug: string | null;
-  } | null;
+  timeline: TimelineResponse | null;
   mobileSuitsCount: number;
   kitsCount: number;
   scrapedImages: string[];
@@ -36,7 +39,10 @@ export default function AddSeriesToTimelinesPage() {
   const [selectedTimeline, setSelectedTimeline] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -49,8 +55,8 @@ export default function AddSeriesToTimelinesPage() {
         setSeries(seriesData);
         setTimelines(timelinesData);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setMessage({ type: 'error', text: 'Failed to load data' });
+        console.error("Error fetching data:", error);
+        setMessage({ type: "error", text: "Failed to load data" });
       } finally {
         setLoading(false);
       }
@@ -60,31 +66,33 @@ export default function AddSeriesToTimelinesPage() {
   }, []);
 
   const handleSeriesToggle = (seriesId: string) => {
-    setSelectedSeries(prev =>
+    setSelectedSeries((prev) =>
       prev.includes(seriesId)
-        ? prev.filter(id => id !== seriesId)
+        ? prev.filter((id) => id !== seriesId)
         : [...prev, seriesId]
     );
   };
 
   // Filter series based on search term
-  const filteredSeries = series.filter(s =>
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (s.timeline?.name.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
-    (s.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
+  const filteredSeries = series.filter(
+    (s) =>
+      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (s.timeline?.name.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        false) ||
+      (s.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
   );
 
   const handleSelectAll = () => {
     if (selectedSeries.length === filteredSeries.length) {
       setSelectedSeries([]);
     } else {
-      setSelectedSeries(filteredSeries.map(s => s.id));
+      setSelectedSeries(filteredSeries.map((s) => s.id));
     }
   };
 
   const handleUpdateTimeline = async () => {
     if (selectedSeries.length === 0) {
-      setMessage({ type: 'error', text: 'Please select at least one series' });
+      setMessage({ type: "error", text: "Please select at least one series" });
       return;
     }
 
@@ -97,8 +105,8 @@ export default function AddSeriesToTimelinesPage() {
 
       if (result.success) {
         setMessage({
-          type: 'success',
-          text: `Successfully updated ${result.updatedCount} series`
+          type: "success",
+          text: `Successfully updated ${result.updatedCount} series`,
         });
 
         // Refresh the series data
@@ -107,11 +115,14 @@ export default function AddSeriesToTimelinesPage() {
         setSelectedSeries([]);
         setSelectedTimeline("");
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to update series' });
+        setMessage({
+          type: "error",
+          text: result.error || "Failed to update series",
+        });
       }
     } catch (error) {
-      console.error('Error updating series:', error);
-      setMessage({ type: 'error', text: 'Failed to update series' });
+      console.error("Error updating series:", error);
+      setMessage({ type: "error", text: "Failed to update series" });
     } finally {
       setUpdating(false);
     }
@@ -119,7 +130,7 @@ export default function AddSeriesToTimelinesPage() {
 
   const handleRemoveFromTimeline = async () => {
     if (selectedSeries.length === 0) {
-      setMessage({ type: 'error', text: 'Please select at least one series' });
+      setMessage({ type: "error", text: "Please select at least one series" });
       return;
     }
 
@@ -131,8 +142,8 @@ export default function AddSeriesToTimelinesPage() {
 
       if (result.success) {
         setMessage({
-          type: 'success',
-          text: `Successfully removed ${result.updatedCount} series from timeline`
+          type: "success",
+          text: `Successfully removed ${result.updatedCount} series from timeline`,
         });
 
         // Refresh the series data
@@ -140,11 +151,17 @@ export default function AddSeriesToTimelinesPage() {
         setSeries(updatedSeries);
         setSelectedSeries([]);
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to remove series from timeline' });
+        setMessage({
+          type: "error",
+          text: result.error || "Failed to remove series from timeline",
+        });
       }
     } catch (error) {
-      console.error('Error removing series from timeline:', error);
-      setMessage({ type: 'error', text: 'Failed to remove series from timeline' });
+      console.error("Error removing series from timeline:", error);
+      setMessage({
+        type: "error",
+        text: "Failed to remove series from timeline",
+      });
     } finally {
       setUpdating(false);
     }
@@ -163,16 +180,19 @@ export default function AddSeriesToTimelinesPage() {
       <div>
         <h1 className="text-3xl font-bold">Add Series to Timelines</h1>
         <p className="text-muted-foreground mt-2">
-          Select multiple series and assign them to a timeline, or remove them from their current timeline.
+          Select multiple series and assign them to a timeline, or remove them
+          from their current timeline.
         </p>
       </div>
 
       {message && (
-        <div className={`p-4 rounded-md ${
-          message.type === 'success'
-            ? 'bg-green-50 text-green-800 border border-green-200'
-            : 'bg-red-50 text-red-800 border border-red-200'
-        }`}>
+        <div
+          className={`p-4 rounded-md ${
+            message.type === "success"
+              ? "bg-green-50 text-green-800 border border-green-200"
+              : "bg-red-50 text-red-800 border border-red-200"
+          }`}
+        >
           {message.text}
         </div>
       )}
@@ -188,7 +208,10 @@ export default function AddSeriesToTimelinesPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label htmlFor="search-series" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="search-series"
+                className="block text-sm font-medium mb-2"
+              >
                 Search Series
               </label>
               <input
@@ -212,44 +235,51 @@ export default function AddSeriesToTimelinesPage() {
                 onClick={handleSelectAll}
                 disabled={filteredSeries.length === 0}
               >
-                {selectedSeries.length === filteredSeries.length && filteredSeries.length > 0 ? 'Deselect All' : 'Select All'}
+                {selectedSeries.length === filteredSeries.length &&
+                filteredSeries.length > 0
+                  ? "Deselect All"
+                  : "Select All"}
               </Button>
             </div>
 
             <div className="max-h-96 overflow-y-auto space-y-2">
               {filteredSeries.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  {searchTerm ? 'No series found matching your search.' : 'No series available.'}
+                  {searchTerm
+                    ? "No series found matching your search."
+                    : "No series available."}
                 </div>
               ) : (
                 filteredSeries.map((s) => (
-                <div
-                  key={s.id}
-                  className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                    selectedSeries.includes(s.id)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                  onClick={() => handleSeriesToggle(s.id)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium">{s.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {s.timeline ? `Timeline: ${s.timeline.name}` : 'No timeline assigned'}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {s.mobileSuitsCount} mobile suits, {s.kitsCount} kits
-                      </p>
+                  <div
+                    key={s.id}
+                    className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                      selectedSeries.includes(s.id)
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    onClick={() => handleSeriesToggle(s.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-medium">{s.name}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {s.timeline
+                            ? `Timeline: ${s.timeline.name}`
+                            : "No timeline assigned"}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {s.mobileSuitsCount} mobile suits, {s.kitsCount} kits
+                        </p>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={selectedSeries.includes(s.id)}
+                        onChange={() => handleSeriesToggle(s.id)}
+                        className="ml-2"
+                      />
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={selectedSeries.includes(s.id)}
-                      onChange={() => handleSeriesToggle(s.id)}
-                      className="ml-2"
-                    />
                   </div>
-                </div>
                 ))
               )}
             </div>
@@ -266,7 +296,10 @@ export default function AddSeriesToTimelinesPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label htmlFor="timeline-select" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="timeline-select"
+                className="block text-sm font-medium mb-2"
+              >
                 Select Timeline
               </label>
               <select
@@ -290,7 +323,7 @@ export default function AddSeriesToTimelinesPage() {
                 disabled={updating || selectedSeries.length === 0}
                 className="w-full"
               >
-                {updating ? 'Updating...' : 'Assign to Timeline'}
+                {updating ? "Updating..." : "Assign to Timeline"}
               </Button>
 
               <Button
@@ -299,7 +332,7 @@ export default function AddSeriesToTimelinesPage() {
                 disabled={updating || selectedSeries.length === 0}
                 className="w-full"
               >
-                {updating ? 'Removing...' : 'Remove from Timeline'}
+                {updating ? "Removing..." : "Remove from Timeline"}
               </Button>
             </div>
 
@@ -307,11 +340,9 @@ export default function AddSeriesToTimelinesPage() {
               <div className="p-3 bg-gray-50 rounded-lg">
                 <h4 className="font-medium mb-2">Selected Series:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  {selectedSeries.map(seriesId => {
-                    const s = series.find(series => series.id === seriesId);
-                    return s ? (
-                      <li key={seriesId}>• {s.name}</li>
-                    ) : null;
+                  {selectedSeries.map((seriesId) => {
+                    const s = series.find((series) => series.id === seriesId);
+                    return s ? <li key={seriesId}>• {s.name}</li> : null;
                   })}
                 </ul>
               </div>

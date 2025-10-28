@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/prisma";
+import { getReviewFeedback, removeReviewFeedback, submitReviewFeedback } from "@/lib/actions/review-feedback";
 
 export async function POST(
   request: NextRequest,
@@ -21,50 +21,12 @@ export async function POST(
     }
 
     // Check if review exists
-    const review = await prisma.review.findUnique({
-      where: { id: reviewId },
-    });
-
-    if (!review) {
-      return NextResponse.json({ error: "Review not found" }, { status: 404 });
-    }
-
-    // Upsert feedback (create or update)
-    const feedback = await prisma.reviewFeedback.upsert({
-      where: {
-        reviewId_userId: {
-          reviewId,
-          userId,
-        },
-      },
-      update: {
-        isHelpful,
-      },
-      create: {
-        reviewId,
-        userId,
-        isHelpful,
-      },
-    });
-
-    // Get updated feedback counts
-    const feedbackCounts = await prisma.reviewFeedback.groupBy({
-      by: ["isHelpful"],
-      where: { reviewId },
-      _count: {
-        isHelpful: true,
-      },
-    });
-
-    const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-    const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+    const feedback = await submitReviewFeedback(reviewId, isHelpful)
+    const countReviewFeedback = await getReviewFeedback(reviewId)
 
     return NextResponse.json({
       feedback,
-      counts: {
-        helpful: helpfulCount,
-        notHelpful: notHelpfulCount,
-      },
+      counts: countReviewFeedback.counts,
     });
   } catch (error) {
     console.error("Error submitting review feedback:", error);
@@ -89,30 +51,11 @@ export async function DELETE(
     const { reviewId } = await params;
 
     // Delete user's feedback for this review
-    await prisma.reviewFeedback.deleteMany({
-      where: {
-        reviewId,
-        userId,
-      },
-    });
-
-    // Get updated feedback counts
-    const feedbackCounts = await prisma.reviewFeedback.groupBy({
-      by: ["isHelpful"],
-      where: { reviewId },
-      _count: {
-        isHelpful: true,
-      },
-    });
-
-    const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-    const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
+    await removeReviewFeedback(reviewId)
+    const countReviewFeedback = await getReviewFeedback(reviewId)
 
     return NextResponse.json({
-      counts: {
-        helpful: helpfulCount,
-        notHelpful: notHelpfulCount,
-      },
+      counts: countReviewFeedback.counts,
     });
   } catch (error) {
     console.error("Error deleting review feedback:", error);
@@ -128,40 +71,10 @@ export async function GET(
   { params }: { params: Promise<{ reviewId: string }> }
 ) {
   try {
-    const { userId } = await auth();
     const { reviewId } = await params;
-
-    // Get feedback counts
-    const feedbackCounts = await prisma.reviewFeedback.groupBy({
-      by: ["isHelpful"],
-      where: { reviewId },
-      _count: {
-        isHelpful: true,
-      },
-    });
-
-    const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-    const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
-
-    // Get user's feedback if authenticated
-    let userFeedback = null;
-    if (userId) {
-      userFeedback = await prisma.reviewFeedback.findUnique({
-        where: {
-          reviewId_userId: {
-            reviewId,
-            userId,
-          },
-        },
-      });
-    }
-
+    const countReviewFeedback = await getReviewFeedback(reviewId)
     return NextResponse.json({
-      counts: {
-        helpful: helpfulCount,
-        notHelpful: notHelpfulCount,
-      },
-      userFeedback,
+      ...countReviewFeedback
     });
   } catch (error) {
     console.error("Error fetching review feedback:", error);

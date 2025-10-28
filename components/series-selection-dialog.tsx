@@ -34,8 +34,8 @@ export function SeriesSelectionDialog({
   onSeriesSelect,
 }: SeriesSelectionDialogProps) {
   const [open, setOpen] = useState(false);
-  const [series, setSeries] = useState<Series[]>([]);
-  const [filteredSeries, setFilteredSeries] = useState<Series[]>([]);
+  const [series, setSeries] = useState<Partial<Series>[]>([]);
+  const [filteredSeries, setFilteredSeries] = useState<Partial<Series>[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSeriesId, setSelectedSeriesId] = useState<string | null>(
     currentSeriesId || null

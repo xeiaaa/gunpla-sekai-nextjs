@@ -1,8 +1,15 @@
 import { notFound } from "next/navigation";
 import { getUserCollectionByUsername } from "@/lib/actions/collections";
 import { getUserByUsername } from "@/lib/actions/users";
-import { CollectionStatus } from "@/generated/prisma";
 import { KitCard } from "@/components/kit-card";
+
+enum CollectionStatus {
+  WISHLIST = "WISHLIST",
+  PREORDER = "PREORDER",
+  BACKLOG = "BACKLOG",
+  IN_PROGRESS = "IN_PROGRESS",
+  BUILT = "BUILT",
+}
 
 interface UserCollectionsPageProps {
   params: Promise<{

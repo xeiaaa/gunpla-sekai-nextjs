@@ -32,8 +32,15 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { CollectionStatus } from "@/generated/prisma";
 import { SignedIn } from "@clerk/nextjs";
+
+enum CollectionStatus {
+  WISHLIST = "WISHLIST",
+  PREORDER = "PREORDER",
+  BACKLOG = "BACKLOG",
+  IN_PROGRESS = "IN_PROGRESS",
+  BUILT = "BUILT",
+}
 
 interface KitDetailPageProps {
   kit: {

@@ -44,7 +44,6 @@ async function request<T>(
     method,
     headers,
     body: options.body ? JSON.stringify(options.body) : undefined,
-    cache: 'no-store', // Important for server-side requests
   });
 
   if (!response.ok) {

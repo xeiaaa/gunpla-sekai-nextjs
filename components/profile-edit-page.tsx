@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { updateUser, UpdateUserData } from "@/lib/actions/users";
 import { BannerUpload } from "@/components/banner-upload";
 import {
@@ -22,34 +21,12 @@ import {
   Palette,
   Image as ImageIcon,
   Bell,
-  Trophy
+  Trophy,
 } from "lucide-react";
-import Image from "next/image";
+import { UserResponse } from "@/lib/types/actions";
 
 interface ProfileEditPageProps {
-  user: {
-    id: string;
-    username: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    imageUrl: string | null;
-    avatarUrl: string | null;
-    createdAt: Date;
-    // Gunpla Sekai specific fields
-    bio: string | null;
-    instagramUrl: string | null;
-    twitterUrl: string | null;
-    youtubeUrl: string | null;
-    portfolioUrl: string | null;
-    bannerImageUrl: string | null;
-    themeColor: string | null;
-    isPublic: boolean;
-    showCollections: boolean;
-    showBuilds: boolean;
-    showActivity: boolean;
-    showBadges: boolean;
-    emailNotifications: boolean;
-  };
+  user: UserResponse;
 }
 
 export function ProfileEditPage({ user }: ProfileEditPageProps) {
@@ -74,24 +51,24 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
     emailNotifications: user.emailNotifications,
   });
 
-  const handleInputChange = (field: keyof typeof formData) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const value = e.target.type === 'checkbox'
-      ? (e.target as HTMLInputElement).checked
-      : e.target.value;
+  const handleInputChange =
+    (field: keyof typeof formData) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value =
+        e.target.type === "checkbox"
+          ? (e.target as HTMLInputElement).checked
+          : e.target.value;
 
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-    setError(null);
-    setSuccess(false);
-  };
-
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+      setError(null);
+      setSuccess(false);
+    };
 
   const handleBannerUploaded = (url: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       bannerImageUrl: url,
     }));
@@ -100,7 +77,7 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
   };
 
   const handleBannerRemoved = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       bannerImageUrl: "",
     }));
@@ -153,15 +130,20 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
     }
   };
 
-  const displayName = user.firstName && user.lastName
-    ? `${user.firstName} ${user.lastName}`
-    : user.username || "User";
+  const displayName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username || "User";
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Profile Settings</h1>
-        <p className="text-gray-600">Customize your Gunpla Sekai profile and preferences</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Profile Settings
+        </h1>
+        <p className="text-gray-600">
+          Customize your Gunpla Sekai profile and preferences
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -202,7 +184,10 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="instagramUrl" className="flex items-center gap-2">
+                <Label
+                  htmlFor="instagramUrl"
+                  className="flex items-center gap-2"
+                >
                   <Instagram className="w-4 h-4" />
                   Instagram
                 </Label>
@@ -241,7 +226,10 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="portfolioUrl" className="flex items-center gap-2">
+                <Label
+                  htmlFor="portfolioUrl"
+                  className="flex items-center gap-2"
+                >
                   <LinkIcon className="w-4 h-4" />
                   Portfolio/Website
                 </Label>
@@ -307,7 +295,9 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="text-base">Make profile public</Label>
-                  <p className="text-sm text-gray-500">Allow others to view your profile</p>
+                  <p className="text-sm text-gray-500">
+                    Allow others to view your profile
+                  </p>
                 </div>
                 <input
                   type="checkbox"
@@ -318,8 +308,18 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className={`text-base ${!formData.isPublic ? 'text-gray-400' : ''}`}>Show my collections</Label>
-                  <p className={`text-sm ${!formData.isPublic ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <Label
+                    className={`text-base ${
+                      !formData.isPublic ? "text-gray-400" : ""
+                    }`}
+                  >
+                    Show my collections
+                  </Label>
+                  <p
+                    className={`text-sm ${
+                      !formData.isPublic ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     Display your kit collections publicly
                   </p>
                 </div>
@@ -333,8 +333,18 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className={`text-base ${!formData.isPublic ? 'text-gray-400' : ''}`}>Show my builds</Label>
-                  <p className={`text-sm ${!formData.isPublic ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <Label
+                    className={`text-base ${
+                      !formData.isPublic ? "text-gray-400" : ""
+                    }`}
+                  >
+                    Show my builds
+                  </Label>
+                  <p
+                    className={`text-sm ${
+                      !formData.isPublic ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     Display your build gallery publicly
                   </p>
                 </div>
@@ -348,8 +358,18 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className={`text-base ${!formData.isPublic ? 'text-gray-400' : ''}`}>Show my activity feed</Label>
-                  <p className={`text-sm ${!formData.isPublic ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <Label
+                    className={`text-base ${
+                      !formData.isPublic ? "text-gray-400" : ""
+                    }`}
+                  >
+                    Show my activity feed
+                  </Label>
+                  <p
+                    className={`text-sm ${
+                      !formData.isPublic ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     Display your recent activity publicly
                   </p>
                 </div>
@@ -363,8 +383,18 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className={`text-base ${!formData.isPublic ? 'text-gray-400' : ''}`}>Show my badges</Label>
-                  <p className={`text-sm ${!formData.isPublic ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <Label
+                    className={`text-base ${
+                      !formData.isPublic ? "text-gray-400" : ""
+                    }`}
+                  >
+                    Show my badges
+                  </Label>
+                  <p
+                    className={`text-sm ${
+                      !formData.isPublic ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     Display earned badges and achievements
                   </p>
                 </div>
@@ -380,7 +410,6 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
           </CardContent>
         </Card>
 
-
         {/* Notifications */}
         <Card>
           <CardHeader>
@@ -394,7 +423,9 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="text-base">Email notifications</Label>
-                  <p className="text-sm text-gray-500">Receive email updates about your activity</p>
+                  <p className="text-sm text-gray-500">
+                    Receive email updates about your activity
+                  </p>
                 </div>
                 <input
                   type="checkbox"
@@ -419,7 +450,9 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
             <div className="text-center py-8 text-gray-500">
               <Trophy className="w-12 h-12 mx-auto mb-4 text-gray-300" />
               <p className="text-lg font-medium mb-2">Coming Soon!</p>
-              <p className="text-sm">Badge system will be implemented in a future update</p>
+              <p className="text-sm">
+                Badge system will be implemented in a future update
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -433,17 +466,15 @@ export function ProfileEditPage({ user }: ProfileEditPageProps) {
 
         {success && (
           <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-            <p className="text-sm text-green-600">Profile updated successfully!</p>
+            <p className="text-sm text-green-600">
+              Profile updated successfully!
+            </p>
           </div>
         )}
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-4">
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="flex-1"
-          >
+          <Button type="submit" disabled={isLoading} className="flex-1">
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button

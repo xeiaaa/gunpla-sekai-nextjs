@@ -181,6 +181,7 @@ export interface UserResponse {
   emailNotifications: boolean;
   createdAt: Date;
   updatedAt: Date;
+  bannerImageUrl?: string | null
 
   builds: number;
   collections: number;

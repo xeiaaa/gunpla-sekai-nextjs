@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { redirect } from "next/navigation";
 import { isCurrentUserAdmin } from "@/lib/actions/users";
 import { KitAddForm } from "@/components/kit-add-form";
