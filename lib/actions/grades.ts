@@ -1,32 +1,58 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+
+export interface GradesResponse {
+  items: GradeWithRelations[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages?: number;
+  };
+}
+
+export interface GradeWithRelations {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  createdAt: string;
+  updatedAt: string;
+
+  // Relations
+  productLines: ProductLineWithCount[];
+
+  // Count relation added by Prisma
+  _count: {
+    productLines: number;
+  };
+}
+
+export interface ProductLineWithCount {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  createdAt: string;
+  updatedAt: string;
+
+  // Count of kits per product line
+  _count: {
+    kits: number;
+  };
+}
 
 export async function getAllGrades() {
   try {
-    const grades = await prisma.grade.findMany({
-      include: {
-        productLines: {
-          include: {
-            _count: {
-              select: {
-                kits: true,
-              },
-            },
-          },
-        },
-        _count: {
-          select: {
-            productLines: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
 
-    return grades.map(grade => ({
+    const response = await apiClient.get<GradesResponse>(
+      `/grades?include=productLines._count,productLines._count.kits,_count,_count.productLines&sort=name:asc`,
+    );
+
+
+    return response.items.map(grade => ({
       id: grade.id,
       name: grade.name,
       slug: grade.slug,
@@ -34,6 +60,8 @@ export async function getAllGrades() {
       kitsCount: grade.productLines.reduce((total, productLine) => total + productLine._count.kits, 0),
       productLinesCount: grade._count.productLines,
     }));
+
+
   } catch (error) {
     console.error('Error fetching all grades:', error);
     return [];
@@ -42,6 +70,7 @@ export async function getAllGrades() {
 
 export async function getGradeBySlug(slug: string) {
   try {
+
     const grade = await prisma.grade.findUnique({
       where: { slug },
       include: {

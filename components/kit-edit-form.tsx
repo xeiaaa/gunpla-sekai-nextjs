@@ -22,7 +22,6 @@ import { ExpansionsSelectionDialog } from "@/components/expansions-selection-dia
 import { ExpandedBySelectionDialog } from "@/components/expanded-by-selection-dialog";
 import {
   updateKit,
-  getAllProductLines,
   updateKitMobileSuits,
   updateKitExpansions,
   updateKitExpandedBy,
@@ -31,6 +30,8 @@ import { deleteKitUpload } from "@/lib/actions/uploads";
 import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 import { useQueryClient } from "@tanstack/react-query";
 import { BoxArtUpload } from "./box-art-upload";
+import { getAllProductLines } from "@/lib/actions/product-lines";
+import { ProductLine } from "@/lib/actions/type";
 
 interface KitEditFormProps {
   kit: {
@@ -128,9 +129,7 @@ export function KitEditForm({ kit }: KitEditFormProps) {
     text: string;
   } | null>(null);
   const [removedFileIds, setRemovedFileIds] = useState<string[]>([]);
-  const [productLines, setProductLines] = useState<
-    Array<{ id: string; name: string; slug: string; grade: { name: string } }>
-  >([]);
+  const [productLines, setProductLines] = useState<Array<ProductLine>>([]);
   const [mobileSuits, setMobileSuits] = useState(kit.mobileSuits);
   const [baseKit, setBaseKit] = useState(kit.baseKit);
   const [expansions, setExpansions] = useState(kit.expansions);
@@ -258,7 +257,7 @@ export function KitEditForm({ kit }: KitEditFormProps) {
         baseKitId: formData.baseKitId,
       };
 
-      const result = await updateKit(kit.id, updateData);
+      const result = await updateKit(kit.id, updateData, kit.slug);
 
       if (result.success) {
         // Update mobile suits if they have changed

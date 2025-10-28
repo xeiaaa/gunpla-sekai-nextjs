@@ -37,8 +37,12 @@ export function SeriesSelectionDialog({
   const [series, setSeries] = useState<Series[]>([]);
   const [filteredSeries, setFilteredSeries] = useState<Series[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSeriesId, setSelectedSeriesId] = useState<string | null>(currentSeriesId || null);
-  const [selectedSeriesName, setSelectedSeriesName] = useState<string | null>(currentSeriesName || null);
+  const [selectedSeriesId, setSelectedSeriesId] = useState<string | null>(
+    currentSeriesId || null
+  );
+  const [selectedSeriesName, setSelectedSeriesName] = useState<string | null>(
+    currentSeriesName || null
+  );
   const [loading, setLoading] = useState(false);
 
   // Load series when dialog opens
@@ -134,7 +138,9 @@ export function SeriesSelectionDialog({
                 </div>
               ) : filteredSeries.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">
-                  {searchTerm ? "No series found matching your search." : "No series available."}
+                  {searchTerm
+                    ? "No series found matching your search."
+                    : "No series available."}
                 </div>
               ) : (
                 <div className="divide-y">
@@ -148,7 +154,9 @@ export function SeriesSelectionDialog({
                     >
                       <div className="font-medium">{s.name}</div>
                       {s.slug && (
-                        <div className="text-sm text-muted-foreground">{s.slug}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {s.slug}
+                        </div>
                       )}
                     </button>
                   ))}

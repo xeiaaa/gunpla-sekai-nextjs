@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { X, Plus } from "lucide-react";
-import { getProductLines } from "@/lib/actions/kits";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import CreateProductLineForm from "./create-product-line-form";
+import { getProductLines } from "@/lib/actions/product-lines";
 
 export type ProductLine = {
   id?: string;

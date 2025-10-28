@@ -2,7 +2,6 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { CollectionStatus } from "@/generated/prisma";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -19,6 +18,14 @@ import {
   removeFromCollection,
   updateCollectionStatus,
 } from "@/lib/actions/collections";
+
+enum CollectionStatus {
+  WISHLIST = "WISHLIST",
+  PREORDER = "PREORDER",
+  BACKLOG = "BACKLOG",
+  IN_PROGRESS = "IN_PROGRESS",
+  BUILT = "BUILT",
+}
 
 interface CollectionControlsProps {
   kitId: string;

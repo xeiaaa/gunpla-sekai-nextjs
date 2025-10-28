@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { getUserCollection } from "@/lib/actions/collections";
-import { CollectionStatus } from "@/generated/prisma";
+import { getUserCollection, CollectionStatus } from "@/lib/actions/collections";
 import { KitCard } from "@/components/kit-card";
 
 export default async function MeCollectionsPage() {
@@ -24,7 +23,8 @@ export default async function MeCollectionsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">My Collection</h1>
         <p className="text-gray-600">
-          Manage your Gunpla collection across wishlist, preorder, backlog, in progress, and built kits.
+          Manage your Gunpla collection across wishlist, preorder, backlog, in
+          progress, and built kits.
         </p>
       </div>
 
@@ -35,9 +35,7 @@ export default async function MeCollectionsPage() {
             <h2 className="text-2xl font-semibold text-gray-900">
               Wishlist ({wishlist.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits you want to get
-            </p>
+            <p className="text-sm text-gray-500">Kits you want to get</p>
           </div>
 
           {wishlist.length > 0 ? (
@@ -56,9 +54,9 @@ export default async function MeCollectionsPage() {
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series: collection.kit.series?.name || null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: [],
                   }}
                   collectionStatus={collection.status}
                 />
@@ -80,9 +78,7 @@ export default async function MeCollectionsPage() {
             <h2 className="text-2xl font-semibold text-gray-900">
               Preorder ({preorder.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits you have preordered
-            </p>
+            <p className="text-sm text-gray-500">Kits you have preordered</p>
           </div>
 
           {preorder.length > 0 ? (
@@ -101,9 +97,9 @@ export default async function MeCollectionsPage() {
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series: collection.kit.series?.name || null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: [],
                   }}
                   collectionStatus={collection.status}
                 />
@@ -146,9 +142,9 @@ export default async function MeCollectionsPage() {
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series: collection.kit.series?.name || null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: [],
                   }}
                   collectionStatus={collection.status}
                 />
@@ -191,9 +187,9 @@ export default async function MeCollectionsPage() {
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series: collection.kit.series?.name || null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: [],
                   }}
                   collectionStatus={collection.status}
                 />
@@ -215,9 +211,7 @@ export default async function MeCollectionsPage() {
             <h2 className="text-2xl font-semibold text-gray-900">
               Built ({built.length})
             </h2>
-            <p className="text-sm text-gray-500">
-              Kits you have completed
-            </p>
+            <p className="text-sm text-gray-500">Kits you have completed</p>
           </div>
 
           {built.length > 0 ? (
@@ -236,9 +230,9 @@ export default async function MeCollectionsPage() {
                     boxArt: collection.kit.boxArt,
                     grade: collection.kit.productLine?.grade?.name || null,
                     productLine: collection.kit.productLine?.name || null,
-                    series: collection.kit.mobileSuits[0]?.mobileSuit?.series?.name || null,
+                    series: collection.kit.series?.name || null,
                     releaseType: collection.kit.releaseType?.name || null,
-                    mobileSuits: collection.kit.mobileSuits.map((ms: any) => ms.mobileSuit.name),
+                    mobileSuits: [],
                   }}
                   collectionStatus={collection.status}
                 />

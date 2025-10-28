@@ -1,6 +1,42 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+
+export interface Series {
+  id: string
+  name: string
+  slug: string | null
+  description: string
+  timelineId: string
+  logoUrl: string
+  bannerUrl: string
+  scrapedImages: string[],
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface MobileSuit {
+  name: string;
+  id: string;
+  slug: string | null;
+  scrapedImages: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  seriesId: string | null;
+  description: string | null;
+  series: Series | null,
+  _count: { kits: number }
+}
+
+export interface ListResult<T> {
+  items: T[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
 
 export async function getMobileSuitBySlug(slug: string) {
   try {
@@ -89,41 +125,23 @@ export async function getMobileSuitBySlug(slug: string) {
   }
 }
 
-export async function getAllMobileSuits() {
-  try {
-    const mobileSuits = await prisma.mobileSuit.findMany({
-      include: {
-        series: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          },
-        },
-        _count: {
-          select: {
-            kits: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
 
-    return mobileSuits.map(mobileSuit => ({
-      id: mobileSuit.id,
-      name: mobileSuit.name,
-      slug: mobileSuit.slug,
-      description: mobileSuit.description,
-      series: mobileSuit.series,
-      kitsCount: mobileSuit._count.kits,
-      scrapedImages: mobileSuit.scrapedImages,
-    }));
-  } catch (error) {
-    console.error('Error fetching all mobile suits:', error);
-    return [];
-  }
+export async function getAllMobileSuits({ search = '', skip = 0, take = 20 }) {
+  const page = Math.floor(skip / take) + 1;
+
+  const response = await apiClient.get<ListResult<MobileSuit>>(
+    `/mobile-suits?include=series,_count.kits&search=${search}&page=${page}&limit=${take}&sort=name:asc`,
+  );
+
+  return response.items.map(mobileSuit => ({
+    id: mobileSuit.id,
+    name: mobileSuit.name,
+    slug: mobileSuit.slug,
+    description: mobileSuit.description,
+    series: mobileSuit.series,
+    kitsCount: mobileSuit._count.kits,
+    scrapedImages: mobileSuit.scrapedImages,
+  }));
 }
 
 export async function getMobileSuitsBySeries(seriesId: string) {

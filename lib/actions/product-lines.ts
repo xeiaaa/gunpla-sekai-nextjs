@@ -1,29 +1,17 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+import { ListResult, ProductLine } from "./type";
 
 export async function getAllProductLines() {
   try {
-    const productLines = await prisma.productLine.findMany({
-      include: {
-        grade: {
-          select: {
-            name: true,
-          },
-        },
-        _count: {
-          select: {
-            kits: true,
-          },
-        },
-      },
-      orderBy: [
-        { grade: { name: "asc" } },
-        { name: "asc" },
-      ],
-    });
 
-    return productLines.map(productLine => ({
+    const response = await apiClient.get<ListResult<ProductLine>>(
+      `/product-lines?limit=100&include=grade,_count.kits&sort=name:asc`,
+    );
+
+    return response.items.map(productLine => ({
       id: productLine.id,
       name: productLine.name,
       slug: productLine.slug,
@@ -35,6 +23,32 @@ export async function getAllProductLines() {
   } catch (error) {
     console.error('Error fetching all product lines:', error);
     return [];
+  }
+}
+
+export async function getProductLines({
+  search = "",
+  skip = 0,
+  take = 20,
+}: {
+  search?: string;
+  skip?: number;
+  take?: number;
+}) {
+  try {
+
+    // Convert skip/take to page/limit for your service
+    const page = Math.floor(skip / take) + 1;
+    const limit = take;
+
+    const response = await apiClient.get<ListResult<ProductLine>>(
+      `/product-lines?search=${search}&page=${page}&limit=${limit}&sort=name:asc&include=grade`,
+    );
+
+    return { productLines: response.items, totalCount: response.meta.total };
+  } catch (error) {
+    console.error("Error fetching product lines:", error);
+    return { productLines: [], totalCount: 0 };
   }
 }
 

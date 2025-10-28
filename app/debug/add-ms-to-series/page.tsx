@@ -1,10 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAllMobileSuits, updateMobileSuitSeries } from "@/lib/actions/mobile-suits";
+import {
+  getAllMobileSuits,
+  updateMobileSuitSeries,
+} from "@/lib/actions/mobile-suits";
 import { getAllSeries } from "@/lib/actions/series";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface MobileSuit {
   id: string;
@@ -42,21 +51,24 @@ export default function AddMobileSuitsToSeriesPage() {
   const [selectedSeries, setSelectedSeries] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [mobileSuitsData, seriesData] = await Promise.all([
-          getAllMobileSuits(),
+          getAllMobileSuits({}),
           getAllSeries(),
         ]);
         setMobileSuits(mobileSuitsData);
         setSeries(seriesData);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setMessage({ type: 'error', text: 'Failed to load data' });
+        console.error("Error fetching data:", error);
+        setMessage({ type: "error", text: "Failed to load data" });
       } finally {
         setLoading(false);
       }
@@ -66,31 +78,37 @@ export default function AddMobileSuitsToSeriesPage() {
   }, []);
 
   const handleMobileSuitToggle = (mobileSuitId: string) => {
-    setSelectedMobileSuits(prev =>
+    setSelectedMobileSuits((prev) =>
       prev.includes(mobileSuitId)
-        ? prev.filter(id => id !== mobileSuitId)
+        ? prev.filter((id) => id !== mobileSuitId)
         : [...prev, mobileSuitId]
     );
   };
 
   // Filter mobile suits based on search term
-  const filteredMobileSuits = mobileSuits.filter(ms =>
-    ms.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (ms.series?.name.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
-    (ms.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
+  const filteredMobileSuits = mobileSuits.filter(
+    (ms) =>
+      ms.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (ms.series?.name.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        false) ||
+      (ms.description?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        false)
   );
 
   const handleSelectAll = () => {
     if (selectedMobileSuits.length === filteredMobileSuits.length) {
       setSelectedMobileSuits([]);
     } else {
-      setSelectedMobileSuits(filteredMobileSuits.map(ms => ms.id));
+      setSelectedMobileSuits(filteredMobileSuits.map((ms) => ms.id));
     }
   };
 
   const handleUpdateSeries = async () => {
     if (selectedMobileSuits.length === 0) {
-      setMessage({ type: 'error', text: 'Please select at least one mobile suit' });
+      setMessage({
+        type: "error",
+        text: "Please select at least one mobile suit",
+      });
       return;
     }
 
@@ -99,25 +117,31 @@ export default function AddMobileSuitsToSeriesPage() {
 
     try {
       const seriesId = selectedSeries === "" ? null : selectedSeries;
-      const result = await updateMobileSuitSeries(selectedMobileSuits, seriesId);
+      const result = await updateMobileSuitSeries(
+        selectedMobileSuits,
+        seriesId
+      );
 
       if (result.success) {
         setMessage({
-          type: 'success',
-          text: `Successfully updated ${result.updatedCount} mobile suits`
+          type: "success",
+          text: `Successfully updated ${result.updatedCount} mobile suits`,
         });
 
         // Refresh the mobile suits data
-        const updatedMobileSuits = await getAllMobileSuits();
+        const updatedMobileSuits = await getAllMobileSuits({});
         setMobileSuits(updatedMobileSuits);
         setSelectedMobileSuits([]);
         setSelectedSeries("");
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to update mobile suits' });
+        setMessage({
+          type: "error",
+          text: result.error || "Failed to update mobile suits",
+        });
       }
     } catch (error) {
-      console.error('Error updating mobile suits:', error);
-      setMessage({ type: 'error', text: 'Failed to update mobile suits' });
+      console.error("Error updating mobile suits:", error);
+      setMessage({ type: "error", text: "Failed to update mobile suits" });
     } finally {
       setUpdating(false);
     }
@@ -125,7 +149,10 @@ export default function AddMobileSuitsToSeriesPage() {
 
   const handleRemoveFromSeries = async () => {
     if (selectedMobileSuits.length === 0) {
-      setMessage({ type: 'error', text: 'Please select at least one mobile suit' });
+      setMessage({
+        type: "error",
+        text: "Please select at least one mobile suit",
+      });
       return;
     }
 
@@ -137,20 +164,26 @@ export default function AddMobileSuitsToSeriesPage() {
 
       if (result.success) {
         setMessage({
-          type: 'success',
-          text: `Successfully removed ${result.updatedCount} mobile suits from series`
+          type: "success",
+          text: `Successfully removed ${result.updatedCount} mobile suits from series`,
         });
 
         // Refresh the mobile suits data
-        const updatedMobileSuits = await getAllMobileSuits();
+        const updatedMobileSuits = await getAllMobileSuits({});
         setMobileSuits(updatedMobileSuits);
         setSelectedMobileSuits([]);
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to remove mobile suits from series' });
+        setMessage({
+          type: "error",
+          text: result.error || "Failed to remove mobile suits from series",
+        });
       }
     } catch (error) {
-      console.error('Error removing mobile suits from series:', error);
-      setMessage({ type: 'error', text: 'Failed to remove mobile suits from series' });
+      console.error("Error removing mobile suits from series:", error);
+      setMessage({
+        type: "error",
+        text: "Failed to remove mobile suits from series",
+      });
     } finally {
       setUpdating(false);
     }
@@ -169,16 +202,19 @@ export default function AddMobileSuitsToSeriesPage() {
       <div>
         <h1 className="text-3xl font-bold">Add Mobile Suits to Series</h1>
         <p className="text-muted-foreground mt-2">
-          Select multiple mobile suits and assign them to a series, or remove them from their current series.
+          Select multiple mobile suits and assign them to a series, or remove
+          them from their current series.
         </p>
       </div>
 
       {message && (
-        <div className={`p-4 rounded-md ${
-          message.type === 'success'
-            ? 'bg-green-50 text-green-800 border border-green-200'
-            : 'bg-red-50 text-red-800 border border-red-200'
-        }`}>
+        <div
+          className={`p-4 rounded-md ${
+            message.type === "success"
+              ? "bg-green-50 text-green-800 border border-green-200"
+              : "bg-red-50 text-red-800 border border-red-200"
+          }`}
+        >
           {message.text}
         </div>
       )}
@@ -194,7 +230,10 @@ export default function AddMobileSuitsToSeriesPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label htmlFor="search-mobile-suits" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="search-mobile-suits"
+                className="block text-sm font-medium mb-2"
+              >
                 Search Mobile Suits
               </label>
               <input
@@ -209,7 +248,8 @@ export default function AddMobileSuitsToSeriesPage() {
 
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">
-                {selectedMobileSuits.length} of {filteredMobileSuits.length} selected
+                {selectedMobileSuits.length} of {filteredMobileSuits.length}{" "}
+                selected
                 {searchTerm && ` (${mobileSuits.length} total)`}
               </span>
               <Button
@@ -218,44 +258,51 @@ export default function AddMobileSuitsToSeriesPage() {
                 onClick={handleSelectAll}
                 disabled={filteredMobileSuits.length === 0}
               >
-                {selectedMobileSuits.length === filteredMobileSuits.length && filteredMobileSuits.length > 0 ? 'Deselect All' : 'Select All'}
+                {selectedMobileSuits.length === filteredMobileSuits.length &&
+                filteredMobileSuits.length > 0
+                  ? "Deselect All"
+                  : "Select All"}
               </Button>
             </div>
 
             <div className="max-h-96 overflow-y-auto space-y-2">
               {filteredMobileSuits.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  {searchTerm ? 'No mobile suits found matching your search.' : 'No mobile suits available.'}
+                  {searchTerm
+                    ? "No mobile suits found matching your search."
+                    : "No mobile suits available."}
                 </div>
               ) : (
                 filteredMobileSuits.map((ms) => (
-                <div
-                  key={ms.id}
-                  className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                    selectedMobileSuits.includes(ms.id)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                  onClick={() => handleMobileSuitToggle(ms.id)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium">{ms.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {ms.series ? `Series: ${ms.series.name}` : 'No series assigned'}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {ms.kitsCount} kits
-                      </p>
+                  <div
+                    key={ms.id}
+                    className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                      selectedMobileSuits.includes(ms.id)
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    onClick={() => handleMobileSuitToggle(ms.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-medium">{ms.name}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {ms.series
+                            ? `Series: ${ms.series.name}`
+                            : "No series assigned"}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {ms.kitsCount} kits
+                        </p>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={selectedMobileSuits.includes(ms.id)}
+                        onChange={() => handleMobileSuitToggle(ms.id)}
+                        className="ml-2"
+                      />
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={selectedMobileSuits.includes(ms.id)}
-                      onChange={() => handleMobileSuitToggle(ms.id)}
-                      className="ml-2"
-                    />
                   </div>
-                </div>
                 ))
               )}
             </div>
@@ -272,7 +319,10 @@ export default function AddMobileSuitsToSeriesPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label htmlFor="series-select" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="series-select"
+                className="block text-sm font-medium mb-2"
+              >
                 Select Series
               </label>
               <select
@@ -297,7 +347,7 @@ export default function AddMobileSuitsToSeriesPage() {
                 disabled={updating || selectedMobileSuits.length === 0}
                 className="w-full"
               >
-                {updating ? 'Updating...' : 'Assign to Series'}
+                {updating ? "Updating..." : "Assign to Series"}
               </Button>
 
               <Button
@@ -306,7 +356,7 @@ export default function AddMobileSuitsToSeriesPage() {
                 disabled={updating || selectedMobileSuits.length === 0}
                 className="w-full"
               >
-                {updating ? 'Removing...' : 'Remove from Series'}
+                {updating ? "Removing..." : "Remove from Series"}
               </Button>
             </div>
 
@@ -314,11 +364,11 @@ export default function AddMobileSuitsToSeriesPage() {
               <div className="p-3 bg-gray-50 rounded-lg">
                 <h4 className="font-medium mb-2">Selected Mobile Suits:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  {selectedMobileSuits.map(mobileSuitId => {
-                    const ms = mobileSuits.find(mobileSuit => mobileSuit.id === mobileSuitId);
-                    return ms ? (
-                      <li key={mobileSuitId}>• {ms.name}</li>
-                    ) : null;
+                  {selectedMobileSuits.map((mobileSuitId) => {
+                    const ms = mobileSuits.find(
+                      (mobileSuit) => mobileSuit.id === mobileSuitId
+                    );
+                    return ms ? <li key={mobileSuitId}>• {ms.name}</li> : null;
                   })}
                 </ul>
               </div>

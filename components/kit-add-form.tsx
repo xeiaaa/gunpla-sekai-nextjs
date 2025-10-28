@@ -23,7 +23,6 @@ import { BaseKitSelectionDialog } from "@/components/base-kit-selection-dialog";
 import { ExpansionsSelectionDialog } from "@/components/expansions-selection-dialog";
 import { ExpandedBySelectionDialog } from "@/components/expanded-by-selection-dialog";
 import {
-  getAllProductLines,
   updateKitMobileSuits,
   updateKitExpansions,
   updateKitExpandedBy,
@@ -31,6 +30,8 @@ import {
 import { getAllReleaseTypes } from "@/lib/actions/release-types";
 import { useAuth } from "@clerk/nextjs";
 import { BoxArtUpload } from "./box-art-upload";
+import { getAllProductLines } from "@/lib/actions/product-lines";
+import { ProductLine } from "@/lib/actions/type";
 
 export function KitAddForm() {
   const router = useRouter();
@@ -42,9 +43,7 @@ export function KitAddForm() {
     type: "success" | "error";
     text: string;
   } | null>(null);
-  const [productLines, setProductLines] = useState<
-    Array<{ id: string; name: string; slug: string; grade: { name: string } }>
-  >([]);
+  const [productLines, setProductLines] = useState<Array<ProductLine>>([]);
   const [releaseTypes, setReleaseTypes] = useState<
     Array<{ id: string; name: string; slug: string }>
   >([]);

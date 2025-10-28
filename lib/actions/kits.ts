@@ -3,6 +3,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { apiClient } from "../api-client";
+import { KitResponse, ListResult, ProductLine, Series } from "./type";
 
 interface KitFilters {
   gradeIds?: string[];
@@ -215,46 +217,12 @@ export async function getFilteredKits(filters: KitFilters = {}) {
 
 export async function getAllKits() {
   try {
-    const kits = await prisma.kit.findMany({
-      include: {
-        productLine: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            grade: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-        series: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          },
-        },
-        mobileSuits: {
-          include: {
-            mobileSuit: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-        _count: {
-          select: {
-            mobileSuits: true,
-          },
-        },
-      },
-      orderBy: [{ name: "asc" }],
-    });
 
-    return kits.map((kit) => ({
+    const result = await apiClient.get<ListResult<KitResponse>>(
+      `/kits?page=1&limit=200&include=productLine.grade,series,mobileSuits.mobileSuit,_count&sort=name:asc`,
+    );
+
+    return result.items.map((kit) => ({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
@@ -264,11 +232,11 @@ export async function getAllKits() {
       priceYen: kit.priceYen,
       boxArt: kit.boxArt,
       scrapedImages: kit.scrapedImages,
-      grade: kit.productLine?.grade.name || null,
+      grade: kit.productLine?.grade?.name || null,
       productLine: kit.productLine,
       series: kit.series,
-      mobileSuitsCount: kit._count.mobileSuits,
-      mobileSuits: kit.mobileSuits.map((ms) => ms.mobileSuit.name),
+      mobileSuitsCount: kit._count?.mobileSuits ?? 0,
+      mobileSuits: kit.mobileSuits?.map((ms) => ms.mobileSuit.name) || [],
     }));
   } catch (error) {
     console.error("Error fetching all kits:", error);
@@ -276,31 +244,39 @@ export async function getAllKits() {
   }
 }
 
+
 export async function updateKitProductLine(
   kitIds: string[],
   productLineId: string | null
 ) {
+
   try {
-    const result = await prisma.kit.updateMany({
-      where: {
-        id: { in: kitIds },
-      },
-      data: {
-        productLineId: productLineId,
-      },
-    });
+    const result = await Promise.all(
+      kitIds.map(kitId =>
+        apiClient.put(`/kits/${kitId}`, { productLineId },)
+      )
+    );
 
     return {
       success: true,
-      updatedCount: result.count,
+      updatedCount: result.length,
     };
-  } catch (error) {
-    console.error("Error updating kit product lines:", error);
+  } catch (error: any) {
+    console.error("Failed to update some kits:", error);
+
+    // Extract a human friendly error message
+    const message =
+      error?.response?.data?.message || // from backend API
+      error?.message || // general JS or Axios error
+      "Something went wrong while updating kit product lines";
+
     return {
       success: false,
-      error: "Failed to update kit product lines",
+      updatedCount: 0,
+      error: message,
     };
   }
+
 }
 
 export async function addKitToMobileSuits(
@@ -544,86 +520,17 @@ export async function updateKitExpandedBy(
   }
 }
 
-export async function getAllProductLines() {
-  try {
-    const productLines = await prisma.productLine.findMany({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        grade: {
-          select: {
-            name: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
-
-    return productLines;
-  } catch (error) {
-    console.error("Error fetching product lines:", error);
-    return [];
-  }
-}
 
 // lib/db/productLine.ts
 // lib/actions/product-line.ts
 
-export async function getProductLines({
-  search = "",
-  skip = 0,
-  take = 20,
-}: {
-  search?: string;
-  skip?: number;
-  take?: number;
-}) {
-  try {
-    const productLines = await prisma.productLine.findMany({
-      where: {
-        name: { contains: search, mode: "insensitive" },
-      },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        grade: {
-          select: { name: true },
-        },
-      },
-      orderBy: { name: "asc" },
-      skip,
-      take,
-    });
-
-    const totalCount = await prisma.productLine.count({
-      where: { name: { contains: search, mode: "insensitive" } },
-    });
-
-    return { productLines, totalCount };
-  } catch (error) {
-    console.error("Error fetching product lines:", error);
-    return { productLines: [], totalCount: 0 };
-  }
-}
-
 export async function getAllSeries() {
   try {
-    const series = await prisma.series.findMany({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
+    const response = await apiClient.get<ListResult<Series>>(
+      `/series?limit=200&select=id,name,slug&sort=name:asc`,
+    );
 
-    return series;
+    return response.items;
   } catch (error) {
     console.error("Error fetching series:", error);
     return [];
@@ -640,25 +547,36 @@ export async function getSeries({
   take?: number;
 }) {
   try {
-    const series = await prisma.series.findMany({
-      where: {
-        name: { contains: search },
-      },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-      },
-      orderBy: { name: "asc" },
-      skip,
-      take,
-    });
 
-    const totalCount = await prisma.series.count({
-      where: { name: { contains: search } },
-    });
+    // Convert skip/take to page/limit for your service
+    const page = Math.floor(skip / take) + 1;
+    const limit = take;
 
-    return { series, totalCount };
+    const response = await apiClient.get<ListResult<ProductLine>>(
+      `/series?search=${search}&page=${page}&limit=${limit}&sort=name:asc&select=id,name,slug`,
+    );
+
+
+    // const series = await prisma.series.findMany({
+    //   where: {
+    //     name: { contains: search },
+    //   },
+    //   select: {
+    //     id: true,
+    //     name: true,
+    //     slug: true,
+    //   },
+    //   orderBy: { name: "asc" },
+    //   skip,
+    //   take,
+    // });
+
+    // const totalCount = await prisma.series.count({
+    //   where: { name: { contains: search } },
+    // });
+
+    return { series: response.items, totalCount: response.meta.total };
+
   } catch (error) {
     console.error("Error fetching series:", error);
     return { series: [], totalCount: 0 };
@@ -783,23 +701,23 @@ export async function getKitBySlug(slug: string) {
       baseKitId: kit.baseKitId,
       productLine: kit.productLine
         ? {
-            name: kit.productLine.name,
-            logo: kit.productLine.logoUrl || null,
-            slug: kit.productLine.slug || null,
-            grade: kit.productLine.grade
-              ? {
-                  name: kit.productLine.grade.name,
-                  slug: kit.productLine.grade.slug || null,
-                }
-              : null,
-            vendor: kit.productLine.vendor
-              ? {
-                  name: kit.productLine.vendor.name,
-                  slug: kit.productLine.vendor.slug || null,
-                  category: kit.productLine.vendor.category || null,
-                }
-              : null,
-          }
+          name: kit.productLine.name,
+          logo: kit.productLine.logoUrl || null,
+          slug: kit.productLine.slug || null,
+          grade: kit.productLine.grade
+            ? {
+              name: kit.productLine.grade.name,
+              slug: kit.productLine.grade.slug || null,
+            }
+            : null,
+          vendor: kit.productLine.vendor
+            ? {
+              name: kit.productLine.vendor.name,
+              slug: kit.productLine.vendor.slug || null,
+              category: kit.productLine.vendor.category || null,
+            }
+            : null,
+        }
         : null,
       series: kit.series?.name,
       seriesSlug: kit.series?.slug,
@@ -807,16 +725,16 @@ export async function getKitBySlug(slug: string) {
       releaseTypeSlug: kit.releaseType?.slug,
       baseKit: kit.baseKit
         ? {
-            id: kit.baseKit.id,
-            name: kit.baseKit.name,
-            slug: kit.baseKit.slug,
-            number: kit.baseKit.number,
-            variant: kit.baseKit.variant,
-            boxArt: kit.baseKit.boxArt,
-            grade: kit.baseKit.productLine?.grade?.name || null,
-            productLine: kit.baseKit.productLine || null,
-            isBootleg: kit.baseKit.productLine?.vendor?.category === "BOOTLEG",
-          }
+          id: kit.baseKit.id,
+          name: kit.baseKit.name,
+          slug: kit.baseKit.slug,
+          number: kit.baseKit.number,
+          variant: kit.baseKit.variant,
+          boxArt: kit.baseKit.boxArt,
+          grade: kit.baseKit.productLine?.grade?.name || null,
+          productLine: kit.baseKit.productLine || null,
+          isBootleg: kit.baseKit.productLine?.vendor?.category === "BOOTLEG",
+        }
         : null,
       variants:
         kit.variants?.map((variant: any) => ({
@@ -903,7 +821,7 @@ export interface UpdateKitData {
   baseKitId?: string | null;
 }
 
-export async function updateKit(kitId: string, data: UpdateKitData) {
+export async function updateKit(kitId: string, data: UpdateKitData, kitSlug: string) {
   try {
     const { userId } = await auth();
 
@@ -911,37 +829,13 @@ export async function updateKit(kitId: string, data: UpdateKitData) {
       return { success: false, error: "User must be authenticated" };
     }
 
-    // Check if user is admin
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { isAdmin: true },
-    });
-
-    if (!user?.isAdmin) {
-      return { success: false, error: "Admin access required" };
-    }
-
-    // Check if kit exists
-    const existingKit = await prisma.kit.findUnique({
-      where: { id: kitId },
-    });
-
-    if (!existingKit) {
-      return { success: false, error: "Kit not found" };
-    }
-
-    // Update the kit
-    const updatedKit = await prisma.kit.update({
-      where: { id: kitId },
-      data: {
-        ...data,
-        updatedAt: new Date(),
-      },
-    });
-
+    const updatedKit = await apiClient.put<KitResponse>(
+      `/kits/${kitId}`,
+      data,
+    );
     // Revalidate relevant paths (ISR cache invalidation)
-    revalidatePath(`/kits/${existingKit.slug}`);
-    if (data.slug && data.slug !== existingKit.slug) {
+    revalidatePath(`/kits/${kitSlug}`);
+    if (data.slug && data.slug !== kitSlug) {
       revalidatePath(`/kits/${data.slug}`);
     }
 
