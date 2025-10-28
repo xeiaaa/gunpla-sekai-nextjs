@@ -119,3 +119,43 @@ export interface ListResult<T> {
     limit: number;
   };
 }
+
+enum KitImageType {
+  BOX_ART = "BOX_ART",
+  PRODUCT_SHOTS = "PRODUCT_SHOTS",
+  RUNNERS = "RUNNERS",
+  MANUAL = "MANUAL",
+  PROTOTYPE = "PROTOTYPE",
+}
+
+
+export interface UploadResponse {
+  id: string
+  cloudinaryAssetId: string
+  publicId: string
+  url: string
+  eagerUrl?: string
+  format: string
+  resourceType: string
+  size: number
+  pages: number
+  originalFilename: string
+  uploadedAt: Date
+  uploadedById: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface KitUploadResponse {
+  id: string
+  kitId: string
+  uploadId: string
+  caption?: string
+  order?: number
+  type: KitImageType
+  createdAt: Date
+  updatedAt: Date
+  kit?: KitResponse
+  upload?: UploadResponse
+
+}

@@ -226,7 +226,7 @@ export function KitEditForm({ kit }: KitEditFormProps) {
       for (const fileId of removedFileIds) {
         try {
           console.log(`Deleting file ${fileId}...`);
-          await deleteKitUpload(fileId);
+          await deleteKitUpload(kit.id, fileId);
           console.log(`Successfully deleted file ${fileId}`);
         } catch (error) {
           console.error(`Error deleting file ${fileId}:`, error);

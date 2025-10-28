@@ -2,8 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { KitImageType } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
+import { apiClient } from "../api-client";
+import { KitResponse, KitUploadResponse, ListResult } from "./type";
 
 export interface CreateUploadData {
   cloudinaryAssetId: string;
@@ -16,6 +17,14 @@ export interface CreateUploadData {
   originalFilename: string;
   uploadedAt: Date;
   uploadedById: string;
+}
+
+enum KitImageType {
+  BOX_ART = "BOX_ART",
+  PRODUCT_SHOTS = "PRODUCT_SHOTS",
+  RUNNERS = "RUNNERS",
+  MANUAL = "MANUAL",
+  PROTOTYPE = "PROTOTYPE",
 }
 
 export async function createUpload(data: CreateUploadData) {
@@ -281,35 +290,10 @@ export async function createKitUpload(data: CreateKitUploadData) {
   if (!userId) {
     throw new Error("Unauthorized");
   }
-
-  // Check if user is admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isAdmin: true },
-  });
-
-  if (!user?.isAdmin) {
-    throw new Error("Admin access required");
-  }
-
   try {
-    const kitUpload = await prisma.kitUpload.create({
-      data: {
-        kitId: data.kitId,
-        uploadId: data.uploadId,
-        type: data.type,
-        caption: data.caption,
-        order: data.order,
-      },
-      include: {
-        upload: true,
-        kit: {
-          select: {
-            slug: true,
-          },
-        },
-      },
-    });
+    const kitUpload = await apiClient.post<KitUploadResponse>(`/kits/${data.kitId}/uploads`, {
+      uploadId: data.uploadId
+    })
 
     // Revalidate kit page
     if (kitUpload.kit.slug) {
@@ -323,42 +307,16 @@ export async function createKitUpload(data: CreateKitUploadData) {
   }
 }
 
-export async function deleteKitUpload(kitUploadId: string) {
+export async function deleteKitUpload(kitId: string, kitUploadId: string) {
   const { userId } = await auth();
   if (!userId) {
     throw new Error("Unauthorized");
   }
-
-  // Check if user is admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isAdmin: true },
-  });
-
-  if (!user?.isAdmin) {
-    throw new Error("Admin access required");
-  }
-
   try {
-    const kitUpload = await prisma.kitUpload.findUnique({
-      where: { id: kitUploadId },
-      include: {
-        kit: {
-          select: {
-            slug: true,
-          },
-        },
-      },
-    });
-
+    const kitUpload = await apiClient.delete<KitUploadResponse>(`/kits/${kitId}/uploads/${kitUploadId}`)
     if (!kitUpload) {
       throw new Error("Kit upload not found");
     }
-
-    await prisma.kitUpload.delete({
-      where: { id: kitUploadId },
-    });
-
     // Revalidate kit page
     if (kitUpload.kit.slug) {
       revalidatePath(`/kits/${kitUpload.kit.slug}`);
@@ -372,15 +330,9 @@ export async function deleteKitUpload(kitUploadId: string) {
 
 export async function getKitUploads(kitId: string) {
   try {
-    const kitUploads = await prisma.kitUpload.findMany({
-      where: { kitId },
-      include: {
-        upload: true,
-      },
-      orderBy: { order: 'asc' },
-    });
+    const kitUploads = await apiClient.get<ListResult<KitUploadResponse>>(`/kits/${kitId}/uploads`)
 
-    return kitUploads;
+    return kitUploads.items
   } catch (error) {
     console.error("Error fetching kit uploads:", error);
     throw new Error("Failed to fetch kit uploads");
@@ -393,28 +345,10 @@ export async function updateKitUploadCaption(kitId: string, kitUploadId: string,
     throw new Error("Unauthorized");
   }
 
-  // Check if user is admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isAdmin: true },
-  });
-
-  if (!user?.isAdmin) {
-    throw new Error("Admin access required");
-  }
-
   try {
-    const kitUpload = await prisma.kitUpload.update({
-      where: { id: kitUploadId },
-      data: { caption },
-      include: {
-        kit: {
-          select: {
-            slug: true,
-          },
-        },
-      },
-    });
+    const kitUpload = await apiClient.put<KitUploadResponse>(`/kits/${kitId}/uploads/${kitUploadId}`, {
+      caption
+    })
 
     // Revalidate kit page
     if (kitUpload.kit.slug) {
@@ -434,28 +368,16 @@ export async function updateKitUploadType(kitId: string, kitUploadId: string, ty
     throw new Error("Unauthorized");
   }
 
-  // Check if user is admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isAdmin: true },
-  });
-
-  if (!user?.isAdmin) {
-    throw new Error("Admin access required");
-  }
-
   try {
-    const kitUpload = await prisma.kitUpload.update({
-      where: { id: kitUploadId },
-      data: { type },
-      include: {
-        kit: {
-          select: {
-            slug: true,
-          },
-        },
-      },
-    });
+    const kitUpload = await apiClient.put<KitUploadResponse>(`/kits/${kitId}/uploads/${kitUploadId}`, {
+      type
+    })
+
+    // Revalidate kit page
+    if (kitUpload.kit.slug) {
+      revalidatePath(`/kits/${kitUpload.kit.slug}`);
+    }
+
 
     // Revalidate kit page
     if (kitUpload.kit.slug) {
@@ -475,33 +397,15 @@ export async function reorderKitUploads(kitId: string, kitUploadIds: string[]) {
     throw new Error("Unauthorized");
   }
 
-  // Check if user is admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { isAdmin: true },
-  });
-
-  if (!user?.isAdmin) {
-    throw new Error("Admin access required");
-  }
-
   try {
     // Update order for each kit upload
-    const updatePromises = kitUploadIds.map((kitUploadId, index) =>
-      prisma.kitUpload.update({
-        where: { id: kitUploadId },
-        data: { order: index },
-      })
-    );
 
-    await Promise.all(updatePromises);
+    await apiClient.post<KitUploadResponse[]>(`/kits/${kitId}/uploads/reorder`, {
+      kitUploadIds
+    })
 
     // Revalidate kit page
-    const kit = await prisma.kit.findUnique({
-      where: { id: kitId },
-      select: { slug: true },
-    });
-
+    const kit = await apiClient.get<KitResponse>(`/kits/${kitId}`,)
     if (kit?.slug) {
       revalidatePath(`/kits/${kit.slug}`);
     }

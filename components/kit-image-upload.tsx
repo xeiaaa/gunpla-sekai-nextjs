@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
-  AlertCircleIcon,
   ImageIcon,
   UploadIcon,
   XIcon,
@@ -13,7 +12,6 @@ import {
   Edit3,
   Save,
 } from "lucide-react";
-import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -32,12 +30,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { KitImageType } from "@/generated/prisma";
 import { getUploadSignature, uploadToCloudinary } from "@/lib/upload-client";
 import {
   createUpload,
   createKitUpload,
-  deleteKitUpload,
   updateKitUploadCaption,
   updateKitUploadType,
   reorderKitUploads,
@@ -62,6 +58,14 @@ import {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import NextImage from "next/image";
+
+enum KitImageType {
+  BOX_ART = "BOX_ART",
+  PRODUCT_SHOTS = "PRODUCT_SHOTS",
+  RUNNERS = "RUNNERS",
+  MANUAL = "MANUAL",
+  PROTOTYPE = "PROTOTYPE",
+}
 
 interface KitImageItem {
   id: string;
@@ -293,7 +297,7 @@ export function KitImageUpload({
           const kitUpload = await createKitUpload({
             kitId,
             uploadId: upload.id,
-            type: "PRODUCT_SHOTS",
+            type: KitImageType.PRODUCT_SHOTS,
             caption: undefined,
             order: imageItems.length,
           });
@@ -679,13 +683,21 @@ export function KitImageUpload({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="BOX_ART">Box Art</SelectItem>
-                        <SelectItem value="PRODUCT_SHOTS">
+                        <SelectItem value={KitImageType.BOX_ART}>
+                          Box Art
+                        </SelectItem>
+                        <SelectItem value={KitImageType.PRODUCT_SHOTS}>
                           Product Shots
                         </SelectItem>
-                        <SelectItem value="RUNNERS">Runners</SelectItem>
-                        <SelectItem value="MANUAL">Manual</SelectItem>
-                        <SelectItem value="PROTOTYPE">Prototype</SelectItem>
+                        <SelectItem value={KitImageType.RUNNERS}>
+                          Runners
+                        </SelectItem>
+                        <SelectItem value={KitImageType.MANUAL}>
+                          Manual
+                        </SelectItem>
+                        <SelectItem value={KitImageType.PROTOTYPE}>
+                          Prototype
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
