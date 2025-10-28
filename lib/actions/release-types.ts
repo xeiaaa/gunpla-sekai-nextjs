@@ -1,23 +1,17 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+import { ListResult, ReleaseTypeResponse } from "./type";
 
 export async function getAllReleaseTypes() {
   try {
-    const releaseTypes = await prisma.releaseType.findMany({
-      include: {
-        _count: {
-          select: {
-            kits: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
 
-    return releaseTypes.map(releaseType => ({
+    const response = await apiClient.get<ListResult<ReleaseTypeResponse>>(
+      `/release-types?page=1&limit=100&include=_count.kits&sort=name:asc`,
+    );
+
+    return response.items.map(releaseType => ({
       id: releaseType.id,
       name: releaseType.name,
       slug: releaseType.slug,

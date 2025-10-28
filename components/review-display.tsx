@@ -6,11 +6,9 @@ import { Button } from "@/components/ui/button";
 import {
   ReviewWithDetails,
   ReviewStats,
-  REVIEW_CATEGORIES,
   getCategoryInfo,
-  getScoreLabel
+  getScoreLabel,
 } from "@/lib/types/reviews";
-import { ReviewCategory } from "@/generated/prisma";
 import Link from "next/link";
 import { ReviewVotingButtons } from "./review-voting-buttons";
 
@@ -29,7 +27,7 @@ export function ReviewDisplay({
   onEdit,
   onDelete,
   canEdit = false,
-  canDelete = false
+  canDelete = false,
 }: ReviewDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(showFullContent);
 
@@ -55,6 +53,8 @@ export function ReviewDisplay({
     return "bg-red-100";
   };
 
+  console.info(review.updatedAt);
+
   return (
     <Card className="w-full">
       <CardHeader className="pb-3">
@@ -64,7 +64,9 @@ export function ReviewDisplay({
               {review.user?.imageUrl && (
                 <img
                   src={review.user?.imageUrl}
-                  alt={`${review.user.firstName || ''} ${review.user.lastName || ''}`}
+                  alt={`${review.user.firstName || ""} ${
+                    review.user.lastName || ""
+                  }`}
                   className="w-8 h-8 rounded-full"
                 />
               )}
@@ -81,11 +83,14 @@ export function ReviewDisplay({
                     {review.user?.firstName} {review.user?.lastName}
                   </p>
                 )}
+
                 <p className="text-sm text-muted-foreground">
                   {formatDate(review.createdAt)}
-                  {review.updatedAt.getTime() !== review.createdAt.getTime() && (
-                    <span className="ml-1">(edited)</span>
-                  )}
+                  {review.updatedAt &&
+                    new Date(review.updatedAt).getTime() !==
+                      new Date(review.createdAt).getTime() && (
+                      <span className="ml-1">(edited)</span>
+                    )}
                 </p>
               </div>
             </div>
@@ -95,8 +100,14 @@ export function ReviewDisplay({
             )}
 
             <div className="flex items-center space-x-4">
-              <div className={`px-3 py-1 rounded-full ${getScoreBgColor(review.overallScore)}`}>
-                <span className={`font-bold ${getScoreColor(review.overallScore)}`}>
+              <div
+                className={`px-3 py-1 rounded-full ${getScoreBgColor(
+                  review.overallScore
+                )}`}
+              >
+                <span
+                  className={`font-bold ${getScoreColor(review.overallScore)}`}
+                >
                   {review.overallScore}/10
                 </span>
                 <span className="ml-1 text-sm text-muted-foreground">
@@ -109,11 +120,7 @@ export function ReviewDisplay({
           {(canEdit || canDelete) && (
             <div className="flex space-x-2">
               {canEdit && onEdit && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onEdit}
-                >
+                <Button variant="outline" size="sm" onClick={onEdit}>
                   Edit
                 </Button>
               )}
@@ -142,15 +149,28 @@ export function ReviewDisplay({
             {review.categoryScores.map((score) => {
               const categoryInfo = getCategoryInfo(score.category);
               return (
-                <div key={score.category} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div
+                  key={score.category}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                >
                   <div className="flex-1">
                     <p className="font-medium text-sm">{categoryInfo.label}</p>
                     {score.notes && (
-                      <p className="text-xs text-muted-foreground mt-1">{score.notes}</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {score.notes}
+                      </p>
                     )}
                   </div>
-                  <div className={`px-2 py-1 rounded ${getScoreBgColor(score.score)}`}>
-                    <span className={`text-sm font-medium ${getScoreColor(score.score)}`}>
+                  <div
+                    className={`px-2 py-1 rounded ${getScoreBgColor(
+                      score.score
+                    )}`}
+                  >
+                    <span
+                      className={`text-sm font-medium ${getScoreColor(
+                        score.score
+                      )}`}
+                    >
                       {score.score}/10
                     </span>
                   </div>
@@ -173,8 +193,7 @@ export function ReviewDisplay({
                 <p className="whitespace-pre-wrap">
                   {review.content.length > 200
                     ? `${review.content.substring(0, 200)}...`
-                    : review.content
-                  }
+                    : review.content}
                 </p>
               )}
             </div>
@@ -237,14 +256,23 @@ export function ReviewStatsDisplay({ stats }: ReviewStatsDisplayProps) {
       <CardHeader>
         <h3 className="text-lg font-semibold">Review Statistics</h3>
         <p className="text-sm text-muted-foreground">
-          Based on {stats.totalReviews} review{stats.totalReviews !== 1 ? "s" : ""}
+          Based on {stats.totalReviews} review
+          {stats.totalReviews !== 1 ? "s" : ""}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Overall Average */}
         <div className="text-center p-4 bg-gray-50 rounded-lg">
-          <div className={`inline-flex items-center px-4 py-2 rounded-full ${getScoreBgColor(stats.averageScore)}`}>
-            <span className={`text-2xl font-bold ${getScoreColor(stats.averageScore)}`}>
+          <div
+            className={`inline-flex items-center px-4 py-2 rounded-full ${getScoreBgColor(
+              stats.averageScore
+            )}`}
+          >
+            <span
+              className={`text-2xl font-bold ${getScoreColor(
+                stats.averageScore
+              )}`}
+            >
               {stats.averageScore}/10
             </span>
             <span className="ml-2 text-sm text-muted-foreground">
@@ -262,15 +290,27 @@ export function ReviewStatsDisplay({ stats }: ReviewStatsDisplayProps) {
             {stats.categoryAverages.map((categoryAvg) => {
               const categoryInfo = getCategoryInfo(categoryAvg.category);
               return (
-                <div key={categoryAvg.category} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div
+                  key={categoryAvg.category}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                >
                   <div className="flex-1">
                     <p className="font-medium text-sm">{categoryInfo.label}</p>
                     <p className="text-xs text-muted-foreground">
-                      {categoryAvg.reviewCount} review{categoryAvg.reviewCount !== 1 ? "s" : ""}
+                      {categoryAvg.reviewCount} review
+                      {categoryAvg.reviewCount !== 1 ? "s" : ""}
                     </p>
                   </div>
-                  <div className={`px-2 py-1 rounded ${getScoreBgColor(categoryAvg.averageScore)}`}>
-                    <span className={`text-sm font-medium ${getScoreColor(categoryAvg.averageScore)}`}>
+                  <div
+                    className={`px-2 py-1 rounded ${getScoreBgColor(
+                      categoryAvg.averageScore
+                    )}`}
+                  >
+                    <span
+                      className={`text-sm font-medium ${getScoreColor(
+                        categoryAvg.averageScore
+                      )}`}
+                    >
                       {categoryAvg.averageScore}/10
                     </span>
                   </div>
@@ -297,7 +337,7 @@ export function ReviewList({
   showUserActions = false,
   onEdit,
   onDelete,
-  currentUserId
+  currentUserId,
 }: ReviewListProps) {
   if (reviews.length === 0) {
     return (

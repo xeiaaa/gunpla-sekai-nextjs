@@ -1,4 +1,3 @@
-
 export interface KitResponse {
   id: string;
   name: string;
@@ -30,6 +29,20 @@ export interface KitResponse {
   _count: {
     mobileSuits: number;
   };
+}
+
+export interface ReleaseTypeResponse {
+  id: string
+  name: string
+  slug: string
+  logoUrl?: string
+  bannerUrl?: string
+  createdAt: string
+  updatedAt: string
+  _count?: {
+    kits?: number;
+  };
+
 }
 
 export interface ProductLine {

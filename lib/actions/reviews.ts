@@ -5,6 +5,10 @@ import { prisma } from "@/lib/prisma";
 import { ReviewCategory } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
 import type { Prisma } from "../../generated/prisma";
+import { apiClient } from "../api-client";
+import { KitResponse } from "./type";
+import { CategoryScore } from "../types/reviews";
+import { getReviewFeedback } from "./review-feedback";
 
 // Types for review operations
 export interface ReviewScoreInput {
@@ -25,6 +29,19 @@ export interface UpdateReviewInput {
   title?: string;
   content?: string;
   scores?: ReviewScoreInput[];
+}
+
+export interface ReviewResponse {
+  id: string;
+  kitId: string;
+  userId: string;
+  title: string | null;
+  content: string | null;
+  overallScore: number;
+  createdAt: Date;
+  updatedAt: Date;
+  categoryScores: CategoryScore;
+  kit?: KitResponse
 }
 
 // Validation constants
@@ -90,7 +107,7 @@ function validateScores(scores: ReviewScoreInput[]): {
 }
 
 // Check if user has access to review (removed collection requirement)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 async function checkReviewAccess(
   userId: string,
   kitId: string
@@ -112,75 +129,27 @@ export async function createReview(input: CreateReviewInput) {
   if (!userId) {
     throw new Error("User must be authenticated to create a review");
   }
-
-  // Validate scores
-  const validation = validateScores(input.scores);
-  if (!validation.isValid) {
-    throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-  }
-
-  // Check if kit exists
-  const kit = await prisma.kit.findUnique({
-    where: { id: input.kitId },
-  });
-
-  if (!kit) {
-    throw new Error("Kit not found");
-  }
-
-  // Check if user has access to review this kit (now allows all authenticated users)
-  const hasAccess = await checkReviewAccess(userId, input.kitId);
-  if (!hasAccess) {
-    throw new Error("You must be authenticated to review kits");
-  }
-
-  // Check if user already has a review for this kit
-  const existingReview = await prisma.review.findUnique({
-    where: {
-      userId_kitId: {
+  try {
+    const review = await apiClient.post<ReviewResponse>(
+      `/reviews`,
+      {
         userId,
         kitId: input.kitId,
-      },
-    },
-  });
-
-  if (existingReview) {
-    throw new Error("You have already reviewed this kit");
-  }
-
-  // Calculate overall score
-  const overallScore = calculateOverallScore(input.scores);
-
-  try {
-    // Create review with scores in a transaction
-    const review = await prisma.$transaction(async (tx) => {
-      // Create the review
-      const newReview = await tx.review.create({
-        data: {
-          userId,
-          kitId: input.kitId,
-          title: input.title,
-          content: input.content,
-          overallScore,
-        },
-      });
-
-      // Create category scores
-      await tx.reviewScore.createMany({
-        data: input.scores.map((score) => ({
-          reviewId: newReview.id,
+        title: input.title,
+        content: input.content,
+        categoryScores: input.scores.map((score) => ({
           category: score.category,
           score: score.score,
           notes: score.notes,
         })),
-      });
-
-      return newReview;
-    });
-
+      }
+    );
     // Revalidate relevant paths
     revalidatePath("/kits");
-    revalidatePath(`/kits/${kit.slug}`);
+    if (review?.kit) {
+      revalidatePath(`/kits/${review?.kit.slug}`);
+    }
+
     revalidatePath("/collections");
     revalidatePath(`/users/${userId}`);
 
@@ -199,79 +168,25 @@ export async function updateReview(input: UpdateReviewInput) {
     throw new Error("User must be authenticated to update a review");
   }
 
-  // Find the existing review
-  const existingReview = await prisma.review.findUnique({
-    where: { id: input.reviewId },
-    include: { categoryScores: true },
-  });
-
-  if (!existingReview) {
-    throw new Error("Review not found");
-  }
-
-  // Check if user owns this review
-  if (existingReview.userId !== userId) {
-    throw new Error("You can only update your own reviews");
-  }
-
-  // Validate scores if provided
-  if (input.scores) {
-    const validation = validateScores(input.scores);
-    if (!validation.isValid) {
-      throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-    }
-  }
 
   try {
-    // Update review in a transaction
-    const updatedReview = await prisma.$transaction(async (tx) => {
-      // Calculate new overall score if scores are being updated
-      let overallScore = existingReview.overallScore;
-      if (input.scores) {
-        overallScore = calculateOverallScore(input.scores);
+    const updatedReview = await apiClient.put<ReviewResponse>(
+      `/reviews/${input.reviewId}`,
+      {
+        title: input.title,
+        content: input.content,
+        categoryScores: input.scores.map((score) => ({
+          category: score.category,
+          score: score.score,
+          notes: score.notes,
+        }))
       }
-
-      // Update the review
-      const review = await tx.review.update({
-        where: { id: input.reviewId },
-        data: {
-          title: input.title,
-          content: input.content,
-          overallScore,
-          updatedAt: new Date(),
-        },
-      });
-
-      // Update scores if provided
-      if (input.scores) {
-        // Delete existing scores
-        await tx.reviewScore.deleteMany({
-          where: { reviewId: input.reviewId },
-        });
-
-        // Create new scores
-        await tx.reviewScore.createMany({
-          data: input.scores.map((score) => ({
-            reviewId: input.reviewId,
-            category: score.category,
-            score: score.score,
-            notes: score.notes,
-          })),
-        });
-      }
-
-      return review;
-    });
-
-    // Get kit for revalidation
-    const kit = await prisma.kit.findUnique({
-      where: { id: existingReview.kitId },
-    });
+    );
 
     // Revalidate relevant paths
     revalidatePath("/kits");
-    if (kit) {
-      revalidatePath(`/kits/${kit.slug}`);
+    if (updatedReview?.kit?.slug) {
+      revalidatePath(`/kits/${updatedReview?.kit?.slug}`);
     }
     revalidatePath("/collections");
     revalidatePath(`/users/${userId}`);
@@ -291,35 +206,15 @@ export async function deleteReview(reviewId: string) {
     throw new Error("User must be authenticated to delete a review");
   }
 
-  // Find the existing review
-  const existingReview = await prisma.review.findUnique({
-    where: { id: reviewId },
-  });
-
-  if (!existingReview) {
-    throw new Error("Review not found");
-  }
-
-  // Check if user owns this review
-  if (existingReview.userId !== userId) {
-    throw new Error("You can only delete your own reviews");
-  }
-
   try {
-    // Get kit for revalidation before deletion
-    const kit = await prisma.kit.findUnique({
-      where: { id: existingReview.kitId },
-    });
-
     // Delete the review (cascade will handle scores)
-    await prisma.review.delete({
-      where: { id: reviewId },
-    });
-
+    const deletedReview = await apiClient.delete<ReviewResponse>(
+      `/reviews/${reviewId}`,
+    );
     // Revalidate relevant paths
     revalidatePath("/kits");
-    if (kit) {
-      revalidatePath(`/kits/${kit.slug}`);
+    if (deletedReview?.kit) {
+      revalidatePath(`/kits/${deletedReview?.kit.slug}`);
     }
     revalidatePath("/collections");
     revalidatePath(`/users/${userId}`);
@@ -369,6 +264,7 @@ export async function getKitReviews(
       isHelpful: true,
     },
   });
+
 
   // Get user's feedback for all reviews if authenticated
   let userFeedback: Array<{
@@ -425,93 +321,43 @@ export async function getUserKitReview(kitId: string) {
     return null;
   }
 
-  const review = await prisma.review.findUnique({
-    where: {
-      userId_kitId: {
-        userId,
-        kitId,
-      },
-    },
-    include: {
-      user: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          imageUrl: true,
-          username: true,
-        },
-      },
-      categoryScores: true,
-    },
-  });
+  const review = await apiClient.get<ReviewResponse>(
+    `/reviews/kit/${kitId}`,
+  );
 
   if (!review) {
     return null;
   }
 
-  // Get feedback data for this review
-  const feedbackCounts = await prisma.reviewFeedback.groupBy({
-    by: ["isHelpful"],
-    where: { reviewId: review.id },
-    _count: {
-      isHelpful: true,
-    },
-  });
-
-  const helpfulCount =
-    feedbackCounts.find((f) => f.isHelpful)?._count.isHelpful || 0;
-  const notHelpfulCount =
-    feedbackCounts.find((f) => !f.isHelpful)?._count.isHelpful || 0;
-
-  // Get user's feedback for this review
-  const userFeedback = await prisma.reviewFeedback.findUnique({
-    where: {
-      reviewId_userId: {
-        reviewId: review.id,
-        userId,
-      },
-    },
-  });
-
+  const feedback = await getReviewFeedback(review.id)
   return {
     ...review,
-    feedback: {
-      helpful: helpfulCount,
-      notHelpful: notHelpfulCount,
-      userFeedback: userFeedback ? { isHelpful: userFeedback.isHelpful } : null,
-    },
+    feedback: feedback ? {
+      helpful: feedback.counts.helpful,
+      notHelpful: feedback.counts.notHelpful,
+      userFeedback: feedback.userFeedback
+    } : null,
   };
 }
 
 // Get review statistics for a kit
 export async function getKitReviewStats(kitId: string) {
-  const stats = await prisma.review.aggregate({
-    where: { kitId },
-    _count: { id: true },
-    _avg: { overallScore: true },
-  });
-
-  // Get category averages
-  const categoryStats = await prisma.reviewScore.groupBy({
-    by: ["category"],
-    where: {
-      review: { kitId },
-    },
-    _avg: { score: true },
-    _count: { score: true },
-  });
+  const stats = await apiClient.get<{
+    totalReviews: number;
+    overallAverage: number;
+    categoryAverages: Record<ReviewCategory, number>;
+  }>(
+    `/kits/${kitId}/reviews/stats`,
+  );
 
   return {
-    totalReviews: stats._count.id,
-    averageScore: stats._avg.overallScore
-      ? Math.round(stats._avg.overallScore * 10) / 10
-      : 0,
-    categoryAverages: categoryStats.map((stat) => ({
-      category: stat.category,
-      averageScore: stat._avg.score ? Math.round(stat._avg.score * 10) / 10 : 0,
-      reviewCount: stat._count.score,
-    })),
+    ...stats,
+    averageScore: stats.overallAverage,
+    categoryAverages: Object.entries(stats.categoryAverages).map(([category, averageScore]) => ({
+      category,
+      averageScore,
+      reviewCount: stats.totalReviews,
+    }))
   };
 }
 

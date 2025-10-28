@@ -2,11 +2,19 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { apiClient } from "../api-client";
 
 export interface ReviewFeedbackCounts {
   helpful: number;
   notHelpful: number;
 }
+
+export interface ReviewFeedbackCountsResponse {
+  helpfulCount: number;
+  notHelpfulCount: number;
+}
+
+export interface UserFeedback { isHelpful: boolean }
 
 export interface ReviewFeedbackData {
   counts: ReviewFeedbackCounts;
@@ -17,41 +25,21 @@ export interface ReviewFeedbackData {
 
 export async function getReviewFeedback(reviewId: string): Promise<ReviewFeedbackData> {
   try {
-    const { userId } = await auth();
+    const reviewFeedbackCountResponse = await apiClient.get<ReviewFeedbackCountsResponse>(
+      `/reviews/${reviewId}/feedback-summary`,
+    );
 
-    // Get feedback counts
-    const feedbackCounts = await prisma.reviewFeedback.groupBy({
-      by: ["isHelpful"],
-      where: { reviewId },
-      _count: {
-        isHelpful: true,
-      },
-    });
-
-    const helpfulCount = feedbackCounts.find(f => f.isHelpful)?._count.isHelpful || 0;
-    const notHelpfulCount = feedbackCounts.find(f => !f.isHelpful)?._count.isHelpful || 0;
-
-    // Get user's feedback if authenticated
-    let userFeedback = null;
-    if (userId) {
-      const feedback = await prisma.reviewFeedback.findUnique({
-        where: {
-          reviewId_userId: {
-            reviewId,
-            userId,
-          },
-        },
-      });
-      userFeedback = feedback ? { isHelpful: feedback.isHelpful } : null;
-    }
+    const userFeedbackResponse = await apiClient.get<UserFeedback>(
+      `/reviews/${reviewId}/user-feedback`,
+    );
 
     return {
       counts: {
-        helpful: helpfulCount,
-        notHelpful: notHelpfulCount,
+        helpful: reviewFeedbackCountResponse.helpfulCount,
+        notHelpful: reviewFeedbackCountResponse.notHelpfulCount
       },
-      userFeedback,
-    };
+      userFeedback: userFeedbackResponse
+    }
   } catch (error) {
     console.error("Error fetching review feedback:", error);
     throw new Error("Failed to fetch review feedback");
@@ -64,38 +52,13 @@ export async function submitReviewFeedback(
 ): Promise<ReviewFeedbackData> {
   try {
     const { userId } = await auth();
-
     if (!userId) {
       throw new Error("Unauthorized");
     }
-
-    // Check if review exists
-    const review = await prisma.review.findUnique({
-      where: { id: reviewId },
-    });
-
-    if (!review) {
-      throw new Error("Review not found");
-    }
-
-    // Upsert feedback (create or update)
-    await prisma.reviewFeedback.upsert({
-      where: {
-        reviewId_userId: {
-          reviewId,
-          userId,
-        },
-      },
-      update: {
-        isHelpful,
-      },
-      create: {
-        reviewId,
-        userId,
-        isHelpful,
-      },
-    });
-
+    await apiClient.post(
+      `/reviews/${reviewId}/feedbacks`,
+      { isHelpful },
+    );
     // Return updated feedback data
     return await getReviewFeedback(reviewId);
   } catch (error) {
@@ -113,12 +76,9 @@ export async function removeReviewFeedback(reviewId: string): Promise<ReviewFeed
     }
 
     // Delete user's feedback for this review
-    await prisma.reviewFeedback.deleteMany({
-      where: {
-        reviewId,
-        userId,
-      },
-    });
+    await apiClient.delete(
+      `/reviews/${reviewId}/feedback`,
+    );
 
     // Return updated feedback data
     return await getReviewFeedback(reviewId);
