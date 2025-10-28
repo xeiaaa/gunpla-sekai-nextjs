@@ -1,23 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+import { ListResult, TimelineResponse } from "./type";
 
 export async function getAllTimelines() {
   try {
-    const timelines = await prisma.timeline.findMany({
-      include: {
-        _count: {
-          select: {
-            series: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
+    const response = await apiClient.get<ListResult<TimelineResponse>>(
+      `/timelines?sort=name:asc&include=_count.series&limit=100`,
+    )
 
-    return timelines.map(timeline => ({
+    return response.items.map(timeline => ({
       id: timeline.id,
       name: timeline.name,
       slug: timeline.slug,
@@ -88,13 +81,11 @@ export async function createTimeline(data: {
   description?: string;
 }) {
   try {
-    const timeline = await prisma.timeline.create({
-      data: {
-        name: data.name,
-        slug: data.slug || data.name.toLowerCase().replace(/\s+/g, '-'),
-        description: data.description,
-      },
-    });
+
+    const timeline = await apiClient.post<TimelineResponse>(
+      `/timelines`,
+      data
+    )
 
     return { success: true, timeline };
   } catch (error) {
@@ -109,10 +100,10 @@ export async function updateTimeline(id: string, data: {
   description?: string;
 }) {
   try {
-    const timeline = await prisma.timeline.update({
-      where: { id },
-      data,
-    });
+    const timeline = await apiClient.patch<TimelineResponse>(
+      `/timelines/${id}`,
+      data
+    )
 
     return { success: true, timeline };
   } catch (error) {
@@ -123,32 +114,7 @@ export async function updateTimeline(id: string, data: {
 
 export async function deleteTimeline(id: string) {
   try {
-    // First check if timeline has series
-    const timeline = await prisma.timeline.findUnique({
-      where: { id },
-      include: {
-        _count: {
-          select: {
-            series: true,
-          },
-        },
-      },
-    });
-
-    if (!timeline) {
-      return { success: false, error: 'Timeline not found' };
-    }
-
-    if (timeline._count.series > 0) {
-      return {
-        success: false,
-        error: `Cannot delete timeline with ${timeline._count.series} series. Please reassign or delete the series first.`
-      };
-    }
-
-    await prisma.timeline.delete({
-      where: { id },
-    });
+    await apiClient.delete(`/timelines/${id}`);
 
     return { success: true };
   } catch (error) {

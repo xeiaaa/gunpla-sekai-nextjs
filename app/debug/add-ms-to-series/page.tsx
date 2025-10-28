@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { TimelineResponse } from "@/lib/actions/type";
 
 interface MobileSuit {
   id: string;
@@ -34,11 +35,7 @@ interface Series {
   name: string;
   slug: string | null;
   description: string | null;
-  timeline: {
-    id: string;
-    name: string;
-    slug: string | null;
-  } | null;
+  timeline: TimelineResponse | null;
   mobileSuitsCount: number;
   kitsCount: number;
   scrapedImages: string[];

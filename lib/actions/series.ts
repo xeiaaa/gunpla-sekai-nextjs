@@ -1,6 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { apiClient } from "../api-client";
+import { ListResult, SeriesResponse } from "./type";
 
 export async function getSeriesBySlug(slug: string) {
   try {
@@ -65,28 +67,12 @@ export async function getSeriesBySlug(slug: string) {
 
 export async function getAllSeries() {
   try {
-    const series = await prisma.series.findMany({
-      include: {
-        timeline: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          },
-        },
-        _count: {
-          select: {
-            mobileSuits: true,
-            kits: true,
-          },
-        },
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
 
-    return series.map(series => ({
+    const response = await apiClient.get<ListResult<SeriesResponse>>(
+      `/series?sort=name:asc&include=timeline,_count.mobileSuits,_count.kits&limit=200`,
+    );
+
+    return response.items.map(series => ({
       id: series.id,
       name: series.name,
       slug: series.slug,

@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { apiClient } from "../api-client";
-import { KitResponse, ListResult, ProductLine, Series } from "./type";
+import { KitResponse, ListResult, SeriesResponse } from "./type";
 
 interface KitFilters {
   gradeIds?: string[];
@@ -526,7 +526,7 @@ export async function updateKitExpandedBy(
 
 export async function getAllSeries() {
   try {
-    const response = await apiClient.get<ListResult<Series>>(
+    const response = await apiClient.get<ListResult<SeriesResponse>>(
       `/series?limit=200&select=id,name,slug&sort=name:asc`,
     );
 
@@ -552,7 +552,7 @@ export async function getSeries({
     const page = Math.floor(skip / take) + 1;
     const limit = take;
 
-    const response = await apiClient.get<ListResult<ProductLine>>(
+    const response = await apiClient.get<ListResult<SeriesResponse>>(
       `/series?search=${search}&page=${page}&limit=${limit}&sort=name:asc&select=id,name,slug`,
     );
 

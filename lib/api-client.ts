@@ -55,7 +55,16 @@ async function request<T>(
     );
   }
 
-  return response.json();
+  // ✅ Handle empty response or JSON safely
+  const contentType = response.headers.get("content-type");
+
+  if (contentType && contentType.includes("application/json")) {
+    return response.json(); // ✅ Parse valid JSON
+  } else {
+    // ✅ Return text or empty response safely
+    const text = await response.text();
+    return (text ? (text as unknown as T) : ({} as T));
+  }
 }
 
 export const apiClient = {

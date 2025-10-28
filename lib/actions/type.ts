@@ -66,10 +66,49 @@ export interface ProductLine {
   };
 }
 
-export interface Series {
+export interface MobileSuitResponse {
   id: string
   name: string
-  slug: string
+  slug?: string
+  description?: string
+  seriesId?: string
+  scrapedImages: string[]
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface TimelineResponse {
+  id: string
+  name: string
+  slug?: string
+  description?: string
+  createdAt: Date
+  updatedAt: Date
+  _count?: {
+    series?: number;
+  };
+}
+
+export interface SeriesResponse {
+  id: string
+  name: string
+  slug?: string
+  description?: string
+  timelineId?: string
+  logoUrl?: string
+  bannerUrl?: string
+  scrapedImages: string[]
+  createdAt: Date
+  updatedAt: Date
+  _count?: {
+    kits?: number;
+    mobileSuits?: number;
+  };
+
+  timeline?: TimelineResponse
+  mobileSuits?: MobileSuitResponse[]
+  kits?: KitResponse[]
+
 }
 
 export interface ListResult<T> {
