@@ -1,7 +1,7 @@
+// lib/apiClient.server.ts
 import { auth } from "@clerk/nextjs/server";
 
-// lib/apiClient.ts
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
+const apiUrl = process.env.API_URL || "http://localhost:3000/api/v1"; // Full URL for server-side
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -17,7 +17,7 @@ async function request<T>(
   options: RequestOptions = {}
 ): Promise<T> {
   const { getToken } = await auth();
-  const token = await getToken()
+  const token = await getToken();
 
   const queryString = options.query
     ? "?" +
@@ -31,7 +31,6 @@ async function request<T>(
 
   const url = `${apiUrl}${endpoint}${queryString}`;
 
-  // Build headers safely
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
@@ -41,11 +40,11 @@ async function request<T>(
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-
   const response = await fetch(url, {
     method,
     headers,
     body: options.body ? JSON.stringify(options.body) : undefined,
+    cache: 'no-store', // Important for server-side requests
   });
 
   if (!response.ok) {
@@ -55,13 +54,11 @@ async function request<T>(
     );
   }
 
-  // ✅ Handle empty response or JSON safely
   const contentType = response.headers.get("content-type");
 
   if (contentType && contentType.includes("application/json")) {
-    return response.json(); // ✅ Parse valid JSON
+    return response.json();
   } else {
-    // ✅ Return text or empty response safely
     const text = await response.text();
     return (text ? (text as unknown as T) : ({} as T));
   }

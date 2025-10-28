@@ -159,3 +159,31 @@ export interface KitUploadResponse {
   upload?: UploadResponse
 
 }
+
+export interface UserResponse {
+  id: string;
+  email: string;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  avatarUrl: string | null;
+  bio: string | null;
+  instagramUrl: string | null;
+  twitterUrl: string | null;
+  youtubeUrl: string | null;
+  portfolioUrl: string | null;
+  themeColor: string | null;
+  isPublic: boolean;
+  showCollections: boolean;
+  showBuilds: boolean;
+  showActivity: boolean;
+  showBadges: boolean;
+  emailNotifications: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+
+  builds: number;
+  collections: number;
+  reviews: number;
+}
+

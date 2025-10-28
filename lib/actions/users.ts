@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { CollectionStatus } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
+import { apiClient } from "../api-client";
+import { UserResponse } from "./type";
 
 export interface UserProfileData {
   id: string;
@@ -177,14 +179,14 @@ export async function getUserByUsername(
     const allFeedbackCounts =
       reviewIds.length > 0
         ? await prisma.reviewFeedback.groupBy({
-            by: ["reviewId", "isHelpful"],
-            where: {
-              reviewId: { in: reviewIds },
-            },
-            _count: {
-              isHelpful: true,
-            },
-          })
+          by: ["reviewId", "isHelpful"],
+          where: {
+            reviewId: { in: reviewIds },
+          },
+          _count: {
+            isHelpful: true,
+          },
+        })
         : [];
 
     // Create a map for quick lookup
@@ -253,33 +255,7 @@ export async function getUserByUsername(
 
 export async function getUserById(userId: string) {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        avatarUrl: true,
-        createdAt: true,
-        // Gunpla Sekai specific fields
-        bio: true,
-        instagramUrl: true,
-        twitterUrl: true,
-        youtubeUrl: true,
-        portfolioUrl: true,
-        bannerImageUrl: true,
-        themeColor: true,
-        isPublic: true,
-        showCollections: true,
-        showBuilds: true,
-        showActivity: true,
-        showBadges: true,
-        emailNotifications: true,
-      },
-    });
-
+    const user = await apiClient.get<UserResponse>(`/users/${userId}`)
     return user;
   } catch (error) {
     console.error("Error fetching user by ID:", error);
@@ -290,18 +266,7 @@ export async function getUserById(userId: string) {
 // Optimized function for basic user info (metadata generation)
 export async function getUserBasicInfo(username: string) {
   try {
-    const user = await prisma.user.findUnique({
-      where: { username },
-      select: {
-        id: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        avatarUrl: true,
-        createdAt: true,
-      },
-    });
+    const user = await apiClient.get<UserResponse>(`/users/username/:${username}`)
 
     return user;
   } catch (error) {
@@ -391,14 +356,14 @@ export async function getUserProfileById(
     const allFeedbackCounts =
       reviewIds.length > 0
         ? await prisma.reviewFeedback.groupBy({
-            by: ["reviewId", "isHelpful"],
-            where: {
-              reviewId: { in: reviewIds },
-            },
-            _count: {
-              isHelpful: true,
-            },
-          })
+          by: ["reviewId", "isHelpful"],
+          where: {
+            reviewId: { in: reviewIds },
+          },
+          _count: {
+            isHelpful: true,
+          },
+        })
         : [];
 
     // Create a map for quick lookup
@@ -484,34 +449,7 @@ export interface UpdateUserData {
 
 export async function updateUser(userId: string, data: UpdateUserData) {
   try {
-    const user = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        ...data,
-        updatedAt: new Date(),
-      },
-      select: {
-        id: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        avatarUrl: true,
-        bio: true,
-        instagramUrl: true,
-        twitterUrl: true,
-        youtubeUrl: true,
-        portfolioUrl: true,
-        bannerImageUrl: true,
-        themeColor: true,
-        isPublic: true,
-        showCollections: true,
-        showBuilds: true,
-        showActivity: true,
-        showBadges: true,
-        emailNotifications: true,
-      },
-    });
+    const user = await apiClient.put<UserResponse>(`/users/${userId}`, data)
 
     // Revalidate the user's public profile page if they have a username
     if (user.username) {
