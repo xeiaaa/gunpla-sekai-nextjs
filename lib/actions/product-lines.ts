@@ -17,13 +17,10 @@ export async function getAllProductLines() {
           },
         },
       },
-      orderBy: [
-        { grade: { name: "asc" } },
-        { name: "asc" },
-      ],
+      orderBy: [{ grade: { name: "asc" } }, { name: "asc" }],
     });
 
-    return productLines.map(productLine => ({
+    return productLines.map((productLine) => ({
       id: productLine.id,
       name: productLine.name,
       slug: productLine.slug,
@@ -33,7 +30,7 @@ export async function getAllProductLines() {
       scrapedImage: productLine.scrapedImage,
     }));
   } catch (error) {
-    console.error('Error fetching all product lines:', error);
+    console.error("Error fetching all product lines:", error);
     return [];
   }
 }
@@ -79,12 +76,16 @@ export async function getProductLineBySlug(slug: string) {
       scrapedImage: productLine.scrapedImage,
     };
   } catch (error) {
-    console.error('Error fetching product line by slug:', error);
+    console.error("Error fetching product line by slug:", error);
     return null;
   }
 }
 
-export async function getProductLineKits(productLineId: string, limit: number = 20, offset: number = 0) {
+export async function getProductLineKits(
+  productLineId: string,
+  limit: number = 20,
+  offset: number = 0
+) {
   try {
     const kits = await prisma.kit.findMany({
       where: { productLineId },
@@ -119,15 +120,12 @@ export async function getProductLineKits(productLineId: string, limit: number = 
           },
         },
       },
-      orderBy: [
-        { releaseDate: "desc" },
-        { name: "asc" },
-      ],
+      orderBy: [{ releaseDate: "desc" }, { name: "asc" }],
       take: limit,
       skip: offset,
     });
 
-    return kits.map(kit => ({
+    return kits.map((kit) => ({
       id: kit.id,
       name: kit.name,
       slug: kit.slug,
@@ -140,10 +138,10 @@ export async function getProductLineKits(productLineId: string, limit: number = 
       productLine: kit.productLine?.name || null,
       series: kit.series?.name || null,
       releaseType: kit.releaseType?.name || null,
-      mobileSuits: kit.mobileSuits.map(ms => ms.mobileSuit.name),
+      mobileSuits: kit.mobileSuits.map((ms) => ms.mobileSuit.name),
     }));
   } catch (error) {
-    console.error('Error fetching product line kits:', error);
+    console.error("Error fetching product line kits:", error);
     return [];
   }
 }
