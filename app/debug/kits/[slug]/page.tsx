@@ -75,6 +75,7 @@ export default async function KitEditPage({ params }: KitEditPageProps) {
     ...kit,
     uploads: orderedUploads,
     name: kit.fullName,
+    releaseTypeId: kit.releaseTypeId,
     baseKit: kit.baseKit
       ? {
           id: kit.baseKit.id,

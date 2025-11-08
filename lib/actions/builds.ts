@@ -66,23 +66,31 @@ export async function createBuild(data: CreateBuildData) {
     });
 
     // Automatically add/update kit in user's collection with BUILT status
-    await prisma.userKitCollection.upsert({
+    const existingCollection = await prisma.userKitCollection.findFirst({
       where: {
-        userId_kitId: {
-          userId,
-          kitId: data.kitId,
-        },
-      },
-      update: {
-        status: "BUILT",
-        updatedAt: new Date(),
-      },
-      create: {
         userId,
         kitId: data.kitId,
-        status: "BUILT",
       },
+      select: { id: true },
     });
+
+    if (existingCollection) {
+      await prisma.userKitCollection.update({
+        where: { id: existingCollection.id },
+        data: {
+          status: "BUILT",
+          updatedAt: new Date(),
+        },
+      });
+    } else {
+      await prisma.userKitCollection.create({
+        data: {
+          userId,
+          kitId: data.kitId,
+          status: "BUILT",
+        },
+      });
+    }
 
     // Get user's username for proper cache invalidation
     const user = await prisma.user.findUnique({

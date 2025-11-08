@@ -22,24 +22,31 @@ export async function addToCollection(kitId: string, status: CollectionStatus) {
       throw new Error("Kit not found");
     }
 
-    // Upsert collection entry (update if exists, create if not)
-    const collection = await prisma.userKitCollection.upsert({
-      where: {
-        userId_kitId: {
+    // Update existing collection entry if present, otherwise create a new one
+    const existingCollection = await prisma.userKitCollection.findFirst({
+      where: { userId, kitId },
+      select: { id: true },
+    });
+
+    let collection;
+
+    if (existingCollection) {
+      collection = await prisma.userKitCollection.update({
+        where: { id: existingCollection.id },
+        data: {
+          status,
+          updatedAt: new Date(),
+        },
+      });
+    } else {
+      collection = await prisma.userKitCollection.create({
+        data: {
           userId,
           kitId,
+          status,
         },
-      },
-      update: {
-        status,
-        updatedAt: new Date(),
-      },
-      create: {
-        userId,
-        kitId,
-        status,
-      },
-    });
+      });
+    }
 
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
@@ -69,14 +76,16 @@ export async function removeFromCollection(kitId: string) {
       throw new Error("Kit not found");
     }
 
-    await prisma.userKitCollection.delete({
-      where: {
-        userId_kitId: {
-          userId,
-          kitId,
-        },
-      },
+    const existingCollection = await prisma.userKitCollection.findFirst({
+      where: { userId, kitId },
+      select: { id: true },
     });
+
+    if (existingCollection) {
+      await prisma.userKitCollection.delete({
+        where: { id: existingCollection.id },
+      });
+    }
 
     revalidatePath("/kits");
     revalidatePath(`/kits/${kit.slug}`);
@@ -109,13 +118,17 @@ export async function updateCollectionStatus(
       throw new Error("Kit not found");
     }
 
+    const existingCollection = await prisma.userKitCollection.findFirst({
+      where: { userId, kitId },
+      select: { id: true },
+    });
+
+    if (!existingCollection) {
+      throw new Error("Collection entry not found");
+    }
+
     const collection = await prisma.userKitCollection.update({
-      where: {
-        userId_kitId: {
-          userId,
-          kitId,
-        },
-      },
+      where: { id: existingCollection.id },
       data: {
         status,
         updatedAt: new Date(),
@@ -188,13 +201,8 @@ export async function getKitCollectionStatus(kitId: string) {
   }
 
   try {
-    const collection = await prisma.userKitCollection.findUnique({
-      where: {
-        userId_kitId: {
-          userId,
-          kitId,
-        },
-      },
+    const collection = await prisma.userKitCollection.findFirst({
+      where: { userId, kitId },
     });
 
     return collection?.status || null;

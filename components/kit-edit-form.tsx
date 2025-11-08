@@ -31,6 +31,7 @@ import { deleteKitUpload } from "@/lib/actions/uploads";
 import { KitImageType } from "@/generated/prisma";
 import { useInvalidateKitQueries } from "@/hooks/use-kit-detail";
 import { useQueryClient } from "@tanstack/react-query";
+import { getAllReleaseTypes } from "@/lib/actions/release-types";
 
 interface KitEditFormProps {
   kit: {
@@ -46,6 +47,7 @@ interface KitEditFormProps {
     notes?: string | null;
     scrapedImages: string[];
     productLineId?: string | null;
+    releaseTypeId?: string | null;
     seriesId?: string | null;
     series?: string | null;
     baseKitId?: string | null;
@@ -131,6 +133,9 @@ export function KitEditForm({ kit }: KitEditFormProps) {
   const [productLines, setProductLines] = useState<
     Array<{ id: string; name: string; slug: string; grade: { name: string } }>
   >([]);
+  const [releaseTypes, setReleaseTypes] = useState<
+    Array<{ id: string; name: string; slug: string; kitsCount: number }>
+  >([]);
   const [mobileSuits, setMobileSuits] = useState(kit.mobileSuits);
   const [baseKit, setBaseKit] = useState(kit.baseKit);
   const [expansions, setExpansions] = useState(kit.expansions);
@@ -149,22 +154,27 @@ export function KitEditForm({ kit }: KitEditFormProps) {
     notes: kit.notes || "",
     scrapedImages: kit.scrapedImages.join("\n"),
     productLineId: kit.productLineId || "none",
+    releaseTypeId: kit.releaseTypeId || "none",
     seriesId: kit.seriesId || null,
     baseKitId: kit.baseKitId || null,
   });
 
-  // Fetch product lines on component mount
+  // Fetch product lines and release types on component mount
   useEffect(() => {
-    const fetchProductLines = async () => {
+    const fetchReferenceData = async () => {
       try {
-        const lines = await getAllProductLines();
+        const [lines, types] = await Promise.all([
+          getAllProductLines(),
+          getAllReleaseTypes(),
+        ]);
         setProductLines(lines);
+        setReleaseTypes(types);
       } catch (error) {
-        console.error("Error fetching product lines:", error);
+        console.error("Error fetching product lines or release types:", error);
       }
     };
 
-    fetchProductLines();
+    fetchReferenceData();
   }, []);
 
   const handleInputChange = (field: string, value: string) => {
@@ -254,6 +264,10 @@ export function KitEditForm({ kit }: KitEditFormProps) {
           formData.productLineId === "none"
             ? null
             : formData.productLineId || null,
+        releaseTypeId:
+          formData.releaseTypeId === "none"
+            ? null
+            : formData.releaseTypeId || null,
         seriesId: formData.seriesId,
         baseKitId: formData.baseKitId,
       };
@@ -489,6 +503,28 @@ export function KitEditForm({ kit }: KitEditFormProps) {
                   </SelectContent>
                 </Select>
               </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="releaseTypeId">Release Type</Label>
+              <Select
+                value={formData.releaseTypeId}
+                onValueChange={(value) =>
+                  handleInputChange("releaseTypeId", value)
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a release type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No Release Type</SelectItem>
+                  {releaseTypes.map((releaseType) => (
+                    <SelectItem key={releaseType.id} value={releaseType.id}>
+                      {releaseType.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
               <div className="space-y-2">
                 <Label htmlFor="seriesId">Series</Label>

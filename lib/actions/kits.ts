@@ -781,6 +781,7 @@ export async function getKitBySlug(slug: string) {
       manualLinks: kit.manualLinks,
       scrapedImages: kit.scrapedImages,
       productLineId: kit.productLineId,
+      releaseTypeId: kit.releaseTypeId,
       baseKitId: kit.baseKitId,
       productLine: kit.productLine
         ? {
@@ -900,6 +901,7 @@ export interface UpdateKitData {
   notes?: string;
   scrapedImages?: string[];
   productLineId?: string | null;
+  releaseTypeId?: string | null;
   seriesId?: string | null;
   baseKitId?: string | null;
 }
