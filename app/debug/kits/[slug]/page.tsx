@@ -29,9 +29,11 @@ export default async function KitEditPage({ params }: KitEditPageProps) {
   // Check if user is admin
   const isAdmin = await isCurrentUserAdmin();
 
-  if (!isAdmin) {
-    redirect("/");
-  }
+  console.log("isCurrentUserAdmin", isAdmin);
+
+  // if (!isAdmin) {
+  //   redirect("/");
+  // }
 
   const { slug } = await params;
   const kit = await getKitBySlug(slug);
