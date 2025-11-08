@@ -565,7 +565,10 @@ export async function getCurrentUser() {
 
 export async function isCurrentUserAdmin() {
   try {
+    console.log("------------------------");
     const user = await getCurrentUser();
+    console.log(user);
+    console.log("------------------------");
     return user?.isAdmin || false;
   } catch (error) {
     console.error("Error checking admin status:", error);
