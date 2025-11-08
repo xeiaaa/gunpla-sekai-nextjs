@@ -442,21 +442,27 @@ export function KitImageUpload({
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
+      const previousItems = imageItems;
       const oldIndex = sortedItems.findIndex((item) => item.id === active.id);
       const newIndex = sortedItems.findIndex((item) => item.id === over.id);
 
       // Update local state immediately for responsive UI
-      const newItems = arrayMove(sortedItems, oldIndex, newIndex);
-      setImageItems(newItems);
+      const reorderedItems = arrayMove(sortedItems, oldIndex, newIndex).map(
+        (item, index) => ({
+          ...item,
+          order: index,
+        })
+      );
+      setImageItems(reorderedItems);
 
       // Update order in database
       try {
-        const kitUploadIds = newItems.map((item) => item.kitUploadId);
+        const kitUploadIds = reorderedItems.map((item) => item.kitUploadId);
         await reorderKitUploads(kitId, kitUploadIds);
       } catch (error) {
         console.error("Error reordering image items:", error);
         // Revert local state on error
-        setImageItems(imageItems);
+        setImageItems(previousItems);
       }
     }
   };

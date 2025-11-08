@@ -163,6 +163,16 @@ export type WikiSubmissionComment = $Result.DefaultSelection<Prisma.$WikiSubmiss
  * 
  */
 export type WikiSubmissionLike = $Result.DefaultSelection<Prisma.$WikiSubmissionLikePayload>
+/**
+ * Model UserWishlist
+ * 
+ */
+export type UserWishlist = $Result.DefaultSelection<Prisma.$UserWishlistPayload>
+/**
+ * Model UserRecommendation
+ * 
+ */
+export type UserRecommendation = $Result.DefaultSelection<Prisma.$UserRecommendationPayload>
 
 /**
  * Enums
@@ -245,6 +255,8 @@ export const MilestoneType: {
   DECALS: 'DECALS',
   TOPCOAT: 'TOPCOAT',
   PHOTOGRAPHY: 'PHOTOGRAPHY',
+  CLEANUP: 'CLEANUP',
+  MODIFICATION: 'MODIFICATION',
   COMPLETION: 'COMPLETION'
 };
 
@@ -727,6 +739,26 @@ export class PrismaClient<
     * ```
     */
   get wikiSubmissionLike(): Prisma.WikiSubmissionLikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userWishlist`: Exposes CRUD operations for the **UserWishlist** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserWishlists
+    * const userWishlists = await prisma.userWishlist.findMany()
+    * ```
+    */
+  get userWishlist(): Prisma.UserWishlistDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userRecommendation`: Exposes CRUD operations for the **UserRecommendation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserRecommendations
+    * const userRecommendations = await prisma.userRecommendation.findMany()
+    * ```
+    */
+  get userRecommendation(): Prisma.UserRecommendationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -785,7 +817,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.0
+   * Prisma Client JS version: 6.16.2
    * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
@@ -1196,7 +1228,9 @@ export namespace Prisma {
     MarketplaceListing: 'MarketplaceListing',
     WikiSubmission: 'WikiSubmission',
     WikiSubmissionComment: 'WikiSubmissionComment',
-    WikiSubmissionLike: 'WikiSubmissionLike'
+    WikiSubmissionLike: 'WikiSubmissionLike',
+    UserWishlist: 'UserWishlist',
+    UserRecommendation: 'UserRecommendation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1215,7 +1249,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "vendor" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing" | "wikiSubmission" | "wikiSubmissionComment" | "wikiSubmissionLike"
+      modelProps: "timeline" | "series" | "mobileSuit" | "grade" | "vendor" | "productLine" | "releaseType" | "kit" | "gunplaCard" | "kitMobileSuit" | "kitRelation" | "upload" | "kitUpload" | "mobileSuitUpload" | "buildUpload" | "buildMilestoneUpload" | "user" | "userKitCollection" | "review" | "reviewScore" | "reviewFeedback" | "build" | "buildMilestone" | "buildLike" | "buildComment" | "userStore" | "marketplaceListing" | "wikiSubmission" | "wikiSubmissionComment" | "wikiSubmissionLike" | "userWishlist" | "userRecommendation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3439,6 +3473,154 @@ export namespace Prisma {
           }
         }
       }
+      UserWishlist: {
+        payload: Prisma.$UserWishlistPayload<ExtArgs>
+        fields: Prisma.UserWishlistFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserWishlistFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserWishlistFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          findFirst: {
+            args: Prisma.UserWishlistFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserWishlistFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          findMany: {
+            args: Prisma.UserWishlistFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>[]
+          }
+          create: {
+            args: Prisma.UserWishlistCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          createMany: {
+            args: Prisma.UserWishlistCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserWishlistCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>[]
+          }
+          delete: {
+            args: Prisma.UserWishlistDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          update: {
+            args: Prisma.UserWishlistUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserWishlistDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserWishlistUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserWishlistUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserWishlistUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWishlistPayload>
+          }
+          aggregate: {
+            args: Prisma.UserWishlistAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserWishlist>
+          }
+          groupBy: {
+            args: Prisma.UserWishlistGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserWishlistGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserWishlistCountArgs<ExtArgs>
+            result: $Utils.Optional<UserWishlistCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserRecommendation: {
+        payload: Prisma.$UserRecommendationPayload<ExtArgs>
+        fields: Prisma.UserRecommendationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserRecommendationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserRecommendationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          findFirst: {
+            args: Prisma.UserRecommendationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserRecommendationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          findMany: {
+            args: Prisma.UserRecommendationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>[]
+          }
+          create: {
+            args: Prisma.UserRecommendationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          createMany: {
+            args: Prisma.UserRecommendationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserRecommendationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>[]
+          }
+          delete: {
+            args: Prisma.UserRecommendationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          update: {
+            args: Prisma.UserRecommendationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserRecommendationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserRecommendationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserRecommendationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserRecommendationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRecommendationPayload>
+          }
+          aggregate: {
+            args: Prisma.UserRecommendationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserRecommendation>
+          }
+          groupBy: {
+            args: Prisma.UserRecommendationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserRecommendationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserRecommendationCountArgs<ExtArgs>
+            result: $Utils.Optional<UserRecommendationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3565,6 +3747,8 @@ export namespace Prisma {
     wikiSubmission?: WikiSubmissionOmit
     wikiSubmissionComment?: WikiSubmissionCommentOmit
     wikiSubmissionLike?: WikiSubmissionLikeOmit
+    userWishlist?: UserWishlistOmit
+    userRecommendation?: UserRecommendationOmit
   }
 
   /* Types for Logging */
@@ -3887,9 +4071,11 @@ export namespace Prisma {
     reviews: number
     builds: number
     listings: number
+    wishlist: number
     expansions: number
     expandedBy: number
     gunplaCards: number
+    UserRecommendation: number
   }
 
   export type KitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3900,9 +4086,11 @@ export namespace Prisma {
     reviews?: boolean | KitCountOutputTypeCountReviewsArgs
     builds?: boolean | KitCountOutputTypeCountBuildsArgs
     listings?: boolean | KitCountOutputTypeCountListingsArgs
+    wishlist?: boolean | KitCountOutputTypeCountWishlistArgs
     expansions?: boolean | KitCountOutputTypeCountExpansionsArgs
     expandedBy?: boolean | KitCountOutputTypeCountExpandedByArgs
     gunplaCards?: boolean | KitCountOutputTypeCountGunplaCardsArgs
+    UserRecommendation?: boolean | KitCountOutputTypeCountUserRecommendationArgs
   }
 
   // Custom InputTypes
@@ -3968,6 +4156,13 @@ export namespace Prisma {
   /**
    * KitCountOutputType without action
    */
+  export type KitCountOutputTypeCountWishlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWishlistWhereInput
+  }
+
+  /**
+   * KitCountOutputType without action
+   */
   export type KitCountOutputTypeCountExpansionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: KitRelationWhereInput
   }
@@ -3986,6 +4181,13 @@ export namespace Prisma {
     where?: GunplaCardWhereInput
   }
 
+  /**
+   * KitCountOutputType without action
+   */
+  export type KitCountOutputTypeCountUserRecommendationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRecommendationWhereInput
+  }
+
 
   /**
    * Count Type UploadCountOutputType
@@ -3999,6 +4201,11 @@ export namespace Prisma {
     buildMilestoneUploads: number
     buildFeaturedImages: number
     gunplaCards: number
+    wishlistUploads: number
+    preorderUploads: number
+    backlogUploads: number
+    inProgressUploads: number
+    builtUploads: number
   }
 
   export type UploadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4009,6 +4216,11 @@ export namespace Prisma {
     buildMilestoneUploads?: boolean | UploadCountOutputTypeCountBuildMilestoneUploadsArgs
     buildFeaturedImages?: boolean | UploadCountOutputTypeCountBuildFeaturedImagesArgs
     gunplaCards?: boolean | UploadCountOutputTypeCountGunplaCardsArgs
+    wishlistUploads?: boolean | UploadCountOutputTypeCountWishlistUploadsArgs
+    preorderUploads?: boolean | UploadCountOutputTypeCountPreorderUploadsArgs
+    backlogUploads?: boolean | UploadCountOutputTypeCountBacklogUploadsArgs
+    inProgressUploads?: boolean | UploadCountOutputTypeCountInProgressUploadsArgs
+    builtUploads?: boolean | UploadCountOutputTypeCountBuiltUploadsArgs
   }
 
   // Custom InputTypes
@@ -4071,6 +4283,41 @@ export namespace Prisma {
     where?: GunplaCardWhereInput
   }
 
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountWishlistUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserKitCollectionWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountPreorderUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserKitCollectionWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountBacklogUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserKitCollectionWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountInProgressUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserKitCollectionWhereInput
+  }
+
+  /**
+   * UploadCountOutputType without action
+   */
+  export type UploadCountOutputTypeCountBuiltUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserKitCollectionWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -4089,6 +4336,8 @@ export namespace Prisma {
     reviewedWikiSubmissions: number
     wikiSubmissionComments: number
     wikiSubmissionLikes: number
+    wishlist: number
+    UserRecommendation: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4104,6 +4353,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: boolean | UserCountOutputTypeCountReviewedWikiSubmissionsArgs
     wikiSubmissionComments?: boolean | UserCountOutputTypeCountWikiSubmissionCommentsArgs
     wikiSubmissionLikes?: boolean | UserCountOutputTypeCountWikiSubmissionLikesArgs
+    wishlist?: boolean | UserCountOutputTypeCountWishlistArgs
+    UserRecommendation?: boolean | UserCountOutputTypeCountUserRecommendationArgs
   }
 
   // Custom InputTypes
@@ -4199,6 +4450,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWikiSubmissionLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WikiSubmissionLikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWishlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWishlistWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserRecommendationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRecommendationWhereInput
   }
 
 
@@ -12474,10 +12739,12 @@ export namespace Prisma {
 
   export type KitAvgAggregateOutputType = {
     priceYen: number | null
+    featuredScore: number | null
   }
 
   export type KitSumAggregateOutputType = {
     priceYen: number | null
+    featuredScore: number | null
   }
 
   export type KitMinAggregateOutputType = {
@@ -12493,6 +12760,7 @@ export namespace Prisma {
     notes: string | null
     potentialBaseKit: string | null
     isOriginalDesign: boolean | null
+    featuredScore: number | null
     createdAt: Date | null
     updatedAt: Date | null
     productLineId: string | null
@@ -12514,6 +12782,7 @@ export namespace Prisma {
     notes: string | null
     potentialBaseKit: string | null
     isOriginalDesign: boolean | null
+    featuredScore: number | null
     createdAt: Date | null
     updatedAt: Date | null
     productLineId: string | null
@@ -12537,6 +12806,7 @@ export namespace Prisma {
     scrapedImages: number
     potentialBaseKit: number
     isOriginalDesign: number
+    featuredScore: number
     createdAt: number
     updatedAt: number
     productLineId: number
@@ -12549,10 +12819,12 @@ export namespace Prisma {
 
   export type KitAvgAggregateInputType = {
     priceYen?: true
+    featuredScore?: true
   }
 
   export type KitSumAggregateInputType = {
     priceYen?: true
+    featuredScore?: true
   }
 
   export type KitMinAggregateInputType = {
@@ -12568,6 +12840,7 @@ export namespace Prisma {
     notes?: true
     potentialBaseKit?: true
     isOriginalDesign?: true
+    featuredScore?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -12589,6 +12862,7 @@ export namespace Prisma {
     notes?: true
     potentialBaseKit?: true
     isOriginalDesign?: true
+    featuredScore?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -12612,6 +12886,7 @@ export namespace Prisma {
     scrapedImages?: true
     potentialBaseKit?: true
     isOriginalDesign?: true
+    featuredScore?: true
     createdAt?: true
     updatedAt?: true
     productLineId?: true
@@ -12722,6 +12997,7 @@ export namespace Prisma {
     scrapedImages: string[]
     potentialBaseKit: string | null
     isOriginalDesign: boolean
+    featuredScore: number | null
     createdAt: Date
     updatedAt: Date
     productLineId: string | null
@@ -12764,6 +13040,7 @@ export namespace Prisma {
     scrapedImages?: boolean
     potentialBaseKit?: boolean
     isOriginalDesign?: boolean
+    featuredScore?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -12781,9 +13058,11 @@ export namespace Prisma {
     reviews?: boolean | Kit$reviewsArgs<ExtArgs>
     builds?: boolean | Kit$buildsArgs<ExtArgs>
     listings?: boolean | Kit$listingsArgs<ExtArgs>
+    wishlist?: boolean | Kit$wishlistArgs<ExtArgs>
     expansions?: boolean | Kit$expansionsArgs<ExtArgs>
     expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
     gunplaCards?: boolean | Kit$gunplaCardsArgs<ExtArgs>
+    UserRecommendation?: boolean | Kit$UserRecommendationArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["kit"]>
 
@@ -12802,6 +13081,7 @@ export namespace Prisma {
     scrapedImages?: boolean
     potentialBaseKit?: boolean
     isOriginalDesign?: boolean
+    featuredScore?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -12829,6 +13109,7 @@ export namespace Prisma {
     scrapedImages?: boolean
     potentialBaseKit?: boolean
     isOriginalDesign?: boolean
+    featuredScore?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -12856,6 +13137,7 @@ export namespace Prisma {
     scrapedImages?: boolean
     potentialBaseKit?: boolean
     isOriginalDesign?: boolean
+    featuredScore?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     productLineId?: boolean
@@ -12864,7 +13146,7 @@ export namespace Prisma {
     baseKitId?: boolean
   }
 
-  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "isOriginalDesign" | "createdAt" | "updatedAt" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
+  export type KitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "number" | "variant" | "releaseDate" | "priceYen" | "region" | "boxArt" | "notes" | "manualLinks" | "scrapedImages" | "potentialBaseKit" | "isOriginalDesign" | "featuredScore" | "createdAt" | "updatedAt" | "productLineId" | "seriesId" | "releaseTypeId" | "baseKitId", ExtArgs["result"]["kit"]>
   export type KitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     productLine?: boolean | Kit$productLineArgs<ExtArgs>
     series?: boolean | Kit$seriesArgs<ExtArgs>
@@ -12877,9 +13159,11 @@ export namespace Prisma {
     reviews?: boolean | Kit$reviewsArgs<ExtArgs>
     builds?: boolean | Kit$buildsArgs<ExtArgs>
     listings?: boolean | Kit$listingsArgs<ExtArgs>
+    wishlist?: boolean | Kit$wishlistArgs<ExtArgs>
     expansions?: boolean | Kit$expansionsArgs<ExtArgs>
     expandedBy?: boolean | Kit$expandedByArgs<ExtArgs>
     gunplaCards?: boolean | Kit$gunplaCardsArgs<ExtArgs>
+    UserRecommendation?: boolean | Kit$UserRecommendationArgs<ExtArgs>
     _count?: boolean | KitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type KitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12909,9 +13193,11 @@ export namespace Prisma {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       builds: Prisma.$BuildPayload<ExtArgs>[]
       listings: Prisma.$MarketplaceListingPayload<ExtArgs>[]
+      wishlist: Prisma.$UserWishlistPayload<ExtArgs>[]
       expansions: Prisma.$KitRelationPayload<ExtArgs>[]
       expandedBy: Prisma.$KitRelationPayload<ExtArgs>[]
       gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
+      UserRecommendation: Prisma.$UserRecommendationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12928,6 +13214,7 @@ export namespace Prisma {
       scrapedImages: string[]
       potentialBaseKit: string | null
       isOriginalDesign: boolean
+      featuredScore: number | null
       createdAt: Date
       updatedAt: Date
       productLineId: string | null
@@ -13339,9 +13626,11 @@ export namespace Prisma {
     reviews<T extends Kit$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     builds<T extends Kit$buildsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$buildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     listings<T extends Kit$listingsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wishlist<T extends Kit$wishlistArgs<ExtArgs> = {}>(args?: Subset<T, Kit$wishlistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expansions<T extends Kit$expansionsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expansionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expandedBy<T extends Kit$expandedByArgs<ExtArgs> = {}>(args?: Subset<T, Kit$expandedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     gunplaCards<T extends Kit$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, Kit$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    UserRecommendation<T extends Kit$UserRecommendationArgs<ExtArgs> = {}>(args?: Subset<T, Kit$UserRecommendationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13385,6 +13674,7 @@ export namespace Prisma {
     readonly scrapedImages: FieldRef<"Kit", 'String[]'>
     readonly potentialBaseKit: FieldRef<"Kit", 'String'>
     readonly isOriginalDesign: FieldRef<"Kit", 'Boolean'>
+    readonly featuredScore: FieldRef<"Kit", 'Int'>
     readonly createdAt: FieldRef<"Kit", 'DateTime'>
     readonly updatedAt: FieldRef<"Kit", 'DateTime'>
     readonly productLineId: FieldRef<"Kit", 'String'>
@@ -14031,6 +14321,30 @@ export namespace Prisma {
   }
 
   /**
+   * Kit.wishlist
+   */
+  export type Kit$wishlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    where?: UserWishlistWhereInput
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    cursor?: UserWishlistWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserWishlistScalarFieldEnum | UserWishlistScalarFieldEnum[]
+  }
+
+  /**
    * Kit.expansions
    */
   export type Kit$expansionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14100,6 +14414,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
+   * Kit.UserRecommendation
+   */
+  export type Kit$UserRecommendationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    where?: UserRecommendationWhereInput
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    cursor?: UserRecommendationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserRecommendationScalarFieldEnum | UserRecommendationScalarFieldEnum[]
   }
 
   /**
@@ -17648,6 +17986,11 @@ export namespace Prisma {
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
     gunplaCards?: boolean | Upload$gunplaCardsArgs<ExtArgs>
+    wishlistUploads?: boolean | Upload$wishlistUploadsArgs<ExtArgs>
+    preorderUploads?: boolean | Upload$preorderUploadsArgs<ExtArgs>
+    backlogUploads?: boolean | Upload$backlogUploadsArgs<ExtArgs>
+    inProgressUploads?: boolean | Upload$inProgressUploadsArgs<ExtArgs>
+    builtUploads?: boolean | Upload$builtUploadsArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["upload"]>
 
@@ -17714,6 +18057,11 @@ export namespace Prisma {
     buildMilestoneUploads?: boolean | Upload$buildMilestoneUploadsArgs<ExtArgs>
     buildFeaturedImages?: boolean | Upload$buildFeaturedImagesArgs<ExtArgs>
     gunplaCards?: boolean | Upload$gunplaCardsArgs<ExtArgs>
+    wishlistUploads?: boolean | Upload$wishlistUploadsArgs<ExtArgs>
+    preorderUploads?: boolean | Upload$preorderUploadsArgs<ExtArgs>
+    backlogUploads?: boolean | Upload$backlogUploadsArgs<ExtArgs>
+    inProgressUploads?: boolean | Upload$inProgressUploadsArgs<ExtArgs>
+    builtUploads?: boolean | Upload$builtUploadsArgs<ExtArgs>
     _count?: boolean | UploadCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UploadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17734,6 +18082,11 @@ export namespace Prisma {
       buildMilestoneUploads: Prisma.$BuildMilestoneUploadPayload<ExtArgs>[]
       buildFeaturedImages: Prisma.$BuildPayload<ExtArgs>[]
       gunplaCards: Prisma.$GunplaCardPayload<ExtArgs>[]
+      wishlistUploads: Prisma.$UserKitCollectionPayload<ExtArgs>[]
+      preorderUploads: Prisma.$UserKitCollectionPayload<ExtArgs>[]
+      backlogUploads: Prisma.$UserKitCollectionPayload<ExtArgs>[]
+      inProgressUploads: Prisma.$UserKitCollectionPayload<ExtArgs>[]
+      builtUploads: Prisma.$UserKitCollectionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -18152,6 +18505,11 @@ export namespace Prisma {
     buildMilestoneUploads<T extends Upload$buildMilestoneUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildMilestoneUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestoneUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buildFeaturedImages<T extends Upload$buildFeaturedImagesArgs<ExtArgs> = {}>(args?: Subset<T, Upload$buildFeaturedImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     gunplaCards<T extends Upload$gunplaCardsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$gunplaCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GunplaCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wishlistUploads<T extends Upload$wishlistUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$wishlistUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    preorderUploads<T extends Upload$preorderUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$preorderUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    backlogUploads<T extends Upload$backlogUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$backlogUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inProgressUploads<T extends Upload$inProgressUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$inProgressUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    builtUploads<T extends Upload$builtUploadsArgs<ExtArgs> = {}>(args?: Subset<T, Upload$builtUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18756,6 +19114,126 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GunplaCardScalarFieldEnum | GunplaCardScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.wishlistUploads
+   */
+  export type Upload$wishlistUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
+    orderBy?: UserKitCollectionOrderByWithRelationInput | UserKitCollectionOrderByWithRelationInput[]
+    cursor?: UserKitCollectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserKitCollectionScalarFieldEnum | UserKitCollectionScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.preorderUploads
+   */
+  export type Upload$preorderUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
+    orderBy?: UserKitCollectionOrderByWithRelationInput | UserKitCollectionOrderByWithRelationInput[]
+    cursor?: UserKitCollectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserKitCollectionScalarFieldEnum | UserKitCollectionScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.backlogUploads
+   */
+  export type Upload$backlogUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
+    orderBy?: UserKitCollectionOrderByWithRelationInput | UserKitCollectionOrderByWithRelationInput[]
+    cursor?: UserKitCollectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserKitCollectionScalarFieldEnum | UserKitCollectionScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.inProgressUploads
+   */
+  export type Upload$inProgressUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
+    orderBy?: UserKitCollectionOrderByWithRelationInput | UserKitCollectionOrderByWithRelationInput[]
+    cursor?: UserKitCollectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserKitCollectionScalarFieldEnum | UserKitCollectionScalarFieldEnum[]
+  }
+
+  /**
+   * Upload.builtUploads
+   */
+  export type Upload$builtUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
+    orderBy?: UserKitCollectionOrderByWithRelationInput | UserKitCollectionOrderByWithRelationInput[]
+    cursor?: UserKitCollectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserKitCollectionScalarFieldEnum | UserKitCollectionScalarFieldEnum[]
   }
 
   /**
@@ -23615,6 +24093,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: boolean | User$reviewedWikiSubmissionsArgs<ExtArgs>
     wikiSubmissionComments?: boolean | User$wikiSubmissionCommentsArgs<ExtArgs>
     wikiSubmissionLikes?: boolean | User$wikiSubmissionLikesArgs<ExtArgs>
+    wishlist?: boolean | User$wishlistArgs<ExtArgs>
+    UserRecommendation?: boolean | User$UserRecommendationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -23711,6 +24191,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: boolean | User$reviewedWikiSubmissionsArgs<ExtArgs>
     wikiSubmissionComments?: boolean | User$wikiSubmissionCommentsArgs<ExtArgs>
     wikiSubmissionLikes?: boolean | User$wikiSubmissionLikesArgs<ExtArgs>
+    wishlist?: boolean | User$wishlistArgs<ExtArgs>
+    UserRecommendation?: boolean | User$UserRecommendationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -23732,6 +24214,8 @@ export namespace Prisma {
       reviewedWikiSubmissions: Prisma.$WikiSubmissionPayload<ExtArgs>[]
       wikiSubmissionComments: Prisma.$WikiSubmissionCommentPayload<ExtArgs>[]
       wikiSubmissionLikes: Prisma.$WikiSubmissionLikePayload<ExtArgs>[]
+      wishlist: Prisma.$UserWishlistPayload<ExtArgs>[]
+      UserRecommendation: Prisma.$UserRecommendationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -24164,6 +24648,8 @@ export namespace Prisma {
     reviewedWikiSubmissions<T extends User$reviewedWikiSubmissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedWikiSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wikiSubmissionComments<T extends User$wikiSubmissionCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$wikiSubmissionCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wikiSubmissionLikes<T extends User$wikiSubmissionLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$wikiSubmissionLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WikiSubmissionLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wishlist<T extends User$wishlistArgs<ExtArgs> = {}>(args?: Subset<T, User$wishlistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    UserRecommendation<T extends User$UserRecommendationArgs<ExtArgs> = {}>(args?: Subset<T, User$UserRecommendationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24911,6 +25397,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.wishlist
+   */
+  export type User$wishlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    where?: UserWishlistWhereInput
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    cursor?: UserWishlistWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserWishlistScalarFieldEnum | UserWishlistScalarFieldEnum[]
+  }
+
+  /**
+   * User.UserRecommendation
+   */
+  export type User$UserRecommendationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    where?: UserRecommendationWhereInput
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    cursor?: UserRecommendationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserRecommendationScalarFieldEnum | UserRecommendationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24953,10 +25487,24 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     kitId: string | null
+    buildId: string | null
     status: $Enums.CollectionStatus | null
-    notes: string | null
     price: number | null
+    wishlistNotes: string | null
+    preorderNotes: string | null
+    backlogNotes: string | null
+    inProgressNotes: string | null
+    builtNotes: string | null
+    wishlistedAt: Date | null
+    preorderedAt: Date | null
     acquiredAt: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    wishlistUploadId: string | null
+    preorderUploadId: string | null
+    backlogUploadId: string | null
+    inProgressUploadId: string | null
+    builtUploadId: string | null
     addedAt: Date | null
     updatedAt: Date | null
   }
@@ -24965,10 +25513,24 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     kitId: string | null
+    buildId: string | null
     status: $Enums.CollectionStatus | null
-    notes: string | null
     price: number | null
+    wishlistNotes: string | null
+    preorderNotes: string | null
+    backlogNotes: string | null
+    inProgressNotes: string | null
+    builtNotes: string | null
+    wishlistedAt: Date | null
+    preorderedAt: Date | null
     acquiredAt: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    wishlistUploadId: string | null
+    preorderUploadId: string | null
+    backlogUploadId: string | null
+    inProgressUploadId: string | null
+    builtUploadId: string | null
     addedAt: Date | null
     updatedAt: Date | null
   }
@@ -24977,10 +25539,24 @@ export namespace Prisma {
     id: number
     userId: number
     kitId: number
+    buildId: number
     status: number
-    notes: number
     price: number
+    wishlistNotes: number
+    preorderNotes: number
+    backlogNotes: number
+    inProgressNotes: number
+    builtNotes: number
+    wishlistedAt: number
+    preorderedAt: number
     acquiredAt: number
+    startedAt: number
+    completedAt: number
+    wishlistUploadId: number
+    preorderUploadId: number
+    backlogUploadId: number
+    inProgressUploadId: number
+    builtUploadId: number
     addedAt: number
     updatedAt: number
     _all: number
@@ -24999,10 +25575,24 @@ export namespace Prisma {
     id?: true
     userId?: true
     kitId?: true
+    buildId?: true
     status?: true
-    notes?: true
     price?: true
+    wishlistNotes?: true
+    preorderNotes?: true
+    backlogNotes?: true
+    inProgressNotes?: true
+    builtNotes?: true
+    wishlistedAt?: true
+    preorderedAt?: true
     acquiredAt?: true
+    startedAt?: true
+    completedAt?: true
+    wishlistUploadId?: true
+    preorderUploadId?: true
+    backlogUploadId?: true
+    inProgressUploadId?: true
+    builtUploadId?: true
     addedAt?: true
     updatedAt?: true
   }
@@ -25011,10 +25601,24 @@ export namespace Prisma {
     id?: true
     userId?: true
     kitId?: true
+    buildId?: true
     status?: true
-    notes?: true
     price?: true
+    wishlistNotes?: true
+    preorderNotes?: true
+    backlogNotes?: true
+    inProgressNotes?: true
+    builtNotes?: true
+    wishlistedAt?: true
+    preorderedAt?: true
     acquiredAt?: true
+    startedAt?: true
+    completedAt?: true
+    wishlistUploadId?: true
+    preorderUploadId?: true
+    backlogUploadId?: true
+    inProgressUploadId?: true
+    builtUploadId?: true
     addedAt?: true
     updatedAt?: true
   }
@@ -25023,10 +25627,24 @@ export namespace Prisma {
     id?: true
     userId?: true
     kitId?: true
+    buildId?: true
     status?: true
-    notes?: true
     price?: true
+    wishlistNotes?: true
+    preorderNotes?: true
+    backlogNotes?: true
+    inProgressNotes?: true
+    builtNotes?: true
+    wishlistedAt?: true
+    preorderedAt?: true
     acquiredAt?: true
+    startedAt?: true
+    completedAt?: true
+    wishlistUploadId?: true
+    preorderUploadId?: true
+    backlogUploadId?: true
+    inProgressUploadId?: true
+    builtUploadId?: true
     addedAt?: true
     updatedAt?: true
     _all?: true
@@ -25122,10 +25740,24 @@ export namespace Prisma {
     id: string
     userId: string
     kitId: string
+    buildId: string | null
     status: $Enums.CollectionStatus
-    notes: string | null
     price: number | null
+    wishlistNotes: string | null
+    preorderNotes: string | null
+    backlogNotes: string | null
+    inProgressNotes: string | null
+    builtNotes: string | null
+    wishlistedAt: Date | null
+    preorderedAt: Date | null
     acquiredAt: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    wishlistUploadId: string | null
+    preorderUploadId: string | null
+    backlogUploadId: string | null
+    inProgressUploadId: string | null
+    builtUploadId: string | null
     addedAt: Date
     updatedAt: Date
     _count: UserKitCollectionCountAggregateOutputType | null
@@ -25153,68 +25785,160 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     kitId?: boolean
+    buildId?: boolean
     status?: boolean
-    notes?: boolean
     price?: boolean
+    wishlistNotes?: boolean
+    preorderNotes?: boolean
+    backlogNotes?: boolean
+    inProgressNotes?: boolean
+    builtNotes?: boolean
+    wishlistedAt?: boolean
+    preorderedAt?: boolean
     acquiredAt?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    wishlistUploadId?: boolean
+    preorderUploadId?: boolean
+    backlogUploadId?: boolean
+    inProgressUploadId?: boolean
+    builtUploadId?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }, ExtArgs["result"]["userKitCollection"]>
 
   export type UserKitCollectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     kitId?: boolean
+    buildId?: boolean
     status?: boolean
-    notes?: boolean
     price?: boolean
+    wishlistNotes?: boolean
+    preorderNotes?: boolean
+    backlogNotes?: boolean
+    inProgressNotes?: boolean
+    builtNotes?: boolean
+    wishlistedAt?: boolean
+    preorderedAt?: boolean
     acquiredAt?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    wishlistUploadId?: boolean
+    preorderUploadId?: boolean
+    backlogUploadId?: boolean
+    inProgressUploadId?: boolean
+    builtUploadId?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }, ExtArgs["result"]["userKitCollection"]>
 
   export type UserKitCollectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     kitId?: boolean
+    buildId?: boolean
     status?: boolean
-    notes?: boolean
     price?: boolean
+    wishlistNotes?: boolean
+    preorderNotes?: boolean
+    backlogNotes?: boolean
+    inProgressNotes?: boolean
+    builtNotes?: boolean
+    wishlistedAt?: boolean
+    preorderedAt?: boolean
     acquiredAt?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    wishlistUploadId?: boolean
+    preorderUploadId?: boolean
+    backlogUploadId?: boolean
+    inProgressUploadId?: boolean
+    builtUploadId?: boolean
     addedAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }, ExtArgs["result"]["userKitCollection"]>
 
   export type UserKitCollectionSelectScalar = {
     id?: boolean
     userId?: boolean
     kitId?: boolean
+    buildId?: boolean
     status?: boolean
-    notes?: boolean
     price?: boolean
+    wishlistNotes?: boolean
+    preorderNotes?: boolean
+    backlogNotes?: boolean
+    inProgressNotes?: boolean
+    builtNotes?: boolean
+    wishlistedAt?: boolean
+    preorderedAt?: boolean
     acquiredAt?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    wishlistUploadId?: boolean
+    preorderUploadId?: boolean
+    backlogUploadId?: boolean
+    inProgressUploadId?: boolean
+    builtUploadId?: boolean
     addedAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserKitCollectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "status" | "notes" | "price" | "acquiredAt" | "addedAt" | "updatedAt", ExtArgs["result"]["userKitCollection"]>
+  export type UserKitCollectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "buildId" | "status" | "price" | "wishlistNotes" | "preorderNotes" | "backlogNotes" | "inProgressNotes" | "builtNotes" | "wishlistedAt" | "preorderedAt" | "acquiredAt" | "startedAt" | "completedAt" | "wishlistUploadId" | "preorderUploadId" | "backlogUploadId" | "inProgressUploadId" | "builtUploadId" | "addedAt" | "updatedAt", ExtArgs["result"]["userKitCollection"]>
   export type UserKitCollectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }
   export type UserKitCollectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }
   export type UserKitCollectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
+    build?: boolean | UserKitCollection$buildArgs<ExtArgs>
+    wishlistUpload?: boolean | UserKitCollection$wishlistUploadArgs<ExtArgs>
+    preorderUpload?: boolean | UserKitCollection$preorderUploadArgs<ExtArgs>
+    backlogUpload?: boolean | UserKitCollection$backlogUploadArgs<ExtArgs>
+    inProgressUpload?: boolean | UserKitCollection$inProgressUploadArgs<ExtArgs>
+    builtUpload?: boolean | UserKitCollection$builtUploadArgs<ExtArgs>
   }
 
   export type $UserKitCollectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25222,15 +25946,35 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       kit: Prisma.$KitPayload<ExtArgs>
+      build: Prisma.$BuildPayload<ExtArgs> | null
+      wishlistUpload: Prisma.$UploadPayload<ExtArgs> | null
+      preorderUpload: Prisma.$UploadPayload<ExtArgs> | null
+      backlogUpload: Prisma.$UploadPayload<ExtArgs> | null
+      inProgressUpload: Prisma.$UploadPayload<ExtArgs> | null
+      builtUpload: Prisma.$UploadPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
       kitId: string
+      buildId: string | null
       status: $Enums.CollectionStatus
-      notes: string | null
       price: number | null
+      wishlistNotes: string | null
+      preorderNotes: string | null
+      backlogNotes: string | null
+      inProgressNotes: string | null
+      builtNotes: string | null
+      wishlistedAt: Date | null
+      preorderedAt: Date | null
       acquiredAt: Date | null
+      startedAt: Date | null
+      completedAt: Date | null
+      wishlistUploadId: string | null
+      preorderUploadId: string | null
+      backlogUploadId: string | null
+      inProgressUploadId: string | null
+      builtUploadId: string | null
       addedAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userKitCollection"]>
@@ -25629,6 +26373,12 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    build<T extends UserKitCollection$buildArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$buildArgs<ExtArgs>>): Prisma__BuildClient<$Result.GetResult<Prisma.$BuildPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    wishlistUpload<T extends UserKitCollection$wishlistUploadArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$wishlistUploadArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    preorderUpload<T extends UserKitCollection$preorderUploadArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$preorderUploadArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    backlogUpload<T extends UserKitCollection$backlogUploadArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$backlogUploadArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    inProgressUpload<T extends UserKitCollection$inProgressUploadArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$inProgressUploadArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    builtUpload<T extends UserKitCollection$builtUploadArgs<ExtArgs> = {}>(args?: Subset<T, UserKitCollection$builtUploadArgs<ExtArgs>>): Prisma__UploadClient<$Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -25661,10 +26411,24 @@ export namespace Prisma {
     readonly id: FieldRef<"UserKitCollection", 'String'>
     readonly userId: FieldRef<"UserKitCollection", 'String'>
     readonly kitId: FieldRef<"UserKitCollection", 'String'>
+    readonly buildId: FieldRef<"UserKitCollection", 'String'>
     readonly status: FieldRef<"UserKitCollection", 'CollectionStatus'>
-    readonly notes: FieldRef<"UserKitCollection", 'String'>
     readonly price: FieldRef<"UserKitCollection", 'Int'>
+    readonly wishlistNotes: FieldRef<"UserKitCollection", 'String'>
+    readonly preorderNotes: FieldRef<"UserKitCollection", 'String'>
+    readonly backlogNotes: FieldRef<"UserKitCollection", 'String'>
+    readonly inProgressNotes: FieldRef<"UserKitCollection", 'String'>
+    readonly builtNotes: FieldRef<"UserKitCollection", 'String'>
+    readonly wishlistedAt: FieldRef<"UserKitCollection", 'DateTime'>
+    readonly preorderedAt: FieldRef<"UserKitCollection", 'DateTime'>
     readonly acquiredAt: FieldRef<"UserKitCollection", 'DateTime'>
+    readonly startedAt: FieldRef<"UserKitCollection", 'DateTime'>
+    readonly completedAt: FieldRef<"UserKitCollection", 'DateTime'>
+    readonly wishlistUploadId: FieldRef<"UserKitCollection", 'String'>
+    readonly preorderUploadId: FieldRef<"UserKitCollection", 'String'>
+    readonly backlogUploadId: FieldRef<"UserKitCollection", 'String'>
+    readonly inProgressUploadId: FieldRef<"UserKitCollection", 'String'>
+    readonly builtUploadId: FieldRef<"UserKitCollection", 'String'>
     readonly addedAt: FieldRef<"UserKitCollection", 'DateTime'>
     readonly updatedAt: FieldRef<"UserKitCollection", 'DateTime'>
   }
@@ -26060,6 +26824,120 @@ export namespace Prisma {
      * Limit how many UserKitCollections to delete.
      */
     limit?: number
+  }
+
+  /**
+   * UserKitCollection.build
+   */
+  export type UserKitCollection$buildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Build
+     */
+    select?: BuildSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Build
+     */
+    omit?: BuildOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildInclude<ExtArgs> | null
+    where?: BuildWhereInput
+  }
+
+  /**
+   * UserKitCollection.wishlistUpload
+   */
+  export type UserKitCollection$wishlistUploadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
+  }
+
+  /**
+   * UserKitCollection.preorderUpload
+   */
+  export type UserKitCollection$preorderUploadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
+  }
+
+  /**
+   * UserKitCollection.backlogUpload
+   */
+  export type UserKitCollection$backlogUploadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
+  }
+
+  /**
+   * UserKitCollection.inProgressUpload
+   */
+  export type UserKitCollection$inProgressUploadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
+  }
+
+  /**
+   * UserKitCollection.builtUpload
+   */
+  export type UserKitCollection$builtUploadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Upload
+     */
+    select?: UploadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Upload
+     */
+    omit?: UploadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UploadInclude<ExtArgs> | null
+    where?: UploadWhereInput
   }
 
   /**
@@ -29453,6 +30331,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: $Enums.BuildStatus | null
+    isPublic: boolean | null
     startedAt: Date | null
     completedAt: Date | null
     featuredImageId: string | null
@@ -29467,6 +30346,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: $Enums.BuildStatus | null
+    isPublic: boolean | null
     startedAt: Date | null
     completedAt: Date | null
     featuredImageId: string | null
@@ -29481,6 +30361,7 @@ export namespace Prisma {
     title: number
     description: number
     status: number
+    isPublic: number
     startedAt: number
     completedAt: number
     featuredImageId: number
@@ -29497,6 +30378,7 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    isPublic?: true
     startedAt?: true
     completedAt?: true
     featuredImageId?: true
@@ -29511,6 +30393,7 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    isPublic?: true
     startedAt?: true
     completedAt?: true
     featuredImageId?: true
@@ -29525,6 +30408,7 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    isPublic?: true
     startedAt?: true
     completedAt?: true
     featuredImageId?: true
@@ -29612,6 +30496,7 @@ export namespace Prisma {
     title: string
     description: string | null
     status: $Enums.BuildStatus
+    isPublic: boolean
     startedAt: Date | null
     completedAt: Date | null
     featuredImageId: string | null
@@ -29643,6 +30528,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    isPublic?: boolean
     startedAt?: boolean
     completedAt?: boolean
     featuredImageId?: boolean
@@ -29655,6 +30541,7 @@ export namespace Prisma {
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
     likes?: boolean | Build$likesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
+    collection?: boolean | Build$collectionArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["build"]>
 
@@ -29665,6 +30552,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    isPublic?: boolean
     startedAt?: boolean
     completedAt?: boolean
     featuredImageId?: boolean
@@ -29682,6 +30570,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    isPublic?: boolean
     startedAt?: boolean
     completedAt?: boolean
     featuredImageId?: boolean
@@ -29699,6 +30588,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    isPublic?: boolean
     startedAt?: boolean
     completedAt?: boolean
     featuredImageId?: boolean
@@ -29706,7 +30596,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BuildOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "title" | "description" | "status" | "startedAt" | "completedAt" | "featuredImageId" | "createdAt" | "updatedAt", ExtArgs["result"]["build"]>
+  export type BuildOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "title" | "description" | "status" | "isPublic" | "startedAt" | "completedAt" | "featuredImageId" | "createdAt" | "updatedAt", ExtArgs["result"]["build"]>
   export type BuildInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     kit?: boolean | KitDefaultArgs<ExtArgs>
@@ -29715,6 +30605,7 @@ export namespace Prisma {
     milestones?: boolean | Build$milestonesArgs<ExtArgs>
     likes?: boolean | Build$likesArgs<ExtArgs>
     comments?: boolean | Build$commentsArgs<ExtArgs>
+    collection?: boolean | Build$collectionArgs<ExtArgs>
     _count?: boolean | BuildCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BuildIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29738,6 +30629,7 @@ export namespace Prisma {
       milestones: Prisma.$BuildMilestonePayload<ExtArgs>[]
       likes: Prisma.$BuildLikePayload<ExtArgs>[]
       comments: Prisma.$BuildCommentPayload<ExtArgs>[]
+      collection: Prisma.$UserKitCollectionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -29746,6 +30638,7 @@ export namespace Prisma {
       title: string
       description: string | null
       status: $Enums.BuildStatus
+      isPublic: boolean
       startedAt: Date | null
       completedAt: Date | null
       featuredImageId: string | null
@@ -30152,6 +31045,7 @@ export namespace Prisma {
     milestones<T extends Build$milestonesArgs<ExtArgs> = {}>(args?: Subset<T, Build$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends Build$likesArgs<ExtArgs> = {}>(args?: Subset<T, Build$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Build$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Build$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    collection<T extends Build$collectionArgs<ExtArgs> = {}>(args?: Subset<T, Build$collectionArgs<ExtArgs>>): Prisma__UserKitCollectionClient<$Result.GetResult<Prisma.$UserKitCollectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30187,6 +31081,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Build", 'String'>
     readonly description: FieldRef<"Build", 'String'>
     readonly status: FieldRef<"Build", 'BuildStatus'>
+    readonly isPublic: FieldRef<"Build", 'Boolean'>
     readonly startedAt: FieldRef<"Build", 'DateTime'>
     readonly completedAt: FieldRef<"Build", 'DateTime'>
     readonly featuredImageId: FieldRef<"Build", 'String'>
@@ -30700,6 +31595,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BuildCommentScalarFieldEnum | BuildCommentScalarFieldEnum[]
+  }
+
+  /**
+   * Build.collection
+   */
+  export type Build$collectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserKitCollection
+     */
+    select?: UserKitCollectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserKitCollection
+     */
+    omit?: UserKitCollectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserKitCollectionInclude<ExtArgs> | null
+    where?: UserKitCollectionWhereInput
   }
 
   /**
@@ -39708,6 +40622,2112 @@ export namespace Prisma {
 
 
   /**
+   * Model UserWishlist
+   */
+
+  export type AggregateUserWishlist = {
+    _count: UserWishlistCountAggregateOutputType | null
+    _min: UserWishlistMinAggregateOutputType | null
+    _max: UserWishlistMaxAggregateOutputType | null
+  }
+
+  export type UserWishlistMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    kitId: string | null
+    addedAt: Date | null
+  }
+
+  export type UserWishlistMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    kitId: string | null
+    addedAt: Date | null
+  }
+
+  export type UserWishlistCountAggregateOutputType = {
+    id: number
+    userId: number
+    kitId: number
+    addedAt: number
+    _all: number
+  }
+
+
+  export type UserWishlistMinAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+  }
+
+  export type UserWishlistMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+  }
+
+  export type UserWishlistCountAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+    _all?: true
+  }
+
+  export type UserWishlistAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserWishlist to aggregate.
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWishlists to fetch.
+     */
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWishlistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWishlists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWishlists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserWishlists
+    **/
+    _count?: true | UserWishlistCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserWishlistMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserWishlistMaxAggregateInputType
+  }
+
+  export type GetUserWishlistAggregateType<T extends UserWishlistAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserWishlist]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserWishlist[P]>
+      : GetScalarType<T[P], AggregateUserWishlist[P]>
+  }
+
+
+
+
+  export type UserWishlistGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWishlistWhereInput
+    orderBy?: UserWishlistOrderByWithAggregationInput | UserWishlistOrderByWithAggregationInput[]
+    by: UserWishlistScalarFieldEnum[] | UserWishlistScalarFieldEnum
+    having?: UserWishlistScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserWishlistCountAggregateInputType | true
+    _min?: UserWishlistMinAggregateInputType
+    _max?: UserWishlistMaxAggregateInputType
+  }
+
+  export type UserWishlistGroupByOutputType = {
+    id: string
+    userId: string
+    kitId: string
+    addedAt: Date
+    _count: UserWishlistCountAggregateOutputType | null
+    _min: UserWishlistMinAggregateOutputType | null
+    _max: UserWishlistMaxAggregateOutputType | null
+  }
+
+  type GetUserWishlistGroupByPayload<T extends UserWishlistGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserWishlistGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserWishlistGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserWishlistGroupByOutputType[P]>
+            : GetScalarType<T[P], UserWishlistGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserWishlistSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userWishlist"]>
+
+  export type UserWishlistSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userWishlist"]>
+
+  export type UserWishlistSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userWishlist"]>
+
+  export type UserWishlistSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+  }
+
+  export type UserWishlistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "addedAt", ExtArgs["result"]["userWishlist"]>
+  export type UserWishlistInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type UserWishlistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type UserWishlistIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+
+  export type $UserWishlistPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserWishlist"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      kit: Prisma.$KitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      kitId: string
+      addedAt: Date
+    }, ExtArgs["result"]["userWishlist"]>
+    composites: {}
+  }
+
+  type UserWishlistGetPayload<S extends boolean | null | undefined | UserWishlistDefaultArgs> = $Result.GetResult<Prisma.$UserWishlistPayload, S>
+
+  type UserWishlistCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserWishlistFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserWishlistCountAggregateInputType | true
+    }
+
+  export interface UserWishlistDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserWishlist'], meta: { name: 'UserWishlist' } }
+    /**
+     * Find zero or one UserWishlist that matches the filter.
+     * @param {UserWishlistFindUniqueArgs} args - Arguments to find a UserWishlist
+     * @example
+     * // Get one UserWishlist
+     * const userWishlist = await prisma.userWishlist.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserWishlistFindUniqueArgs>(args: SelectSubset<T, UserWishlistFindUniqueArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserWishlist that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserWishlistFindUniqueOrThrowArgs} args - Arguments to find a UserWishlist
+     * @example
+     * // Get one UserWishlist
+     * const userWishlist = await prisma.userWishlist.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserWishlistFindUniqueOrThrowArgs>(args: SelectSubset<T, UserWishlistFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserWishlist that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistFindFirstArgs} args - Arguments to find a UserWishlist
+     * @example
+     * // Get one UserWishlist
+     * const userWishlist = await prisma.userWishlist.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserWishlistFindFirstArgs>(args?: SelectSubset<T, UserWishlistFindFirstArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserWishlist that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistFindFirstOrThrowArgs} args - Arguments to find a UserWishlist
+     * @example
+     * // Get one UserWishlist
+     * const userWishlist = await prisma.userWishlist.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserWishlistFindFirstOrThrowArgs>(args?: SelectSubset<T, UserWishlistFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserWishlists that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserWishlists
+     * const userWishlists = await prisma.userWishlist.findMany()
+     * 
+     * // Get first 10 UserWishlists
+     * const userWishlists = await prisma.userWishlist.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWishlistWithIdOnly = await prisma.userWishlist.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserWishlistFindManyArgs>(args?: SelectSubset<T, UserWishlistFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserWishlist.
+     * @param {UserWishlistCreateArgs} args - Arguments to create a UserWishlist.
+     * @example
+     * // Create one UserWishlist
+     * const UserWishlist = await prisma.userWishlist.create({
+     *   data: {
+     *     // ... data to create a UserWishlist
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserWishlistCreateArgs>(args: SelectSubset<T, UserWishlistCreateArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserWishlists.
+     * @param {UserWishlistCreateManyArgs} args - Arguments to create many UserWishlists.
+     * @example
+     * // Create many UserWishlists
+     * const userWishlist = await prisma.userWishlist.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserWishlistCreateManyArgs>(args?: SelectSubset<T, UserWishlistCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserWishlists and returns the data saved in the database.
+     * @param {UserWishlistCreateManyAndReturnArgs} args - Arguments to create many UserWishlists.
+     * @example
+     * // Create many UserWishlists
+     * const userWishlist = await prisma.userWishlist.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserWishlists and only return the `id`
+     * const userWishlistWithIdOnly = await prisma.userWishlist.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserWishlistCreateManyAndReturnArgs>(args?: SelectSubset<T, UserWishlistCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserWishlist.
+     * @param {UserWishlistDeleteArgs} args - Arguments to delete one UserWishlist.
+     * @example
+     * // Delete one UserWishlist
+     * const UserWishlist = await prisma.userWishlist.delete({
+     *   where: {
+     *     // ... filter to delete one UserWishlist
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserWishlistDeleteArgs>(args: SelectSubset<T, UserWishlistDeleteArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserWishlist.
+     * @param {UserWishlistUpdateArgs} args - Arguments to update one UserWishlist.
+     * @example
+     * // Update one UserWishlist
+     * const userWishlist = await prisma.userWishlist.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserWishlistUpdateArgs>(args: SelectSubset<T, UserWishlistUpdateArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserWishlists.
+     * @param {UserWishlistDeleteManyArgs} args - Arguments to filter UserWishlists to delete.
+     * @example
+     * // Delete a few UserWishlists
+     * const { count } = await prisma.userWishlist.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserWishlistDeleteManyArgs>(args?: SelectSubset<T, UserWishlistDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserWishlists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserWishlists
+     * const userWishlist = await prisma.userWishlist.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserWishlistUpdateManyArgs>(args: SelectSubset<T, UserWishlistUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserWishlists and returns the data updated in the database.
+     * @param {UserWishlistUpdateManyAndReturnArgs} args - Arguments to update many UserWishlists.
+     * @example
+     * // Update many UserWishlists
+     * const userWishlist = await prisma.userWishlist.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserWishlists and only return the `id`
+     * const userWishlistWithIdOnly = await prisma.userWishlist.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserWishlistUpdateManyAndReturnArgs>(args: SelectSubset<T, UserWishlistUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserWishlist.
+     * @param {UserWishlistUpsertArgs} args - Arguments to update or create a UserWishlist.
+     * @example
+     * // Update or create a UserWishlist
+     * const userWishlist = await prisma.userWishlist.upsert({
+     *   create: {
+     *     // ... data to create a UserWishlist
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserWishlist we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserWishlistUpsertArgs>(args: SelectSubset<T, UserWishlistUpsertArgs<ExtArgs>>): Prisma__UserWishlistClient<$Result.GetResult<Prisma.$UserWishlistPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserWishlists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistCountArgs} args - Arguments to filter UserWishlists to count.
+     * @example
+     * // Count the number of UserWishlists
+     * const count = await prisma.userWishlist.count({
+     *   where: {
+     *     // ... the filter for the UserWishlists we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserWishlistCountArgs>(
+      args?: Subset<T, UserWishlistCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserWishlistCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserWishlist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserWishlistAggregateArgs>(args: Subset<T, UserWishlistAggregateArgs>): Prisma.PrismaPromise<GetUserWishlistAggregateType<T>>
+
+    /**
+     * Group by UserWishlist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWishlistGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserWishlistGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserWishlistGroupByArgs['orderBy'] }
+        : { orderBy?: UserWishlistGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserWishlistGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserWishlistGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserWishlist model
+   */
+  readonly fields: UserWishlistFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserWishlist.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserWishlistClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserWishlist model
+   */
+  interface UserWishlistFieldRefs {
+    readonly id: FieldRef<"UserWishlist", 'String'>
+    readonly userId: FieldRef<"UserWishlist", 'String'>
+    readonly kitId: FieldRef<"UserWishlist", 'String'>
+    readonly addedAt: FieldRef<"UserWishlist", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserWishlist findUnique
+   */
+  export type UserWishlistFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter, which UserWishlist to fetch.
+     */
+    where: UserWishlistWhereUniqueInput
+  }
+
+  /**
+   * UserWishlist findUniqueOrThrow
+   */
+  export type UserWishlistFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter, which UserWishlist to fetch.
+     */
+    where: UserWishlistWhereUniqueInput
+  }
+
+  /**
+   * UserWishlist findFirst
+   */
+  export type UserWishlistFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter, which UserWishlist to fetch.
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWishlists to fetch.
+     */
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserWishlists.
+     */
+    cursor?: UserWishlistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWishlists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWishlists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserWishlists.
+     */
+    distinct?: UserWishlistScalarFieldEnum | UserWishlistScalarFieldEnum[]
+  }
+
+  /**
+   * UserWishlist findFirstOrThrow
+   */
+  export type UserWishlistFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter, which UserWishlist to fetch.
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWishlists to fetch.
+     */
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserWishlists.
+     */
+    cursor?: UserWishlistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWishlists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWishlists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserWishlists.
+     */
+    distinct?: UserWishlistScalarFieldEnum | UserWishlistScalarFieldEnum[]
+  }
+
+  /**
+   * UserWishlist findMany
+   */
+  export type UserWishlistFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter, which UserWishlists to fetch.
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWishlists to fetch.
+     */
+    orderBy?: UserWishlistOrderByWithRelationInput | UserWishlistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserWishlists.
+     */
+    cursor?: UserWishlistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWishlists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWishlists.
+     */
+    skip?: number
+    distinct?: UserWishlistScalarFieldEnum | UserWishlistScalarFieldEnum[]
+  }
+
+  /**
+   * UserWishlist create
+   */
+  export type UserWishlistCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserWishlist.
+     */
+    data: XOR<UserWishlistCreateInput, UserWishlistUncheckedCreateInput>
+  }
+
+  /**
+   * UserWishlist createMany
+   */
+  export type UserWishlistCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserWishlists.
+     */
+    data: UserWishlistCreateManyInput | UserWishlistCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserWishlist createManyAndReturn
+   */
+  export type UserWishlistCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserWishlists.
+     */
+    data: UserWishlistCreateManyInput | UserWishlistCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserWishlist update
+   */
+  export type UserWishlistUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserWishlist.
+     */
+    data: XOR<UserWishlistUpdateInput, UserWishlistUncheckedUpdateInput>
+    /**
+     * Choose, which UserWishlist to update.
+     */
+    where: UserWishlistWhereUniqueInput
+  }
+
+  /**
+   * UserWishlist updateMany
+   */
+  export type UserWishlistUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserWishlists.
+     */
+    data: XOR<UserWishlistUpdateManyMutationInput, UserWishlistUncheckedUpdateManyInput>
+    /**
+     * Filter which UserWishlists to update
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * Limit how many UserWishlists to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserWishlist updateManyAndReturn
+   */
+  export type UserWishlistUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * The data used to update UserWishlists.
+     */
+    data: XOR<UserWishlistUpdateManyMutationInput, UserWishlistUncheckedUpdateManyInput>
+    /**
+     * Filter which UserWishlists to update
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * Limit how many UserWishlists to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserWishlist upsert
+   */
+  export type UserWishlistUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserWishlist to update in case it exists.
+     */
+    where: UserWishlistWhereUniqueInput
+    /**
+     * In case the UserWishlist found by the `where` argument doesn't exist, create a new UserWishlist with this data.
+     */
+    create: XOR<UserWishlistCreateInput, UserWishlistUncheckedCreateInput>
+    /**
+     * In case the UserWishlist was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserWishlistUpdateInput, UserWishlistUncheckedUpdateInput>
+  }
+
+  /**
+   * UserWishlist delete
+   */
+  export type UserWishlistDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+    /**
+     * Filter which UserWishlist to delete.
+     */
+    where: UserWishlistWhereUniqueInput
+  }
+
+  /**
+   * UserWishlist deleteMany
+   */
+  export type UserWishlistDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserWishlists to delete
+     */
+    where?: UserWishlistWhereInput
+    /**
+     * Limit how many UserWishlists to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserWishlist without action
+   */
+  export type UserWishlistDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWishlist
+     */
+    select?: UserWishlistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserWishlist
+     */
+    omit?: UserWishlistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserWishlistInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserRecommendation
+   */
+
+  export type AggregateUserRecommendation = {
+    _count: UserRecommendationCountAggregateOutputType | null
+    _min: UserRecommendationMinAggregateOutputType | null
+    _max: UserRecommendationMaxAggregateOutputType | null
+  }
+
+  export type UserRecommendationMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    kitId: string | null
+    addedAt: Date | null
+  }
+
+  export type UserRecommendationMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    kitId: string | null
+    addedAt: Date | null
+  }
+
+  export type UserRecommendationCountAggregateOutputType = {
+    id: number
+    userId: number
+    kitId: number
+    addedAt: number
+    _all: number
+  }
+
+
+  export type UserRecommendationMinAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+  }
+
+  export type UserRecommendationMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+  }
+
+  export type UserRecommendationCountAggregateInputType = {
+    id?: true
+    userId?: true
+    kitId?: true
+    addedAt?: true
+    _all?: true
+  }
+
+  export type UserRecommendationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserRecommendation to aggregate.
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRecommendations to fetch.
+     */
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserRecommendations
+    **/
+    _count?: true | UserRecommendationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserRecommendationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserRecommendationMaxAggregateInputType
+  }
+
+  export type GetUserRecommendationAggregateType<T extends UserRecommendationAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserRecommendation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserRecommendation[P]>
+      : GetScalarType<T[P], AggregateUserRecommendation[P]>
+  }
+
+
+
+
+  export type UserRecommendationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRecommendationWhereInput
+    orderBy?: UserRecommendationOrderByWithAggregationInput | UserRecommendationOrderByWithAggregationInput[]
+    by: UserRecommendationScalarFieldEnum[] | UserRecommendationScalarFieldEnum
+    having?: UserRecommendationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserRecommendationCountAggregateInputType | true
+    _min?: UserRecommendationMinAggregateInputType
+    _max?: UserRecommendationMaxAggregateInputType
+  }
+
+  export type UserRecommendationGroupByOutputType = {
+    id: string
+    userId: string
+    kitId: string
+    addedAt: Date
+    _count: UserRecommendationCountAggregateOutputType | null
+    _min: UserRecommendationMinAggregateOutputType | null
+    _max: UserRecommendationMaxAggregateOutputType | null
+  }
+
+  type GetUserRecommendationGroupByPayload<T extends UserRecommendationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserRecommendationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserRecommendationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserRecommendationGroupByOutputType[P]>
+            : GetScalarType<T[P], UserRecommendationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserRecommendationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRecommendation"]>
+
+  export type UserRecommendationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRecommendation"]>
+
+  export type UserRecommendationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRecommendation"]>
+
+  export type UserRecommendationSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    kitId?: boolean
+    addedAt?: boolean
+  }
+
+  export type UserRecommendationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "kitId" | "addedAt", ExtArgs["result"]["userRecommendation"]>
+  export type UserRecommendationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type UserRecommendationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+  export type UserRecommendationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    kit?: boolean | KitDefaultArgs<ExtArgs>
+  }
+
+  export type $UserRecommendationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserRecommendation"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      kit: Prisma.$KitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      kitId: string
+      addedAt: Date
+    }, ExtArgs["result"]["userRecommendation"]>
+    composites: {}
+  }
+
+  type UserRecommendationGetPayload<S extends boolean | null | undefined | UserRecommendationDefaultArgs> = $Result.GetResult<Prisma.$UserRecommendationPayload, S>
+
+  type UserRecommendationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserRecommendationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserRecommendationCountAggregateInputType | true
+    }
+
+  export interface UserRecommendationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserRecommendation'], meta: { name: 'UserRecommendation' } }
+    /**
+     * Find zero or one UserRecommendation that matches the filter.
+     * @param {UserRecommendationFindUniqueArgs} args - Arguments to find a UserRecommendation
+     * @example
+     * // Get one UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserRecommendationFindUniqueArgs>(args: SelectSubset<T, UserRecommendationFindUniqueArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserRecommendation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserRecommendationFindUniqueOrThrowArgs} args - Arguments to find a UserRecommendation
+     * @example
+     * // Get one UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserRecommendationFindUniqueOrThrowArgs>(args: SelectSubset<T, UserRecommendationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserRecommendation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationFindFirstArgs} args - Arguments to find a UserRecommendation
+     * @example
+     * // Get one UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserRecommendationFindFirstArgs>(args?: SelectSubset<T, UserRecommendationFindFirstArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserRecommendation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationFindFirstOrThrowArgs} args - Arguments to find a UserRecommendation
+     * @example
+     * // Get one UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserRecommendationFindFirstOrThrowArgs>(args?: SelectSubset<T, UserRecommendationFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserRecommendations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserRecommendations
+     * const userRecommendations = await prisma.userRecommendation.findMany()
+     * 
+     * // Get first 10 UserRecommendations
+     * const userRecommendations = await prisma.userRecommendation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userRecommendationWithIdOnly = await prisma.userRecommendation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserRecommendationFindManyArgs>(args?: SelectSubset<T, UserRecommendationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserRecommendation.
+     * @param {UserRecommendationCreateArgs} args - Arguments to create a UserRecommendation.
+     * @example
+     * // Create one UserRecommendation
+     * const UserRecommendation = await prisma.userRecommendation.create({
+     *   data: {
+     *     // ... data to create a UserRecommendation
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserRecommendationCreateArgs>(args: SelectSubset<T, UserRecommendationCreateArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserRecommendations.
+     * @param {UserRecommendationCreateManyArgs} args - Arguments to create many UserRecommendations.
+     * @example
+     * // Create many UserRecommendations
+     * const userRecommendation = await prisma.userRecommendation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserRecommendationCreateManyArgs>(args?: SelectSubset<T, UserRecommendationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserRecommendations and returns the data saved in the database.
+     * @param {UserRecommendationCreateManyAndReturnArgs} args - Arguments to create many UserRecommendations.
+     * @example
+     * // Create many UserRecommendations
+     * const userRecommendation = await prisma.userRecommendation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserRecommendations and only return the `id`
+     * const userRecommendationWithIdOnly = await prisma.userRecommendation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserRecommendationCreateManyAndReturnArgs>(args?: SelectSubset<T, UserRecommendationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserRecommendation.
+     * @param {UserRecommendationDeleteArgs} args - Arguments to delete one UserRecommendation.
+     * @example
+     * // Delete one UserRecommendation
+     * const UserRecommendation = await prisma.userRecommendation.delete({
+     *   where: {
+     *     // ... filter to delete one UserRecommendation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserRecommendationDeleteArgs>(args: SelectSubset<T, UserRecommendationDeleteArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserRecommendation.
+     * @param {UserRecommendationUpdateArgs} args - Arguments to update one UserRecommendation.
+     * @example
+     * // Update one UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserRecommendationUpdateArgs>(args: SelectSubset<T, UserRecommendationUpdateArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserRecommendations.
+     * @param {UserRecommendationDeleteManyArgs} args - Arguments to filter UserRecommendations to delete.
+     * @example
+     * // Delete a few UserRecommendations
+     * const { count } = await prisma.userRecommendation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserRecommendationDeleteManyArgs>(args?: SelectSubset<T, UserRecommendationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserRecommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserRecommendations
+     * const userRecommendation = await prisma.userRecommendation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserRecommendationUpdateManyArgs>(args: SelectSubset<T, UserRecommendationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserRecommendations and returns the data updated in the database.
+     * @param {UserRecommendationUpdateManyAndReturnArgs} args - Arguments to update many UserRecommendations.
+     * @example
+     * // Update many UserRecommendations
+     * const userRecommendation = await prisma.userRecommendation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserRecommendations and only return the `id`
+     * const userRecommendationWithIdOnly = await prisma.userRecommendation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserRecommendationUpdateManyAndReturnArgs>(args: SelectSubset<T, UserRecommendationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserRecommendation.
+     * @param {UserRecommendationUpsertArgs} args - Arguments to update or create a UserRecommendation.
+     * @example
+     * // Update or create a UserRecommendation
+     * const userRecommendation = await prisma.userRecommendation.upsert({
+     *   create: {
+     *     // ... data to create a UserRecommendation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserRecommendation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserRecommendationUpsertArgs>(args: SelectSubset<T, UserRecommendationUpsertArgs<ExtArgs>>): Prisma__UserRecommendationClient<$Result.GetResult<Prisma.$UserRecommendationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserRecommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationCountArgs} args - Arguments to filter UserRecommendations to count.
+     * @example
+     * // Count the number of UserRecommendations
+     * const count = await prisma.userRecommendation.count({
+     *   where: {
+     *     // ... the filter for the UserRecommendations we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserRecommendationCountArgs>(
+      args?: Subset<T, UserRecommendationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserRecommendationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserRecommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserRecommendationAggregateArgs>(args: Subset<T, UserRecommendationAggregateArgs>): Prisma.PrismaPromise<GetUserRecommendationAggregateType<T>>
+
+    /**
+     * Group by UserRecommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRecommendationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserRecommendationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserRecommendationGroupByArgs['orderBy'] }
+        : { orderBy?: UserRecommendationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserRecommendationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserRecommendationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserRecommendation model
+   */
+  readonly fields: UserRecommendationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserRecommendation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserRecommendationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    kit<T extends KitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitDefaultArgs<ExtArgs>>): Prisma__KitClient<$Result.GetResult<Prisma.$KitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserRecommendation model
+   */
+  interface UserRecommendationFieldRefs {
+    readonly id: FieldRef<"UserRecommendation", 'String'>
+    readonly userId: FieldRef<"UserRecommendation", 'String'>
+    readonly kitId: FieldRef<"UserRecommendation", 'String'>
+    readonly addedAt: FieldRef<"UserRecommendation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserRecommendation findUnique
+   */
+  export type UserRecommendationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRecommendation to fetch.
+     */
+    where: UserRecommendationWhereUniqueInput
+  }
+
+  /**
+   * UserRecommendation findUniqueOrThrow
+   */
+  export type UserRecommendationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRecommendation to fetch.
+     */
+    where: UserRecommendationWhereUniqueInput
+  }
+
+  /**
+   * UserRecommendation findFirst
+   */
+  export type UserRecommendationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRecommendation to fetch.
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRecommendations to fetch.
+     */
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRecommendations.
+     */
+    cursor?: UserRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRecommendations.
+     */
+    distinct?: UserRecommendationScalarFieldEnum | UserRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * UserRecommendation findFirstOrThrow
+   */
+  export type UserRecommendationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRecommendation to fetch.
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRecommendations to fetch.
+     */
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRecommendations.
+     */
+    cursor?: UserRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRecommendations.
+     */
+    distinct?: UserRecommendationScalarFieldEnum | UserRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * UserRecommendation findMany
+   */
+  export type UserRecommendationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRecommendations to fetch.
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRecommendations to fetch.
+     */
+    orderBy?: UserRecommendationOrderByWithRelationInput | UserRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserRecommendations.
+     */
+    cursor?: UserRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRecommendations.
+     */
+    skip?: number
+    distinct?: UserRecommendationScalarFieldEnum | UserRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * UserRecommendation create
+   */
+  export type UserRecommendationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserRecommendation.
+     */
+    data: XOR<UserRecommendationCreateInput, UserRecommendationUncheckedCreateInput>
+  }
+
+  /**
+   * UserRecommendation createMany
+   */
+  export type UserRecommendationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserRecommendations.
+     */
+    data: UserRecommendationCreateManyInput | UserRecommendationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserRecommendation createManyAndReturn
+   */
+  export type UserRecommendationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserRecommendations.
+     */
+    data: UserRecommendationCreateManyInput | UserRecommendationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserRecommendation update
+   */
+  export type UserRecommendationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserRecommendation.
+     */
+    data: XOR<UserRecommendationUpdateInput, UserRecommendationUncheckedUpdateInput>
+    /**
+     * Choose, which UserRecommendation to update.
+     */
+    where: UserRecommendationWhereUniqueInput
+  }
+
+  /**
+   * UserRecommendation updateMany
+   */
+  export type UserRecommendationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserRecommendations.
+     */
+    data: XOR<UserRecommendationUpdateManyMutationInput, UserRecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which UserRecommendations to update
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * Limit how many UserRecommendations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserRecommendation updateManyAndReturn
+   */
+  export type UserRecommendationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to update UserRecommendations.
+     */
+    data: XOR<UserRecommendationUpdateManyMutationInput, UserRecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which UserRecommendations to update
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * Limit how many UserRecommendations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserRecommendation upsert
+   */
+  export type UserRecommendationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserRecommendation to update in case it exists.
+     */
+    where: UserRecommendationWhereUniqueInput
+    /**
+     * In case the UserRecommendation found by the `where` argument doesn't exist, create a new UserRecommendation with this data.
+     */
+    create: XOR<UserRecommendationCreateInput, UserRecommendationUncheckedCreateInput>
+    /**
+     * In case the UserRecommendation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserRecommendationUpdateInput, UserRecommendationUncheckedUpdateInput>
+  }
+
+  /**
+   * UserRecommendation delete
+   */
+  export type UserRecommendationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter which UserRecommendation to delete.
+     */
+    where: UserRecommendationWhereUniqueInput
+  }
+
+  /**
+   * UserRecommendation deleteMany
+   */
+  export type UserRecommendationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserRecommendations to delete
+     */
+    where?: UserRecommendationWhereInput
+    /**
+     * Limit how many UserRecommendations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserRecommendation without action
+   */
+  export type UserRecommendationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRecommendation
+     */
+    select?: UserRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRecommendation
+     */
+    omit?: UserRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRecommendationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -39840,6 +42860,7 @@ export namespace Prisma {
     scrapedImages: 'scrapedImages',
     potentialBaseKit: 'potentialBaseKit',
     isOriginalDesign: 'isOriginalDesign',
+    featuredScore: 'featuredScore',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     productLineId: 'productLineId',
@@ -39993,10 +43014,24 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     kitId: 'kitId',
+    buildId: 'buildId',
     status: 'status',
-    notes: 'notes',
     price: 'price',
+    wishlistNotes: 'wishlistNotes',
+    preorderNotes: 'preorderNotes',
+    backlogNotes: 'backlogNotes',
+    inProgressNotes: 'inProgressNotes',
+    builtNotes: 'builtNotes',
+    wishlistedAt: 'wishlistedAt',
+    preorderedAt: 'preorderedAt',
     acquiredAt: 'acquiredAt',
+    startedAt: 'startedAt',
+    completedAt: 'completedAt',
+    wishlistUploadId: 'wishlistUploadId',
+    preorderUploadId: 'preorderUploadId',
+    backlogUploadId: 'backlogUploadId',
+    inProgressUploadId: 'inProgressUploadId',
+    builtUploadId: 'builtUploadId',
     addedAt: 'addedAt',
     updatedAt: 'updatedAt'
   };
@@ -40047,6 +43082,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     status: 'status',
+    isPublic: 'isPublic',
     startedAt: 'startedAt',
     completedAt: 'completedAt',
     featuredImageId: 'featuredImageId',
@@ -40162,6 +43198,26 @@ export namespace Prisma {
   };
 
   export type WikiSubmissionLikeScalarFieldEnum = (typeof WikiSubmissionLikeScalarFieldEnum)[keyof typeof WikiSubmissionLikeScalarFieldEnum]
+
+
+  export const UserWishlistScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    kitId: 'kitId',
+    addedAt: 'addedAt'
+  };
+
+  export type UserWishlistScalarFieldEnum = (typeof UserWishlistScalarFieldEnum)[keyof typeof UserWishlistScalarFieldEnum]
+
+
+  export const UserRecommendationScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    kitId: 'kitId',
+    addedAt: 'addedAt'
+  };
+
+  export type UserRecommendationScalarFieldEnum = (typeof UserRecommendationScalarFieldEnum)[keyof typeof UserRecommendationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -40974,6 +44030,7 @@ export namespace Prisma {
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     isOriginalDesign?: BoolFilter<"Kit"> | boolean
+    featuredScore?: IntNullableFilter<"Kit"> | number | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -40991,9 +44048,11 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     builds?: BuildListRelationFilter
     listings?: MarketplaceListingListRelationFilter
+    wishlist?: UserWishlistListRelationFilter
     expansions?: KitRelationListRelationFilter
     expandedBy?: KitRelationListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    UserRecommendation?: UserRecommendationListRelationFilter
   }
 
   export type KitOrderByWithRelationInput = {
@@ -41011,6 +44070,7 @@ export namespace Prisma {
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrderInput | SortOrder
     isOriginalDesign?: SortOrder
+    featuredScore?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrderInput | SortOrder
@@ -41028,9 +44088,11 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
     builds?: BuildOrderByRelationAggregateInput
     listings?: MarketplaceListingOrderByRelationAggregateInput
+    wishlist?: UserWishlistOrderByRelationAggregateInput
     expansions?: KitRelationOrderByRelationAggregateInput
     expandedBy?: KitRelationOrderByRelationAggregateInput
     gunplaCards?: GunplaCardOrderByRelationAggregateInput
+    UserRecommendation?: UserRecommendationOrderByRelationAggregateInput
   }
 
   export type KitWhereUniqueInput = Prisma.AtLeast<{
@@ -41051,6 +44113,7 @@ export namespace Prisma {
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     isOriginalDesign?: BoolFilter<"Kit"> | boolean
+    featuredScore?: IntNullableFilter<"Kit"> | number | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -41068,9 +44131,11 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     builds?: BuildListRelationFilter
     listings?: MarketplaceListingListRelationFilter
+    wishlist?: UserWishlistListRelationFilter
     expansions?: KitRelationListRelationFilter
     expandedBy?: KitRelationListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    UserRecommendation?: UserRecommendationListRelationFilter
   }, "id" | "slug">
 
   export type KitOrderByWithAggregationInput = {
@@ -41088,6 +44153,7 @@ export namespace Prisma {
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrderInput | SortOrder
     isOriginalDesign?: SortOrder
+    featuredScore?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrderInput | SortOrder
@@ -41119,6 +44185,7 @@ export namespace Prisma {
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableWithAggregatesFilter<"Kit"> | string | null
     isOriginalDesign?: BoolWithAggregatesFilter<"Kit"> | boolean
+    featuredScore?: IntNullableWithAggregatesFilter<"Kit"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Kit"> | Date | string
     productLineId?: StringNullableWithAggregatesFilter<"Kit"> | string | null
@@ -41348,6 +44415,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    wishlistUploads?: UserKitCollectionListRelationFilter
+    preorderUploads?: UserKitCollectionListRelationFilter
+    backlogUploads?: UserKitCollectionListRelationFilter
+    inProgressUploads?: UserKitCollectionListRelationFilter
+    builtUploads?: UserKitCollectionListRelationFilter
   }
 
   export type UploadOrderByWithRelationInput = {
@@ -41373,6 +44445,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadOrderByRelationAggregateInput
     buildFeaturedImages?: BuildOrderByRelationAggregateInput
     gunplaCards?: GunplaCardOrderByRelationAggregateInput
+    wishlistUploads?: UserKitCollectionOrderByRelationAggregateInput
+    preorderUploads?: UserKitCollectionOrderByRelationAggregateInput
+    backlogUploads?: UserKitCollectionOrderByRelationAggregateInput
+    inProgressUploads?: UserKitCollectionOrderByRelationAggregateInput
+    builtUploads?: UserKitCollectionOrderByRelationAggregateInput
   }
 
   export type UploadWhereUniqueInput = Prisma.AtLeast<{
@@ -41401,6 +44478,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadListRelationFilter
     buildFeaturedImages?: BuildListRelationFilter
     gunplaCards?: GunplaCardListRelationFilter
+    wishlistUploads?: UserKitCollectionListRelationFilter
+    preorderUploads?: UserKitCollectionListRelationFilter
+    backlogUploads?: UserKitCollectionListRelationFilter
+    inProgressUploads?: UserKitCollectionListRelationFilter
+    builtUploads?: UserKitCollectionListRelationFilter
   }, "id" | "cloudinaryAssetId">
 
   export type UploadOrderByWithAggregationInput = {
@@ -41774,6 +44856,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionListRelationFilter
     wikiSubmissionComments?: WikiSubmissionCommentListRelationFilter
     wikiSubmissionLikes?: WikiSubmissionLikeListRelationFilter
+    wishlist?: UserWishlistListRelationFilter
+    UserRecommendation?: UserRecommendationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -41813,6 +44897,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionOrderByRelationAggregateInput
     wikiSubmissionComments?: WikiSubmissionCommentOrderByRelationAggregateInput
     wikiSubmissionLikes?: WikiSubmissionLikeOrderByRelationAggregateInput
+    wishlist?: UserWishlistOrderByRelationAggregateInput
+    UserRecommendation?: UserRecommendationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -41855,6 +44941,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionListRelationFilter
     wikiSubmissionComments?: WikiSubmissionCommentListRelationFilter
     wikiSubmissionLikes?: WikiSubmissionLikeListRelationFilter
+    wishlist?: UserWishlistListRelationFilter
+    UserRecommendation?: UserRecommendationListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -41922,56 +45010,129 @@ export namespace Prisma {
     id?: StringFilter<"UserKitCollection"> | string
     userId?: StringFilter<"UserKitCollection"> | string
     kitId?: StringFilter<"UserKitCollection"> | string
+    buildId?: StringNullableFilter<"UserKitCollection"> | string | null
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
-    notes?: StringNullableFilter<"UserKitCollection"> | string | null
     price?: IntNullableFilter<"UserKitCollection"> | number | null
+    wishlistNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    wishlistedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    preorderedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    wishlistUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+    build?: XOR<BuildNullableScalarRelationFilter, BuildWhereInput> | null
+    wishlistUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    preorderUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    backlogUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    inProgressUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    builtUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
   }
 
   export type UserKitCollectionOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
     kitId?: SortOrder
+    buildId?: SortOrderInput | SortOrder
     status?: SortOrder
-    notes?: SortOrderInput | SortOrder
     price?: SortOrderInput | SortOrder
+    wishlistNotes?: SortOrderInput | SortOrder
+    preorderNotes?: SortOrderInput | SortOrder
+    backlogNotes?: SortOrderInput | SortOrder
+    inProgressNotes?: SortOrderInput | SortOrder
+    builtNotes?: SortOrderInput | SortOrder
+    wishlistedAt?: SortOrderInput | SortOrder
+    preorderedAt?: SortOrderInput | SortOrder
     acquiredAt?: SortOrderInput | SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    wishlistUploadId?: SortOrderInput | SortOrder
+    preorderUploadId?: SortOrderInput | SortOrder
+    backlogUploadId?: SortOrderInput | SortOrder
+    inProgressUploadId?: SortOrderInput | SortOrder
+    builtUploadId?: SortOrderInput | SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     kit?: KitOrderByWithRelationInput
+    build?: BuildOrderByWithRelationInput
+    wishlistUpload?: UploadOrderByWithRelationInput
+    preorderUpload?: UploadOrderByWithRelationInput
+    backlogUpload?: UploadOrderByWithRelationInput
+    inProgressUpload?: UploadOrderByWithRelationInput
+    builtUpload?: UploadOrderByWithRelationInput
   }
 
   export type UserKitCollectionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId_kitId?: UserKitCollectionUserIdKitIdCompoundUniqueInput
+    buildId?: string
     AND?: UserKitCollectionWhereInput | UserKitCollectionWhereInput[]
     OR?: UserKitCollectionWhereInput[]
     NOT?: UserKitCollectionWhereInput | UserKitCollectionWhereInput[]
     userId?: StringFilter<"UserKitCollection"> | string
     kitId?: StringFilter<"UserKitCollection"> | string
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
-    notes?: StringNullableFilter<"UserKitCollection"> | string | null
     price?: IntNullableFilter<"UserKitCollection"> | number | null
+    wishlistNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    wishlistedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    preorderedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    wishlistUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     kit?: XOR<KitScalarRelationFilter, KitWhereInput>
-  }, "id" | "userId_kitId">
+    build?: XOR<BuildNullableScalarRelationFilter, BuildWhereInput> | null
+    wishlistUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    preorderUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    backlogUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    inProgressUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+    builtUpload?: XOR<UploadNullableScalarRelationFilter, UploadWhereInput> | null
+  }, "id" | "buildId">
 
   export type UserKitCollectionOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
     kitId?: SortOrder
+    buildId?: SortOrderInput | SortOrder
     status?: SortOrder
-    notes?: SortOrderInput | SortOrder
     price?: SortOrderInput | SortOrder
+    wishlistNotes?: SortOrderInput | SortOrder
+    preorderNotes?: SortOrderInput | SortOrder
+    backlogNotes?: SortOrderInput | SortOrder
+    inProgressNotes?: SortOrderInput | SortOrder
+    builtNotes?: SortOrderInput | SortOrder
+    wishlistedAt?: SortOrderInput | SortOrder
+    preorderedAt?: SortOrderInput | SortOrder
     acquiredAt?: SortOrderInput | SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    wishlistUploadId?: SortOrderInput | SortOrder
+    preorderUploadId?: SortOrderInput | SortOrder
+    backlogUploadId?: SortOrderInput | SortOrder
+    inProgressUploadId?: SortOrderInput | SortOrder
+    builtUploadId?: SortOrderInput | SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserKitCollectionCountOrderByAggregateInput
@@ -41988,10 +45149,24 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"UserKitCollection"> | string
     userId?: StringWithAggregatesFilter<"UserKitCollection"> | string
     kitId?: StringWithAggregatesFilter<"UserKitCollection"> | string
+    buildId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
     status?: EnumCollectionStatusWithAggregatesFilter<"UserKitCollection"> | $Enums.CollectionStatus
-    notes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
     price?: IntNullableWithAggregatesFilter<"UserKitCollection"> | number | null
+    wishlistNotes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    preorderNotes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    backlogNotes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    inProgressNotes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    builtNotes?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    wishlistedAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
+    preorderedAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
     acquiredAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
+    startedAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
+    completedAt?: DateTimeNullableWithAggregatesFilter<"UserKitCollection"> | Date | string | null
+    wishlistUploadId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    preorderUploadId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    backlogUploadId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    inProgressUploadId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
+    builtUploadId?: StringNullableWithAggregatesFilter<"UserKitCollection"> | string | null
     addedAt?: DateTimeWithAggregatesFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserKitCollection"> | Date | string
   }
@@ -42205,6 +45380,7 @@ export namespace Prisma {
     title?: StringFilter<"Build"> | string
     description?: StringNullableFilter<"Build"> | string | null
     status?: EnumBuildStatusFilter<"Build"> | $Enums.BuildStatus
+    isPublic?: BoolFilter<"Build"> | boolean
     startedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     featuredImageId?: StringNullableFilter<"Build"> | string | null
@@ -42217,6 +45393,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneListRelationFilter
     likes?: BuildLikeListRelationFilter
     comments?: BuildCommentListRelationFilter
+    collection?: XOR<UserKitCollectionNullableScalarRelationFilter, UserKitCollectionWhereInput> | null
   }
 
   export type BuildOrderByWithRelationInput = {
@@ -42226,6 +45403,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     status?: SortOrder
+    isPublic?: SortOrder
     startedAt?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     featuredImageId?: SortOrderInput | SortOrder
@@ -42238,6 +45416,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneOrderByRelationAggregateInput
     likes?: BuildLikeOrderByRelationAggregateInput
     comments?: BuildCommentOrderByRelationAggregateInput
+    collection?: UserKitCollectionOrderByWithRelationInput
   }
 
   export type BuildWhereUniqueInput = Prisma.AtLeast<{
@@ -42250,6 +45429,7 @@ export namespace Prisma {
     title?: StringFilter<"Build"> | string
     description?: StringNullableFilter<"Build"> | string | null
     status?: EnumBuildStatusFilter<"Build"> | $Enums.BuildStatus
+    isPublic?: BoolFilter<"Build"> | boolean
     startedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     featuredImageId?: StringNullableFilter<"Build"> | string | null
@@ -42262,6 +45442,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneListRelationFilter
     likes?: BuildLikeListRelationFilter
     comments?: BuildCommentListRelationFilter
+    collection?: XOR<UserKitCollectionNullableScalarRelationFilter, UserKitCollectionWhereInput> | null
   }, "id">
 
   export type BuildOrderByWithAggregationInput = {
@@ -42271,6 +45452,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     status?: SortOrder
+    isPublic?: SortOrder
     startedAt?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     featuredImageId?: SortOrderInput | SortOrder
@@ -42291,6 +45473,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Build"> | string
     description?: StringNullableWithAggregatesFilter<"Build"> | string | null
     status?: EnumBuildStatusWithAggregatesFilter<"Build"> | $Enums.BuildStatus
+    isPublic?: BoolWithAggregatesFilter<"Build"> | boolean
     startedAt?: DateTimeNullableWithAggregatesFilter<"Build"> | Date | string | null
     completedAt?: DateTimeNullableWithAggregatesFilter<"Build"> | Date | string | null
     featuredImageId?: StringNullableWithAggregatesFilter<"Build"> | string | null
@@ -42869,6 +46052,114 @@ export namespace Prisma {
     submissionId?: StringWithAggregatesFilter<"WikiSubmissionLike"> | string
     userId?: StringWithAggregatesFilter<"WikiSubmissionLike"> | string
     createdAt?: DateTimeWithAggregatesFilter<"WikiSubmissionLike"> | Date | string
+  }
+
+  export type UserWishlistWhereInput = {
+    AND?: UserWishlistWhereInput | UserWishlistWhereInput[]
+    OR?: UserWishlistWhereInput[]
+    NOT?: UserWishlistWhereInput | UserWishlistWhereInput[]
+    id?: StringFilter<"UserWishlist"> | string
+    userId?: StringFilter<"UserWishlist"> | string
+    kitId?: StringFilter<"UserWishlist"> | string
+    addedAt?: DateTimeFilter<"UserWishlist"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }
+
+  export type UserWishlistOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    kit?: KitOrderByWithRelationInput
+  }
+
+  export type UserWishlistWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_kitId?: UserWishlistUserIdKitIdCompoundUniqueInput
+    AND?: UserWishlistWhereInput | UserWishlistWhereInput[]
+    OR?: UserWishlistWhereInput[]
+    NOT?: UserWishlistWhereInput | UserWishlistWhereInput[]
+    userId?: StringFilter<"UserWishlist"> | string
+    kitId?: StringFilter<"UserWishlist"> | string
+    addedAt?: DateTimeFilter<"UserWishlist"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }, "id" | "userId_kitId">
+
+  export type UserWishlistOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+    _count?: UserWishlistCountOrderByAggregateInput
+    _max?: UserWishlistMaxOrderByAggregateInput
+    _min?: UserWishlistMinOrderByAggregateInput
+  }
+
+  export type UserWishlistScalarWhereWithAggregatesInput = {
+    AND?: UserWishlistScalarWhereWithAggregatesInput | UserWishlistScalarWhereWithAggregatesInput[]
+    OR?: UserWishlistScalarWhereWithAggregatesInput[]
+    NOT?: UserWishlistScalarWhereWithAggregatesInput | UserWishlistScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserWishlist"> | string
+    userId?: StringWithAggregatesFilter<"UserWishlist"> | string
+    kitId?: StringWithAggregatesFilter<"UserWishlist"> | string
+    addedAt?: DateTimeWithAggregatesFilter<"UserWishlist"> | Date | string
+  }
+
+  export type UserRecommendationWhereInput = {
+    AND?: UserRecommendationWhereInput | UserRecommendationWhereInput[]
+    OR?: UserRecommendationWhereInput[]
+    NOT?: UserRecommendationWhereInput | UserRecommendationWhereInput[]
+    id?: StringFilter<"UserRecommendation"> | string
+    userId?: StringFilter<"UserRecommendation"> | string
+    kitId?: StringFilter<"UserRecommendation"> | string
+    addedAt?: DateTimeFilter<"UserRecommendation"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }
+
+  export type UserRecommendationOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    kit?: KitOrderByWithRelationInput
+  }
+
+  export type UserRecommendationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_kitId?: UserRecommendationUserIdKitIdCompoundUniqueInput
+    AND?: UserRecommendationWhereInput | UserRecommendationWhereInput[]
+    OR?: UserRecommendationWhereInput[]
+    NOT?: UserRecommendationWhereInput | UserRecommendationWhereInput[]
+    userId?: StringFilter<"UserRecommendation"> | string
+    kitId?: StringFilter<"UserRecommendation"> | string
+    addedAt?: DateTimeFilter<"UserRecommendation"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    kit?: XOR<KitScalarRelationFilter, KitWhereInput>
+  }, "id" | "userId_kitId">
+
+  export type UserRecommendationOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+    _count?: UserRecommendationCountOrderByAggregateInput
+    _max?: UserRecommendationMaxOrderByAggregateInput
+    _min?: UserRecommendationMinOrderByAggregateInput
+  }
+
+  export type UserRecommendationScalarWhereWithAggregatesInput = {
+    AND?: UserRecommendationScalarWhereWithAggregatesInput | UserRecommendationScalarWhereWithAggregatesInput[]
+    OR?: UserRecommendationScalarWhereWithAggregatesInput[]
+    NOT?: UserRecommendationScalarWhereWithAggregatesInput | UserRecommendationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserRecommendation"> | string
+    userId?: StringWithAggregatesFilter<"UserRecommendation"> | string
+    kitId?: StringWithAggregatesFilter<"UserRecommendation"> | string
+    addedAt?: DateTimeWithAggregatesFilter<"UserRecommendation"> | Date | string
   }
 
   export type TimelineCreateInput = {
@@ -43498,6 +46789,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -43511,9 +46803,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateInput = {
@@ -43531,6 +46825,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -43544,9 +46839,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitUpdateInput = {
@@ -43564,6 +46861,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -43577,9 +46875,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateInput = {
@@ -43597,6 +46897,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43610,9 +46911,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitCreateManyInput = {
@@ -43630,6 +46933,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -43653,6 +46957,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43672,6 +46977,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43884,6 +47190,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateInput = {
@@ -43908,6 +47219,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUpdateInput = {
@@ -43932,6 +47248,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateInput = {
@@ -43956,6 +47277,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadCreateManyInput = {
@@ -44324,6 +47650,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -44363,6 +47691,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -44402,6 +47732,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -44441,6 +47773,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -44524,23 +47858,51 @@ export namespace Prisma {
   export type UserKitCollectionCreateInput = {
     id?: string
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCollectionsInput
     kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
   }
 
   export type UserKitCollectionUncheckedCreateInput = {
     id?: string
     userId: string
     kitId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -44548,23 +47910,51 @@ export namespace Prisma {
   export type UserKitCollectionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
     kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
   }
 
   export type UserKitCollectionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44573,10 +47963,24 @@ export namespace Prisma {
     id?: string
     userId: string
     kitId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -44584,9 +47988,17 @@ export namespace Prisma {
   export type UserKitCollectionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44595,10 +48007,24 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44800,6 +48226,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -44811,6 +48238,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateInput = {
@@ -44820,6 +48248,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -44829,6 +48258,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUpdateInput = {
@@ -44836,6 +48266,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44847,6 +48278,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateInput = {
@@ -44856,6 +48288,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44865,6 +48298,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildCreateManyInput = {
@@ -44874,6 +48308,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -44886,6 +48321,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44899,6 +48335,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45489,6 +48926,100 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserWishlistCreateInput = {
+    id?: string
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutWishlistInput
+    kit: KitCreateNestedOneWithoutWishlistInput
+  }
+
+  export type UserWishlistUncheckedCreateInput = {
+    id?: string
+    userId: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserWishlistUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWishlistNestedInput
+    kit?: KitUpdateOneRequiredWithoutWishlistNestedInput
+  }
+
+  export type UserWishlistUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistCreateManyInput = {
+    id?: string
+    userId: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserWishlistUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationCreateInput = {
+    id?: string
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutUserRecommendationInput
+    kit: KitCreateNestedOneWithoutUserRecommendationInput
+  }
+
+  export type UserRecommendationUncheckedCreateInput = {
+    id?: string
+    userId: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserRecommendationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserRecommendationNestedInput
+    kit?: KitUpdateOneRequiredWithoutUserRecommendationNestedInput
+  }
+
+  export type UserRecommendationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationCreateManyInput = {
+    id?: string
+    userId: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserRecommendationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -46020,6 +49551,12 @@ export namespace Prisma {
     none?: MarketplaceListingWhereInput
   }
 
+  export type UserWishlistListRelationFilter = {
+    every?: UserWishlistWhereInput
+    some?: UserWishlistWhereInput
+    none?: UserWishlistWhereInput
+  }
+
   export type KitRelationListRelationFilter = {
     every?: KitRelationWhereInput
     some?: KitRelationWhereInput
@@ -46030,6 +49567,12 @@ export namespace Prisma {
     every?: GunplaCardWhereInput
     some?: GunplaCardWhereInput
     none?: GunplaCardWhereInput
+  }
+
+  export type UserRecommendationListRelationFilter = {
+    every?: UserRecommendationWhereInput
+    some?: UserRecommendationWhereInput
+    none?: UserRecommendationWhereInput
   }
 
   export type KitUploadOrderByRelationAggregateInput = {
@@ -46052,11 +49595,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserWishlistOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type KitRelationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type GunplaCardOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserRecommendationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -46075,6 +49626,7 @@ export namespace Prisma {
     scrapedImages?: SortOrder
     potentialBaseKit?: SortOrder
     isOriginalDesign?: SortOrder
+    featuredScore?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -46085,6 +49637,7 @@ export namespace Prisma {
 
   export type KitAvgOrderByAggregateInput = {
     priceYen?: SortOrder
+    featuredScore?: SortOrder
   }
 
   export type KitMaxOrderByAggregateInput = {
@@ -46100,6 +49653,7 @@ export namespace Prisma {
     notes?: SortOrder
     potentialBaseKit?: SortOrder
     isOriginalDesign?: SortOrder
+    featuredScore?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -46121,6 +49675,7 @@ export namespace Prisma {
     notes?: SortOrder
     potentialBaseKit?: SortOrder
     isOriginalDesign?: SortOrder
+    featuredScore?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     productLineId?: SortOrder
@@ -46131,6 +49686,7 @@ export namespace Prisma {
 
   export type KitSumOrderByAggregateInput = {
     priceYen?: SortOrder
+    featuredScore?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -46766,19 +50322,33 @@ export namespace Prisma {
     not?: NestedEnumCollectionStatusFilter<$PrismaModel> | $Enums.CollectionStatus
   }
 
-  export type UserKitCollectionUserIdKitIdCompoundUniqueInput = {
-    userId: string
-    kitId: string
+  export type BuildNullableScalarRelationFilter = {
+    is?: BuildWhereInput | null
+    isNot?: BuildWhereInput | null
   }
 
   export type UserKitCollectionCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     kitId?: SortOrder
+    buildId?: SortOrder
     status?: SortOrder
-    notes?: SortOrder
     price?: SortOrder
+    wishlistNotes?: SortOrder
+    preorderNotes?: SortOrder
+    backlogNotes?: SortOrder
+    inProgressNotes?: SortOrder
+    builtNotes?: SortOrder
+    wishlistedAt?: SortOrder
+    preorderedAt?: SortOrder
     acquiredAt?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    wishlistUploadId?: SortOrder
+    preorderUploadId?: SortOrder
+    backlogUploadId?: SortOrder
+    inProgressUploadId?: SortOrder
+    builtUploadId?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -46791,10 +50361,24 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     kitId?: SortOrder
+    buildId?: SortOrder
     status?: SortOrder
-    notes?: SortOrder
     price?: SortOrder
+    wishlistNotes?: SortOrder
+    preorderNotes?: SortOrder
+    backlogNotes?: SortOrder
+    inProgressNotes?: SortOrder
+    builtNotes?: SortOrder
+    wishlistedAt?: SortOrder
+    preorderedAt?: SortOrder
     acquiredAt?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    wishlistUploadId?: SortOrder
+    preorderUploadId?: SortOrder
+    backlogUploadId?: SortOrder
+    inProgressUploadId?: SortOrder
+    builtUploadId?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -46803,10 +50387,24 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     kitId?: SortOrder
+    buildId?: SortOrder
     status?: SortOrder
-    notes?: SortOrder
     price?: SortOrder
+    wishlistNotes?: SortOrder
+    preorderNotes?: SortOrder
+    backlogNotes?: SortOrder
+    inProgressNotes?: SortOrder
+    builtNotes?: SortOrder
+    wishlistedAt?: SortOrder
+    preorderedAt?: SortOrder
     acquiredAt?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    wishlistUploadId?: SortOrder
+    preorderUploadId?: SortOrder
+    backlogUploadId?: SortOrder
+    inProgressUploadId?: SortOrder
+    builtUploadId?: SortOrder
     addedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -47009,6 +50607,11 @@ export namespace Prisma {
     none?: BuildMilestoneWhereInput
   }
 
+  export type UserKitCollectionNullableScalarRelationFilter = {
+    is?: UserKitCollectionWhereInput | null
+    isNot?: UserKitCollectionWhereInput | null
+  }
+
   export type BuildMilestoneOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -47020,6 +50623,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    isPublic?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
     featuredImageId?: SortOrder
@@ -47034,6 +50638,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    isPublic?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
     featuredImageId?: SortOrder
@@ -47048,6 +50653,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    isPublic?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
     featuredImageId?: SortOrder
@@ -47455,6 +51061,58 @@ export namespace Prisma {
     submissionId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type UserWishlistUserIdKitIdCompoundUniqueInput = {
+    userId: string
+    kitId: string
+  }
+
+  export type UserWishlistCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserWishlistMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserWishlistMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserRecommendationUserIdKitIdCompoundUniqueInput = {
+    userId: string
+    kitId: string
+  }
+
+  export type UserRecommendationCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserRecommendationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserRecommendationMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    kitId?: SortOrder
+    addedAt?: SortOrder
   }
 
   export type SeriesCreateNestedManyWithoutTimelineInput = {
@@ -48034,6 +51692,13 @@ export namespace Prisma {
     connect?: MarketplaceListingWhereUniqueInput | MarketplaceListingWhereUniqueInput[]
   }
 
+  export type UserWishlistCreateNestedManyWithoutKitInput = {
+    create?: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput> | UserWishlistCreateWithoutKitInput[] | UserWishlistUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutKitInput | UserWishlistCreateOrConnectWithoutKitInput[]
+    createMany?: UserWishlistCreateManyKitInputEnvelope
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+  }
+
   export type KitRelationCreateNestedManyWithoutKitInput = {
     create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
     connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
@@ -48053,6 +51718,13 @@ export namespace Prisma {
     connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
     createMany?: GunplaCardCreateManyKitInputEnvelope
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
+  export type UserRecommendationCreateNestedManyWithoutKitInput = {
+    create?: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput> | UserRecommendationCreateWithoutKitInput[] | UserRecommendationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutKitInput | UserRecommendationCreateOrConnectWithoutKitInput[]
+    createMany?: UserRecommendationCreateManyKitInputEnvelope
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
   }
 
   export type KitUncheckedCreateNestedManyWithoutBaseKitInput = {
@@ -48104,6 +51776,13 @@ export namespace Prisma {
     connect?: MarketplaceListingWhereUniqueInput | MarketplaceListingWhereUniqueInput[]
   }
 
+  export type UserWishlistUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput> | UserWishlistCreateWithoutKitInput[] | UserWishlistUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutKitInput | UserWishlistCreateOrConnectWithoutKitInput[]
+    createMany?: UserWishlistCreateManyKitInputEnvelope
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+  }
+
   export type KitRelationUncheckedCreateNestedManyWithoutKitInput = {
     create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
     connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
@@ -48123,6 +51802,13 @@ export namespace Prisma {
     connectOrCreate?: GunplaCardCreateOrConnectWithoutKitInput | GunplaCardCreateOrConnectWithoutKitInput[]
     createMany?: GunplaCardCreateManyKitInputEnvelope
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
+  export type UserRecommendationUncheckedCreateNestedManyWithoutKitInput = {
+    create?: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput> | UserRecommendationCreateWithoutKitInput[] | UserRecommendationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutKitInput | UserRecommendationCreateOrConnectWithoutKitInput[]
+    createMany?: UserRecommendationCreateManyKitInputEnvelope
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -48285,6 +51971,20 @@ export namespace Prisma {
     deleteMany?: MarketplaceListingScalarWhereInput | MarketplaceListingScalarWhereInput[]
   }
 
+  export type UserWishlistUpdateManyWithoutKitNestedInput = {
+    create?: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput> | UserWishlistCreateWithoutKitInput[] | UserWishlistUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutKitInput | UserWishlistCreateOrConnectWithoutKitInput[]
+    upsert?: UserWishlistUpsertWithWhereUniqueWithoutKitInput | UserWishlistUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: UserWishlistCreateManyKitInputEnvelope
+    set?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    disconnect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    delete?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    update?: UserWishlistUpdateWithWhereUniqueWithoutKitInput | UserWishlistUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: UserWishlistUpdateManyWithWhereWithoutKitInput | UserWishlistUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+  }
+
   export type KitRelationUpdateManyWithoutKitNestedInput = {
     create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
     connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
@@ -48325,6 +52025,20 @@ export namespace Prisma {
     update?: GunplaCardUpdateWithWhereUniqueWithoutKitInput | GunplaCardUpdateWithWhereUniqueWithoutKitInput[]
     updateMany?: GunplaCardUpdateManyWithWhereWithoutKitInput | GunplaCardUpdateManyWithWhereWithoutKitInput[]
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
+  export type UserRecommendationUpdateManyWithoutKitNestedInput = {
+    create?: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput> | UserRecommendationCreateWithoutKitInput[] | UserRecommendationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutKitInput | UserRecommendationCreateOrConnectWithoutKitInput[]
+    upsert?: UserRecommendationUpsertWithWhereUniqueWithoutKitInput | UserRecommendationUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: UserRecommendationCreateManyKitInputEnvelope
+    set?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    disconnect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    delete?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    update?: UserRecommendationUpdateWithWhereUniqueWithoutKitInput | UserRecommendationUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: UserRecommendationUpdateManyWithWhereWithoutKitInput | UserRecommendationUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
   }
 
   export type KitUncheckedUpdateManyWithoutBaseKitNestedInput = {
@@ -48425,6 +52139,20 @@ export namespace Prisma {
     deleteMany?: MarketplaceListingScalarWhereInput | MarketplaceListingScalarWhereInput[]
   }
 
+  export type UserWishlistUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput> | UserWishlistCreateWithoutKitInput[] | UserWishlistUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutKitInput | UserWishlistCreateOrConnectWithoutKitInput[]
+    upsert?: UserWishlistUpsertWithWhereUniqueWithoutKitInput | UserWishlistUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: UserWishlistCreateManyKitInputEnvelope
+    set?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    disconnect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    delete?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    update?: UserWishlistUpdateWithWhereUniqueWithoutKitInput | UserWishlistUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: UserWishlistUpdateManyWithWhereWithoutKitInput | UserWishlistUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+  }
+
   export type KitRelationUncheckedUpdateManyWithoutKitNestedInput = {
     create?: XOR<KitRelationCreateWithoutKitInput, KitRelationUncheckedCreateWithoutKitInput> | KitRelationCreateWithoutKitInput[] | KitRelationUncheckedCreateWithoutKitInput[]
     connectOrCreate?: KitRelationCreateOrConnectWithoutKitInput | KitRelationCreateOrConnectWithoutKitInput[]
@@ -48465,6 +52193,20 @@ export namespace Prisma {
     update?: GunplaCardUpdateWithWhereUniqueWithoutKitInput | GunplaCardUpdateWithWhereUniqueWithoutKitInput[]
     updateMany?: GunplaCardUpdateManyWithWhereWithoutKitInput | GunplaCardUpdateManyWithWhereWithoutKitInput[]
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
+  export type UserRecommendationUncheckedUpdateManyWithoutKitNestedInput = {
+    create?: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput> | UserRecommendationCreateWithoutKitInput[] | UserRecommendationUncheckedCreateWithoutKitInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutKitInput | UserRecommendationCreateOrConnectWithoutKitInput[]
+    upsert?: UserRecommendationUpsertWithWhereUniqueWithoutKitInput | UserRecommendationUpsertWithWhereUniqueWithoutKitInput[]
+    createMany?: UserRecommendationCreateManyKitInputEnvelope
+    set?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    disconnect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    delete?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    update?: UserRecommendationUpdateWithWhereUniqueWithoutKitInput | UserRecommendationUpdateWithWhereUniqueWithoutKitInput[]
+    updateMany?: UserRecommendationUpdateManyWithWhereWithoutKitInput | UserRecommendationUpdateManyWithWhereWithoutKitInput[]
+    deleteMany?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
   }
 
   export type UploadCreateNestedOneWithoutGunplaCardsInput = {
@@ -48624,6 +52366,41 @@ export namespace Prisma {
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
   }
 
+  export type UserKitCollectionCreateNestedManyWithoutWishlistUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput> | UserKitCollectionCreateWithoutWishlistUploadInput[] | UserKitCollectionUncheckedCreateWithoutWishlistUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutWishlistUploadInput | UserKitCollectionCreateOrConnectWithoutWishlistUploadInput[]
+    createMany?: UserKitCollectionCreateManyWishlistUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionCreateNestedManyWithoutPreorderUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput> | UserKitCollectionCreateWithoutPreorderUploadInput[] | UserKitCollectionUncheckedCreateWithoutPreorderUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutPreorderUploadInput | UserKitCollectionCreateOrConnectWithoutPreorderUploadInput[]
+    createMany?: UserKitCollectionCreateManyPreorderUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionCreateNestedManyWithoutBacklogUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput> | UserKitCollectionCreateWithoutBacklogUploadInput[] | UserKitCollectionUncheckedCreateWithoutBacklogUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBacklogUploadInput | UserKitCollectionCreateOrConnectWithoutBacklogUploadInput[]
+    createMany?: UserKitCollectionCreateManyBacklogUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionCreateNestedManyWithoutInProgressUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput> | UserKitCollectionCreateWithoutInProgressUploadInput[] | UserKitCollectionUncheckedCreateWithoutInProgressUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutInProgressUploadInput | UserKitCollectionCreateOrConnectWithoutInProgressUploadInput[]
+    createMany?: UserKitCollectionCreateManyInProgressUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionCreateNestedManyWithoutBuiltUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput> | UserKitCollectionCreateWithoutBuiltUploadInput[] | UserKitCollectionUncheckedCreateWithoutBuiltUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuiltUploadInput | UserKitCollectionCreateOrConnectWithoutBuiltUploadInput[]
+    createMany?: UserKitCollectionCreateManyBuiltUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
   export type KitUploadUncheckedCreateNestedManyWithoutUploadInput = {
     create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
@@ -48671,6 +52448,41 @@ export namespace Prisma {
     connectOrCreate?: GunplaCardCreateOrConnectWithoutUploadInput | GunplaCardCreateOrConnectWithoutUploadInput[]
     createMany?: GunplaCardCreateManyUploadInputEnvelope
     connect?: GunplaCardWhereUniqueInput | GunplaCardWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput> | UserKitCollectionCreateWithoutWishlistUploadInput[] | UserKitCollectionUncheckedCreateWithoutWishlistUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutWishlistUploadInput | UserKitCollectionCreateOrConnectWithoutWishlistUploadInput[]
+    createMany?: UserKitCollectionCreateManyWishlistUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput> | UserKitCollectionCreateWithoutPreorderUploadInput[] | UserKitCollectionUncheckedCreateWithoutPreorderUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutPreorderUploadInput | UserKitCollectionCreateOrConnectWithoutPreorderUploadInput[]
+    createMany?: UserKitCollectionCreateManyPreorderUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput> | UserKitCollectionCreateWithoutBacklogUploadInput[] | UserKitCollectionUncheckedCreateWithoutBacklogUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBacklogUploadInput | UserKitCollectionCreateOrConnectWithoutBacklogUploadInput[]
+    createMany?: UserKitCollectionCreateManyBacklogUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput> | UserKitCollectionCreateWithoutInProgressUploadInput[] | UserKitCollectionUncheckedCreateWithoutInProgressUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutInProgressUploadInput | UserKitCollectionCreateOrConnectWithoutInProgressUploadInput[]
+    createMany?: UserKitCollectionCreateManyInProgressUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput> | UserKitCollectionCreateWithoutBuiltUploadInput[] | UserKitCollectionUncheckedCreateWithoutBuiltUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuiltUploadInput | UserKitCollectionCreateOrConnectWithoutBuiltUploadInput[]
+    createMany?: UserKitCollectionCreateManyBuiltUploadInputEnvelope
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -48787,6 +52599,76 @@ export namespace Prisma {
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
   }
 
+  export type UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput> | UserKitCollectionCreateWithoutWishlistUploadInput[] | UserKitCollectionUncheckedCreateWithoutWishlistUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutWishlistUploadInput | UserKitCollectionCreateOrConnectWithoutWishlistUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutWishlistUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutWishlistUploadInput[]
+    createMany?: UserKitCollectionCreateManyWishlistUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutWishlistUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutWishlistUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutWishlistUploadInput | UserKitCollectionUpdateManyWithWhereWithoutWishlistUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput> | UserKitCollectionCreateWithoutPreorderUploadInput[] | UserKitCollectionUncheckedCreateWithoutPreorderUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutPreorderUploadInput | UserKitCollectionCreateOrConnectWithoutPreorderUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutPreorderUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutPreorderUploadInput[]
+    createMany?: UserKitCollectionCreateManyPreorderUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutPreorderUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutPreorderUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutPreorderUploadInput | UserKitCollectionUpdateManyWithWhereWithoutPreorderUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput> | UserKitCollectionCreateWithoutBacklogUploadInput[] | UserKitCollectionUncheckedCreateWithoutBacklogUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBacklogUploadInput | UserKitCollectionCreateOrConnectWithoutBacklogUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutBacklogUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutBacklogUploadInput[]
+    createMany?: UserKitCollectionCreateManyBacklogUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutBacklogUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutBacklogUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutBacklogUploadInput | UserKitCollectionUpdateManyWithWhereWithoutBacklogUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput> | UserKitCollectionCreateWithoutInProgressUploadInput[] | UserKitCollectionUncheckedCreateWithoutInProgressUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutInProgressUploadInput | UserKitCollectionCreateOrConnectWithoutInProgressUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutInProgressUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutInProgressUploadInput[]
+    createMany?: UserKitCollectionCreateManyInProgressUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutInProgressUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutInProgressUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutInProgressUploadInput | UserKitCollectionUpdateManyWithWhereWithoutInProgressUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput> | UserKitCollectionCreateWithoutBuiltUploadInput[] | UserKitCollectionUncheckedCreateWithoutBuiltUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuiltUploadInput | UserKitCollectionCreateOrConnectWithoutBuiltUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutBuiltUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutBuiltUploadInput[]
+    createMany?: UserKitCollectionCreateManyBuiltUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutBuiltUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutBuiltUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutBuiltUploadInput | UserKitCollectionUpdateManyWithWhereWithoutBuiltUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
   export type KitUploadUncheckedUpdateManyWithoutUploadNestedInput = {
     create?: XOR<KitUploadCreateWithoutUploadInput, KitUploadUncheckedCreateWithoutUploadInput> | KitUploadCreateWithoutUploadInput[] | KitUploadUncheckedCreateWithoutUploadInput[]
     connectOrCreate?: KitUploadCreateOrConnectWithoutUploadInput | KitUploadCreateOrConnectWithoutUploadInput[]
@@ -48883,6 +52765,76 @@ export namespace Prisma {
     update?: GunplaCardUpdateWithWhereUniqueWithoutUploadInput | GunplaCardUpdateWithWhereUniqueWithoutUploadInput[]
     updateMany?: GunplaCardUpdateManyWithWhereWithoutUploadInput | GunplaCardUpdateManyWithWhereWithoutUploadInput[]
     deleteMany?: GunplaCardScalarWhereInput | GunplaCardScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput> | UserKitCollectionCreateWithoutWishlistUploadInput[] | UserKitCollectionUncheckedCreateWithoutWishlistUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutWishlistUploadInput | UserKitCollectionCreateOrConnectWithoutWishlistUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutWishlistUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutWishlistUploadInput[]
+    createMany?: UserKitCollectionCreateManyWishlistUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutWishlistUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutWishlistUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutWishlistUploadInput | UserKitCollectionUpdateManyWithWhereWithoutWishlistUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput> | UserKitCollectionCreateWithoutPreorderUploadInput[] | UserKitCollectionUncheckedCreateWithoutPreorderUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutPreorderUploadInput | UserKitCollectionCreateOrConnectWithoutPreorderUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutPreorderUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutPreorderUploadInput[]
+    createMany?: UserKitCollectionCreateManyPreorderUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutPreorderUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutPreorderUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutPreorderUploadInput | UserKitCollectionUpdateManyWithWhereWithoutPreorderUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput> | UserKitCollectionCreateWithoutBacklogUploadInput[] | UserKitCollectionUncheckedCreateWithoutBacklogUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBacklogUploadInput | UserKitCollectionCreateOrConnectWithoutBacklogUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutBacklogUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutBacklogUploadInput[]
+    createMany?: UserKitCollectionCreateManyBacklogUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutBacklogUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutBacklogUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutBacklogUploadInput | UserKitCollectionUpdateManyWithWhereWithoutBacklogUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput> | UserKitCollectionCreateWithoutInProgressUploadInput[] | UserKitCollectionUncheckedCreateWithoutInProgressUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutInProgressUploadInput | UserKitCollectionCreateOrConnectWithoutInProgressUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutInProgressUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutInProgressUploadInput[]
+    createMany?: UserKitCollectionCreateManyInProgressUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutInProgressUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutInProgressUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutInProgressUploadInput | UserKitCollectionUpdateManyWithWhereWithoutInProgressUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput> | UserKitCollectionCreateWithoutBuiltUploadInput[] | UserKitCollectionUncheckedCreateWithoutBuiltUploadInput[]
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuiltUploadInput | UserKitCollectionCreateOrConnectWithoutBuiltUploadInput[]
+    upsert?: UserKitCollectionUpsertWithWhereUniqueWithoutBuiltUploadInput | UserKitCollectionUpsertWithWhereUniqueWithoutBuiltUploadInput[]
+    createMany?: UserKitCollectionCreateManyBuiltUploadInputEnvelope
+    set?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    disconnect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    delete?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    connect?: UserKitCollectionWhereUniqueInput | UserKitCollectionWhereUniqueInput[]
+    update?: UserKitCollectionUpdateWithWhereUniqueWithoutBuiltUploadInput | UserKitCollectionUpdateWithWhereUniqueWithoutBuiltUploadInput[]
+    updateMany?: UserKitCollectionUpdateManyWithWhereWithoutBuiltUploadInput | UserKitCollectionUpdateManyWithWhereWithoutBuiltUploadInput[]
+    deleteMany?: UserKitCollectionScalarWhereInput | UserKitCollectionScalarWhereInput[]
   }
 
   export type KitCreateNestedOneWithoutUploadsInput = {
@@ -49091,6 +53043,20 @@ export namespace Prisma {
     connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
   }
 
+  export type UserWishlistCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput> | UserWishlistCreateWithoutUserInput[] | UserWishlistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutUserInput | UserWishlistCreateOrConnectWithoutUserInput[]
+    createMany?: UserWishlistCreateManyUserInputEnvelope
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+  }
+
+  export type UserRecommendationCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput> | UserRecommendationCreateWithoutUserInput[] | UserRecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutUserInput | UserRecommendationCreateOrConnectWithoutUserInput[]
+    createMany?: UserRecommendationCreateManyUserInputEnvelope
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+  }
+
   export type UserKitCollectionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -49179,6 +53145,20 @@ export namespace Prisma {
     connectOrCreate?: WikiSubmissionLikeCreateOrConnectWithoutUserInput | WikiSubmissionLikeCreateOrConnectWithoutUserInput[]
     createMany?: WikiSubmissionLikeCreateManyUserInputEnvelope
     connect?: WikiSubmissionLikeWhereUniqueInput | WikiSubmissionLikeWhereUniqueInput[]
+  }
+
+  export type UserWishlistUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput> | UserWishlistCreateWithoutUserInput[] | UserWishlistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutUserInput | UserWishlistCreateOrConnectWithoutUserInput[]
+    createMany?: UserWishlistCreateManyUserInputEnvelope
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+  }
+
+  export type UserRecommendationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput> | UserRecommendationCreateWithoutUserInput[] | UserRecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutUserInput | UserRecommendationCreateOrConnectWithoutUserInput[]
+    createMany?: UserRecommendationCreateManyUserInputEnvelope
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
   }
 
   export type UserKitCollectionUpdateManyWithoutUserNestedInput = {
@@ -49359,6 +53339,34 @@ export namespace Prisma {
     deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
   }
 
+  export type UserWishlistUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput> | UserWishlistCreateWithoutUserInput[] | UserWishlistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutUserInput | UserWishlistCreateOrConnectWithoutUserInput[]
+    upsert?: UserWishlistUpsertWithWhereUniqueWithoutUserInput | UserWishlistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserWishlistCreateManyUserInputEnvelope
+    set?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    disconnect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    delete?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    update?: UserWishlistUpdateWithWhereUniqueWithoutUserInput | UserWishlistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserWishlistUpdateManyWithWhereWithoutUserInput | UserWishlistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+  }
+
+  export type UserRecommendationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput> | UserRecommendationCreateWithoutUserInput[] | UserRecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutUserInput | UserRecommendationCreateOrConnectWithoutUserInput[]
+    upsert?: UserRecommendationUpsertWithWhereUniqueWithoutUserInput | UserRecommendationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserRecommendationCreateManyUserInputEnvelope
+    set?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    disconnect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    delete?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    update?: UserRecommendationUpdateWithWhereUniqueWithoutUserInput | UserRecommendationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserRecommendationUpdateManyWithWhereWithoutUserInput | UserRecommendationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
+  }
+
   export type UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserKitCollectionCreateWithoutUserInput, UserKitCollectionUncheckedCreateWithoutUserInput> | UserKitCollectionCreateWithoutUserInput[] | UserKitCollectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserKitCollectionCreateOrConnectWithoutUserInput | UserKitCollectionCreateOrConnectWithoutUserInput[]
@@ -49537,6 +53545,34 @@ export namespace Prisma {
     deleteMany?: WikiSubmissionLikeScalarWhereInput | WikiSubmissionLikeScalarWhereInput[]
   }
 
+  export type UserWishlistUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput> | UserWishlistCreateWithoutUserInput[] | UserWishlistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserWishlistCreateOrConnectWithoutUserInput | UserWishlistCreateOrConnectWithoutUserInput[]
+    upsert?: UserWishlistUpsertWithWhereUniqueWithoutUserInput | UserWishlistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserWishlistCreateManyUserInputEnvelope
+    set?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    disconnect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    delete?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    connect?: UserWishlistWhereUniqueInput | UserWishlistWhereUniqueInput[]
+    update?: UserWishlistUpdateWithWhereUniqueWithoutUserInput | UserWishlistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserWishlistUpdateManyWithWhereWithoutUserInput | UserWishlistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+  }
+
+  export type UserRecommendationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput> | UserRecommendationCreateWithoutUserInput[] | UserRecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRecommendationCreateOrConnectWithoutUserInput | UserRecommendationCreateOrConnectWithoutUserInput[]
+    upsert?: UserRecommendationUpsertWithWhereUniqueWithoutUserInput | UserRecommendationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserRecommendationCreateManyUserInputEnvelope
+    set?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    disconnect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    delete?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    connect?: UserRecommendationWhereUniqueInput | UserRecommendationWhereUniqueInput[]
+    update?: UserRecommendationUpdateWithWhereUniqueWithoutUserInput | UserRecommendationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserRecommendationUpdateManyWithWhereWithoutUserInput | UserRecommendationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutCollectionsInput = {
     create?: XOR<UserCreateWithoutCollectionsInput, UserUncheckedCreateWithoutCollectionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCollectionsInput
@@ -49547,6 +53583,42 @@ export namespace Prisma {
     create?: XOR<KitCreateWithoutCollectionsInput, KitUncheckedCreateWithoutCollectionsInput>
     connectOrCreate?: KitCreateOrConnectWithoutCollectionsInput
     connect?: KitWhereUniqueInput
+  }
+
+  export type BuildCreateNestedOneWithoutCollectionInput = {
+    create?: XOR<BuildCreateWithoutCollectionInput, BuildUncheckedCreateWithoutCollectionInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutCollectionInput
+    connect?: BuildWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutWishlistUploadsInput = {
+    create?: XOR<UploadCreateWithoutWishlistUploadsInput, UploadUncheckedCreateWithoutWishlistUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutWishlistUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutPreorderUploadsInput = {
+    create?: XOR<UploadCreateWithoutPreorderUploadsInput, UploadUncheckedCreateWithoutPreorderUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutPreorderUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutBacklogUploadsInput = {
+    create?: XOR<UploadCreateWithoutBacklogUploadsInput, UploadUncheckedCreateWithoutBacklogUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBacklogUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutInProgressUploadsInput = {
+    create?: XOR<UploadCreateWithoutInProgressUploadsInput, UploadUncheckedCreateWithoutInProgressUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutInProgressUploadsInput
+    connect?: UploadWhereUniqueInput
+  }
+
+  export type UploadCreateNestedOneWithoutBuiltUploadsInput = {
+    create?: XOR<UploadCreateWithoutBuiltUploadsInput, UploadUncheckedCreateWithoutBuiltUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBuiltUploadsInput
+    connect?: UploadWhereUniqueInput
   }
 
   export type EnumCollectionStatusFieldUpdateOperationsInput = {
@@ -49567,6 +53639,66 @@ export namespace Prisma {
     upsert?: KitUpsertWithoutCollectionsInput
     connect?: KitWhereUniqueInput
     update?: XOR<XOR<KitUpdateToOneWithWhereWithoutCollectionsInput, KitUpdateWithoutCollectionsInput>, KitUncheckedUpdateWithoutCollectionsInput>
+  }
+
+  export type BuildUpdateOneWithoutCollectionNestedInput = {
+    create?: XOR<BuildCreateWithoutCollectionInput, BuildUncheckedCreateWithoutCollectionInput>
+    connectOrCreate?: BuildCreateOrConnectWithoutCollectionInput
+    upsert?: BuildUpsertWithoutCollectionInput
+    disconnect?: BuildWhereInput | boolean
+    delete?: BuildWhereInput | boolean
+    connect?: BuildWhereUniqueInput
+    update?: XOR<XOR<BuildUpdateToOneWithWhereWithoutCollectionInput, BuildUpdateWithoutCollectionInput>, BuildUncheckedUpdateWithoutCollectionInput>
+  }
+
+  export type UploadUpdateOneWithoutWishlistUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutWishlistUploadsInput, UploadUncheckedCreateWithoutWishlistUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutWishlistUploadsInput
+    upsert?: UploadUpsertWithoutWishlistUploadsInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutWishlistUploadsInput, UploadUpdateWithoutWishlistUploadsInput>, UploadUncheckedUpdateWithoutWishlistUploadsInput>
+  }
+
+  export type UploadUpdateOneWithoutPreorderUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutPreorderUploadsInput, UploadUncheckedCreateWithoutPreorderUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutPreorderUploadsInput
+    upsert?: UploadUpsertWithoutPreorderUploadsInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutPreorderUploadsInput, UploadUpdateWithoutPreorderUploadsInput>, UploadUncheckedUpdateWithoutPreorderUploadsInput>
+  }
+
+  export type UploadUpdateOneWithoutBacklogUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutBacklogUploadsInput, UploadUncheckedCreateWithoutBacklogUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBacklogUploadsInput
+    upsert?: UploadUpsertWithoutBacklogUploadsInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutBacklogUploadsInput, UploadUpdateWithoutBacklogUploadsInput>, UploadUncheckedUpdateWithoutBacklogUploadsInput>
+  }
+
+  export type UploadUpdateOneWithoutInProgressUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutInProgressUploadsInput, UploadUncheckedCreateWithoutInProgressUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutInProgressUploadsInput
+    upsert?: UploadUpsertWithoutInProgressUploadsInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutInProgressUploadsInput, UploadUpdateWithoutInProgressUploadsInput>, UploadUncheckedUpdateWithoutInProgressUploadsInput>
+  }
+
+  export type UploadUpdateOneWithoutBuiltUploadsNestedInput = {
+    create?: XOR<UploadCreateWithoutBuiltUploadsInput, UploadUncheckedCreateWithoutBuiltUploadsInput>
+    connectOrCreate?: UploadCreateOrConnectWithoutBuiltUploadsInput
+    upsert?: UploadUpsertWithoutBuiltUploadsInput
+    disconnect?: UploadWhereInput | boolean
+    delete?: UploadWhereInput | boolean
+    connect?: UploadWhereUniqueInput
+    update?: XOR<XOR<UploadUpdateToOneWithWhereWithoutBuiltUploadsInput, UploadUpdateWithoutBuiltUploadsInput>, UploadUncheckedUpdateWithoutBuiltUploadsInput>
   }
 
   export type UserCreateNestedOneWithoutReviewsInput = {
@@ -49781,6 +53913,12 @@ export namespace Prisma {
     connect?: BuildCommentWhereUniqueInput | BuildCommentWhereUniqueInput[]
   }
 
+  export type UserKitCollectionCreateNestedOneWithoutBuildInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuildInput
+    connect?: UserKitCollectionWhereUniqueInput
+  }
+
   export type BuildUploadUncheckedCreateNestedManyWithoutBuildInput = {
     create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
@@ -49807,6 +53945,12 @@ export namespace Prisma {
     connectOrCreate?: BuildCommentCreateOrConnectWithoutBuildInput | BuildCommentCreateOrConnectWithoutBuildInput[]
     createMany?: BuildCommentCreateManyBuildInputEnvelope
     connect?: BuildCommentWhereUniqueInput | BuildCommentWhereUniqueInput[]
+  }
+
+  export type UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuildInput
+    connect?: UserKitCollectionWhereUniqueInput
   }
 
   export type EnumBuildStatusFieldUpdateOperationsInput = {
@@ -49895,6 +54039,16 @@ export namespace Prisma {
     deleteMany?: BuildCommentScalarWhereInput | BuildCommentScalarWhereInput[]
   }
 
+  export type UserKitCollectionUpdateOneWithoutBuildNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuildInput
+    upsert?: UserKitCollectionUpsertWithoutBuildInput
+    disconnect?: UserKitCollectionWhereInput | boolean
+    delete?: UserKitCollectionWhereInput | boolean
+    connect?: UserKitCollectionWhereUniqueInput
+    update?: XOR<XOR<UserKitCollectionUpdateToOneWithWhereWithoutBuildInput, UserKitCollectionUpdateWithoutBuildInput>, UserKitCollectionUncheckedUpdateWithoutBuildInput>
+  }
+
   export type BuildUploadUncheckedUpdateManyWithoutBuildNestedInput = {
     create?: XOR<BuildUploadCreateWithoutBuildInput, BuildUploadUncheckedCreateWithoutBuildInput> | BuildUploadCreateWithoutBuildInput[] | BuildUploadUncheckedCreateWithoutBuildInput[]
     connectOrCreate?: BuildUploadCreateOrConnectWithoutBuildInput | BuildUploadCreateOrConnectWithoutBuildInput[]
@@ -49949,6 +54103,16 @@ export namespace Prisma {
     update?: BuildCommentUpdateWithWhereUniqueWithoutBuildInput | BuildCommentUpdateWithWhereUniqueWithoutBuildInput[]
     updateMany?: BuildCommentUpdateManyWithWhereWithoutBuildInput | BuildCommentUpdateManyWithWhereWithoutBuildInput[]
     deleteMany?: BuildCommentScalarWhereInput | BuildCommentScalarWhereInput[]
+  }
+
+  export type UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput = {
+    create?: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+    connectOrCreate?: UserKitCollectionCreateOrConnectWithoutBuildInput
+    upsert?: UserKitCollectionUpsertWithoutBuildInput
+    disconnect?: UserKitCollectionWhereInput | boolean
+    delete?: UserKitCollectionWhereInput | boolean
+    connect?: UserKitCollectionWhereUniqueInput
+    update?: XOR<XOR<UserKitCollectionUpdateToOneWithWhereWithoutBuildInput, UserKitCollectionUpdateWithoutBuildInput>, UserKitCollectionUncheckedUpdateWithoutBuildInput>
   }
 
   export type BuildMilestoneCreateimageUrlsInput = {
@@ -50345,6 +54509,62 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutWikiSubmissionLikesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWikiSubmissionLikesInput, UserUpdateWithoutWikiSubmissionLikesInput>, UserUncheckedUpdateWithoutWikiSubmissionLikesInput>
+  }
+
+  export type UserCreateNestedOneWithoutWishlistInput = {
+    create?: XOR<UserCreateWithoutWishlistInput, UserUncheckedCreateWithoutWishlistInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWishlistInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type KitCreateNestedOneWithoutWishlistInput = {
+    create?: XOR<KitCreateWithoutWishlistInput, KitUncheckedCreateWithoutWishlistInput>
+    connectOrCreate?: KitCreateOrConnectWithoutWishlistInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutWishlistNestedInput = {
+    create?: XOR<UserCreateWithoutWishlistInput, UserUncheckedCreateWithoutWishlistInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWishlistInput
+    upsert?: UserUpsertWithoutWishlistInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWishlistInput, UserUpdateWithoutWishlistInput>, UserUncheckedUpdateWithoutWishlistInput>
+  }
+
+  export type KitUpdateOneRequiredWithoutWishlistNestedInput = {
+    create?: XOR<KitCreateWithoutWishlistInput, KitUncheckedCreateWithoutWishlistInput>
+    connectOrCreate?: KitCreateOrConnectWithoutWishlistInput
+    upsert?: KitUpsertWithoutWishlistInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutWishlistInput, KitUpdateWithoutWishlistInput>, KitUncheckedUpdateWithoutWishlistInput>
+  }
+
+  export type UserCreateNestedOneWithoutUserRecommendationInput = {
+    create?: XOR<UserCreateWithoutUserRecommendationInput, UserUncheckedCreateWithoutUserRecommendationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserRecommendationInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type KitCreateNestedOneWithoutUserRecommendationInput = {
+    create?: XOR<KitCreateWithoutUserRecommendationInput, KitUncheckedCreateWithoutUserRecommendationInput>
+    connectOrCreate?: KitCreateOrConnectWithoutUserRecommendationInput
+    connect?: KitWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserRecommendationNestedInput = {
+    create?: XOR<UserCreateWithoutUserRecommendationInput, UserUncheckedCreateWithoutUserRecommendationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserRecommendationInput
+    upsert?: UserUpsertWithoutUserRecommendationInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserRecommendationInput, UserUpdateWithoutUserRecommendationInput>, UserUncheckedUpdateWithoutUserRecommendationInput>
+  }
+
+  export type KitUpdateOneRequiredWithoutUserRecommendationNestedInput = {
+    create?: XOR<KitCreateWithoutUserRecommendationInput, KitUncheckedCreateWithoutUserRecommendationInput>
+    connectOrCreate?: KitCreateOrConnectWithoutUserRecommendationInput
+    upsert?: KitUpsertWithoutUserRecommendationInput
+    connect?: KitWhereUniqueInput
+    update?: XOR<XOR<KitUpdateToOneWithWhereWithoutUserRecommendationInput, KitUpdateWithoutUserRecommendationInput>, KitUncheckedUpdateWithoutUserRecommendationInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -50882,6 +55102,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -50894,9 +55115,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutSeriesInput = {
@@ -50914,6 +55137,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -50926,9 +55150,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutSeriesInput = {
@@ -51034,6 +55260,7 @@ export namespace Prisma {
     scrapedImages?: StringNullableListFilter<"Kit">
     potentialBaseKit?: StringNullableFilter<"Kit"> | string | null
     isOriginalDesign?: BoolFilter<"Kit"> | boolean
+    featuredScore?: IntNullableFilter<"Kit"> | number | null
     createdAt?: DateTimeFilter<"Kit"> | Date | string
     updatedAt?: DateTimeFilter<"Kit"> | Date | string
     productLineId?: StringNullableFilter<"Kit"> | string | null
@@ -51433,6 +55660,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutProductLineLogosInput = {
@@ -51456,6 +55688,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutProductLineLogosInput = {
@@ -51478,6 +55715,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     series?: SeriesCreateNestedOneWithoutKitsInput
@@ -51490,9 +55728,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutProductLineInput = {
@@ -51510,6 +55750,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     seriesId?: string | null
@@ -51522,9 +55763,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutProductLineInput = {
@@ -51641,6 +55884,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutProductLineLogosInput = {
@@ -51664,6 +55912,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type KitUpsertWithWhereUniqueWithoutProductLineInput = {
@@ -51697,6 +55950,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51709,9 +55963,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutReleaseTypeInput = {
@@ -51729,6 +55985,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51741,9 +55998,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutReleaseTypeInput = {
@@ -51880,6 +56139,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51892,9 +56152,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutVariantsInput = {
@@ -51912,6 +56174,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51924,9 +56187,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutVariantsInput = {
@@ -51949,6 +56214,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -51961,9 +56227,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutBaseKitInput = {
@@ -51981,6 +56249,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -51993,9 +56262,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutBaseKitInput = {
@@ -52065,21 +56336,49 @@ export namespace Prisma {
   export type UserKitCollectionCreateWithoutKitInput = {
     id?: string
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
   }
 
   export type UserKitCollectionUncheckedCreateWithoutKitInput = {
     id?: string
     userId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52133,6 +56432,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -52143,6 +56443,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutKitInput = {
@@ -52151,6 +56452,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -52160,6 +56462,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutKitInput = {
@@ -52205,6 +56508,28 @@ export namespace Prisma {
 
   export type MarketplaceListingCreateManyKitInputEnvelope = {
     data: MarketplaceListingCreateManyKitInput | MarketplaceListingCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserWishlistCreateWithoutKitInput = {
+    id?: string
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutWishlistInput
+  }
+
+  export type UserWishlistUncheckedCreateWithoutKitInput = {
+    id?: string
+    userId: string
+    addedAt?: Date | string
+  }
+
+  export type UserWishlistCreateOrConnectWithoutKitInput = {
+    where: UserWishlistWhereUniqueInput
+    create: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput>
+  }
+
+  export type UserWishlistCreateManyKitInputEnvelope = {
+    data: UserWishlistCreateManyKitInput | UserWishlistCreateManyKitInput[]
     skipDuplicates?: boolean
   }
 
@@ -52287,6 +56612,28 @@ export namespace Prisma {
 
   export type GunplaCardCreateManyKitInputEnvelope = {
     data: GunplaCardCreateManyKitInput | GunplaCardCreateManyKitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserRecommendationCreateWithoutKitInput = {
+    id?: string
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutUserRecommendationInput
+  }
+
+  export type UserRecommendationUncheckedCreateWithoutKitInput = {
+    id?: string
+    userId: string
+    addedAt?: Date | string
+  }
+
+  export type UserRecommendationCreateOrConnectWithoutKitInput = {
+    where: UserRecommendationWhereUniqueInput
+    create: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput>
+  }
+
+  export type UserRecommendationCreateManyKitInputEnvelope = {
+    data: UserRecommendationCreateManyKitInput | UserRecommendationCreateManyKitInput[]
     skipDuplicates?: boolean
   }
 
@@ -52427,6 +56774,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -52439,9 +56787,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutVariantsInput = {
@@ -52459,6 +56809,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52471,9 +56822,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUpsertWithWhereUniqueWithoutBaseKitInput = {
@@ -52561,10 +56914,24 @@ export namespace Prisma {
     id?: StringFilter<"UserKitCollection"> | string
     userId?: StringFilter<"UserKitCollection"> | string
     kitId?: StringFilter<"UserKitCollection"> | string
+    buildId?: StringNullableFilter<"UserKitCollection"> | string | null
     status?: EnumCollectionStatusFilter<"UserKitCollection"> | $Enums.CollectionStatus
-    notes?: StringNullableFilter<"UserKitCollection"> | string | null
     price?: IntNullableFilter<"UserKitCollection"> | number | null
+    wishlistNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtNotes?: StringNullableFilter<"UserKitCollection"> | string | null
+    wishlistedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    preorderedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
     acquiredAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"UserKitCollection"> | Date | string | null
+    wishlistUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    preorderUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    backlogUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    inProgressUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
+    builtUploadId?: StringNullableFilter<"UserKitCollection"> | string | null
     addedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
     updatedAt?: DateTimeFilter<"UserKitCollection"> | Date | string
   }
@@ -52625,6 +56992,7 @@ export namespace Prisma {
     title?: StringFilter<"Build"> | string
     description?: StringNullableFilter<"Build"> | string | null
     status?: EnumBuildStatusFilter<"Build"> | $Enums.BuildStatus
+    isPublic?: BoolFilter<"Build"> | boolean
     startedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Build"> | Date | string | null
     featuredImageId?: StringNullableFilter<"Build"> | string | null
@@ -52663,6 +57031,32 @@ export namespace Prisma {
     available?: BoolFilter<"MarketplaceListing"> | boolean
     createdAt?: DateTimeFilter<"MarketplaceListing"> | Date | string
     updatedAt?: DateTimeFilter<"MarketplaceListing"> | Date | string
+  }
+
+  export type UserWishlistUpsertWithWhereUniqueWithoutKitInput = {
+    where: UserWishlistWhereUniqueInput
+    update: XOR<UserWishlistUpdateWithoutKitInput, UserWishlistUncheckedUpdateWithoutKitInput>
+    create: XOR<UserWishlistCreateWithoutKitInput, UserWishlistUncheckedCreateWithoutKitInput>
+  }
+
+  export type UserWishlistUpdateWithWhereUniqueWithoutKitInput = {
+    where: UserWishlistWhereUniqueInput
+    data: XOR<UserWishlistUpdateWithoutKitInput, UserWishlistUncheckedUpdateWithoutKitInput>
+  }
+
+  export type UserWishlistUpdateManyWithWhereWithoutKitInput = {
+    where: UserWishlistScalarWhereInput
+    data: XOR<UserWishlistUpdateManyMutationInput, UserWishlistUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type UserWishlistScalarWhereInput = {
+    AND?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+    OR?: UserWishlistScalarWhereInput[]
+    NOT?: UserWishlistScalarWhereInput | UserWishlistScalarWhereInput[]
+    id?: StringFilter<"UserWishlist"> | string
+    userId?: StringFilter<"UserWishlist"> | string
+    kitId?: StringFilter<"UserWishlist"> | string
+    addedAt?: DateTimeFilter<"UserWishlist"> | Date | string
   }
 
   export type KitRelationUpsertWithWhereUniqueWithoutKitInput = {
@@ -52738,6 +57132,32 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"GunplaCard"> | Date | string
   }
 
+  export type UserRecommendationUpsertWithWhereUniqueWithoutKitInput = {
+    where: UserRecommendationWhereUniqueInput
+    update: XOR<UserRecommendationUpdateWithoutKitInput, UserRecommendationUncheckedUpdateWithoutKitInput>
+    create: XOR<UserRecommendationCreateWithoutKitInput, UserRecommendationUncheckedCreateWithoutKitInput>
+  }
+
+  export type UserRecommendationUpdateWithWhereUniqueWithoutKitInput = {
+    where: UserRecommendationWhereUniqueInput
+    data: XOR<UserRecommendationUpdateWithoutKitInput, UserRecommendationUncheckedUpdateWithoutKitInput>
+  }
+
+  export type UserRecommendationUpdateManyWithWhereWithoutKitInput = {
+    where: UserRecommendationScalarWhereInput
+    data: XOR<UserRecommendationUpdateManyMutationInput, UserRecommendationUncheckedUpdateManyWithoutKitInput>
+  }
+
+  export type UserRecommendationScalarWhereInput = {
+    AND?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
+    OR?: UserRecommendationScalarWhereInput[]
+    NOT?: UserRecommendationScalarWhereInput | UserRecommendationScalarWhereInput[]
+    id?: StringFilter<"UserRecommendation"> | string
+    userId?: StringFilter<"UserRecommendation"> | string
+    kitId?: StringFilter<"UserRecommendation"> | string
+    addedAt?: DateTimeFilter<"UserRecommendation"> | Date | string
+  }
+
   export type UploadCreateWithoutGunplaCardsInput = {
     id?: string
     cloudinaryAssetId: string
@@ -52759,6 +57179,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutGunplaCardsInput = {
@@ -52782,6 +57207,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutGunplaCardsInput = {
@@ -52825,6 +57255,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGunplaCardsInput = {
@@ -52863,6 +57295,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGunplaCardsInput = {
@@ -52885,6 +57319,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -52898,8 +57333,10 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutGunplaCardsInput = {
@@ -52917,6 +57354,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -52930,8 +57368,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutGunplaCardsInput = {
@@ -52971,6 +57411,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutGunplaCardsInput = {
@@ -52994,6 +57439,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UserUpsertWithoutGunplaCardsInput = {
@@ -53043,6 +57493,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGunplaCardsInput = {
@@ -53081,6 +57533,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutGunplaCardsInput = {
@@ -53109,6 +57563,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -53122,8 +57577,10 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutGunplaCardsInput = {
@@ -53141,6 +57598,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53154,8 +57612,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitCreateWithoutMobileSuitsInput = {
@@ -53173,6 +57633,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -53185,9 +57646,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutMobileSuitsInput = {
@@ -53205,6 +57668,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -53217,9 +57681,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutMobileSuitsInput = {
@@ -53282,6 +57748,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -53294,9 +57761,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutMobileSuitsInput = {
@@ -53314,6 +57783,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53326,9 +57796,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type MobileSuitUpsertWithoutKitsInput = {
@@ -53381,6 +57853,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -53394,8 +57867,10 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutExpansionsInput = {
@@ -53413,6 +57888,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -53426,8 +57902,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutExpansionsInput = {
@@ -53450,6 +57928,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -53463,8 +57942,10 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutExpandedByInput = {
@@ -53482,6 +57963,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -53495,8 +57977,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutExpandedByInput = {
@@ -53530,6 +58014,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -53543,8 +58028,10 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutExpansionsInput = {
@@ -53562,6 +58049,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53575,8 +58063,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUpsertWithoutExpandedByInput = {
@@ -53605,6 +58095,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -53618,8 +58109,10 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutExpandedByInput = {
@@ -53637,6 +58130,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53650,8 +58144,10 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UserCreateWithoutUploadsInput = {
@@ -53690,6 +58186,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadsInput = {
@@ -53728,6 +58226,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadsInput = {
@@ -53894,6 +58394,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -53904,6 +58405,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutFeaturedImageInput = {
@@ -53913,6 +58415,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -53921,6 +58424,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutFeaturedImageInput = {
@@ -53956,6 +58460,306 @@ export namespace Prisma {
 
   export type GunplaCardCreateManyUploadInputEnvelope = {
     data: GunplaCardCreateManyUploadInput | GunplaCardCreateManyUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserKitCollectionCreateWithoutWishlistUploadInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutWishlistUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutWishlistUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput>
+  }
+
+  export type UserKitCollectionCreateManyWishlistUploadInputEnvelope = {
+    data: UserKitCollectionCreateManyWishlistUploadInput | UserKitCollectionCreateManyWishlistUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserKitCollectionCreateWithoutPreorderUploadInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutPreorderUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutPreorderUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput>
+  }
+
+  export type UserKitCollectionCreateManyPreorderUploadInputEnvelope = {
+    data: UserKitCollectionCreateManyPreorderUploadInput | UserKitCollectionCreateManyPreorderUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserKitCollectionCreateWithoutBacklogUploadInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutBacklogUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutBacklogUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput>
+  }
+
+  export type UserKitCollectionCreateManyBacklogUploadInputEnvelope = {
+    data: UserKitCollectionCreateManyBacklogUploadInput | UserKitCollectionCreateManyBacklogUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserKitCollectionCreateWithoutInProgressUploadInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutInProgressUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutInProgressUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput>
+  }
+
+  export type UserKitCollectionCreateManyInProgressUploadInputEnvelope = {
+    data: UserKitCollectionCreateManyInProgressUploadInput | UserKitCollectionCreateManyInProgressUploadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserKitCollectionCreateWithoutBuiltUploadInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutBuiltUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutBuiltUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput>
+  }
+
+  export type UserKitCollectionCreateManyBuiltUploadInputEnvelope = {
+    data: UserKitCollectionCreateManyBuiltUploadInput | UserKitCollectionCreateManyBuiltUploadInput[]
     skipDuplicates?: boolean
   }
 
@@ -54006,6 +58810,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadsInput = {
@@ -54044,6 +58850,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUploadUpsertWithWhereUniqueWithoutUploadInput = {
@@ -54184,6 +58992,86 @@ export namespace Prisma {
     data: XOR<GunplaCardUpdateManyMutationInput, GunplaCardUncheckedUpdateManyWithoutUploadInput>
   }
 
+  export type UserKitCollectionUpsertWithWhereUniqueWithoutWishlistUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    update: XOR<UserKitCollectionUpdateWithoutWishlistUploadInput, UserKitCollectionUncheckedUpdateWithoutWishlistUploadInput>
+    create: XOR<UserKitCollectionCreateWithoutWishlistUploadInput, UserKitCollectionUncheckedCreateWithoutWishlistUploadInput>
+  }
+
+  export type UserKitCollectionUpdateWithWhereUniqueWithoutWishlistUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    data: XOR<UserKitCollectionUpdateWithoutWishlistUploadInput, UserKitCollectionUncheckedUpdateWithoutWishlistUploadInput>
+  }
+
+  export type UserKitCollectionUpdateManyWithWhereWithoutWishlistUploadInput = {
+    where: UserKitCollectionScalarWhereInput
+    data: XOR<UserKitCollectionUpdateManyMutationInput, UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadInput>
+  }
+
+  export type UserKitCollectionUpsertWithWhereUniqueWithoutPreorderUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    update: XOR<UserKitCollectionUpdateWithoutPreorderUploadInput, UserKitCollectionUncheckedUpdateWithoutPreorderUploadInput>
+    create: XOR<UserKitCollectionCreateWithoutPreorderUploadInput, UserKitCollectionUncheckedCreateWithoutPreorderUploadInput>
+  }
+
+  export type UserKitCollectionUpdateWithWhereUniqueWithoutPreorderUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    data: XOR<UserKitCollectionUpdateWithoutPreorderUploadInput, UserKitCollectionUncheckedUpdateWithoutPreorderUploadInput>
+  }
+
+  export type UserKitCollectionUpdateManyWithWhereWithoutPreorderUploadInput = {
+    where: UserKitCollectionScalarWhereInput
+    data: XOR<UserKitCollectionUpdateManyMutationInput, UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadInput>
+  }
+
+  export type UserKitCollectionUpsertWithWhereUniqueWithoutBacklogUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    update: XOR<UserKitCollectionUpdateWithoutBacklogUploadInput, UserKitCollectionUncheckedUpdateWithoutBacklogUploadInput>
+    create: XOR<UserKitCollectionCreateWithoutBacklogUploadInput, UserKitCollectionUncheckedCreateWithoutBacklogUploadInput>
+  }
+
+  export type UserKitCollectionUpdateWithWhereUniqueWithoutBacklogUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    data: XOR<UserKitCollectionUpdateWithoutBacklogUploadInput, UserKitCollectionUncheckedUpdateWithoutBacklogUploadInput>
+  }
+
+  export type UserKitCollectionUpdateManyWithWhereWithoutBacklogUploadInput = {
+    where: UserKitCollectionScalarWhereInput
+    data: XOR<UserKitCollectionUpdateManyMutationInput, UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadInput>
+  }
+
+  export type UserKitCollectionUpsertWithWhereUniqueWithoutInProgressUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    update: XOR<UserKitCollectionUpdateWithoutInProgressUploadInput, UserKitCollectionUncheckedUpdateWithoutInProgressUploadInput>
+    create: XOR<UserKitCollectionCreateWithoutInProgressUploadInput, UserKitCollectionUncheckedCreateWithoutInProgressUploadInput>
+  }
+
+  export type UserKitCollectionUpdateWithWhereUniqueWithoutInProgressUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    data: XOR<UserKitCollectionUpdateWithoutInProgressUploadInput, UserKitCollectionUncheckedUpdateWithoutInProgressUploadInput>
+  }
+
+  export type UserKitCollectionUpdateManyWithWhereWithoutInProgressUploadInput = {
+    where: UserKitCollectionScalarWhereInput
+    data: XOR<UserKitCollectionUpdateManyMutationInput, UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadInput>
+  }
+
+  export type UserKitCollectionUpsertWithWhereUniqueWithoutBuiltUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    update: XOR<UserKitCollectionUpdateWithoutBuiltUploadInput, UserKitCollectionUncheckedUpdateWithoutBuiltUploadInput>
+    create: XOR<UserKitCollectionCreateWithoutBuiltUploadInput, UserKitCollectionUncheckedCreateWithoutBuiltUploadInput>
+  }
+
+  export type UserKitCollectionUpdateWithWhereUniqueWithoutBuiltUploadInput = {
+    where: UserKitCollectionWhereUniqueInput
+    data: XOR<UserKitCollectionUpdateWithoutBuiltUploadInput, UserKitCollectionUncheckedUpdateWithoutBuiltUploadInput>
+  }
+
+  export type UserKitCollectionUpdateManyWithWhereWithoutBuiltUploadInput = {
+    where: UserKitCollectionScalarWhereInput
+    data: XOR<UserKitCollectionUpdateManyMutationInput, UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadInput>
+  }
+
   export type KitCreateWithoutUploadsInput = {
     id?: string
     name: string
@@ -54199,6 +59087,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -54211,9 +59100,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutUploadsInput = {
@@ -54231,6 +59122,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -54243,9 +59135,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutUploadsInput = {
@@ -54274,6 +59168,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutKitUploadsInput = {
@@ -54297,6 +59196,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutKitUploadsInput = {
@@ -54330,6 +59234,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -54342,9 +59247,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutUploadsInput = {
@@ -54362,6 +59269,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54374,9 +59282,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UploadUpsertWithoutKitUploadsInput = {
@@ -54411,6 +59321,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutKitUploadsInput = {
@@ -54434,6 +59349,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type MobileSuitCreateWithoutUploadsInput = {
@@ -54486,6 +59406,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutMobileSuitUploadsInput = {
@@ -54509,6 +59434,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutMobileSuitUploadsInput = {
@@ -54583,6 +59513,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutMobileSuitUploadsInput = {
@@ -54606,6 +59541,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type BuildCreateWithoutUploadsInput = {
@@ -54613,6 +59553,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -54623,6 +59564,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutUploadsInput = {
@@ -54632,6 +59574,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -54640,6 +59583,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutUploadsInput = {
@@ -54668,6 +59612,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildUploadsInput = {
@@ -54691,6 +59640,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildUploadsInput = {
@@ -54714,6 +59668,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54724,6 +59679,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutUploadsInput = {
@@ -54733,6 +59689,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54741,6 +59698,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type UploadUpsertWithoutBuildUploadsInput = {
@@ -54775,6 +59733,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildUploadsInput = {
@@ -54798,6 +59761,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type BuildMilestoneCreateWithoutUploadsInput = {
@@ -54852,6 +59820,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildMilestoneUploadsInput = {
@@ -54875,6 +59848,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildMilestoneUploadsInput = {
@@ -54951,6 +59929,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildMilestoneUploadsInput = {
@@ -54974,26 +59957,59 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UserKitCollectionCreateWithoutUserInput = {
     id?: string
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
     addedAt?: Date | string
     updatedAt?: Date | string
     kit: KitCreateNestedOneWithoutCollectionsInput
+    build?: BuildCreateNestedOneWithoutCollectionInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
   }
 
   export type UserKitCollectionUncheckedCreateWithoutUserInput = {
     id?: string
     kitId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55013,6 +60029,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -55023,6 +60040,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutUserInput = {
@@ -55031,6 +60049,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -55040,6 +60059,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutUserInput = {
@@ -55132,6 +60152,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutUploadedByInput = {
@@ -55155,6 +60180,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutUploadedByInput = {
@@ -55392,6 +60422,50 @@ export namespace Prisma {
 
   export type WikiSubmissionLikeCreateManyUserInputEnvelope = {
     data: WikiSubmissionLikeCreateManyUserInput | WikiSubmissionLikeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserWishlistCreateWithoutUserInput = {
+    id?: string
+    addedAt?: Date | string
+    kit: KitCreateNestedOneWithoutWishlistInput
+  }
+
+  export type UserWishlistUncheckedCreateWithoutUserInput = {
+    id?: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserWishlistCreateOrConnectWithoutUserInput = {
+    where: UserWishlistWhereUniqueInput
+    create: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserWishlistCreateManyUserInputEnvelope = {
+    data: UserWishlistCreateManyUserInput | UserWishlistCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserRecommendationCreateWithoutUserInput = {
+    id?: string
+    addedAt?: Date | string
+    kit: KitCreateNestedOneWithoutUserRecommendationInput
+  }
+
+  export type UserRecommendationUncheckedCreateWithoutUserInput = {
+    id?: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserRecommendationCreateOrConnectWithoutUserInput = {
+    where: UserRecommendationWhereUniqueInput
+    create: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserRecommendationCreateManyUserInputEnvelope = {
+    data: UserRecommendationCreateManyUserInput | UserRecommendationCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -55710,6 +60784,38 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"WikiSubmissionLike"> | Date | string
   }
 
+  export type UserWishlistUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserWishlistWhereUniqueInput
+    update: XOR<UserWishlistUpdateWithoutUserInput, UserWishlistUncheckedUpdateWithoutUserInput>
+    create: XOR<UserWishlistCreateWithoutUserInput, UserWishlistUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserWishlistUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserWishlistWhereUniqueInput
+    data: XOR<UserWishlistUpdateWithoutUserInput, UserWishlistUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserWishlistUpdateManyWithWhereWithoutUserInput = {
+    where: UserWishlistScalarWhereInput
+    data: XOR<UserWishlistUpdateManyMutationInput, UserWishlistUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserRecommendationUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserRecommendationWhereUniqueInput
+    update: XOR<UserRecommendationUpdateWithoutUserInput, UserRecommendationUncheckedUpdateWithoutUserInput>
+    create: XOR<UserRecommendationCreateWithoutUserInput, UserRecommendationUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserRecommendationUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserRecommendationWhereUniqueInput
+    data: XOR<UserRecommendationUpdateWithoutUserInput, UserRecommendationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserRecommendationUpdateManyWithWhereWithoutUserInput = {
+    where: UserRecommendationScalarWhereInput
+    data: XOR<UserRecommendationUpdateManyMutationInput, UserRecommendationUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutCollectionsInput = {
     id: string
     email: string
@@ -55746,6 +60852,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCollectionsInput = {
@@ -55784,6 +60892,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCollectionsInput = {
@@ -55806,6 +60916,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -55818,9 +60929,11 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutCollectionsInput = {
@@ -55838,6 +60951,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -55850,14 +60964,364 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutCollectionsInput = {
     where: KitWhereUniqueInput
     create: XOR<KitCreateWithoutCollectionsInput, KitUncheckedCreateWithoutCollectionsInput>
+  }
+
+  export type BuildCreateWithoutCollectionInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    isPublic?: boolean
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBuildsInput
+    kit: KitCreateNestedOneWithoutBuildsInput
+    featuredImage?: UploadCreateNestedOneWithoutBuildFeaturedImagesInput
+    uploads?: BuildUploadCreateNestedManyWithoutBuildInput
+    milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildUncheckedCreateWithoutCollectionInput = {
+    id?: string
+    userId: string
+    kitId: string
+    title: string
+    description?: string | null
+    status?: $Enums.BuildStatus
+    isPublic?: boolean
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    featuredImageId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
+    milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
+    likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
+    comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+  }
+
+  export type BuildCreateOrConnectWithoutCollectionInput = {
+    where: BuildWhereUniqueInput
+    create: XOR<BuildCreateWithoutCollectionInput, BuildUncheckedCreateWithoutCollectionInput>
+  }
+
+  export type UploadCreateWithoutWishlistUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutWishlistUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutWishlistUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutWishlistUploadsInput, UploadUncheckedCreateWithoutWishlistUploadsInput>
+  }
+
+  export type UploadCreateWithoutPreorderUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutPreorderUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutPreorderUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutPreorderUploadsInput, UploadUncheckedCreateWithoutPreorderUploadsInput>
+  }
+
+  export type UploadCreateWithoutBacklogUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutBacklogUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutBacklogUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutBacklogUploadsInput, UploadUncheckedCreateWithoutBacklogUploadsInput>
+  }
+
+  export type UploadCreateWithoutInProgressUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutInProgressUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutInProgressUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutInProgressUploadsInput, UploadUncheckedCreateWithoutInProgressUploadsInput>
+  }
+
+  export type UploadCreateWithoutBuiltUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uploadedBy: UserCreateNestedOneWithoutUploadsInput
+    kitUploads?: KitUploadCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+  }
+
+  export type UploadUncheckedCreateWithoutBuiltUploadsInput = {
+    id?: string
+    cloudinaryAssetId: string
+    publicId: string
+    url: string
+    eagerUrl?: string | null
+    format: string
+    resourceType: string
+    size: number
+    pages?: number | null
+    originalFilename: string
+    uploadedAt: Date | string
+    uploadedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kitUploads?: KitUploadUncheckedCreateNestedManyWithoutUploadInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedCreateNestedManyWithoutUploadInput
+    productLineLogos?: ProductLineUncheckedCreateNestedManyWithoutLogoInput
+    buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
+    buildFeaturedImages?: BuildUncheckedCreateNestedManyWithoutFeaturedImageInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+  }
+
+  export type UploadCreateOrConnectWithoutBuiltUploadsInput = {
+    where: UploadWhereUniqueInput
+    create: XOR<UploadCreateWithoutBuiltUploadsInput, UploadUncheckedCreateWithoutBuiltUploadsInput>
   }
 
   export type UserUpsertWithoutCollectionsInput = {
@@ -55907,6 +61371,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCollectionsInput = {
@@ -55945,6 +61411,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutCollectionsInput = {
@@ -55973,6 +61441,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -55985,9 +61454,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutCollectionsInput = {
@@ -56005,6 +61476,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56017,9 +61489,395 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type BuildUpsertWithoutCollectionInput = {
+    update: XOR<BuildUpdateWithoutCollectionInput, BuildUncheckedUpdateWithoutCollectionInput>
+    create: XOR<BuildCreateWithoutCollectionInput, BuildUncheckedCreateWithoutCollectionInput>
+    where?: BuildWhereInput
+  }
+
+  export type BuildUpdateToOneWithWhereWithoutCollectionInput = {
+    where?: BuildWhereInput
+    data: XOR<BuildUpdateWithoutCollectionInput, BuildUncheckedUpdateWithoutCollectionInput>
+  }
+
+  export type BuildUpdateWithoutCollectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBuildsNestedInput
+    kit?: KitUpdateOneRequiredWithoutBuildsNestedInput
+    featuredImage?: UploadUpdateOneWithoutBuildFeaturedImagesNestedInput
+    uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
+    milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+  }
+
+  export type BuildUncheckedUpdateWithoutCollectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
+    milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
+    likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
+    comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+  }
+
+  export type UploadUpsertWithoutWishlistUploadsInput = {
+    update: XOR<UploadUpdateWithoutWishlistUploadsInput, UploadUncheckedUpdateWithoutWishlistUploadsInput>
+    create: XOR<UploadCreateWithoutWishlistUploadsInput, UploadUncheckedCreateWithoutWishlistUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutWishlistUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutWishlistUploadsInput, UploadUncheckedUpdateWithoutWishlistUploadsInput>
+  }
+
+  export type UploadUpdateWithoutWishlistUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutWishlistUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUpsertWithoutPreorderUploadsInput = {
+    update: XOR<UploadUpdateWithoutPreorderUploadsInput, UploadUncheckedUpdateWithoutPreorderUploadsInput>
+    create: XOR<UploadCreateWithoutPreorderUploadsInput, UploadUncheckedCreateWithoutPreorderUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutPreorderUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutPreorderUploadsInput, UploadUncheckedUpdateWithoutPreorderUploadsInput>
+  }
+
+  export type UploadUpdateWithoutPreorderUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutPreorderUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUpsertWithoutBacklogUploadsInput = {
+    update: XOR<UploadUpdateWithoutBacklogUploadsInput, UploadUncheckedUpdateWithoutBacklogUploadsInput>
+    create: XOR<UploadCreateWithoutBacklogUploadsInput, UploadUncheckedCreateWithoutBacklogUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutBacklogUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutBacklogUploadsInput, UploadUncheckedUpdateWithoutBacklogUploadsInput>
+  }
+
+  export type UploadUpdateWithoutBacklogUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutBacklogUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUpsertWithoutInProgressUploadsInput = {
+    update: XOR<UploadUpdateWithoutInProgressUploadsInput, UploadUncheckedUpdateWithoutInProgressUploadsInput>
+    create: XOR<UploadCreateWithoutInProgressUploadsInput, UploadUncheckedCreateWithoutInProgressUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutInProgressUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutInProgressUploadsInput, UploadUncheckedUpdateWithoutInProgressUploadsInput>
+  }
+
+  export type UploadUpdateWithoutInProgressUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutInProgressUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
+  }
+
+  export type UploadUpsertWithoutBuiltUploadsInput = {
+    update: XOR<UploadUpdateWithoutBuiltUploadsInput, UploadUncheckedUpdateWithoutBuiltUploadsInput>
+    create: XOR<UploadCreateWithoutBuiltUploadsInput, UploadUncheckedCreateWithoutBuiltUploadsInput>
+    where?: UploadWhereInput
+  }
+
+  export type UploadUpdateToOneWithWhereWithoutBuiltUploadsInput = {
+    where?: UploadWhereInput
+    data: XOR<UploadUpdateWithoutBuiltUploadsInput, UploadUncheckedUpdateWithoutBuiltUploadsInput>
+  }
+
+  export type UploadUpdateWithoutBuiltUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedBy?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    kitUploads?: KitUploadUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+  }
+
+  export type UploadUncheckedUpdateWithoutBuiltUploadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cloudinaryAssetId?: StringFieldUpdateOperationsInput | string
+    publicId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    eagerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    format?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    originalFilename?: StringFieldUpdateOperationsInput | string
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kitUploads?: KitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    mobileSuitUploads?: MobileSuitUploadUncheckedUpdateManyWithoutUploadNestedInput
+    productLineLogos?: ProductLineUncheckedUpdateManyWithoutLogoNestedInput
+    buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
+    buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -56058,6 +61916,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -56096,6 +61956,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -56118,6 +61980,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -56130,9 +61993,11 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutReviewsInput = {
@@ -56150,6 +62015,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -56162,9 +62028,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutReviewsInput = {
@@ -56267,6 +62135,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -56305,6 +62175,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutReviewsInput = {
@@ -56333,6 +62205,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -56345,9 +62218,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReviewsInput = {
@@ -56365,6 +62240,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56377,9 +62253,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type ReviewScoreUpsertWithWhereUniqueWithoutReviewInput = {
@@ -56554,6 +62432,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewFeedbackInput = {
@@ -56592,6 +62472,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewFeedbackInput = {
@@ -56681,6 +62563,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewFeedbackInput = {
@@ -56719,6 +62603,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBuildsInput = {
@@ -56757,6 +62643,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildsInput = {
@@ -56795,6 +62683,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildsInput = {
@@ -56817,6 +62707,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -56829,9 +62720,11 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     reviews?: ReviewCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutBuildsInput = {
@@ -56849,6 +62742,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -56861,9 +62755,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutBuildsInput = {
@@ -56892,6 +62788,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadCreateNestedManyWithoutUploadInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadUncheckedCreateWithoutBuildFeaturedImagesInput = {
@@ -56915,6 +62816,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedCreateNestedManyWithoutUploadInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedCreateNestedManyWithoutUploadInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUploadInput
+    wishlistUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutWishlistUploadInput
+    preorderUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutPreorderUploadInput
+    backlogUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBacklogUploadInput
+    inProgressUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutInProgressUploadInput
+    builtUploads?: UserKitCollectionUncheckedCreateNestedManyWithoutBuiltUploadInput
   }
 
   export type UploadCreateOrConnectWithoutBuildFeaturedImagesInput = {
@@ -57034,6 +62940,61 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserKitCollectionCreateWithoutBuildInput = {
+    id?: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCollectionsInput
+    kit: KitCreateNestedOneWithoutCollectionsInput
+    wishlistUpload?: UploadCreateNestedOneWithoutWishlistUploadsInput
+    preorderUpload?: UploadCreateNestedOneWithoutPreorderUploadsInput
+    backlogUpload?: UploadCreateNestedOneWithoutBacklogUploadsInput
+    inProgressUpload?: UploadCreateNestedOneWithoutInProgressUploadsInput
+    builtUpload?: UploadCreateNestedOneWithoutBuiltUploadsInput
+  }
+
+  export type UserKitCollectionUncheckedCreateWithoutBuildInput = {
+    id?: string
+    userId: string
+    kitId: string
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateOrConnectWithoutBuildInput = {
+    where: UserKitCollectionWhereUniqueInput
+    create: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+  }
+
   export type UserUpsertWithoutBuildsInput = {
     update: XOR<UserUpdateWithoutBuildsInput, UserUncheckedUpdateWithoutBuildsInput>
     create: XOR<UserCreateWithoutBuildsInput, UserUncheckedCreateWithoutBuildsInput>
@@ -57081,6 +63042,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildsInput = {
@@ -57119,6 +63082,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type KitUpsertWithoutBuildsInput = {
@@ -57147,6 +63112,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -57159,9 +63125,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBuildsInput = {
@@ -57179,6 +63147,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57191,9 +63160,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UploadUpsertWithoutBuildFeaturedImagesInput = {
@@ -57228,6 +63199,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutBuildFeaturedImagesInput = {
@@ -57251,6 +63227,11 @@ export namespace Prisma {
     buildUploads?: BuildUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type BuildUploadUpsertWithWhereUniqueWithoutBuildInput = {
@@ -57333,11 +63314,73 @@ export namespace Prisma {
     data: XOR<BuildCommentUpdateManyMutationInput, BuildCommentUncheckedUpdateManyWithoutBuildInput>
   }
 
+  export type UserKitCollectionUpsertWithoutBuildInput = {
+    update: XOR<UserKitCollectionUpdateWithoutBuildInput, UserKitCollectionUncheckedUpdateWithoutBuildInput>
+    create: XOR<UserKitCollectionCreateWithoutBuildInput, UserKitCollectionUncheckedCreateWithoutBuildInput>
+    where?: UserKitCollectionWhereInput
+  }
+
+  export type UserKitCollectionUpdateToOneWithWhereWithoutBuildInput = {
+    where?: UserKitCollectionWhereInput
+    data: XOR<UserKitCollectionUpdateWithoutBuildInput, UserKitCollectionUncheckedUpdateWithoutBuildInput>
+  }
+
+  export type UserKitCollectionUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutBuildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BuildCreateWithoutMilestonesInput = {
     id?: string
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -57348,6 +63391,7 @@ export namespace Prisma {
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutMilestonesInput = {
@@ -57357,6 +63401,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -57365,6 +63410,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutMilestonesInput = {
@@ -57416,6 +63462,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57426,6 +63473,7 @@ export namespace Prisma {
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutMilestonesInput = {
@@ -57435,6 +63483,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57443,6 +63492,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildMilestoneUploadUpsertWithWhereUniqueWithoutBuildMilestoneInput = {
@@ -57466,6 +63516,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -57476,6 +63527,7 @@ export namespace Prisma {
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     comments?: BuildCommentCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutLikesInput = {
@@ -57485,6 +63537,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -57493,6 +63546,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     comments?: BuildCommentUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutLikesInput = {
@@ -57536,6 +63590,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildLikesInput = {
@@ -57574,6 +63630,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildLikesInput = {
@@ -57597,6 +63655,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57607,6 +63666,7 @@ export namespace Prisma {
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutLikesInput = {
@@ -57616,6 +63676,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57624,6 +63685,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type UserUpsertWithoutBuildLikesInput = {
@@ -57673,6 +63735,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildLikesInput = {
@@ -57711,6 +63775,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BuildCreateWithoutCommentsInput = {
@@ -57718,6 +63784,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -57728,6 +63795,7 @@ export namespace Prisma {
     uploads?: BuildUploadCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneCreateNestedManyWithoutBuildInput
     likes?: BuildLikeCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionCreateNestedOneWithoutBuildInput
   }
 
   export type BuildUncheckedCreateWithoutCommentsInput = {
@@ -57737,6 +63805,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -57745,6 +63814,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedCreateNestedManyWithoutBuildInput
     milestones?: BuildMilestoneUncheckedCreateNestedManyWithoutBuildInput
     likes?: BuildLikeUncheckedCreateNestedManyWithoutBuildInput
+    collection?: UserKitCollectionUncheckedCreateNestedOneWithoutBuildInput
   }
 
   export type BuildCreateOrConnectWithoutCommentsInput = {
@@ -57788,6 +63858,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBuildCommentsInput = {
@@ -57826,6 +63898,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBuildCommentsInput = {
@@ -57849,6 +63923,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57859,6 +63934,7 @@ export namespace Prisma {
     uploads?: BuildUploadUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutCommentsInput = {
@@ -57868,6 +63944,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57876,6 +63953,7 @@ export namespace Prisma {
     uploads?: BuildUploadUncheckedUpdateManyWithoutBuildNestedInput
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type UserUpsertWithoutBuildCommentsInput = {
@@ -57925,6 +64003,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBuildCommentsInput = {
@@ -57963,6 +64043,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStoreInput = {
@@ -58001,6 +64083,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoreInput = {
@@ -58039,6 +64123,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoreInput = {
@@ -58129,6 +64215,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoreInput = {
@@ -58167,6 +64255,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MarketplaceListingUpsertWithWhereUniqueWithoutStoreInput = {
@@ -58225,6 +64315,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLine?: ProductLineCreateNestedOneWithoutKitsInput
@@ -58237,9 +64328,11 @@ export namespace Prisma {
     collections?: UserKitCollectionCreateNestedManyWithoutKitInput
     reviews?: ReviewCreateNestedManyWithoutKitInput
     builds?: BuildCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
     expansions?: KitRelationCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
   }
 
   export type KitUncheckedCreateWithoutListingsInput = {
@@ -58257,6 +64350,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -58269,9 +64363,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
     builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
     expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
     expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
     gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
   }
 
   export type KitCreateOrConnectWithoutListingsInput = {
@@ -58336,6 +64432,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -58348,9 +64445,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutListingsInput = {
@@ -58368,6 +64467,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58380,9 +64480,11 @@ export namespace Prisma {
     collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type UserCreateWithoutWikiSubmissionsInput = {
@@ -58421,6 +64523,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWikiSubmissionsInput = {
@@ -58459,6 +64563,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWikiSubmissionsInput = {
@@ -58502,6 +64608,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedWikiSubmissionsInput = {
@@ -58540,6 +64648,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedWikiSubmissionsInput = {
@@ -58640,6 +64750,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWikiSubmissionsInput = {
@@ -58678,6 +64790,8 @@ export namespace Prisma {
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReviewedWikiSubmissionsInput = {
@@ -58727,6 +64841,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedWikiSubmissionsInput = {
@@ -58765,6 +64881,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WikiSubmissionCommentUpsertWithWhereUniqueWithoutSubmissionInput = {
@@ -58872,6 +64990,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWikiSubmissionCommentsInput = {
@@ -58910,6 +65030,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWikiSubmissionCommentsInput = {
@@ -59007,6 +65129,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWikiSubmissionCommentsInput = {
@@ -59045,6 +65169,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WikiSubmissionCreateWithoutLikesInput = {
@@ -59120,6 +65246,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
     reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWikiSubmissionLikesInput = {
@@ -59158,6 +65286,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
     reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWikiSubmissionLikesInput = {
@@ -59255,6 +65385,8 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
     reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWikiSubmissionLikesInput = {
@@ -59293,6 +65425,672 @@ export namespace Prisma {
     wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
     reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
     wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutWishlistInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWishlistInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWishlistInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWishlistInput, UserUncheckedCreateWithoutWishlistInput>
+  }
+
+  export type KitCreateWithoutWishlistInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
+    featuredScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
+    reviews?: ReviewCreateNestedManyWithoutKitInput
+    builds?: BuildCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutWishlistInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
+    featuredScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
+    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+    UserRecommendation?: UserRecommendationUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutWishlistInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutWishlistInput, KitUncheckedCreateWithoutWishlistInput>
+  }
+
+  export type UserUpsertWithoutWishlistInput = {
+    update: XOR<UserUpdateWithoutWishlistInput, UserUncheckedUpdateWithoutWishlistInput>
+    create: XOR<UserCreateWithoutWishlistInput, UserUncheckedCreateWithoutWishlistInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWishlistInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWishlistInput, UserUncheckedUpdateWithoutWishlistInput>
+  }
+
+  export type UserUpdateWithoutWishlistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWishlistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type KitUpsertWithoutWishlistInput = {
+    update: XOR<KitUpdateWithoutWishlistInput, KitUncheckedUpdateWithoutWishlistInput>
+    create: XOR<KitCreateWithoutWishlistInput, KitUncheckedCreateWithoutWishlistInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutWishlistInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutWishlistInput, KitUncheckedUpdateWithoutWishlistInput>
+  }
+
+  export type KitUpdateWithoutWishlistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUpdateManyWithoutKitNestedInput
+    builds?: BuildUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutWishlistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
+  }
+
+  export type UserCreateWithoutUserRecommendationInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionCreateNestedManyWithoutUserInput
+    builds?: BuildCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    store?: UserStoreCreateNestedOneWithoutUserInput
+    uploads?: UploadCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserRecommendationInput = {
+    id: string
+    email: string
+    username?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    avatarUrl?: string | null
+    isAdmin?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bio?: string | null
+    instagramUrl?: string | null
+    twitterUrl?: string | null
+    youtubeUrl?: string | null
+    portfolioUrl?: string | null
+    bannerImageUrl?: string | null
+    themeColor?: string | null
+    isPublic?: boolean
+    showCollections?: boolean
+    showBuilds?: boolean
+    showActivity?: boolean
+    showBadges?: boolean
+    emailNotifications?: boolean
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutUserInput
+    builds?: BuildUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    store?: UserStoreUncheckedCreateNestedOneWithoutUserInput
+    uploads?: UploadUncheckedCreateNestedManyWithoutUploadedByInput
+    buildLikes?: BuildLikeUncheckedCreateNestedManyWithoutUserInput
+    buildComments?: BuildCommentUncheckedCreateNestedManyWithoutUserInput
+    reviewFeedback?: ReviewFeedbackUncheckedCreateNestedManyWithoutUserInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutUserInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedCreateNestedManyWithoutReviewerInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedCreateNestedManyWithoutUserInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserRecommendationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserRecommendationInput, UserUncheckedCreateWithoutUserRecommendationInput>
+  }
+
+  export type KitCreateWithoutUserRecommendationInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
+    featuredScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLine?: ProductLineCreateNestedOneWithoutKitsInput
+    series?: SeriesCreateNestedOneWithoutKitsInput
+    releaseType?: ReleaseTypeCreateNestedOneWithoutKitsInput
+    baseKit?: KitCreateNestedOneWithoutVariantsInput
+    variants?: KitCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitCreateNestedManyWithoutKitInput
+    uploads?: KitUploadCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionCreateNestedManyWithoutKitInput
+    reviews?: ReviewCreateNestedManyWithoutKitInput
+    builds?: BuildCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistCreateNestedManyWithoutKitInput
+    expansions?: KitRelationCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardCreateNestedManyWithoutKitInput
+  }
+
+  export type KitUncheckedCreateWithoutUserRecommendationInput = {
+    id?: string
+    name: string
+    slug?: string | null
+    number: string
+    variant?: string | null
+    releaseDate?: Date | string | null
+    priceYen?: number | null
+    region?: string | null
+    boxArt?: string | null
+    notes?: string | null
+    manualLinks?: KitCreatemanualLinksInput | string[]
+    scrapedImages?: KitCreatescrapedImagesInput | string[]
+    potentialBaseKit?: string | null
+    isOriginalDesign?: boolean
+    featuredScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productLineId?: string | null
+    seriesId?: string | null
+    releaseTypeId?: string | null
+    baseKitId?: string | null
+    variants?: KitUncheckedCreateNestedManyWithoutBaseKitInput
+    mobileSuits?: KitMobileSuitUncheckedCreateNestedManyWithoutKitInput
+    uploads?: KitUploadUncheckedCreateNestedManyWithoutKitInput
+    collections?: UserKitCollectionUncheckedCreateNestedManyWithoutKitInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutKitInput
+    builds?: BuildUncheckedCreateNestedManyWithoutKitInput
+    listings?: MarketplaceListingUncheckedCreateNestedManyWithoutKitInput
+    wishlist?: UserWishlistUncheckedCreateNestedManyWithoutKitInput
+    expansions?: KitRelationUncheckedCreateNestedManyWithoutKitInput
+    expandedBy?: KitRelationUncheckedCreateNestedManyWithoutExpansionInput
+    gunplaCards?: GunplaCardUncheckedCreateNestedManyWithoutKitInput
+  }
+
+  export type KitCreateOrConnectWithoutUserRecommendationInput = {
+    where: KitWhereUniqueInput
+    create: XOR<KitCreateWithoutUserRecommendationInput, KitUncheckedCreateWithoutUserRecommendationInput>
+  }
+
+  export type UserUpsertWithoutUserRecommendationInput = {
+    update: XOR<UserUpdateWithoutUserRecommendationInput, UserUncheckedUpdateWithoutUserRecommendationInput>
+    create: XOR<UserCreateWithoutUserRecommendationInput, UserUncheckedCreateWithoutUserRecommendationInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserRecommendationInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserRecommendationInput, UserUncheckedUpdateWithoutUserRecommendationInput>
+  }
+
+  export type UserUpdateWithoutUserRecommendationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUpdateManyWithoutUserNestedInput
+    builds?: BuildUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    store?: UserStoreUpdateOneWithoutUserNestedInput
+    uploads?: UploadUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserRecommendationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    themeColor?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showBuilds?: BoolFieldUpdateOperationsInput | boolean
+    showActivity?: BoolFieldUpdateOperationsInput | boolean
+    showBadges?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutUserNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    store?: UserStoreUncheckedUpdateOneWithoutUserNestedInput
+    uploads?: UploadUncheckedUpdateManyWithoutUploadedByNestedInput
+    buildLikes?: BuildLikeUncheckedUpdateManyWithoutUserNestedInput
+    buildComments?: BuildCommentUncheckedUpdateManyWithoutUserNestedInput
+    reviewFeedback?: ReviewFeedbackUncheckedUpdateManyWithoutUserNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutUserNestedInput
+    reviewedWikiSubmissions?: WikiSubmissionUncheckedUpdateManyWithoutReviewerNestedInput
+    wikiSubmissionComments?: WikiSubmissionCommentUncheckedUpdateManyWithoutUserNestedInput
+    wikiSubmissionLikes?: WikiSubmissionLikeUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type KitUpsertWithoutUserRecommendationInput = {
+    update: XOR<KitUpdateWithoutUserRecommendationInput, KitUncheckedUpdateWithoutUserRecommendationInput>
+    create: XOR<KitCreateWithoutUserRecommendationInput, KitUncheckedCreateWithoutUserRecommendationInput>
+    where?: KitWhereInput
+  }
+
+  export type KitUpdateToOneWithWhereWithoutUserRecommendationInput = {
+    where?: KitWhereInput
+    data: XOR<KitUpdateWithoutUserRecommendationInput, KitUncheckedUpdateWithoutUserRecommendationInput>
+  }
+
+  export type KitUpdateWithoutUserRecommendationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLine?: ProductLineUpdateOneWithoutKitsNestedInput
+    series?: SeriesUpdateOneWithoutKitsNestedInput
+    releaseType?: ReleaseTypeUpdateOneWithoutKitsNestedInput
+    baseKit?: KitUpdateOneWithoutVariantsNestedInput
+    variants?: KitUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUpdateManyWithoutKitNestedInput
+    builds?: BuildUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+  }
+
+  export type KitUncheckedUpdateWithoutUserRecommendationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    priceYen?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    boxArt?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    manualLinks?: KitUpdatemanualLinksInput | string[]
+    scrapedImages?: KitUpdatescrapedImagesInput | string[]
+    potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
+    isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productLineId?: NullableStringFieldUpdateOperationsInput | string | null
+    seriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseTypeId?: NullableStringFieldUpdateOperationsInput | string | null
+    baseKitId?: NullableStringFieldUpdateOperationsInput | string | null
+    variants?: KitUncheckedUpdateManyWithoutBaseKitNestedInput
+    mobileSuits?: KitMobileSuitUncheckedUpdateManyWithoutKitNestedInput
+    uploads?: KitUploadUncheckedUpdateManyWithoutKitNestedInput
+    collections?: UserKitCollectionUncheckedUpdateManyWithoutKitNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
+    builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
+    listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
+    expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
+    expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
+    gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type SeriesCreateManyTimelineInput = {
@@ -59372,6 +66170,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -59428,6 +66227,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -59440,9 +66240,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutSeriesInput = {
@@ -59460,6 +66262,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59472,9 +66275,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutSeriesInput = {
@@ -59492,6 +66297,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59694,6 +66500,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     seriesId?: string | null
@@ -59716,6 +66523,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     series?: SeriesUpdateOneWithoutKitsNestedInput
@@ -59728,9 +66536,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutProductLineInput = {
@@ -59748,6 +66558,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59760,9 +66571,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutProductLineInput = {
@@ -59780,6 +66593,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seriesId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59802,6 +66616,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -59824,6 +66639,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -59836,9 +66652,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutReleaseTypeInput = {
@@ -59856,6 +66674,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59868,9 +66687,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutReleaseTypeInput = {
@@ -59888,6 +66709,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59910,6 +66732,7 @@ export namespace Prisma {
     scrapedImages?: KitCreatescrapedImagesInput | string[]
     potentialBaseKit?: string | null
     isOriginalDesign?: boolean
+    featuredScore?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     productLineId?: string | null
@@ -59937,10 +66760,24 @@ export namespace Prisma {
   export type UserKitCollectionCreateManyKitInput = {
     id?: string
     userId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -59961,6 +66798,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -59979,6 +66817,12 @@ export namespace Prisma {
     available?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type UserWishlistCreateManyKitInput = {
+    id?: string
+    userId: string
+    addedAt?: Date | string
   }
 
   export type KitRelationCreateManyKitInput = {
@@ -60007,6 +66851,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type UserRecommendationCreateManyKitInput = {
+    id?: string
+    userId: string
+    addedAt?: Date | string
+  }
+
   export type KitUpdateWithoutBaseKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -60022,6 +66872,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLine?: ProductLineUpdateOneWithoutKitsNestedInput
@@ -60034,9 +66885,11 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutKitNestedInput
     builds?: BuildUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateWithoutBaseKitInput = {
@@ -60054,6 +66907,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60066,9 +66920,11 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutKitNestedInput
     builds?: BuildUncheckedUpdateManyWithoutKitNestedInput
     listings?: MarketplaceListingUncheckedUpdateManyWithoutKitNestedInput
+    wishlist?: UserWishlistUncheckedUpdateManyWithoutKitNestedInput
     expansions?: KitRelationUncheckedUpdateManyWithoutKitNestedInput
     expandedBy?: KitRelationUncheckedUpdateManyWithoutExpansionNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutKitNestedInput
+    UserRecommendation?: UserRecommendationUncheckedUpdateManyWithoutKitNestedInput
   }
 
   export type KitUncheckedUpdateManyWithoutBaseKitInput = {
@@ -60086,6 +66942,7 @@ export namespace Prisma {
     scrapedImages?: KitUpdatescrapedImagesInput | string[]
     potentialBaseKit?: NullableStringFieldUpdateOperationsInput | string | null
     isOriginalDesign?: BoolFieldUpdateOperationsInput | boolean
+    featuredScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     productLineId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60147,21 +67004,49 @@ export namespace Prisma {
   export type UserKitCollectionUpdateWithoutKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
   }
 
   export type UserKitCollectionUncheckedUpdateWithoutKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60169,10 +67054,24 @@ export namespace Prisma {
   export type UserKitCollectionUncheckedUpdateManyWithoutKitInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60216,6 +67115,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60226,6 +67126,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutKitInput = {
@@ -60234,6 +67135,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60243,6 +67145,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateManyWithoutKitInput = {
@@ -60251,6 +67154,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60295,6 +67199,24 @@ export namespace Prisma {
     available?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWishlistNestedInput
+  }
+
+  export type UserWishlistUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type KitRelationUpdateWithoutKitInput = {
@@ -60375,6 +67297,24 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserRecommendationUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserRecommendationNestedInput
+  }
+
+  export type UserRecommendationUncheckedUpdateWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationUncheckedUpdateManyWithoutKitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type KitUploadCreateManyUploadInput = {
     id?: string
     kitId: string
@@ -60433,6 +67373,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     createdAt?: Date | string
@@ -60444,6 +67385,131 @@ export namespace Prisma {
     userId: string
     kitId: string
     createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateManyWishlistUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateManyPreorderUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateManyBacklogUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateManyInProgressUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    builtUploadId?: string | null
+    addedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserKitCollectionCreateManyBuiltUploadInput = {
+    id?: string
+    userId: string
+    kitId: string
+    buildId?: string | null
+    status: $Enums.CollectionStatus
+    price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
+    acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    addedAt?: Date | string
     updatedAt?: Date | string
   }
 
@@ -60607,6 +67673,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60617,6 +67684,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutFeaturedImageInput = {
@@ -60626,6 +67694,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60634,6 +67703,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateManyWithoutFeaturedImageInput = {
@@ -60643,6 +67713,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60673,13 +67744,402 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserKitCollectionUpdateWithoutWishlistUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutWishlistUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUpdateWithoutPreorderUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutPreorderUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUpdateWithoutBacklogUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutBacklogUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUpdateWithoutInProgressUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutInProgressUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUpdateWithoutBuiltUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCollectionsNestedInput
+    kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+  }
+
+  export type UserKitCollectionUncheckedUpdateWithoutBuiltUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
+    price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserKitCollectionCreateManyUserInput = {
     id?: string
     kitId: string
+    buildId?: string | null
     status: $Enums.CollectionStatus
-    notes?: string | null
     price?: number | null
+    wishlistNotes?: string | null
+    preorderNotes?: string | null
+    backlogNotes?: string | null
+    inProgressNotes?: string | null
+    builtNotes?: string | null
+    wishlistedAt?: Date | string | null
+    preorderedAt?: Date | string | null
     acquiredAt?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    wishlistUploadId?: string | null
+    preorderUploadId?: string | null
+    backlogUploadId?: string | null
+    inProgressUploadId?: string | null
+    builtUploadId?: string | null
     addedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60690,6 +68150,7 @@ export namespace Prisma {
     title: string
     description?: string | null
     status?: $Enums.BuildStatus
+    isPublic?: boolean
     startedAt?: Date | string | null
     completedAt?: Date | string | null
     featuredImageId?: string | null
@@ -60793,24 +68254,64 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type UserWishlistCreateManyUserInput = {
+    id?: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
+  export type UserRecommendationCreateManyUserInput = {
+    id?: string
+    kitId: string
+    addedAt?: Date | string
+  }
+
   export type UserKitCollectionUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     kit?: KitUpdateOneRequiredWithoutCollectionsNestedInput
+    build?: BuildUpdateOneWithoutCollectionNestedInput
+    wishlistUpload?: UploadUpdateOneWithoutWishlistUploadsNestedInput
+    preorderUpload?: UploadUpdateOneWithoutPreorderUploadsNestedInput
+    backlogUpload?: UploadUpdateOneWithoutBacklogUploadsNestedInput
+    inProgressUpload?: UploadUpdateOneWithoutInProgressUploadsNestedInput
+    builtUpload?: UploadUpdateOneWithoutBuiltUploadsNestedInput
   }
 
   export type UserKitCollectionUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60818,10 +68319,24 @@ export namespace Prisma {
   export type UserKitCollectionUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     kitId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumCollectionStatusFieldUpdateOperationsInput | $Enums.CollectionStatus
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
     price?: NullableIntFieldUpdateOperationsInput | number | null
+    wishlistNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    builtNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    wishlistedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preorderedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acquiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    wishlistUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    preorderUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    backlogUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    inProgressUploadId?: NullableStringFieldUpdateOperationsInput | string | null
+    builtUploadId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60831,6 +68346,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60841,6 +68357,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateWithoutUserInput = {
@@ -60849,6 +68366,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60858,6 +68376,7 @@ export namespace Prisma {
     milestones?: BuildMilestoneUncheckedUpdateManyWithoutBuildNestedInput
     likes?: BuildLikeUncheckedUpdateManyWithoutBuildNestedInput
     comments?: BuildCommentUncheckedUpdateManyWithoutBuildNestedInput
+    collection?: UserKitCollectionUncheckedUpdateOneWithoutBuildNestedInput
   }
 
   export type BuildUncheckedUpdateManyWithoutUserInput = {
@@ -60866,6 +68385,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBuildStatusFieldUpdateOperationsInput | $Enums.BuildStatus
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
     startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     featuredImageId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60928,6 +68448,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateWithoutUploadedByInput = {
@@ -60951,6 +68476,11 @@ export namespace Prisma {
     buildMilestoneUploads?: BuildMilestoneUploadUncheckedUpdateManyWithoutUploadNestedInput
     buildFeaturedImages?: BuildUncheckedUpdateManyWithoutFeaturedImageNestedInput
     gunplaCards?: GunplaCardUncheckedUpdateManyWithoutUploadNestedInput
+    wishlistUploads?: UserKitCollectionUncheckedUpdateManyWithoutWishlistUploadNestedInput
+    preorderUploads?: UserKitCollectionUncheckedUpdateManyWithoutPreorderUploadNestedInput
+    backlogUploads?: UserKitCollectionUncheckedUpdateManyWithoutBacklogUploadNestedInput
+    inProgressUploads?: UserKitCollectionUncheckedUpdateManyWithoutInProgressUploadNestedInput
+    builtUploads?: UserKitCollectionUncheckedUpdateManyWithoutBuiltUploadNestedInput
   }
 
   export type UploadUncheckedUpdateManyWithoutUploadedByInput = {
@@ -61185,6 +68715,42 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     submissionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutWishlistNestedInput
+  }
+
+  export type UserWishlistUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWishlistUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kit?: KitUpdateOneRequiredWithoutUserRecommendationNestedInput
+  }
+
+  export type UserRecommendationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRecommendationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kitId?: StringFieldUpdateOperationsInput | string
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewScoreCreateManyReviewInput = {

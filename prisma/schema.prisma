@@ -169,6 +169,7 @@ model Kit {
   scrapedImages    String[]  @default([])
   potentialBaseKit String? // Potential base kit reference
   isOriginalDesign Boolean   @default(true) // true unless known bootleg copy
+  featuredScore    Int?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
@@ -190,13 +191,15 @@ model Kit {
   reviews     Review[]
   builds      Build[]
   listings    MarketplaceListing[]
+  wishlist    UserWishlist[]
 
   // Kit expansion relationships (many-to-many)
   expansions KitRelation[] @relation("KitExpansions") // Expansions
   expandedBy KitRelation[] @relation("KitExpandedBy") // Compatible with
 
   // Gunpla cards created for this kit
-  gunplaCards GunplaCard[]
+  gunplaCards        GunplaCard[]
+  UserRecommendation UserRecommendation[]
 
   @@map("kits")
 }
@@ -296,6 +299,11 @@ model Upload {
   buildMilestoneUploads BuildMilestoneUpload[]
   buildFeaturedImages   Build[]                @relation("BuildFeaturedImage")
   gunplaCards           GunplaCard[]
+  wishlistUploads       UserKitCollection[]    @relation("WishlistUpload")
+  preorderUploads       UserKitCollection[]    @relation("PreorderUpload")
+  backlogUploads        UserKitCollection[]    @relation("BacklogUpload")
+  inProgressUploads     UserKitCollection[]    @relation("InProgressUpload")
+  builtUploads          UserKitCollection[]    @relation("BuiltUpload")
 
   @@map("uploads")
 }
@@ -423,6 +431,8 @@ model User {
   reviewedWikiSubmissions WikiSubmission[]        @relation("ReviewedBy")
   wikiSubmissionComments  WikiSubmissionComment[]
   wikiSubmissionLikes     WikiSubmissionLike[]
+  wishlist                UserWishlist[]
+  UserRecommendation      UserRecommendation[]
 
   @@map("users")
 }
@@ -438,26 +448,54 @@ enum CollectionStatus {
 
 // User kit collections (wishlist, backlog, built)
 model UserKitCollection {
-  id         String           @id @default(cuid())
-  userId     String
-  kitId      String
-  status     CollectionStatus
-  notes      String?
-  price      Int?             @default(0)
-  acquiredAt DateTime?
-  addedAt    DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
+  id      String           @id @default(cuid())
+  userId  String
+  kitId   String
+  buildId String?          @unique
+  status  CollectionStatus
+  price   Int?             @default(0)
+
+  // Status-specific notes
+  wishlistNotes   String?
+  preorderNotes   String?
+  backlogNotes    String?
+  inProgressNotes String?
+  builtNotes      String?
+
+  // Status-specific timestamps
+  wishlistedAt DateTime?
+  preorderedAt DateTime?
+  acquiredAt   DateTime?
+  startedAt    DateTime?
+  completedAt  DateTime?
+
+  // Status-specific upload references
+  wishlistUploadId   String?
+  preorderUploadId   String?
+  backlogUploadId    String?
+  inProgressUploadId String?
+  builtUploadId      String?
+
+  addedAt   DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  kit  Kit  @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit              Kit     @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  build            Build?  @relation(fields: [buildId], references: [id], onDelete: SetNull)
+  wishlistUpload   Upload? @relation("WishlistUpload", fields: [wishlistUploadId], references: [id], onDelete: SetNull)
+  preorderUpload   Upload? @relation("PreorderUpload", fields: [preorderUploadId], references: [id], onDelete: SetNull)
+  backlogUpload    Upload? @relation("BacklogUpload", fields: [backlogUploadId], references: [id], onDelete: SetNull)
+  inProgressUpload Upload? @relation("InProgressUpload", fields: [inProgressUploadId], references: [id], onDelete: SetNull)
+  builtUpload      Upload? @relation("BuiltUpload", fields: [builtUploadId], references: [id], onDelete: SetNull)
 
-  @@unique([userId, kitId])
+  // Removed unique constraint to allow multiple instances of same kit
   @@index([userId])
   @@index([kitId])
   @@index([status])
   @@index([userId, status])
   @@index([price])
+  @@index([userId, kitId]) // Composite index for efficient queries
   @@map("user_kit_collections")
 }
 
@@ -543,6 +581,7 @@ model Build {
   title           String
   description     String?
   status          BuildStatus @default(PLANNING)
+  isPublic        Boolean     @default(false)
   startedAt       DateTime?
   completedAt     DateTime?
   featuredImageId String?
@@ -550,13 +589,14 @@ model Build {
   updatedAt       DateTime    @updatedAt
 
   // Relations
-  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  kit           Kit              @relation(fields: [kitId], references: [id], onDelete: Cascade)
-  featuredImage Upload?          @relation("BuildFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit           Kit                @relation(fields: [kitId], references: [id], onDelete: Cascade)
+  featuredImage Upload?            @relation("BuildFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
   uploads       BuildUpload[]
   milestones    BuildMilestone[]
   likes         BuildLike[]
   comments      BuildComment[]
+  collection    UserKitCollection?
 
   @@index([userId])
   @@index([kitId])
@@ -575,6 +615,8 @@ enum MilestoneType {
   DECALS
   TOPCOAT
   PHOTOGRAPHY
+  CLEANUP
+  MODIFICATION
   COMPLETION
 }
 
@@ -750,4 +792,37 @@ enum SubmissionStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+// User wishlist model - simple wishlist functionality separate from collection status
+model UserWishlist {
+  id      String   @id @default(cuid())
+  userId  String
+  kitId   String
+  addedAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit  Kit  @relation(fields: [kitId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kitId]) // One wishlist entry per user per kit
+  @@index([userId])
+  @@index([kitId])
+  @@map("user_wishlist")
+}
+
+model UserRecommendation {
+  id      String   @id @default(cuid())
+  userId  String
+  kitId   String
+  addedAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kit  Kit  @relation(fields: [kitId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kitId]) // One wishlist entry per user per kit
+  @@index([userId])
+  @@index([kitId])
+  @@map("user_recommendation")
 }

@@ -1,7 +1,8 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getKitBySlug } from "@/lib/actions/kits";
 import { isCurrentUserAdmin } from "@/lib/actions/users";
 import { KitEditForm } from "@/components/kit-edit-form";
+import { prisma } from "@/lib/prisma";
 
 interface KitEditPageProps {
   params: Promise<{
@@ -42,9 +43,37 @@ export default async function KitEditPage({ params }: KitEditPageProps) {
     notFound();
   }
 
+  // Ensure uploads are ordered according to the persisted order value so any
+  // adjustments made in the UI remain consistent after saving.
+  let orderedUploads = kit.uploads;
+
+  if (kit.uploads?.length) {
+    const uploadOrder = await prisma.kitUpload.findMany({
+      where: { kitId: kit.id },
+      select: { id: true, order: true },
+      orderBy: { order: "asc" },
+    });
+
+    const uploadOrderMap = new Map(
+      uploadOrder.map(({ id, order }, index) => [id, order ?? index])
+    );
+
+    orderedUploads = [...kit.uploads]
+      .map((upload, index) => {
+        const order =
+          uploadOrderMap.get(upload.id) ?? uploadOrder.length + index;
+        return {
+          ...upload,
+          order,
+        };
+      })
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  }
+
   // Transform the kit data to match the expected form structure
   const transformedKit = {
     ...kit,
+    uploads: orderedUploads,
     name: kit.fullName,
     baseKit: kit.baseKit
       ? {

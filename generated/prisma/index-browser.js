@@ -20,11 +20,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.0
+ * Prisma Client JS version: 6.16.2
  * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.16.0",
+  client: "6.16.2",
   engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
@@ -218,6 +218,7 @@ exports.Prisma.KitScalarFieldEnum = {
   scrapedImages: 'scrapedImages',
   potentialBaseKit: 'potentialBaseKit',
   isOriginalDesign: 'isOriginalDesign',
+  featuredScore: 'featuredScore',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   productLineId: 'productLineId',
@@ -341,10 +342,24 @@ exports.Prisma.UserKitCollectionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   kitId: 'kitId',
+  buildId: 'buildId',
   status: 'status',
-  notes: 'notes',
   price: 'price',
+  wishlistNotes: 'wishlistNotes',
+  preorderNotes: 'preorderNotes',
+  backlogNotes: 'backlogNotes',
+  inProgressNotes: 'inProgressNotes',
+  builtNotes: 'builtNotes',
+  wishlistedAt: 'wishlistedAt',
+  preorderedAt: 'preorderedAt',
   acquiredAt: 'acquiredAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  wishlistUploadId: 'wishlistUploadId',
+  preorderUploadId: 'preorderUploadId',
+  backlogUploadId: 'backlogUploadId',
+  inProgressUploadId: 'inProgressUploadId',
+  builtUploadId: 'builtUploadId',
   addedAt: 'addedAt',
   updatedAt: 'updatedAt'
 };
@@ -383,6 +398,7 @@ exports.Prisma.BuildScalarFieldEnum = {
   title: 'title',
   description: 'description',
   status: 'status',
+  isPublic: 'isPublic',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   featuredImageId: 'featuredImageId',
@@ -473,6 +489,20 @@ exports.Prisma.WikiSubmissionLikeScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserWishlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kitId: 'kitId',
+  addedAt: 'addedAt'
+};
+
+exports.Prisma.UserRecommendationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  kitId: 'kitId',
+  addedAt: 'addedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -556,6 +586,8 @@ exports.MilestoneType = exports.$Enums.MilestoneType = {
   DECALS: 'DECALS',
   TOPCOAT: 'TOPCOAT',
   PHOTOGRAPHY: 'PHOTOGRAPHY',
+  CLEANUP: 'CLEANUP',
+  MODIFICATION: 'MODIFICATION',
   COMPLETION: 'COMPLETION'
 };
 
@@ -605,7 +637,9 @@ exports.Prisma.ModelName = {
   MarketplaceListing: 'MarketplaceListing',
   WikiSubmission: 'WikiSubmission',
   WikiSubmissionComment: 'WikiSubmissionComment',
-  WikiSubmissionLike: 'WikiSubmissionLike'
+  WikiSubmissionLike: 'WikiSubmissionLike',
+  UserWishlist: 'UserWishlist',
+  UserRecommendation: 'UserRecommendation'
 };
 
 /**
